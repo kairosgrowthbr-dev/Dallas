@@ -140,10 +140,10 @@
         <canvas class="hero__stars" id="hero-stars" aria-hidden="true"></canvas>
         <div class="hero__veil" aria-hidden="true"></div>
         <div class="hero__content" id="hero-content">
-          <p class="eyebrow hero-fade" style="--d: 0.1s">Sites · Funis · CRM · Automações · Sistemas · Painéis · Audiovisual · Design</p>
+          <p class="eyebrow hero-fade" style="--d: 0.1s">Sites · Funis · CRM · Automações · Sistemas · Painéis · Design</p>
           <h1 class="hero__title">
             <span class="mask"><span class="hero-rise light">Criamos</span></span>
-            <span class="mask mask--rot"><span class="hero-rise bold rot" id="hero-rot" style="--d: 0.12s"><i class="is-on">sites</i><i>funis</i><i>CRMs</i><i>automações</i><i>sistemas</i><i>painéis</i><i>vídeos</i><i>marcas</i></span></span>
+            <span class="mask mask--rot"><span class="hero-rise bold rot" id="hero-rot" style="--d: 0.12s"><i class="is-on">sites</i><i>funis</i><i>CRMs</i><i>automações</i><i>sistemas</i><i>painéis</i><i>marcas</i></span></span>
             <span class="mask"><span class="hero-rise light" style="--d: 0.24s">que vendem.</span></span>
           </h1>
           <p class="hero__lede hero-fade" style="--d: 0.5s">Design, tecnologia e tráfego no mesmo time. Do primeiro clique à venda fechada, com tudo no nome da sua empresa.</p>
@@ -165,14 +165,21 @@
               <span class="onode" data-key="automacoes"><svg><use href="#i-bolt" /></svg>Automações</span>
               <span class="onode" data-key="sistemas"><svg><use href="#i-code" /></svg>Sistemas</span>
               <span class="onode" data-key="paineis"><svg><use href="#i-chart" /></svg>Painéis</span>
-              <span class="onode" data-key="audiovisual"><svg><use href="#i-film" /></svg>Audiovisual</span>
               <span class="onode" data-key="design"><svg><use href="#i-pen" /></svg>Design</span>
             </div>
           </div>
           <div class="orbit__core" id="orbit-core">
+            <i class="orbit__rays"></i>
             <i class="orbit__glow"></i>
             <i class="orbit__pulse"></i>
-            <img src="./images/brand/wing.webp" alt="" width="516" height="640" />
+            <i class="orbit__pulse orbit__pulse--b"></i>
+            <canvas class="orbit__sparks" id="orbit-sparks"></canvas>
+            <div class="logo-fx" id="logo-fx">
+              <div class="logo-fx__float">
+                <img src="./images/brand/wing.webp" alt="" width="516" height="640" />
+                <i class="logo-fx__shine" id="logo-shine"></i>
+              </div>
+            </div>
           </div>
         </div>
         <div class="hero__cue hero-fade" style="--d: 0.9s" aria-hidden="true"><span>Role para ver</span><i><b></b></i></div>
@@ -188,7 +195,6 @@
             <span><svg><use href="#i-bolt" /></svg>Automações</span><i></i>
             <span><svg><use href="#i-code" /></svg>Sistemas</span><i></i>
             <span><svg><use href="#i-chart" /></svg>Painéis</span><i></i>
-            <span><svg><use href="#i-film" /></svg>Audiovisual</span><i></i>
             <span><svg><use href="#i-pen" /></svg>Design</span><i></i>
           </div>
           <div class="channels__set" aria-hidden="true">
@@ -198,7 +204,6 @@
             <span><svg><use href="#i-bolt" /></svg>Automações</span><i></i>
             <span><svg><use href="#i-code" /></svg>Sistemas</span><i></i>
             <span><svg><use href="#i-chart" /></svg>Painéis</span><i></i>
-            <span><svg><use href="#i-film" /></svg>Audiovisual</span><i></i>
             <span><svg><use href="#i-pen" /></svg>Design</span><i></i>
           </div>
         </div>
@@ -210,7 +215,7 @@
           <div class="wrap services__head">
             <div>
               <p class="eyebrow eyebrow--dot">O que a gente faz</p>
-              <h2 class="h2 h2--lg" data-split>Oito frentes. <b>Um time só.</b></h2>
+              <h2 class="h2 h2--md" data-split>Sete frentes. <b>Um time só.</b></h2>
             </div>
             <p class="p-lead services__lead" data-rise>Você contrata só o que faz sentido para o seu momento. Tudo conversa entre si, do site ao painel.</p>
           </div>
@@ -265,14 +270,6 @@
             </article>
             <article class="svc">
               <span class="svc__num">07</span>
-              <div class="svc__art svc__art--film" aria-hidden="true"><i></i><i></i><i></i><i></i><b><svg><use href="#i-play" /></svg></b></div>
-              <h3>Audiovisual</h3>
-              <p>Roteiro, captação, edição e motion. Vídeos para anúncios e redes que param o dedo e explicam por que você.</p>
-              <ul class="tags"><li>Vídeos</li><li>Criativos</li><li>Motion</li></ul>
-              <a class="svc__go" href="#diagnostico" data-diag>Quero vídeos<svg><use href="#i-ur" /></svg></a>
-            </article>
-            <article class="svc">
-              <span class="svc__num">08</span>
               <div class="svc__art svc__art--pen" aria-hidden="true"><svg viewBox="0 0 200 120"><path class="curve" d="M14 100 C 60 10, 120 120, 186 24" /><circle class="pt pt--a" cx="14" cy="100" r="4" /><circle class="pt pt--b" cx="186" cy="24" r="4" /><circle class="pt pt--h" cx="60" cy="10" r="3" /><circle class="pt pt--h" cx="120" cy="120" r="3" /><path class="hnd" d="M14 100 60 10M186 24 120 120" /></svg></div>
               <h3>Design</h3>
               <p>Identidade visual, peças para redes, apresentações e interfaces no nível do que a sua empresa entrega.</p>
@@ -299,18 +296,18 @@
           <div class="mural__grid">
             <div class="mural__col" data-speed="1">
               <a class="mural__item" href="./demos/aurea-odonto/index.html" target="_blank" rel="noopener"><img src="./images/work/aurea-odonto-cover.jpg" alt="Site da Áurea Odonto" width="1440" height="900" loading="lazy" /><span>Áurea Odonto · site</span></a>
-              <a class="mural__item" href="./demos/crm/index.html" target="_blank" rel="noopener"><img src="./images/solutions/paineis.jpg" alt="Relatórios do Dalas CRM" width="1600" height="1000" loading="lazy" /><span>Dalas CRM · relatórios</span></a>
+              <a class="mural__item" href="./demos/crm/index.html" target="_blank" rel="noopener"><img src="./images/solutions/conversas.jpg" alt="Conversas do Dalas CRM" width="1600" height="1000" loading="lazy" /><span>Dalas CRM · conversas</span></a>
               <a class="mural__item" href="./demos/nordica-cafe/index.html" target="_blank" rel="noopener"><img src="./images/work/nordica-cafe-cover.jpg" alt="Site da Nórdica Café" width="1440" height="900" loading="lazy" /><span>Nórdica Café · site</span></a>
             </div>
             <div class="mural__col" data-speed="1.8">
               <a class="mural__item" href="./demos/crm/index.html" target="_blank" rel="noopener"><img src="./images/solutions/sistemas.jpg" alt="Pipeline do Dalas CRM" width="1600" height="1000" loading="lazy" /><span>Dalas CRM · pipeline</span></a>
-              <a class="mural__item" href="./demos/forja-box/index.html" target="_blank" rel="noopener"><img src="./images/work/forja-box-cover.jpg" alt="Site da Forja Box" width="1440" height="900" loading="lazy" /><span>Forja Box · site</span></a>
+              <a class="mural__item" href="./demos/aurea-odonto/index.html" target="_blank" rel="noopener"><img src="./images/work/aurea-odonto-cover.jpg" alt="Site da Áurea Odonto" width="1440" height="900" loading="lazy" /><span>Áurea Odonto · site</span></a>
               <a class="mural__item" href="./demos/crm/index.html" target="_blank" rel="noopener"><img src="./images/solutions/automacoes.jpg" alt="Automações do Dalas CRM" width="1600" height="1000" loading="lazy" /><span>Dalas CRM · automações</span></a>
             </div>
             <div class="mural__col" data-speed="0.6">
               <a class="mural__item" href="./demos/vertice-arquitetura/index.html" target="_blank" rel="noopener"><img src="./images/work/vertice-arquitetura-cover.jpg" alt="Site da Vértice Arquitetura" width="1440" height="900" loading="lazy" /><span>Vértice Arquitetura · site</span></a>
-              <a class="mural__item" href="./demos/crm/index.html" target="_blank" rel="noopener"><img src="./images/solutions/trafego.jpg" alt="Campanhas no Dalas CRM" width="1600" height="1000" loading="lazy" /><span>Dalas CRM · campanhas</span></a>
-              <a class="mural__item" href="./demos/aurea-odonto/index.html" target="_blank" rel="noopener"><img src="./images/work/crm-cover.jpg" alt="Dalas CRM" width="1440" height="900" loading="lazy" /><span>Dalas CRM · conversas</span></a>
+              <a class="mural__item" href="./demos/forja-box/index.html" target="_blank" rel="noopener"><img src="./images/work/forja-box-cover.jpg" alt="Site da Forja Box" width="1440" height="900" loading="lazy" /><span>Forja Box · site</span></a>
+              <a class="mural__item" href="./demos/crm/index.html" target="_blank" rel="noopener"><img src="./images/work/crm-cover.jpg" alt="Pipeline do Dalas CRM" width="1440" height="900" loading="lazy" /><span>Dalas CRM · pipeline</span></a>
             </div>
           </div>
           <div class="mural__fade" aria-hidden="true"></div>
@@ -352,57 +349,71 @@
         </div>
       </section>
 
-      <!-- ================= CRM, AUTOMAÇÕES E PAINÉIS: TELAS EM 3D ================= -->
+      <!-- ================= CRM E AUTOMAÇÕES: AO VIVO ================= -->
       <section class="section crm" id="crm">
         <div class="wrap crm__head">
-          <p class="eyebrow eyebrow--dot">CRM · Automações · Painéis</p>
+          <p class="eyebrow eyebrow--dot">CRM · Automações</p>
           <h2 class="h2 h2--xl" data-split>Nenhum cliente <b>sem resposta.</b></h2>
-          <p class="p-lead" data-rise>O Dalas CRM organiza cada conversa por etapa, as automações respondem na hora e o painel mostra o que traz venda. Você pode estar numa reunião ou dormindo: o cliente já está sendo atendido.</p>
+          <p class="p-lead" data-rise>Chegou mensagem no WhatsApp ou no Instagram, a automação responde na hora, entende o que o cliente quer e coloca ele no pipeline. Você entra quando ele já está pronto.</p>
         </div>
-        <div class="stack" id="stack">
-          <figure class="stack__card"><img src="./images/solutions/sistemas.jpg" alt="Pipeline de vendas do Dalas CRM" width="1600" height="1000" loading="lazy" /><figcaption><small>Pipeline</small>Cada cliente por etapa, com a conversa ao lado</figcaption></figure>
-          <figure class="stack__card"><img src="./images/solutions/automacoes.jpg" alt="Automações do Dalas CRM" width="1600" height="1000" loading="lazy" /><figcaption><small>Automações</small>Resposta em segundos e follow-up sozinho</figcaption></figure>
-          <figure class="stack__card"><img src="./images/solutions/paineis.jpg" alt="Relatórios do Dalas CRM" width="1600" height="1000" loading="lazy" /><figcaption><small>Painéis</small>Origem de cada venda e custo por cliente</figcaption></figure>
+        <div class="wrap live" id="live">
+          <div class="live__phone">
+            <div class="live__tabs" role="tablist" aria-label="Canal">
+              <button type="button" role="tab" aria-selected="true" data-ch="wa"><svg><use href="#i-wa" /></svg>WhatsApp</button>
+              <button type="button" role="tab" aria-selected="false" data-ch="ig"><svg><use href="#i-ig" /></svg>Instagram</button>
+            </div>
+            <div class="phone phone--live" id="live-phone" data-ch="wa">
+              <div class="phone__notch"></div>
+              <div class="phone__screen">
+                <div class="chat__top">
+                  <svg class="chat__back"><use href="#i-l" /></svg>
+                  <b class="chat__av" id="chat-av">CL</b>
+                  <p><b id="chat-name">Camila Lopes</b><small id="chat-status">online</small></p>
+                  <span class="chat__ch"><svg><use id="chat-ch" href="#i-wa" /></svg></span>
+                </div>
+                <div class="chat__body" id="chat-body"></div>
+                <div class="chat__bar"><span>Mensagem</span><i><svg><use href="#i-send" /></svg></i></div>
+              </div>
+            </div>
+            <p class="fine">Exemplo ilustrativo, com nomes fictícios.</p>
+          </div>
+          <div class="live__side">
+            <div class="win win--pipe">
+              <div class="win__bar"><span></span><span></span><span></span><em>Dalas CRM · pipeline</em><b class="live__on"><i></i>ao vivo</b></div>
+              <div class="pipe" id="pipe">
+                <div class="pipe__col"><p>Novo</p><div class="pipe__slot"></div>
+                  <div class="pcard"><b class="pcard__av">RM<i class="chb chb--ig"><svg><use href="#i-ig" /></svg></i></b><span>Rafael Moura<small>Instagram · 4 min</small></span></div>
+                  <div class="pcard"><b class="pcard__av">JC<i class="chb chb--wa"><svg><use href="#i-wa" /></svg></i></b><span>Júlia Castro<small>WhatsApp · 12 min</small></span></div>
+                </div>
+                <div class="pipe__col"><p>Em atendimento</p><div class="pipe__slot"></div>
+                  <div class="pcard"><b class="pcard__av">PH<i class="chb chb--wa"><svg><use href="#i-wa" /></svg></i></b><span>Paulo Henrique<small>WhatsApp · 1 h</small></span></div>
+                </div>
+                <div class="pipe__col pipe__col--mid"><p>Proposta</p><div class="pipe__slot"></div>
+                  <div class="pcard"><b class="pcard__av">BT<i class="chb chb--ig"><svg><use href="#i-ig" /></svg></i></b><span>Bianca Torres<small>Instagram · ontem</small></span></div>
+                </div>
+                <div class="pipe__col pipe__col--win"><p>Fechado</p><div class="pipe__slot"></div>
+                  <div class="pcard"><b class="pcard__av">ML<i class="chb chb--wa"><svg><use href="#i-wa" /></svg></i></b><span>Marcos Lima<small>WhatsApp · 2 dias</small></span></div>
+                </div>
+                <div class="pcard pcard--live" id="pipe-live"><b class="pcard__av"><em id="pipe-ini">CL</em><i class="chb chb--wa" id="pipe-ch"><svg><use id="pipe-ch-icon" href="#i-wa" /></svg></i></b><span><em id="pipe-name">Camila Lopes</em><small id="pipe-src">Respondido pela automação</small></span></div>
+              </div>
+            </div>
+            <ul class="rules" id="rules">
+              <li class="rule" data-rule="reply"><span class="rule__ic"><svg><use href="#i-bolt" /></svg></span><p><b>Resposta automática</b><small>Responde em segundos, de dia ou de noite</small></p><i class="tgl"></i></li>
+              <li class="rule" data-rule="pipe"><span class="rule__ic"><svg><use href="#i-kanban" /></svg></span><p><b>Entrada no pipeline</b><small>Cada conversa vira um card com o canal de origem</small></p><i class="tgl"></i></li>
+              <li class="rule" data-rule="follow"><span class="rule__ic"><svg><use href="#i-clock" /></svg></span><p><b>Follow-up em 24h</b><small>Chama de novo quem parou de responder</small></p><i class="tgl"></i></li>
+            </ul>
+          </div>
         </div>
         <div class="wrap crm__foot" data-rise>
           <ul class="checks checks--row">
+            <li><svg><use href="#i-check" /></svg>WhatsApp e Instagram no mesmo lugar</li>
             <li><svg><use href="#i-check" /></svg>Resposta automática de dia ou de noite</li>
             <li><svg><use href="#i-check" /></svg>Retorno para quem parou de responder</li>
-            <li><svg><use href="#i-check" /></svg>Origem gravada: anúncio, site ou indicação</li>
-            <li><svg><use href="#i-check" /></svg>Sistema e CRM no nome da sua empresa</li>
+            <li><svg><use href="#i-check" /></svg>CRM no nome da sua empresa</li>
           </ul>
           <div class="crm__actions">
             <a class="btn btn--green" href="./demos/crm/index.html" target="_blank" rel="noopener">Ver o CRM ao vivo<span class="btn__dot btn__dot--ink"><svg><use href="#i-ur" /></svg></span></a>
             <a class="link" href="#diagnostico" data-diag>ou faça o diagnóstico grátis</a>
-          </div>
-        </div>
-      </section>
-
-      <!-- ================= AUDIOVISUAL E DESIGN: O FILME ================= -->
-      <section class="section reel" id="audiovisual">
-        <div class="wrap reel__head">
-          <p class="eyebrow eyebrow--dot">Audiovisual · Design</p>
-          <h2 class="h2 h2--lg" data-split>Quem cuida da imagem <b>cuida da venda.</b></h2>
-        </div>
-        <div class="reel__film" id="reel">
-          <div class="reel__holes" aria-hidden="true"></div>
-          <div class="reel__strip" id="reel-strip" aria-hidden="true"></div>
-          <div class="reel__holes reel__holes--b" aria-hidden="true"></div>
-          <div class="reel__leak" aria-hidden="true"></div>
-          <p class="reel__rec" aria-hidden="true"><i></i>REC · 4K · 24 fps</p>
-          <button class="reel__play" id="reel-play" type="button"><svg><use href="#i-play" /></svg>Ver em movimento</button>
-          <video class="reel__video" id="reel-video" muted playsinline loop preload="none" poster="./media/wolf-poster.jpg"></video>
-        </div>
-        <div class="wrap reel__cols">
-          <div class="reel__col" data-rise>
-            <h3><svg><use href="#i-film" /></svg>Audiovisual</h3>
-            <p>Roteiro, captação, edição e motion. Vídeos para anúncios, redes e apresentações, feitos para parar o dedo nos primeiros segundos.</p>
-            <ul class="tags"><li>Criativos para anúncio</li><li>Reels e Shorts</li><li>Institucional</li><li>Motion graphics</li></ul>
-          </div>
-          <div class="reel__col" data-rise>
-            <h3><svg><use href="#i-pen" /></svg>Design</h3>
-            <p>Identidade visual, peças para redes, apresentações e interfaces. Tudo no mesmo padrão, para a sua marca parecer o que ela entrega.</p>
-            <ul class="tags"><li>Identidade visual</li><li>Social media</li><li>Apresentações</li><li>UI de sites e sistemas</li></ul>
           </div>
         </div>
       </section>
@@ -441,7 +452,7 @@
             <span class="mstep__ghost">CRM</span>
           </div>
           <div class="mstep">
-            <div class="mstep__text"><small>Medir</small><h3>O que traz venda</h3><p>Você acompanha conversas, vendas e custo por cliente num painel. Cortamos o que não traz resultado e reforçamos o que traz.</p></div>
+            <div class="mstep__text"><small>Medir</small><h3>O que traz venda</h3><p>Você acompanha conversas, vendas e custo por cliente no CRM. Cortamos o que não traz resultado e reforçamos o que traz.</p></div>
             <span class="mstep__node"><svg><use href="#i-chart" /></svg></span>
             <span class="mstep__ghost">Medir</span>
           </div>

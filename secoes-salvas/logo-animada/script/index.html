@@ -1,0 +1,677 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dalas Marketing · logo animada</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500&display=swap" rel="stylesheet" />
+    <style>
+      /* A asa da Dalas no centro de dois mostradores que giram, com raios, faíscas,
+         um reflexo metálico e a palavra DALAS subindo letra por letra.
+         Toda a animação é calculada em JS a partir do tempo (segundos), por isso
+         dá para gravar quadro a quadro com window.__frame(t). */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #060607;
+      }
+      .stage {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: grid;
+        place-items: center;
+        background: #060607;
+        color: #fff;
+        font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      }
+      canvas,
+      .layer {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .veil {
+        background: radial-gradient(60% 60% at 50% 50%, transparent 20%, rgba(6, 6, 7, 0.75) 100%);
+      }
+      /* roda: dois anéis, raios, asa e faíscas */
+      .wheel {
+        position: relative;
+        width: 86vmin;
+        height: 86vmin;
+        display: grid;
+        place-items: center;
+        opacity: 0;
+      }
+      .ring {
+        position: absolute;
+        inset: 0;
+        color: rgba(241, 220, 166, 0.5);
+      }
+      .ring--b {
+        inset: 3.2%;
+        color: rgba(255, 255, 255, 0.28);
+      }
+      .rays {
+        position: absolute;
+        inset: 8%;
+        border-radius: 50%;
+        background: repeating-conic-gradient(from 0deg, rgba(241, 220, 166, 0.16) 0deg 2deg, transparent 2deg 15deg);
+        -webkit-mask-image: radial-gradient(circle, #000 20%, rgba(0, 0, 0, 0.5) 36%, transparent 64%);
+        mask-image: radial-gradient(circle, #000 20%, rgba(0, 0, 0, 0.5) 36%, transparent 64%);
+        opacity: 0;
+      }
+      .glow {
+        position: absolute;
+        inset: 14%;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(214, 180, 106, 0.26) 0%, rgba(63, 191, 110, 0.12) 36%, transparent 66%);
+        opacity: 0;
+      }
+      .flash {
+        position: absolute;
+        inset: 22%;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(255, 246, 220, 0.95) 0%, rgba(255, 220, 150, 0.5) 28%, transparent 62%);
+        opacity: 0;
+      }
+      .pulse {
+        position: absolute;
+        inset: 24%;
+        border-radius: 50%;
+        border: 1px solid rgba(241, 220, 166, 0.55);
+        opacity: 0;
+      }
+      .pulse--b {
+        border-color: rgba(142, 230, 168, 0.45);
+      }
+      .wing {
+        position: relative;
+        width: 30%;
+        opacity: 0;
+        will-change: transform, opacity;
+      }
+      .wing img {
+        display: block;
+        width: 100%;
+        height: auto;
+        filter: drop-shadow(0 2.4vmin 5vmin rgba(0, 0, 0, 0.75)) drop-shadow(0 0 3vmin rgba(63, 191, 110, 0.25));
+      }
+      .shine {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        -webkit-mask-image: url('./wing.png');
+        mask-image: url('./wing.png');
+        -webkit-mask-size: 100% 100%;
+        mask-size: 100% 100%;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+      }
+      .shine i {
+        position: absolute;
+        top: -10%;
+        bottom: -10%;
+        left: 0;
+        width: 60%;
+        background: linear-gradient(105deg, transparent 10%, rgba(255, 255, 255, 0.95) 46%, rgba(255, 238, 196, 0.65) 56%, transparent 90%);
+        transform: translateX(-100%);
+      }
+      /* marca: DALAS letra por letra e MARKETING espaçado */
+      .word {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, 0);
+        margin-top: 17vmin;
+        display: grid;
+        justify-items: center;
+        gap: 1.6vmin;
+        white-space: nowrap;
+      }
+      .word b {
+        display: flex;
+        font-family: Cinzel, 'Times New Roman', serif;
+        font-weight: 600;
+        font-size: 8.6vmin;
+        letter-spacing: 0.24em;
+        text-indent: 0.24em;
+        color: #fff;
+        text-shadow: 0 0 4vmin rgba(241, 220, 166, 0.25);
+      }
+      .word b span {
+        display: inline-block;
+        opacity: 0;
+        will-change: transform, opacity, filter;
+      }
+      .word small {
+        display: block;
+        font-size: 2.1vmin;
+        font-weight: 500;
+        letter-spacing: 0.66em;
+        text-indent: 0.66em;
+        text-transform: uppercase;
+        color: #b9b9c4;
+        opacity: 0;
+      }
+      .line {
+        width: 36vmin;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(241, 220, 166, 0.9), transparent);
+        transform: scaleX(0);
+      }
+      .fade {
+        background: #060607;
+        opacity: 0;
+        pointer-events: none;
+      }
+      @media (min-aspect-ratio: 1/1) and (max-aspect-ratio: 4/3) {
+        .word {
+          margin-top: 15.5vmin;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="stage" id="stage">
+      <canvas id="silk"></canvas>
+      <canvas id="stars"></canvas>
+      <div class="layer veil"></div>
+      <div class="wheel" id="wheel">
+        <svg class="ring ring--a" id="ring-a" viewBox="0 0 1000 1000"></svg>
+        <svg class="ring ring--b" id="ring-b" viewBox="0 0 1000 1000"></svg>
+        <i class="rays" id="rays"></i>
+        <i class="glow" id="glow"></i>
+        <i class="pulse" id="pulse-a"></i>
+        <i class="pulse pulse--b" id="pulse-b"></i>
+        <i class="flash" id="flash"></i>
+        <canvas id="sparks"></canvas>
+        <div class="wing" id="wing">
+          <img src="./wing.png" alt="Dalas Marketing" width="516" height="640" />
+          <div class="shine"><i id="shine"></i></div>
+        </div>
+      </div>
+      <div class="word" id="word">
+        <b id="dalas"><span>D</span><span>A</span><span>L</span><span>A</span><span>S</span></b>
+        <i class="line" id="line"></i>
+        <small id="mkt">Marketing</small>
+      </div>
+      <div class="layer fade" id="fade"></div>
+    </div>
+    <script>
+      (function () {
+        var NS = 'http://www.w3.org/2000/svg';
+        var $ = function (id) {
+          return document.getElementById(id);
+        };
+        var record = /[?&]gravar/.test(location.search);
+
+        /* ---------- utilidades ---------- */
+        function clamp(v, a, b) {
+          return v < a ? a : v > b ? b : v;
+        }
+        // progresso 0..1 entre dois instantes
+        function span(t, a, b) {
+          return clamp((t - a) / (b - a), 0, 1);
+        }
+        function easeOut(p) {
+          return 1 - Math.pow(1 - p, 3);
+        }
+        function easeOutExpo(p) {
+          return p >= 1 ? 1 : 1 - Math.pow(2, -10 * p);
+        }
+        function easeInOut(p) {
+          return p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+        }
+        function bump(p) {
+          return Math.sin(Math.PI * clamp(p, 0, 1));
+        }
+        // aleatório com semente: o vídeo sai igual toda vez
+        function rng(seed) {
+          var s = seed >>> 0;
+          return function () {
+            s = (s + 0x6d2b79f5) >>> 0;
+            var x = Math.imul(s ^ (s >>> 15), 1 | s);
+            x = (x + Math.imul(x ^ (x >>> 7), 61 | x)) ^ x;
+            return ((x ^ (x >>> 14)) >>> 0) / 4294967296;
+          };
+        }
+
+        /* ---------- anéis ---------- */
+        function ring(svg, r, count, long, every, inner) {
+          for (var i = 0; i < count; i += 1) {
+            var a = (i / count) * Math.PI * 2;
+            var big = i % every === 0;
+            var r2 = r - (big ? long : long * 0.4);
+            var line = document.createElementNS(NS, 'line');
+            line.setAttribute('x1', 500 + Math.sin(a) * r);
+            line.setAttribute('y1', 500 - Math.cos(a) * r);
+            line.setAttribute('x2', 500 + Math.sin(a) * r2);
+            line.setAttribute('y2', 500 - Math.cos(a) * r2);
+            line.setAttribute('stroke', 'currentColor');
+            line.setAttribute('stroke-width', big ? 2.2 : 1);
+            line.setAttribute('stroke-linecap', 'round');
+            svg.appendChild(line);
+          }
+          if (inner) {
+            var c = document.createElementNS(NS, 'circle');
+            c.setAttribute('cx', 500);
+            c.setAttribute('cy', 500);
+            c.setAttribute('r', inner);
+            c.setAttribute('fill', 'none');
+            c.setAttribute('stroke', 'currentColor');
+            c.setAttribute('stroke-width', 0.8);
+            svg.appendChild(c);
+          }
+        }
+        ring($('ring-a'), 480, 120, 34, 5);
+        ring($('ring-b'), 480, 60, 22, 5, 448);
+
+        /* ---------- seda (WebGL) ---------- */
+        var VERT = 'attribute vec2 aPos; void main(){ gl_Position = vec4(aPos, 0.0, 1.0); }';
+        var FRAG = [
+          'precision mediump float; uniform vec2 uRes; uniform float uTime;',
+          'float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }',
+          'float noise(vec2 p){ vec2 i = floor(p); vec2 f = fract(p); f = f*f*(3.0-2.0*f);',
+          ' return mix(mix(hash(i), hash(i+vec2(1.0,0.0)), f.x), mix(hash(i+vec2(0.0,1.0)), hash(i+vec2(1.0,1.0)), f.x), f.y); }',
+          'float fbm(vec2 p){ float v = 0.0; float a = 0.5; for (int i = 0; i < 4; i++){ v += a*noise(p); p = p*2.03 + vec2(1.7, 9.2); a *= 0.5; } return v; }',
+          'void main(){ vec2 p = (gl_FragCoord.xy - 0.5*uRes) / uRes.y; float t = uTime*0.05;',
+          ' vec2 q = vec2(fbm(p*1.3 + vec2(0.0, t)), fbm(p*1.3 + vec2(5.2, -t)));',
+          ' vec2 r = vec2(fbm(p*1.5 + 2.6*q + vec2(1.7, 9.2) + t*1.4), fbm(p*1.5 + 2.6*q + vec2(8.3, 2.8) - t));',
+          ' float f = fbm(p*1.1 + 2.2*r); float folds = 0.5 + 0.5*sin((f*5.0 + r.x*2.4 - q.y)*3.14159);',
+          ' float silk = pow(smoothstep(0.35, 1.0, folds), 2.2) * smoothstep(0.25, 0.75, f);',
+          ' float sheen = pow(smoothstep(0.85, 1.0, folds), 6.0) * 0.6;',
+          ' float vig = smoothstep(1.1, 0.15, length(p));',
+          ' vec3 base = vec3(0.024, 0.024, 0.028); vec3 col = base + vec3(0.42, 0.43, 0.47)*(silk + sheen)*vig;',
+          ' gl_FragColor = vec4(col, 1.0); }',
+        ].join('\n');
+        function initSilk(canvas, scale) {
+          var gl = canvas.getContext('webgl', { alpha: false, antialias: false, depth: false, stencil: false, preserveDrawingBuffer: record });
+          if (!gl) return null;
+          function sh(type, src) {
+            var s = gl.createShader(type);
+            gl.shaderSource(s, src);
+            gl.compileShader(s);
+            return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : null;
+          }
+          var vs = sh(gl.VERTEX_SHADER, VERT);
+          var fs = sh(gl.FRAGMENT_SHADER, FRAG);
+          if (!vs || !fs) return null;
+          var prog = gl.createProgram();
+          gl.attachShader(prog, vs);
+          gl.attachShader(prog, fs);
+          gl.bindAttribLocation(prog, 0, 'aPos');
+          gl.linkProgram(prog);
+          gl.useProgram(prog);
+          var buf = gl.createBuffer();
+          gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+          gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+          gl.enableVertexAttribArray(0);
+          gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+          var uRes = gl.getUniformLocation(prog, 'uRes');
+          var uTime = gl.getUniformLocation(prog, 'uTime');
+          var w = 1;
+          var h = 1;
+          function size() {
+            w = Math.max(1, Math.round(canvas.clientWidth * scale));
+            h = Math.max(1, Math.round(canvas.clientHeight * scale));
+            canvas.width = w;
+            canvas.height = h;
+            gl.viewport(0, 0, w, h);
+          }
+          size();
+          window.addEventListener('resize', size);
+          return function (time) {
+            gl.uniform2f(uRes, w, h);
+            gl.uniform1f(uTime, time);
+            gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+          };
+        }
+        var silk = initSilk($('silk'), record ? 0.6 : 0.4);
+
+        /* ---------- estrelas e estrelas cadentes ---------- */
+        var starsC = $('stars');
+        var sctx = starsC.getContext('2d');
+        var stars = [];
+        var streaks = [];
+        var SW = 0;
+        var SH = 0;
+        function sizeStars() {
+          var dpr = Math.min(window.devicePixelRatio || 1, 2);
+          SW = starsC.clientWidth;
+          SH = starsC.clientHeight;
+          starsC.width = Math.round(SW * dpr);
+          starsC.height = Math.round(SH * dpr);
+          sctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+          var r = rng(7);
+          stars = [];
+          for (var i = 0; i < 150; i += 1) {
+            stars.push({ x: r() * SW, y: r() * SH, r: 0.5 + r() * 1.4, a: 0.2 + r() * 0.6, ph: r() * 6.28, sp: 0.4 + r() * 1.6 });
+          }
+          // estrelas cadentes em instantes fixos
+          var r2 = rng(11);
+          streaks = [];
+          var times = [1.9, 3.4, 5.1, 6.6, 8.2];
+          for (var j = 0; j < times.length; j += 1) {
+            var fromLeft = r2() < 0.6;
+            streaks.push({
+              t0: times[j],
+              x: fromLeft ? r2() * SW * 0.4 : SW * 0.6 + r2() * SW * 0.4,
+              y: r2() * SH * 0.35,
+              vx: (fromLeft ? 1 : -1) * (520 + r2() * 400),
+              vy: 180 + r2() * 160,
+              len: 100 + r2() * 150,
+              life: 0.7 + r2() * 0.4,
+            });
+          }
+        }
+        sizeStars();
+        window.addEventListener('resize', sizeStars);
+        function drawStars(t) {
+          sctx.clearRect(0, 0, SW, SH);
+          sctx.fillStyle = '#fff';
+          for (var i = 0; i < stars.length; i += 1) {
+            var s = stars[i];
+            sctx.globalAlpha = s.a * (0.55 + 0.45 * Math.sin(t * s.sp + s.ph));
+            sctx.beginPath();
+            sctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+            sctx.fill();
+          }
+          for (var j = 0; j < streaks.length; j += 1) {
+            var k = streaks[j];
+            var age = t - k.t0;
+            if (age < 0 || age > k.life) continue;
+            var p = age / k.life;
+            var x = k.x + k.vx * age;
+            var y = k.y + k.vy * age;
+            var mag = Math.hypot(k.vx, k.vy);
+            var a = Math.sin(Math.PI * p);
+            var tx = x - (k.vx / mag) * k.len * a;
+            var ty = y - (k.vy / mag) * k.len * a;
+            var g = sctx.createLinearGradient(tx, ty, x, y);
+            g.addColorStop(0, 'rgba(255,255,255,0)');
+            g.addColorStop(1, 'rgba(255,255,255,' + 0.9 * a + ')');
+            sctx.globalAlpha = 1;
+            sctx.strokeStyle = g;
+            sctx.lineWidth = 1.6;
+            sctx.beginPath();
+            sctx.moveTo(tx, ty);
+            sctx.lineTo(x, y);
+            sctx.stroke();
+            sctx.fillStyle = 'rgba(255,255,255,' + a + ')';
+            sctx.beginPath();
+            sctx.arc(x, y, 2, 0, Math.PI * 2);
+            sctx.fill();
+            sctx.fillStyle = '#fff';
+          }
+          sctx.globalAlpha = 1;
+        }
+
+        /* ---------- faíscas em volta da asa ---------- */
+        var COLORS = ['241,220,166', '255,255,255', '142,230,168', '214,180,106'];
+        function sprite(rgb) {
+          var c = document.createElement('canvas');
+          c.width = 32;
+          c.height = 32;
+          var g = c.getContext('2d');
+          var grad = g.createRadialGradient(16, 16, 0, 16, 16, 16);
+          grad.addColorStop(0, 'rgba(' + rgb + ',1)');
+          grad.addColorStop(0.25, 'rgba(' + rgb + ',0.55)');
+          grad.addColorStop(1, 'rgba(' + rgb + ',0)');
+          g.fillStyle = grad;
+          g.fillRect(0, 0, 32, 32);
+          return c;
+        }
+        var sprites = COLORS.map(sprite);
+        var sparksC = $('sparks');
+        var pctx = sparksC.getContext('2d');
+        var PW = 0;
+        var PH = 0;
+        var orbiters = [];
+        var embers = [];
+        var bursts = [];
+        var simT = 0;
+        var emberAcc = 0;
+        var pr = rng(3);
+        function pick(r) {
+          return Math.floor(r() * (r() < 0.55 ? 1 : COLORS.length));
+        }
+        function sizeSparks() {
+          var dpr = Math.min(window.devicePixelRatio || 1, 2);
+          PW = sparksC.clientWidth;
+          PH = sparksC.clientHeight;
+          sparksC.width = Math.round(PW * dpr);
+          sparksC.height = Math.round(PH * dpr);
+          pctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+        sizeSparks();
+        window.addEventListener('resize', sizeSparks);
+        function resetSparks() {
+          pr = rng(3);
+          orbiters = [];
+          embers = [];
+          bursts = [];
+          simT = 0;
+          emberAcc = 0;
+          for (var i = 0; i < 34; i += 1) {
+            orbiters.push({
+              a: pr() * Math.PI * 2,
+              w: (0.18 + pr() * 0.4) * (pr() < 0.85 ? 1 : -1),
+              r: 0.12 + pr() * 0.1,
+              sq: 0.26 + pr() * 0.14,
+              tilt: -0.32 + pr() * 0.12,
+              s: 0.7 + pr() * 1.5,
+              c: pick(pr),
+              ph: pr() * 6.28,
+            });
+          }
+        }
+        function burst() {
+          for (var i = 0; i < 70; i += 1) {
+            var a = pr() * Math.PI * 2;
+            var v = 0.08 + pr() * 0.2;
+            bursts.push({ x: 0, y: 0, vx: Math.cos(a) * v, vy: Math.sin(a) * v * 0.85, s: 0.6 + pr() * 1.5, c: pick(pr), life: 1.1 + pr() * 0.9, age: 0 });
+          }
+        }
+        var burstDone = false;
+        function stepSparks(dt, t) {
+          var i;
+          for (i = 0; i < orbiters.length; i += 1) {
+            orbiters[i].a += orbiters[i].w * dt;
+            orbiters[i].ph += dt * 2.2;
+          }
+          if (t > 1.3) {
+            emberAcc += dt * 7;
+            while (emberAcc >= 1) {
+              emberAcc -= 1;
+              embers.push({ x: (pr() - 0.5) * 0.18, y: 0.06 + pr() * 0.06, vy: 0.03 + pr() * 0.04, sw: pr() * 6.28, s: 0.6 + pr() * 1.3, c: pick(pr), life: 2.4 + pr() * 2.2, age: 0 });
+            }
+          }
+          for (i = embers.length - 1; i >= 0; i -= 1) {
+            embers[i].age += dt;
+            embers[i].y -= embers[i].vy * dt;
+            embers[i].sw += dt * 1.6;
+            if (embers[i].age >= embers[i].life) embers.splice(i, 1);
+          }
+          if (!burstDone && t >= 1.05) {
+            burstDone = true;
+            burst();
+          }
+          for (i = bursts.length - 1; i >= 0; i -= 1) {
+            var b = bursts[i];
+            b.age += dt;
+            var f = Math.exp(-2.4 * b.age);
+            b.x += b.vx * f * dt;
+            b.y += b.vy * f * dt;
+            if (b.age >= b.life) bursts.splice(i, 1);
+          }
+        }
+        // avança a simulação até t em passos fixos (o vídeo sai igual sempre)
+        function simTo(t) {
+          if (t < simT) {
+            resetSparks();
+            burstDone = false;
+          }
+          var STEP = 1 / 60;
+          while (simT + STEP <= t) {
+            simT += STEP;
+            stepSparks(STEP, simT);
+          }
+        }
+        function drawSparks(t) {
+          simTo(t);
+          pctx.clearRect(0, 0, PW, PH);
+          var on = span(t, 1.0, 2.2);
+          if (on <= 0) return;
+          pctx.globalCompositeOperation = 'lighter';
+          var cx = PW / 2;
+          var cy = PH / 2;
+          var k = PW / 860;
+          var i;
+          for (i = 0; i < orbiters.length; i += 1) {
+            var p = orbiters[i];
+            var ex = Math.cos(p.a) * p.r * PW;
+            var ey = Math.sin(p.a) * p.r * PW * p.sq;
+            var x = cx + ex * Math.cos(p.tilt) - ey * Math.sin(p.tilt);
+            var y = cy + ex * Math.sin(p.tilt) + ey * Math.cos(p.tilt);
+            var depth = 0.55 + 0.45 * Math.sin(p.a);
+            var sz = p.s * k * 14 * (0.7 + 0.3 * depth);
+            pctx.globalAlpha = on * (0.35 + 0.45 * depth) * (0.7 + 0.3 * Math.sin(p.ph));
+            pctx.drawImage(sprites[p.c], x - sz / 2, y - sz / 2, sz, sz);
+          }
+          for (i = 0; i < embers.length; i += 1) {
+            var e = embers[i];
+            var q = e.age / e.life;
+            var sz2 = e.s * k * 12;
+            pctx.globalAlpha = Math.sin(Math.PI * q) * 0.85;
+            pctx.drawImage(sprites[e.c], cx + (e.x + Math.sin(e.sw) * 0.012) * PW - sz2 / 2, cy + e.y * PH - sz2 / 2, sz2, sz2);
+          }
+          for (i = 0; i < bursts.length; i += 1) {
+            var b = bursts[i];
+            var sz3 = b.s * k * 14;
+            pctx.globalAlpha = 1 - b.age / b.life;
+            pctx.drawImage(sprites[b.c], cx + b.x * PW - sz3 / 2, cy + b.y * PW - sz3 / 2, sz3, sz3);
+          }
+          pctx.globalAlpha = 1;
+          pctx.globalCompositeOperation = 'source-over';
+        }
+        resetSparks();
+
+        /* ---------- linha do tempo (segundos) ---------- */
+        var el = {
+          wheel: $('wheel'),
+          ringA: $('ring-a'),
+          ringB: $('ring-b'),
+          rays: $('rays'),
+          glow: $('glow'),
+          flash: $('flash'),
+          pulseA: $('pulse-a'),
+          pulseB: $('pulse-b'),
+          wing: $('wing'),
+          shine: $('shine'),
+          letters: Array.prototype.slice.call($('dalas').children),
+          line: $('line'),
+          mkt: $('mkt'),
+          fade: $('fade'),
+          silk: $('silk'),
+          stars: $('stars'),
+        };
+        var DUR = 10;
+
+        function render(t) {
+          // fundo
+          el.silk.style.opacity = span(t, 0, 1.4);
+          el.stars.style.opacity = span(t, 0.3, 1.6);
+          if (silk) silk(11 + t);
+          drawStars(t);
+
+          // roda: cresce e aparece
+          var wIn = easeOutExpo(span(t, 0.4, 2.4));
+          el.wheel.style.opacity = span(t, 0.4, 1.6);
+          el.wheel.style.transform = 'scale(' + (0.82 + 0.18 * wIn) + ')';
+          el.ringA.style.transform = 'rotate(' + t * 3 + 'deg)';
+          el.ringB.style.transform = 'rotate(' + -t * 4.5 + 'deg)';
+          el.rays.style.opacity = span(t, 0.9, 2.4);
+          el.rays.style.transform = 'rotate(' + t * 6 + 'deg)';
+          el.glow.style.opacity = span(t, 0.9, 2.2) * (0.75 + 0.25 * Math.sin(t * 1.1));
+          el.glow.style.transform = 'scale(' + (1 + 0.05 * Math.sin(t * 1.1)) + ')';
+
+          // ondas que saem da asa
+          var p1 = ((t - 1.2) / 4.5) % 1;
+          var p2 = ((t - 1.2 + 2.25) / 4.5) % 1;
+          [el.pulseA, el.pulseB].forEach(function (pl, i) {
+            var p = i ? p2 : p1;
+            if (t < 1.2 || p < 0) {
+              pl.style.opacity = 0;
+              return;
+            }
+            pl.style.opacity = (1 - p) * 0.9 * span(t, 1.2, 2);
+            pl.style.transform = 'scale(' + (1 + p * 1.3) + ')';
+          });
+
+          // asa: entra com um clarão, depois flutua
+          var wingIn = span(t, 0.8, 2.0);
+          var sc = 0.55 + 0.45 * easeOutExpo(wingIn);
+          var floatT = Math.max(0, t - 2);
+          var fy = -Math.sin(floatT * 0.9) * 1.6;
+          var fr = -Math.sin(floatT * 0.9) * 1.5;
+          el.wing.style.opacity = span(t, 0.8, 1.4);
+          el.wing.style.transform = 'translateY(' + fy + 'vmin) rotate(' + fr + 'deg) scale(' + sc + ')';
+          el.flash.style.opacity = bump((t - 0.95) / 1.1) * 0.95;
+          el.flash.style.transform = 'scale(' + (0.6 + 0.9 * span(t, 0.95, 2.05)) + ')';
+
+          // reflexo metálico: passa duas vezes
+          var s1 = span(t, 2.3, 3.2);
+          var s2 = span(t, 6.3, 7.2);
+          var sp = s1 < 1 ? s1 : s2;
+          el.shine.style.transform = 'translateX(' + (-100 + 300 * easeInOut(sp)) + '%)';
+          el.shine.style.opacity = sp > 0 && sp < 1 ? 1 : 0;
+
+          // DALAS letra por letra, risco de luz e MARKETING
+          el.letters.forEach(function (L, i) {
+            var p = easeOut(span(t, 2.7 + i * 0.1, 3.4 + i * 0.1));
+            L.style.opacity = p;
+            L.style.transform = 'translateY(' + (1 - p) * 3.4 + 'vmin)';
+            L.style.filter = 'blur(' + (1 - p) * 1.2 + 'vmin)';
+          });
+          el.line.style.transform = 'scaleX(' + easeOutExpo(span(t, 3.4, 4.4)) + ')';
+          var m = easeOut(span(t, 3.7, 4.6));
+          el.mkt.style.opacity = m;
+          el.mkt.style.letterSpacing = 0.66 + (1 - m) * 0.5 + 'em';
+          el.mkt.style.textIndent = 0.66 + (1 - m) * 0.5 + 'em';
+
+          // faíscas e fecho
+          drawSparks(t);
+          el.fade.style.opacity = span(t, DUR - 0.9, DUR);
+        }
+
+        if (record) {
+          // gravação: cada quadro é desenhado com window.__frame(segundos)
+          window.__frame = function (t) {
+            render(t);
+          };
+          render(0);
+          return;
+        }
+
+        var start = performance.now();
+        function loop(now) {
+          var t = ((now - start) / 1000) % (DUR + 0.6);
+          render(t);
+          requestAnimationFrame(loop);
+        }
+        requestAnimationFrame(loop);
+      })();
+    </script>
+  </body>
+</html>

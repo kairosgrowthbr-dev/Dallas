@@ -9,5 +9,6 @@ Partes do site guardadas para usar de novo. Cada pasta tem:
 | Seção | Pasta |
 | --- | --- |
 | Chamada final com fumaça sedosa ("Sua próxima venda começa agora.") | `chamada-final-fumaca/` |
+| Logo animada (asa, mostradores, faíscas e DALAS letra por letra), em vídeo quadrado e vertical | `logo-animada/` |
 
 Esta pasta não entra no site publicado.

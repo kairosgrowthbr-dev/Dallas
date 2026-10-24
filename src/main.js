@@ -11,8 +11,7 @@ import { initReveals } from './modules/reveals.js';
 import { initServices } from './modules/services.js';
 import { initMural } from './modules/mural.js';
 import { initFunnel } from './modules/funnel.js';
-import { initStack } from './modules/stack.js';
-import { initReel } from './modules/reel.js';
+import { initCrmLive } from './modules/crm-live.js';
 import { initMethod } from './modules/method.js';
 import { initFaq } from './modules/faq.js';
 import { initFinal } from './modules/final.js';
@@ -24,7 +23,7 @@ gsap.registerPlugin(ScrollTrigger);
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const mobile = window.matchMedia('(max-width: 900px)').matches;
 const lowPower = mobile || (navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 4;
-const opts = { reduceMotion, lowPower, media: siteConfig.media };
+const opts = { reduceMotion, lowPower };
 
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 if (!location.hash || location.hash === '#diagnostico') window.scrollTo(0, 0);
@@ -51,8 +50,7 @@ document.fonts.ready.then(() => {
   initServices(opts);
   initMural(opts);
   initFunnel(opts);
-  initStack(opts);
-  initReel(opts);
+  initCrmLive(opts);
   initMethod(opts);
   initFaq(opts);
   initFinal(opts);

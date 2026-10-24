@@ -104,6 +104,10 @@ svg{display:block}
 .wa div{min-width:0}
 .wa strong{display:block;font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .wa span{font-size:11.5px;color:var(--muted);white-space:nowrap}
+.wa.ig{border-color:rgba(225,48,108,.24);background:linear-gradient(180deg,rgba(225,48,108,.1),rgba(225,48,108,.03))}
+.wa.ig .ico{color:#F06292}
+.wa.ig .pulse{background:#F06292}
+.wa.ig .pulse::after{border-color:#F06292}
 .pulse{margin-left:auto;width:8px;height:8px;border-radius:50%;background:var(--green);position:relative;flex:none}
 .pulse::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:1.5px solid var(--green);opacity:0;animation:pulse 2.4s ease-out infinite}
 @keyframes pulse{0%{transform:scale(.5);opacity:.9}100%{transform:scale(1.7);opacity:0}}
@@ -125,6 +129,13 @@ svg{display:block}
 
 /* avatares */
 .avatar{--h:214;width:36px;height:36px;border-radius:50%;flex:none;display:grid;place-items:center;font:600 12px/1 var(--sora);letter-spacing:.02em;color:hsl(var(--h) 90% 88%);background:linear-gradient(145deg,hsl(var(--h) 55% 30%),hsl(var(--h) 50% 17%));border:1px solid hsl(var(--h) 50% 40% / .5)}
+.avatar{position:relative}
+.chb{position:absolute;right:-3px;bottom:-3px;width:15px;height:15px;border-radius:50%;display:grid;place-items:center;border:2px solid var(--bg1);color:#fff}
+.chb .ico{width:9px;height:9px;stroke-width:2.4}
+.chb.wa-c{background:#22C55E}
+.chb.ig-c{background:linear-gradient(45deg,#F9A825,#E1306C 55%,#8E3FD8)}
+.meta-chip.ch-wa .ico{color:var(--green)}
+.meta-chip.ch-ig .ico{color:#F06292}
 .avatar.sm{width:30px;height:30px;font-size:11px}
 .avatar.lg{width:42px;height:42px;font-size:13.5px}
 .avatar.me-av{background:linear-gradient(145deg,#DBE9FF,#8FB8F7);color:#05070B;border-color:transparent}
@@ -324,7 +335,7 @@ svg{display:block}
 .conv-list{border-right:1px solid var(--line);display:flex;flex-direction:column;min-width:0;background:var(--bg1)}
 .conv-list-h{padding:14px 14px 12px;border-bottom:1px solid var(--line)}
 .conv-list-h .search{margin:0;width:100%;height:38px}
-.conv-filters{display:flex;gap:6px;margin-top:10px}
+.conv-filters{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
 .conv-items{overflow-y:auto;flex:1}
 .conv-i{display:flex;align-items:center;gap:11px;width:100%;text-align:left;padding:12px 14px;border-bottom:1px solid var(--line-soft);transition:background .15s}
 .conv-i:hover{background:rgba(200,214,235,.04)}
@@ -578,6 +589,7 @@ td .camp span{display:block;font-size:11.5px;color:var(--dim)}
     <symbol id="i-badge" viewBox="0 0 24 24"><path d="M12 3.5 14.5 6l3.5.3.3 3.5 2.5 2.5-2.5 2.5-.3 3.5-3.5.3L12 20.5 9.5 18 6 17.7l-.3-3.5L3.2 12l2.5-2.5L6 6l3.5-.3z"/><path d="m9 12 2 2 4-4"/></symbol>
     <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></symbol>
     <symbol id="i-wa" viewBox="0 0 24 24"><path d="M12 3.5a8.5 8.5 0 0 0-7.3 12.8L3.5 20.5l4.3-1.2A8.5 8.5 0 1 0 12 3.5z"/><path d="M9.3 8.6c.3-.4.8-.4 1.1 0l.7 1.3c.2.3.1.6-.1.9l-.5.6c.6 1.1 1.5 2 2.6 2.6l.6-.5c.3-.2.6-.3.9-.1l1.3.7c.4.3.4.8 0 1.1l-.5.6c-.5.5-1.3.6-2 .3a9.4 9.4 0 0 1-4.7-4.7c-.3-.7-.2-1.5.3-2z"/></symbol>
+    <symbol id="i-ig" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".8" fill="currentColor"/></symbol>
     <symbol id="i-rail" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5"/><path d="M9.5 4.5v15"/></symbol>
     <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3.5v3M16 3.5v3"/></symbol>
     <symbol id="i-wallet" viewBox="0 0 24 24"><rect x="3.5" y="6" width="17" height="13" rx="2.5"/><path d="M3.5 10h17M15.5 14.5h2"/></symbol>
@@ -602,6 +614,7 @@ td .camp span{display:block;font-size:11.5px;color:var(--dim)}
     </nav>
     <div class="side-foot">
       <div class="wa" title="Número conectado via API oficial"><svg class="ico"><use href="#i-wa"/></svg><div><strong>WhatsApp conectado</strong><span>+55 11 94002-8922</span></div><i class="pulse"></i></div>
+      <div class="wa ig" title="Conta conectada via API oficial da Meta"><svg class="ico"><use href="#i-ig"/></svg><div><strong>Instagram conectado</strong><span>Direct e comentários</span></div><i class="pulse"></i></div>
       <p class="demo-note">Ambiente de demonstração. Todos os nomes, empresas e números são fictícios.</p>
       <div class="me"><span class="avatar me-av">RD</span><div><strong>Rafael Dalas</strong><span>Gestor de tráfego</span></div></div>
     </div>
@@ -673,6 +686,8 @@ td .camp span{display:block;font-size:11.5px;color:var(--dim)}
                   <button class="chip is-on" type="button" data-cf="all">Todas</button>
                   <button class="chip" type="button" data-cf="unread">Não lidas</button>
                   <button class="chip" type="button" data-cf="waiting">Aguardando resposta</button>
+                  <button class="chip" type="button" data-cf="wa"><svg class="ico" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</button>
+                  <button class="chip" type="button" data-cf="ig"><svg class="ico" aria-hidden="true"><use href="#i-ig"/></svg>Instagram</button>
                 </div>
               </div>
               <div class="conv-items" id="conv-items"></div>
@@ -880,6 +895,10 @@ const STAGES = [
 ];
 const stageName = id => (STAGES.find(s => s.id === id) || {}).name || id;
 const ORIGIN = { meta: 'Meta Ads', google: 'Google Ads' };
+const CHANNEL = { wa: 'WhatsApp', ig: 'Instagram Direct' };
+const IG_LEADS = new Set([3, 7, 12, 15]);
+const chOf = l => l.ch || 'wa';
+const avatarHTML = (l, cls = '') => `<span class="avatar${cls ? ' ' + cls : ''}" style="--h:${l.hue}">${initials(l.name)}<i class="chb ${chOf(l)}-c" title="${CHANNEL[chOf(l)]}">${ico(chOf(l))}</i></span>`;
 const QUICK = ['Posso te mandar uma proposta ainda hoje?', 'Tem 15 minutos para uma call amanhã?', 'Qual orçamento mensal você imagina para mídia?', 'Vou te enviar dois cenários de investimento.'];
 
 /* mensagens: [direção, texto, hora, status, automação] */
@@ -1022,6 +1041,8 @@ const LEADS = [
     ], reply: 'Fechado, aguardo o roteiro.' }
 ];
 
+LEADS.forEach(l => { l.ch = IG_LEADS.has(l.id) ? 'ig' : 'wa'; });
+
 const POOL = [
   { name: 'Luciana Prado', co: 'Prado Imóveis', origin: 'meta', value: 7200, tag: 'Quente', hue: 216,
     chat: [['in', 'Oi, vi o anúncio de vocês sobre captação para imobiliárias. Quero entender como funciona.', null], ['out', 'Oi, Luciana! Aqui é a Dalas Marketing. Vocês trabalham mais com venda ou locação?', null, 'read', true]], reply: 'Mais venda. Posso te ligar?' },
@@ -1078,7 +1099,7 @@ document.addEventListener('click', e => {
 function cardHTML(l) {
   const hot = isHot(l), won = l.stage === 'fechado', late = l.ago >= 1440 && !won;
   return `<article class="card${hot ? ' is-hot' : ''}${won ? ' is-won' : ''}" draggable="true" data-id="${l.id}" data-origin="${l.origin}" tabindex="0" role="button" aria-label="${esc(l.name)}, ${esc(l.co)}, ${ORIGIN[l.origin]}, ${brl(l.value)}. Abrir conversa">
-    <div class="card-top"><span class="avatar" style="--h:${l.hue}">${initials(l.name)}</span><div class="who"><strong>${esc(l.name)}</strong><span>${esc(l.co)}</span></div><button class="card-more" type="button" aria-label="Opções de ${esc(l.name)}" data-more="${l.id}">${ico('more')}</button></div>
+    <div class="card-top">${avatarHTML(l)}<div class="who"><strong>${esc(l.name)}</strong><span>${esc(l.co)}</span></div><button class="card-more" type="button" aria-label="Opções de ${esc(l.name)}" data-more="${l.id}">${ico('more')}</button></div>
     <div class="card-mid"><span class="origin">${ico(l.origin === 'meta' ? 'meta' : 'cursor')}${ORIGIN[l.origin]}</span><span class="value">${brl(l.value)}</span></div>
     <div class="card-bot"><span class="ago${late ? ' late' : ''}">${ico('clock')}${agoTxt(l.ago)}</span><span class="tag${hot ? ' hot' : ''}${won ? ' won' : ''}">${esc(l.tag)}</span></div>
   </article>`;
@@ -1262,15 +1283,15 @@ function chatHTML(l) {
   const body = l.chat.length ? `<div class="day">Hoje</div>${l.chat.map(msgHTML).join('')}` : `<p class="chat-empty">Nenhuma mensagem ainda. Mande a primeira: leads respondem mais quando a abordagem é rápida e pessoal.</p>`;
   return `<header class="chat-h">
     <button class="icon-btn chat-back" type="button" data-chat-close aria-label="Voltar">${ico('arrow-left')}</button>
-    <span class="avatar" style="--h:${l.hue}">${initials(l.name)}</span>
-    <div class="who"><strong>${esc(l.name)}</strong><span class="online"><i></i>online agora</span></div>
+    ${avatarHTML(l)}
+    <div class="who"><strong>${esc(l.name)}</strong><span class="online"><i></i>online agora · ${CHANNEL[chOf(l)]}</span></div>
     <div class="chat-tools">
       <button class="icon-btn" type="button" aria-label="Ligar pelo WhatsApp" data-toast="Chamada de voz: ilustrativa nesta demonstração.">${ico('phone')}</button>
       <button class="icon-btn" type="button" aria-label="Opções do lead" data-more="${l.id}">${ico('more')}</button>
       <button class="icon-btn chat-x" type="button" data-chat-close aria-label="Fechar conversa">${ico('x')}</button>
     </div>
   </header>
-  <div class="chat-meta"><span class="meta-chip">${esc(l.co)}</span><span class="meta-chip">${ico(l.origin === 'meta' ? 'meta' : 'cursor')}${ORIGIN[l.origin]}</span><span class="meta-chip">Estimado <b>${brl(l.value)}</b></span><span class="meta-chip stage">${ico('pipeline')}${stageName(l.stage)}</span></div>
+  <div class="chat-meta"><span class="meta-chip ch-${chOf(l)}">${ico(chOf(l))}${CHANNEL[chOf(l)]}</span><span class="meta-chip">${esc(l.co)}</span><span class="meta-chip">${ico(l.origin === 'meta' ? 'meta' : 'cursor')}${ORIGIN[l.origin]}</span><span class="meta-chip">Estimado <b>${brl(l.value)}</b></span><span class="meta-chip stage">${ico('pipeline')}${stageName(l.stage)}</span></div>
   <div class="chat-body" data-body>${body}</div>
   <div class="quick" aria-label="Respostas rápidas">${QUICK.map(q => `<button type="button" data-quick>${q}</button>`).join('')}</div>
   <form class="chat-f" data-form><label class="field"><button type="button" class="attach" aria-label="Anexar arquivo" data-toast="Anexos: ilustrativos nesta demonstração.">${ico('clip')}</button><span class="sr">Mensagem</span><input type="text" placeholder="Escreva uma mensagem" autocomplete="off" maxlength="400"></label><button class="send" type="submit" aria-label="Enviar mensagem">${ico('send')}</button></form>`;
@@ -1355,12 +1376,13 @@ function renderConvList() {
     if (q && !`${l.name} ${l.co}`.toLowerCase().includes(q)) return false;
     if (convFilter === 'unread') return l.unread > 0;
     if (convFilter === 'waiting') return waitingReply(l);
+    if (convFilter === 'wa' || convFilter === 'ig') return chOf(l) === convFilter;
     return true;
   });
   list.innerHTML = items.map(l => {
     const last = lastMsg(l);
     const prev = last ? (last[0] === 'out' ? 'Você: ' : '') + last[1] : 'Sem mensagens ainda';
-    return `<button class="conv-i${chatLead && chatLead.id === l.id ? ' is-active' : ''}" type="button" data-conv="${l.id}"><span class="avatar" style="--h:${l.hue}">${initials(l.name)}</span><div class="who"><strong>${esc(l.name)}</strong><span>${esc(prev)}</span></div><div class="conv-r"><time>${agoTxt(l.ago)}</time>${l.unread ? `<span class="unread">${l.unread}</span>` : ''}</div></button>`;
+    return `<button class="conv-i${chatLead && chatLead.id === l.id ? ' is-active' : ''}" type="button" data-conv="${l.id}">${avatarHTML(l)}<div class="who"><strong>${esc(l.name)}</strong><span>${esc(prev)}</span></div><div class="conv-r"><time>${agoTxt(l.ago)}</time>${l.unread ? `<span class="unread">${l.unread}</span>` : ''}</div></button>`;
   }).join('') || '<p class="conv-none">Nenhuma conversa com esse filtro.</p>';
 }
 $('#conv-items').addEventListener('click', e => { const b = e.target.closest('[data-conv]'); if (b) openChat(Number(b.dataset.conv)); });
@@ -1559,14 +1581,14 @@ let poolIdx = 0;
 function liveLead() {
   if (document.hidden || poolIdx >= POOL.length) return;
   const p = POOL[poolIdx++];
-  const l = { id: Math.max(...LEADS.map(x => x.id)) + 1, ...p, ago: 0, stage: 'novo', unread: 1, chat: p.chat.map(m => [m[0], m[1], nowTime(), m[3], m[4]]) };
+  const l = { id: Math.max(...LEADS.map(x => x.id)) + 1, ch: poolIdx % 2 ? 'wa' : 'ig', ...p, ago: 0, stage: 'novo', unread: 1, chat: p.chat.map(m => [m[0], m[1], nowTime(), m[3], m[4]]) };
   if (!auto.fast) l.chat = l.chat.slice(0, 1);
   LEADS.push(l);
   const body = $('.col-body[data-stage="novo"]');
   body.insertAdjacentHTML('afterbegin', cardHTML(l).replace('class="card', 'class="card is-new'));
   recalc(); applyFilters(); updateHero(); renderConvList(); updateBadges();
   bump('#kpi-leads', 1);
-  toast(`Novo lead pelo ${ORIGIN[l.origin]}: ${l.name}, ${l.co}`);
+  toast(`Nova conversa no ${CHANNEL[chOf(l)]}: ${l.name}, ${l.co}`);
   if (auto.fast) addLog(`Resposta automática enviada para <b>${esc(l.name)}</b> em ${30 + Math.floor(Math.random() * 25)} s.`);
   if (auto.notify && (l.value >= 8000 || isHot(l))) addLog(`Aviso enviado ao gestor: <b>${esc(l.name)}</b> (${brl(l.value)}) entrou no pipeline.`);
 }
