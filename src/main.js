@@ -6,7 +6,7 @@ import { siteConfig } from './config.js';
 import { initContact } from './modules/contact.js';
 import { runIntro } from './modules/intro.js';
 import { initNav } from './modules/nav.js';
-import { initHeroScrub } from './modules/hero-scrub.js';
+import { initHeroOrbit } from './modules/hero-orbit.js';
 import { initReveals } from './modules/reveals.js';
 import { initServices } from './modules/services.js';
 import { initMural } from './modules/mural.js';
@@ -43,7 +43,7 @@ document.querySelectorAll('.team__photo img').forEach((img) => {
   img.addEventListener('error', hide);
 });
 
-initHeroScrub(opts);
+initHeroOrbit(opts);
 runIntro(opts);
 
 document.fonts.ready.then(() => {

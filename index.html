@@ -134,33 +134,49 @@
     </div>
 
     <main id="conteudo">
-      <!-- ================= HERO: O LOBO NO SCROLL ================= -->
-      <div class="hero-wrap" id="top">
-        <section class="hero" aria-label="Abertura">
-          <canvas class="hero__seq" id="hero-seq" aria-hidden="true"></canvas>
-          <div class="hero__veil" aria-hidden="true"></div>
-          <div class="hero__content" id="hero-content">
-            <p class="eyebrow hero-fade" style="--d: 0.1s">Sites · Funis · CRM · Automações · Sistemas · Painéis · Audiovisual · Design</p>
-            <h1 class="hero__title">
-              <span class="mask"><span class="hero-rise light">Criamos</span></span>
-              <span class="mask mask--rot"><span class="hero-rise bold silver rot" id="hero-rot" style="--d: 0.12s"><i class="is-on">sites</i><i>funis</i><i>CRMs</i><i>automações</i><i>sistemas</i><i>painéis</i><i>vídeos</i><i>marcas</i></span></span>
-              <span class="mask"><span class="hero-rise light" style="--d: 0.24s">que vendem.</span></span>
-            </h1>
-            <p class="hero__lede hero-fade" style="--d: 0.5s">Design, tecnologia e tráfego no mesmo time. Do primeiro clique à venda fechada, com tudo no nome da sua empresa.</p>
-            <div class="hero__actions hero-fade" style="--d: 0.65s">
-              <a class="btn btn--paper" href="#diagnostico" data-diag>Diagnóstico grátis<span class="btn__dot"><svg><use href="#i-ur" /></svg></span></a>
-              <a class="btn btn--glass" href="#projetos">Ver projetos<span class="btn__dot btn__dot--line"><svg><use href="#i-down" /></svg></span></a>
+      <!-- ================= HERO: A MARCA E O MAPA ================= -->
+      <section class="hero" id="top" aria-label="Abertura">
+        <canvas class="hero__silk" id="hero-silk" aria-hidden="true"></canvas>
+        <canvas class="hero__stars" id="hero-stars" aria-hidden="true"></canvas>
+        <div class="hero__veil" aria-hidden="true"></div>
+        <div class="hero__content" id="hero-content">
+          <p class="eyebrow hero-fade" style="--d: 0.1s">Sites · Funis · CRM · Automações · Sistemas · Painéis · Audiovisual · Design</p>
+          <h1 class="hero__title">
+            <span class="mask"><span class="hero-rise light">Criamos</span></span>
+            <span class="mask mask--rot"><span class="hero-rise bold rot" id="hero-rot" style="--d: 0.12s"><i class="is-on">sites</i><i>funis</i><i>CRMs</i><i>automações</i><i>sistemas</i><i>painéis</i><i>vídeos</i><i>marcas</i></span></span>
+            <span class="mask"><span class="hero-rise light" style="--d: 0.24s">que vendem.</span></span>
+          </h1>
+          <p class="hero__lede hero-fade" style="--d: 0.5s">Design, tecnologia e tráfego no mesmo time. Do primeiro clique à venda fechada, com tudo no nome da sua empresa.</p>
+          <div class="hero__actions hero-fade" style="--d: 0.65s">
+            <a class="btn btn--paper" href="#diagnostico" data-diag>Diagnóstico grátis<span class="btn__dot"><svg><use href="#i-ur" /></svg></span></a>
+            <a class="btn btn--glass" href="#projetos">Ver projetos<span class="btn__dot btn__dot--line"><svg><use href="#i-down" /></svg></span></a>
+          </div>
+          <p class="hero__note hero-fade" style="--d: 0.8s">7 perguntas rápidas · resposta no seu WhatsApp</p>
+        </div>
+        <div class="orbit" id="orbit" aria-hidden="true">
+          <svg class="orbit__ring orbit__ring--a" id="orbit-a" viewBox="0 0 1000 1000"></svg>
+          <svg class="orbit__ring orbit__ring--b" id="orbit-b" viewBox="0 0 1000 1000"></svg>
+          <div class="orbit__spin" id="orbit-spin">
+            <svg class="orbit__links" id="orbit-links" viewBox="0 0 1000 1000"></svg>
+            <div class="orbit__nodes" id="orbit-nodes">
+              <span class="onode" data-key="sites"><svg><use href="#i-site" /></svg>Sites</span>
+              <span class="onode" data-key="funis"><svg><use href="#i-funnel" /></svg>Funis</span>
+              <span class="onode" data-key="crm"><svg><use href="#i-crm" /></svg>CRM</span>
+              <span class="onode" data-key="automacoes"><svg><use href="#i-bolt" /></svg>Automações</span>
+              <span class="onode" data-key="sistemas"><svg><use href="#i-code" /></svg>Sistemas</span>
+              <span class="onode" data-key="paineis"><svg><use href="#i-chart" /></svg>Painéis</span>
+              <span class="onode" data-key="audiovisual"><svg><use href="#i-film" /></svg>Audiovisual</span>
+              <span class="onode" data-key="design"><svg><use href="#i-pen" /></svg>Design</span>
             </div>
           </div>
-          <div class="hero__phases" aria-hidden="true">
-            <p class="phase" data-phase="0"><small>01</small>Design.</p>
-            <p class="phase" data-phase="1"><small>02</small>Tecnologia.</p>
-            <p class="phase" data-phase="2"><small>03</small>Tráfego.</p>
-            <p class="phase phase--end" data-phase="3"><small>Dalas Marketing</small>Do clique <b>à venda.</b></p>
+          <div class="orbit__core" id="orbit-core">
+            <i class="orbit__glow"></i>
+            <i class="orbit__pulse"></i>
+            <img src="./images/brand/wing.webp" alt="" width="516" height="640" />
           </div>
-          <div class="hero__cue hero-fade" style="--d: 0.9s" aria-hidden="true"><span>Role para ver</span><i><b id="hero-cue-bar"></b></i></div>
-        </section>
-      </div>
+        </div>
+        <div class="hero__cue hero-fade" style="--d: 0.9s" aria-hidden="true"><span>Role para ver</span><i><b></b></i></div>
+      </section>
 
       <!-- ================= FAIXA ================= -->
       <section class="channels" aria-label="O que a Dalas faz">

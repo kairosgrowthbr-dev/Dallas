@@ -16,7 +16,7 @@ npm run preview  # testa a build
 ## Seções
 
 1. **Abertura**: a asa da marca, DALAS letra por letra e um risco de luz (uma vez por visita).
-2. **Hero com o lobo no scroll**: o vídeo do lobo vira uma sequência de quadros e o scroll é quem avança o filme. Enquanto ele corre passam "Design", "Tecnologia" e "Tráfego"; quando ele para e encara, "Do clique à venda". A palavra do título troca sozinha (sites, funis, CRMs, automações, sistemas, painéis, vídeos, marcas).
+2. **Hero**: a asa da Dalas no centro de dois mostradores que giram, com os oito serviços em volta como um mapa mental. Cada chip acende na sua vez, junto com a palavra do título (sites, funis, CRMs, automações, sistemas, painéis, vídeos, marcas). Ao fundo, a fumaça sedosa da chamada final, estrelas piscando e estrelas cadentes.
 3. **Faixa** com as oito frentes.
 4. **Serviços em rolagem horizontal**: a seção fica presa e o scroll empurra oito cartões para o lado, cada um com uma ilustração animada (site, funil, CRM, automações, sistemas, painéis, audiovisual, design). No celular desliza com o dedo.
 5. **Mural de projetos**: três colunas inclinadas com telas dos sites e do CRM, cada uma rolando numa velocidade. Tudo abre em nova aba.
@@ -37,7 +37,7 @@ Extras: questionário "Diagnóstico grátis" (7 passos, termina com a mensagem p
 | WhatsApp, e-mail, Instagram, vídeo do lobo | `src/config.js` |
 | Textos de todas as seções | `index.html` |
 | Perguntas do diagnóstico | `src/modules/diag.js` (`STEPS`) |
-| Quadros do lobo para o scroll | `public/images/seq/d/` (desktop, 70 quadros) e `public/images/seq/m/` (celular, 60); gerados do vídeo com ffmpeg |
+| Quadros do lobo (tira de filme) | `public/images/seq/d/` e `public/images/seq/m/`; gerados do vídeo com ffmpeg |
 | Etapas do funil | `index.html` (lista `#fsteps`) e `src/modules/funnel.js` (`NAMES`) |
 | Cores, tipografia, espaçamentos | `src/styles/main.css` (bloco `:root`) |
 | Logo (asa) | `public/images/brand/` |
@@ -48,7 +48,7 @@ Extras: questionário "Diagnóstico grátis" (7 passos, termina com a mensagem p
 
 ## Performance
 
-Scroll nativo. Os quadros do lobo baixam em ordem, quatro por vez, com o pôster cobrindo a espera. Ilustrações dos serviços pausam fora da tela, a fumaça final roda em resolução baixa a 30 quadros por segundo, o vídeo do filme só baixa no clique. `prefers-reduced-motion` respeitado.
+Scroll nativo. A seda e as estrelas do hero rodam em resolução baixa a 30 quadros por segundo e param fora da tela. Ilustrações dos serviços pausam fora da tela, a fumaça final roda em resolução baixa a 30 quadros por segundo, o vídeo do filme só baixa no clique. `prefers-reduced-motion` respeitado.
 
 ## Versões guardadas
 
