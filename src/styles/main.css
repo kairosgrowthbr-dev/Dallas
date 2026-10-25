@@ -545,30 +545,51 @@ svg use {
 }
 
 /* ---------- navegação ---------- */
+/* barra inteira, transparente no topo; ao rolar ganha fundo e um risco dourado na base */
 .nav {
   position: fixed;
   inset-inline: 0;
-  top: var(--nav-top);
+  top: 0;
   z-index: 50;
-  padding-inline: max(0.75rem, env(safe-area-inset-left));
-  pointer-events: none;
+  padding: env(safe-area-inset-top) var(--gutter) 0;
+  transition: background 0.5s, box-shadow 0.5s;
+}
+
+.nav::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(214, 180, 106, 0.5) 25%, rgba(214, 180, 106, 0.5) 75%, transparent);
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.nav.is-solid {
+  background: rgba(5, 5, 6, 0.8);
+  -webkit-backdrop-filter: blur(16px) saturate(1.3);
+  backdrop-filter: blur(16px) saturate(1.3);
+  box-shadow: 0 20px 50px -30px rgba(0, 0, 0, 0.9);
+}
+
+.nav.is-solid::after {
+  opacity: 1;
 }
 
 .nav__bar {
-  pointer-events: auto;
   display: flex;
   align-items: center;
-  gap: 24px;
-  width: min(1180px, 100%);
-  height: 64px;
+  gap: 28px;
+  width: min(var(--maxw), 100%);
+  height: 80px;
   margin-inline: auto;
-  padding: 0 8px 0 22px;
-  border-radius: 999px;
-  border: 1px solid var(--line);
-  background: rgba(12, 12, 14, 0.62);
-  -webkit-backdrop-filter: blur(14px) saturate(1.3);
-  backdrop-filter: blur(14px) saturate(1.3);
-  box-shadow: 0 20px 50px -30px rgba(0, 0, 0, 0.9);
+  transition: height 0.5s var(--ease);
+}
+
+.nav.is-solid .nav__bar {
+  height: 64px;
 }
 
 .nav__brand {
@@ -579,7 +600,7 @@ svg use {
 }
 
 .nav__brand img {
-  width: 26px;
+  width: 28px;
   height: auto;
 }
 
@@ -587,52 +608,189 @@ svg use {
   width: 34px;
 }
 
+/* links numerados, como as seções */
 .nav__links {
   display: flex;
   align-items: center;
   gap: 4px;
-  margin-left: 30px;
+  margin-left: 22px;
 }
 
-.nav__links a,
-.nav__ext {
+.nav__links a {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  height: 38px;
-  padding: 0 14px;
-  border-radius: 999px;
-  font-size: 15px;
-  color: var(--fog-400);
-  transition: color 0.3s, background 0.3s;
+  gap: 7px;
+  height: 40px;
+  padding: 0 12px;
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--fog-300);
+  transition: color 0.3s;
 }
 
-.nav__links a svg,
-.nav__ext svg {
-  width: 13px;
-  height: 13px;
-  opacity: 0.7;
+.nav__links a small {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--fog-500);
+  transform: translateY(-1px);
+  transition: color 0.3s;
 }
 
-.nav__links a:hover,
-.nav__ext:hover {
-  color: var(--fog-100);
+.nav__links a::after {
+  content: '';
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 5px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--gold-2), var(--gold));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s var(--ease);
+}
+
+.nav__links a:hover {
+  color: #fff;
 }
 
 .nav__links a.is-active {
-  color: var(--fog-100);
-  background: rgba(255, 255, 255, 0.07);
+  color: #fff;
+}
+
+.nav__links a.is-active small {
+  color: var(--gold);
+}
+
+.nav__links a.is-active::after {
+  transform: scaleX(1);
 }
 
 .nav__right {
   margin-left: auto;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 22px;
 }
 
 .nav__ext {
-  color: var(--fog-200);
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fog-400);
+  transition: color 0.3s;
+}
+
+.nav__ext svg {
+  width: 12px;
+  height: 12px;
+}
+
+.nav__ext:hover {
+  color: var(--fog-100);
+}
+
+/* botão do diagnóstico: vidro dourado com um mostrador girando dentro */
+.nav__cta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 44px;
+  padding: 0 18px 0 7px;
+  border-radius: 12px;
+  border: 1px solid rgba(214, 180, 106, 0.45);
+  background: linear-gradient(180deg, rgba(214, 180, 106, 0.14), rgba(214, 180, 106, 0.04));
+  color: var(--gold-2);
+  font-size: 14px;
+  font-weight: 600;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 0.35s, border-color 0.35s, box-shadow 0.35s;
+}
+
+.nav__cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(135deg, #f1dca6, #d6b46a 55%, #b58c40);
+  opacity: 0;
+  transition: opacity 0.35s;
+}
+
+.nav__cta:hover {
+  color: #141009;
+  border-color: transparent;
+  box-shadow: 0 12px 30px -12px rgba(214, 180, 106, 0.7);
+}
+
+.nav__cta:hover::before {
+  opacity: 1;
+}
+
+.nav__dial {
+  position: relative;
+  display: block;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(5, 5, 6, 0.55);
+  color: var(--gold-2);
+  transition: background 0.35s;
+}
+
+.nav__cta:hover .nav__dial {
+  background: rgba(20, 16, 9, 0.9);
+}
+
+.nav__dial::before {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  opacity: 0.4;
+}
+
+.nav__dial::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 3px;
+  height: 3px;
+  margin: -1.5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.nav__dial svg {
+  position: absolute;
+  inset: 2px;
+  width: 26px;
+  height: 26px;
+  will-change: transform;
+  animation: spin 36s linear infinite;
+}
+
+.nav__dial b {
+  position: absolute;
+  left: 50%;
+  bottom: 50%;
+  width: 2px;
+  height: 8px;
+  margin-left: -1px;
+  border-radius: 2px;
+  background: currentColor;
+  transform-origin: 50% 100%;
+  will-change: transform;
+  animation: spin 6s linear infinite;
 }
 
 .nav__burger {
@@ -640,7 +798,10 @@ svg use {
   margin-left: auto;
   width: 44px;
   height: 44px;
-  border-radius: 50%;
+  border-radius: 12px;
+  border: 1px solid var(--line-2);
+  background: rgba(255, 255, 255, 0.03);
+  color: #fff;
   place-items: center;
 }
 
@@ -682,8 +843,26 @@ svg use {
   color: var(--fog-500);
 }
 
-.menu .btn {
+.menu .nav__cta {
   align-self: flex-start;
+  height: 54px;
+  padding: 0 22px 0 9px;
+  font-size: 16px;
+}
+
+.menu .nav__dial {
+  width: 36px;
+  height: 36px;
+}
+
+.menu .nav__dial svg {
+  inset: 3px;
+  width: 30px;
+  height: 30px;
+}
+
+.menu .nav__dial b {
+  height: 10px;
 }
 
 /* ---------- hero: a marca e o mapa ---------- */
@@ -3804,7 +3983,12 @@ svg use {
   }
 
   .nav__links a {
-    padding: 0 10px;
+    padding: 0 9px;
+  }
+
+  .nav__links a::after {
+    left: 9px;
+    right: 9px;
   }
 
   .nav__ext {
@@ -3845,8 +4029,11 @@ svg use {
     display: none;
   }
 
+  /* funil em tela estreita: a faixa de cada etapa vira a coluna da esquerda,
+     lado a lado com o texto, e o conjunto desenha o funil descendo */
   .funnel__grid {
     grid-template-columns: 1fr;
+    gap: 0;
   }
 
   .funnel__sticky {
@@ -3854,15 +4041,117 @@ svg use {
   }
 
   .funnel__svg {
-    width: min(380px, 80%);
+    display: none;
   }
 
   .fsteps {
-    padding-top: 30px;
+    display: grid;
+    gap: 6px;
+    padding-top: 40px;
   }
 
   .fstep {
+    --w0: 100%;
+    --w1: 86%;
+    --shape: polygon(calc(50% - var(--w0) / 2) 0, calc(50% + var(--w0) / 2) 0, calc(50% + var(--w1) / 2) 100%, calc(50% - var(--w1) / 2) 100%);
+    grid-template-columns: clamp(86px, 24vw, 124px) minmax(0, 1fr);
+    align-items: stretch;
+    gap: 18px;
     min-height: 0;
+    padding: 0;
+    border-top: 0;
+    opacity: 1;
+    filter: none;
+  }
+
+  .fstep:nth-child(2) {
+    --w0: 86%;
+    --w1: 72%;
+  }
+
+  .fstep:nth-child(3) {
+    --w0: 72%;
+    --w1: 58%;
+  }
+
+  .fstep:nth-child(4) {
+    --w0: 58%;
+    --w1: 44%;
+  }
+
+  .fstep:nth-child(5) {
+    --w0: 44%;
+    --w1: 30%;
+  }
+
+  .fstep > div {
+    padding: 8px 0 10px;
+  }
+
+  .fstep__n {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    place-items: center;
+    min-height: 92px;
+    padding: 0;
+    font-size: 12px;
+    color: var(--fog-300);
+    background: rgba(255, 255, 255, 0.14);
+    clip-path: var(--shape);
+    transition: color 0.4s, background 0.5s;
+  }
+
+  .fstep__n::before,
+  .fstep__n::after {
+    content: '';
+    position: absolute;
+    inset: 1px;
+    z-index: -1;
+    clip-path: var(--shape);
+  }
+
+  .fstep__n::before {
+    background: #0d0d10;
+  }
+
+  .fstep__n::after {
+    background: linear-gradient(90deg, #f1dca6, #b58c40);
+    opacity: 0.92;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.9s var(--ease);
+  }
+
+  .fstep--end .fstep__n::after {
+    background: linear-gradient(90deg, #8ee6a8, #2f9a58);
+  }
+
+  .fstep.is-on .fstep__n,
+  .fstep--end.is-on .fstep__n {
+    color: #141009;
+    font-weight: 700;
+    background: rgba(241, 220, 166, 0.55);
+  }
+
+  .fstep.is-on .fstep__n::after {
+    transform: scaleX(1);
+  }
+
+  .fstep h3 {
+    font-size: 1.3rem;
+    color: var(--fog-300);
+    transition: color 0.5s;
+  }
+
+  .fstep.is-on h3 {
+    color: #fff;
+  }
+
+  .fstep p {
+    margin-top: 6px;
+    font-size: 14.5px;
+    line-height: 1.55;
   }
 
   .team__card {
@@ -3889,8 +4178,11 @@ svg use {
   }
 
   .nav__bar {
-    height: 58px;
-    padding: 0 8px 0 18px;
+    height: 66px;
+  }
+
+  .nav.is-solid .nav__bar {
+    height: 60px;
   }
 
   .hero {
@@ -4104,6 +4396,15 @@ svg use {
     font-size: 8.5px;
   }
 
+  .fstep {
+    grid-template-columns: 78px minmax(0, 1fr);
+    gap: 14px;
+  }
+
+  .fstep__n {
+    min-height: 84px;
+  }
+
   .team__people {
     gap: 14px;
   }
@@ -4150,6 +4451,11 @@ svg use {
 
   .orbit__sparks {
     display: none;
+  }
+
+  .nav__dial svg,
+  .nav__dial b {
+    animation: none;
   }
 
   .hero-rise,

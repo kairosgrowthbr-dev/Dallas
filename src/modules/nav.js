@@ -1,7 +1,14 @@
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-/** Link ativo conforme a seção na tela e o menu do celular. */
+/** Barra que ganha fundo ao rolar, link ativo conforme a seção na tela e o menu do celular. */
 export function initNav() {
+  const nav = document.getElementById('nav');
+  if (nav) {
+    const solid = () => nav.classList.toggle('is-solid', window.scrollY > 24);
+    solid();
+    window.addEventListener('scroll', solid, { passive: true });
+  }
+
   document.querySelectorAll('[data-spy]').forEach((link) => {
     const section = document.getElementById(link.dataset.spy);
     if (!section) return;
