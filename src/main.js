@@ -10,7 +10,6 @@ import { initHeroOrbit } from './modules/hero-orbit.js';
 import { initReveals } from './modules/reveals.js';
 import { initServices } from './modules/services.js';
 import { initMural } from './modules/mural.js';
-import { initFunnel } from './modules/funnel.js';
 import { initCrmLive } from './modules/crm-live.js';
 import { initMethod } from './modules/method.js';
 import { initFaq } from './modules/faq.js';
@@ -49,7 +48,6 @@ document.fonts.ready.then(() => {
   initReveals(opts);
   initServices(opts);
   initMural(opts);
-  initFunnel(opts);
   initCrmLive(opts);
   initMethod(opts);
   initFaq(opts);

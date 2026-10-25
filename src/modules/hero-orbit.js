@@ -8,7 +8,7 @@ import { gsap } from 'gsap';
  * final e um céu com estrelas piscando e estrelas cadentes. Tudo pausa fora da tela.
  */
 const NS = 'http://www.w3.org/2000/svg';
-const KEYS = ['sites', 'funis', 'crm', 'automacoes', 'sistemas', 'paineis', 'design'];
+const KEYS = ['sites', 'funis', 'crm', 'automacoes', 'ia', 'anuncios', 'whatsapp'];
 
 const VERT = `
 attribute vec2 aPos;

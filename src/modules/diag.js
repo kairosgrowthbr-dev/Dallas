@@ -22,7 +22,7 @@ const STEPS = [
     key: 'precisa',
     type: 'choice',
     q: 'O que você mais precisa agora?',
-    options: ['Site ou landing page', 'Anúncios no Instagram e no Google', 'CRM e automações no WhatsApp', 'Sistema ou painel sob medida', 'Ainda não sei, quero uma orientação'],
+    options: ['Site ou landing page', 'Anúncios no Instagram e no Google', 'CRM e automações no WhatsApp', 'Funil completo, do anúncio à venda', 'Ainda não sei, quero uma orientação'],
   },
   { key: 'anuncia', type: 'choice', q: 'Você já anuncia hoje?', options: ['Sim, todo mês', 'Já anunciei e parei', 'Nunca anunciei'] },
   {
