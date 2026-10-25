@@ -154,7 +154,7 @@ export function initCrmLive({ reduceMotion }) {
   const bubble = (step) => {
     const [kind, text, time, opts] = step;
     const out = kind === 'auto';
-    const tag = out ? '<span class="auto"><svg><use href="#i-bolt" /></svg>resposta automática</span>' : '';
+    const tag = out ? '<span class="auto"><svg><use href="#i-bolt" /></svg>IA · resposta automática</span>' : '';
     const list = opts ? `<div class="cmsg__opts">${opts.map((o) => `<span>${o}</span>`).join('')}</div>` : '';
     return el(`cmsg${out ? ' cmsg--out' : ''}`, `${text}${list}<em>${tag}${time}</em>`);
   };

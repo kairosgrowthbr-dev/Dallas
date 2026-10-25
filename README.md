@@ -19,9 +19,9 @@ npm run preview  # testa a build
 2. **Hero**: a asa da Dalas no centro de dois mostradores que giram, com os sete serviços em volta como um mapa mental. Cada chip acende na sua vez, junto com a palavra do título (sites, funis, CRMs, automações, sistemas, painéis, marcas). A logo tem raios de luz, faíscas em órbita, um reflexo metálico e inclina com o mouse. Ao fundo, a fumaça sedosa da chamada final, estrelas piscando e estrelas cadentes.
 3. **Faixa** com as sete frentes.
 4. **Serviços em rolagem horizontal**: a seção fica presa e o scroll empurra sete cartões compactos para o lado, cada um com uma ilustração animada (site, funil, CRM, automações, sistemas, painéis, design). No celular desliza com o dedo.
-5. **Mural de projetos**: três colunas inclinadas com telas dos sites e do CRM, cada uma rolando numa velocidade. Tudo abre em nova aba.
+5. **Mural de projetos**: três colunas inclinadas com telas dos sites de demonstração (Áurea Odonto, Nórdica Café, Vértice Arquitetura, Forja Box) e de dois sites externos (Ondo e Elena Voss), cada uma rolando numa velocidade. Tudo abre em nova aba.
 6. **Funil "Do clique à venda"**: um funil que se enche faixa por faixa conforme as cinco etapas passam, com uma gota de luz descendo com o scroll.
-7. **CRM e automações ao vivo** ("Nenhum cliente sem resposta"): um celular com a conversa acontecendo no WhatsApp e no Instagram (o cliente escreve, a automação responde em segundos, oferece opções, agenda), e ao lado o pipeline do Dalas CRM, onde o card da conversa entra em "Novo" e anda para "Em atendimento". As três regras (resposta automática, entrada no pipeline, follow-up em 24h) acendem quando disparam. Troca de canal sozinho ou pelas abas.
+7. **CRM, automações e IA ao vivo** ("Mais clientes chamando no seu WhatsApp"): um celular com a conversa acontecendo no WhatsApp e no Instagram (o cliente escreve, a automação responde em segundos, oferece opções, agenda), e ao lado o pipeline do Dalas CRM, onde o card da conversa entra em "Novo" e anda para "Em atendimento". As três regras (IA no atendimento, entrada no pipeline, follow-up em 24h) acendem quando disparam. Troca de canal sozinho ou pelas abas.
 8. **Como a Dalas trabalha**: linha do tempo central que se preenche com o scroll.
 9. **Quem cuida da sua conta**: Ryan Dalatea (CEO da Dalas Marketing) e Gustavo Licks (Kairos Growth).
 10. **Dúvidas** e **chamada final** com fumaça sedosa em WebGL e mostradores girando (guardada em `secoes-salvas/`).
@@ -39,7 +39,7 @@ npm run preview  # testa a build
 | Cores, tipografia, espaçamentos | `src/styles/main.css` (bloco `:root`) |
 | Logo (asa) | `public/images/brand/` |
 | Fotos da equipe | `public/images/team/ryan.jpg` e `gustavo.jpg` (quadradas; sem a foto, aparecem as iniciais) |
-| Telas dos projetos e do CRM | `public/images/work/` e `public/images/solutions/` |
+| Telas dos projetos (capas do mural) | `public/images/work/` |
 | Sites de demonstração e CRM | `public/demos/<nome>/index.html` |
 | Favicon e imagem de compartilhamento | `public/favicon.png`, `public/og.jpg` |
 
