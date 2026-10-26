@@ -2973,18 +2973,339 @@ svg use {
   color: rgba(var(--acc-rgb), 0.14);
 }
 
+.method {
+  overflow: hidden;
+}
+
 .mtl__end {
   position: relative;
   display: grid;
   justify-items: center;
-  gap: 30px;
-  padding-top: 30px;
+  gap: 14px;
+  padding-top: 10px;
 }
 
-.mtl__end img {
-  width: 40px;
+/* a asa no fim da linha: quando a ponta chega, ela pula com clarão, ondas e faíscas */
+.mtl__logo {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  display: grid;
+  place-items: center;
+}
+
+.mtl__logo img {
+  position: relative;
+  width: 54px;
   height: auto;
-  opacity: 0.9;
+  opacity: 0.85;
+  transition: opacity 0.4s, filter 0.6s;
+}
+
+.mtl__sparks {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 440px;
+  height: 440px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.mtl__pulse {
+  position: absolute;
+  inset: 14%;
+  border-radius: 50%;
+  border: 1px solid rgba(241, 220, 166, 0.75);
+  opacity: 0;
+}
+
+.mtl__pulse--b {
+  border-color: rgba(142, 230, 168, 0.65);
+}
+
+.mtl__pulse--c {
+  inset: -4%;
+  border-width: 2px;
+  border-color: rgba(255, 244, 214, 0.7);
+}
+
+.mtl__flare {
+  position: absolute;
+  inset: -45%;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff6dc 0%, rgba(241, 220, 166, 0.75) 14%, rgba(214, 180, 106, 0.35) 30%, rgba(63, 191, 110, 0.16) 46%, transparent 66%);
+  opacity: 0;
+}
+
+.mtl__end .btn {
+  transition: box-shadow 0.6s, transform 0.6s var(--ease);
+}
+
+.mtl__end.is-hit img {
+  opacity: 1;
+  filter: drop-shadow(0 0 16px rgba(241, 220, 166, 0.85)) drop-shadow(0 0 30px rgba(63, 191, 110, 0.4));
+  animation: wing-pop 1s var(--ease) both;
+}
+
+.mtl__end.is-hit .mtl__pulse {
+  animation: ping-slow 1.6s ease-out both;
+}
+
+.mtl__end.is-hit .mtl__pulse--b {
+  animation-delay: 0.35s;
+}
+
+.mtl__end.is-hit .mtl__pulse--c {
+  animation-delay: 0.15s;
+  animation-duration: 2s;
+}
+
+.mtl__end.is-hit .mtl__flare {
+  animation: mtl-flare 1.8s ease-out both;
+}
+
+.mtl__end.is-hit .btn {
+  box-shadow: 0 0 46px -8px rgba(241, 220, 166, 0.75);
+  transform: translateY(-3px);
+}
+
+@keyframes wing-pop {
+  0% {
+    transform: scale(0.6) rotate(-10deg);
+  }
+  45% {
+    transform: scale(1.6) rotate(4deg);
+  }
+  100% {
+    transform: scale(1.18) rotate(0deg);
+  }
+}
+
+@keyframes mtl-flare {
+  0% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  25% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.7);
+  }
+}
+
+/* ---------- chame a Dalas: diagnóstico grátis ---------- */
+.callme__card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: clamp(30px, 5vw, 70px);
+  align-items: center;
+  padding: clamp(28px, 4.5vw, 64px);
+  border-radius: var(--radius);
+}
+
+/* feixe de luz que corre pela borda do cartão */
+.callme__beam {
+  position: absolute;
+  inset: -60%;
+  z-index: -2;
+  background: conic-gradient(from 0deg, transparent 0deg, transparent 240deg, rgba(241, 220, 166, 0.2) 265deg, #f1dca6 300deg, #3fbf6e 330deg, transparent 360deg);
+  animation: spin 7s linear infinite;
+  will-change: transform;
+}
+
+.callme__card.is-off .callme__beam {
+  animation-play-state: paused;
+}
+
+.callme__card::before {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  z-index: -1;
+  border-radius: calc(var(--radius) - 1px);
+  background:
+    radial-gradient(60% 50% at 15% 0%, rgba(214, 180, 106, 0.12), transparent 60%),
+    radial-gradient(50% 40% at 90% 100%, rgba(63, 191, 110, 0.12), transparent 60%),
+    linear-gradient(180deg, #0f0f12, #09090b);
+}
+
+.callme__sparks {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.callme__text,
+.callme__stage {
+  position: relative;
+  z-index: 1;
+}
+
+.callme__text .h2 {
+  margin-top: 16px;
+}
+
+.callme__list {
+  margin-top: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 24px;
+}
+
+.callme__list li {
+  position: relative;
+  padding-left: 16px;
+  font-size: 14px;
+  color: var(--fog-300);
+}
+
+.callme__list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.5em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 10px rgba(214, 180, 106, 0.8);
+}
+
+.callme__list b {
+  color: #fff;
+  font-weight: 700;
+}
+
+.callme__actions {
+  margin-top: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* baralho de perguntas que se responde sozinho */
+.qdeck {
+  position: relative;
+  width: min(380px, 100%);
+  margin-inline: auto;
+  padding-top: 34px;
+}
+
+.qcard {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 34px;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 24px;
+  border-radius: 22px;
+  border: 1px solid var(--line-2);
+  background: linear-gradient(180deg, #14141a, #0b0b0e);
+  box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.95);
+}
+
+.qcard--back {
+  transform: translateY(-18px) scale(0.94);
+  opacity: 0.55;
+}
+
+.qcard--back2 {
+  transform: translateY(-34px) scale(0.88);
+  opacity: 0.3;
+}
+
+.qcard--front {
+  position: relative;
+  top: 0;
+  min-height: 330px;
+  transition: transform 0.5s var(--ease), opacity 0.4s;
+}
+
+.qcard--front.is-out {
+  transform: translateY(30px) rotate(2deg);
+  opacity: 0;
+}
+
+.qcard--front.is-in {
+  transform: translateY(-14px) scale(0.96);
+  opacity: 0;
+  transition: none;
+}
+
+.qcard__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.qring {
+  width: 34px;
+  height: 34px;
+}
+
+.qring circle {
+  fill: none;
+  stroke-width: 2.5;
+}
+
+.qring .bg {
+  stroke: rgba(255, 255, 255, 0.1);
+}
+
+.qring .fg {
+  stroke: var(--gold);
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+
+.qcard__q {
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  color: #fff;
+}
+
+.qcard__opts {
+  display: grid;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.qcard__opts span {
+  padding: 11px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--line-2);
+  background: rgba(255, 255, 255, 0.03);
+  font-size: 13.5px;
+  color: var(--fog-200);
+  transition: background 0.3s, border-color 0.3s, color 0.3s, transform 0.3s;
+}
+
+.qcard__opts span.is-tap {
+  background: rgba(214, 180, 106, 0.16);
+  border-color: rgba(241, 220, 166, 0.75);
+  color: #fff;
+  box-shadow: 0 0 24px -6px rgba(214, 180, 106, 0.7);
+  transform: scale(0.98);
 }
 
 /* ---------- quem cuida ---------- */
@@ -3513,8 +3834,9 @@ svg use {
 .diag__bars {
   margin-top: 18px;
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 6px;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 5px;
 }
 
 .diag__bars i {
@@ -3743,6 +4065,14 @@ svg use {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .callme__card {
+    grid-template-columns: 1fr;
+  }
+
+  .qdeck {
+    margin-top: 10px;
+  }
+
   .team__card {
     grid-template-columns: 1fr;
   }
@@ -3866,7 +4196,16 @@ svg use {
 
   .mtl__end {
     justify-items: start;
-    padding-left: 58px;
+    padding-left: 14px;
+  }
+
+  .callme__card {
+    padding: 26px 20px;
+  }
+
+  .callme__actions .btn {
+    width: 100%;
+    justify-content: space-between;
   }
 
   .nav__burger {
@@ -4145,8 +4484,17 @@ svg use {
 
   .team__ring,
   .team__orb::before,
-  .rot i.is-on {
+  .rot i.is-on,
+  .callme__beam,
+  .mtl__end.is-hit img,
+  .mtl__end.is-hit .mtl__pulse,
+  .mtl__end.is-hit .mtl__flare {
     animation: none;
+  }
+
+  .callme__sparks,
+  .mtl__sparks {
+    display: none;
   }
 
   .band-fill {

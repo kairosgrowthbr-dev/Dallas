@@ -19,6 +19,33 @@ const STEPS = [
     options: ['Saúde e estética', 'Serviços e consultoria', 'Loja ou comércio', 'Alimentação', 'Educação e cursos', 'Imóveis e construção', 'Outro'],
   },
   {
+    key: 'dor',
+    type: 'choice',
+    q: 'Qual é a maior dor do seu negócio hoje?',
+    sub: 'O que mais tira o seu sono quando o assunto é vender.',
+    options: [
+      'Chegam poucos clientes',
+      'Chegam clientes, mas poucos fecham',
+      'Demoro para responder e perco venda',
+      'Gasto com anúncio e não vejo retorno',
+      'Meu site não gera contato',
+      'Não sei de onde vêm os meus clientes',
+    ],
+  },
+  {
+    key: 'quer',
+    type: 'choice',
+    q: 'O que você mais quer nos próximos 3 meses?',
+    options: [
+      'Mais clientes chamando no WhatsApp',
+      'Vender mais para quem já chega',
+      'Um site que passe confiança',
+      'Organizar o atendimento num CRM',
+      'Parar de perder venda à noite e no fim de semana',
+      'Tirar a empresa do boca a boca',
+    ],
+  },
+  {
     key: 'precisa',
     type: 'choice',
     q: 'O que você mais precisa agora?',
@@ -38,6 +65,16 @@ const STEPS = [
     options: ['Na hora', 'Algumas horas', 'Só no outro dia', 'Depende do dia'],
   },
   {
+    key: 'detalhe',
+    type: 'input',
+    q: 'Quer contar algo mais sobre a sua empresa?',
+    sub: 'Cidade, produto principal, meta do ano, o que já tentou. Quanto mais a gente souber, melhor o diagnóstico.',
+    prefix: '',
+    placeholder: 'Ex.: clínica em Canela, quero lotar a agenda de quinta e sexta',
+    skip: 'Pular esta',
+    optional: true,
+  },
+  {
     key: 'nome',
     type: 'final',
     q: 'Para quem a gente manda o diagnóstico?',
@@ -46,11 +83,21 @@ const STEPS = [
   },
 ];
 
-const LABELS = { perfil: 'Perfil', ramo: 'Ramo', precisa: 'Precisa', anuncia: 'Já anuncia', origem: 'Clientes chegam por', resposta: 'Tempo de resposta' };
+const LABELS = {
+  perfil: 'Instagram ou site',
+  ramo: 'Ramo',
+  dor: 'Maior dor hoje',
+  quer: 'Quer nos próximos meses',
+  precisa: 'Precisa agora de',
+  anuncia: 'Já anuncia',
+  origem: 'Clientes chegam por',
+  resposta: 'Tempo de resposta',
+  detalhe: 'Mais detalhes',
+};
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 
-/** Diagnóstico grátis: 7 perguntas num modal; no fim, a mensagem pronta para o WhatsApp. */
+/** Diagnóstico grátis: 9 perguntas num modal; no fim, a mensagem pronta para o WhatsApp. */
 export function initDiag(config, { reduceMotion = false } = {}) {
   const modal = document.getElementById('diag');
   if (!modal) return;
@@ -63,12 +110,37 @@ export function initDiag(config, { reduceMotion = false } = {}) {
   let index = 0;
   let lastFocus = null;
 
+  // mensagem que vai pro WhatsApp: em blocos, com negrito do próprio WhatsApp (sem emoji, que o link corrompe)
   function message() {
-    const lines = ['Olá! Quero o diagnóstico grátis da Dalas Marketing.', ''];
-    if (answers.nome) lines.push(`Nome: ${answers.nome}`);
-    Object.entries(LABELS).forEach(([k, l]) => {
-      if (answers[k]) lines.push(`${l}: ${answers[k]}`);
-    });
+    const a = answers;
+    const perfil = a.perfil && a.perfil !== 'não tem' ? (/\./.test(a.perfil) ? a.perfil : `@${a.perfil}`) : '';
+    const block = (title, rows) => {
+      const r = rows.filter(([, v]) => v).map(([l, v]) => `${l}: ${v}`);
+      return r.length ? [`*${title}*`, ...r, ''] : [];
+    };
+    const lines = [
+      '*Diagnóstico grátis · Dalas Marketing*',
+      '',
+      'Olá, Ryan! Acabei de responder o diagnóstico no site e quero a análise da Dalas para o meu negócio.',
+      '',
+      ...block('Quem sou', [
+        ['Nome', a.nome],
+        ['Instagram ou site', perfil],
+        ['Ramo', a.ramo],
+      ]),
+      ...block('Meu momento', [
+        ['Maior dor hoje', a.dor],
+        ['O que mais quero', a.quer],
+        ['Preciso agora de', a.precisa],
+      ]),
+      ...block('Como está hoje', [
+        ['Já anuncia', a.anuncia],
+        ['Clientes chegam por', a.origem],
+        ['Tempo de resposta', a.resposta],
+      ]),
+      ...(a.detalhe && a.detalhe !== 'não tem' ? ['*Mais detalhes*', a.detalhe, ''] : []),
+      'Pode me responder por aqui com o diagnóstico e por onde começar?',
+    ];
     return lines.join('\n');
   }
 
@@ -79,8 +151,8 @@ export function initDiag(config, { reduceMotion = false } = {}) {
     let html = `<h3 id="diag-q">${esc(step.q)}</h3>`;
     if (step.sub) html += `<p>${esc(step.sub)}</p>`;
     if (step.type === 'input') {
-      html += `<label class="diag__field"><span>${step.prefix}</span><input id="diag-input" type="text" autocomplete="off" placeholder="${esc(step.placeholder)}" value="${esc(answers[step.key] || '')}" /></label>`;
-      html += `<button class="diag__next" type="button" id="diag-next" disabled>Continuar <svg><use href="#i-r" /></svg></button>`;
+      html += `<label class="diag__field${step.prefix ? '' : ' diag__field--plain'}">${step.prefix ? `<span>${step.prefix}</span>` : ''}<input id="diag-input" type="text" autocomplete="off" placeholder="${esc(step.placeholder)}" value="${esc(answers[step.key] === 'não tem' ? '' : answers[step.key] || '')}" /></label>`;
+      html += `<button class="diag__next" type="button" id="diag-next"${step.optional ? '' : ' disabled'}>Continuar <svg><use href="#i-r" /></svg></button>`;
       html += `<div class="diag__links"><button type="button" id="diag-skip">${esc(step.skip)}</button><a class="wa" href="#contato" data-diag-wa><svg><use href="#i-wa" /></svg>Prefiro falar direto no WhatsApp</a></div>`;
     } else if (step.type === 'choice') {
       html += `<div class="diag__opts">${step.options
@@ -89,7 +161,7 @@ export function initDiag(config, { reduceMotion = false } = {}) {
     } else {
       html += `<label class="diag__field"><span><svg width="16" height="16"><use href="#i-crm" /></svg></span><input id="diag-input" type="text" autocomplete="name" placeholder="${esc(step.placeholder)}" value="${esc(answers.nome || '')}" /></label>`;
       html += `<div class="diag__sum">${Object.entries(LABELS)
-        .filter(([k]) => answers[k])
+        .filter(([k]) => answers[k] && answers[k] !== 'não tem')
         .map(([k, l]) => `<span>${esc(l)}: <b>${esc(answers[k])}</b></span>`)
         .join('')}</div>`;
       html += `<a class="diag__next diag__next--wa" id="diag-send" href="#" target="_blank" rel="noopener"><svg><use href="#i-wa" /></svg>Enviar no WhatsApp</a>`;
@@ -120,7 +192,7 @@ export function initDiag(config, { reduceMotion = false } = {}) {
     if (step.type === 'input') {
       const sync = () => {
         answers[step.key] = input.value.trim().replace(/^@/, '');
-        nextBtn.disabled = !answers[step.key];
+        nextBtn.disabled = !step.optional && !answers[step.key];
       };
       input.addEventListener('input', sync);
       input.addEventListener('keydown', (e) => {

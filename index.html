@@ -150,7 +150,7 @@
             <a class="btn btn--paper" href="#diagnostico" data-diag>Diagnóstico grátis<span class="btn__dot"><svg><use href="#i-ur" /></svg></span></a>
             <a class="btn btn--glass" href="#projetos">Ver projetos<span class="btn__dot btn__dot--line"><svg><use href="#i-down" /></svg></span></a>
           </div>
-          <p class="hero__note hero-fade" style="--d: 0.8s">7 perguntas rápidas · resposta no seu WhatsApp</p>
+          <p class="hero__note hero-fade" style="--d: 0.8s">9 perguntas rápidas · resposta no seu WhatsApp</p>
         </div>
         <div class="orbit" id="orbit" aria-hidden="true">
           <svg class="orbit__ring orbit__ring--a" id="orbit-a" viewBox="0 0 1000 1000"></svg>
@@ -368,6 +368,37 @@
         </div>
       </section>
 
+      <!-- ================= CHAME A DALAS: DIAGNÓSTICO GRÁTIS ================= -->
+      <section class="section callme" id="chame">
+        <div class="wrap">
+          <div class="callme__card" id="callme">
+            <i class="callme__beam" aria-hidden="true"></i>
+            <canvas class="callme__sparks" id="callme-sparks" aria-hidden="true"></canvas>
+            <div class="callme__text">
+              <p class="eyebrow eyebrow--dot">Diagnóstico grátis</p>
+              <h2 class="h2 h2--lg" data-split>Chame a Dalas Marketing <b>agora mesmo.</b></h2>
+              <p class="p-lead" data-rise>Em 9 perguntas rápidas a gente entende o seu momento, a sua maior dor e o que você mais quer. A resposta vem no seu WhatsApp, com por onde começar.</p>
+              <ul class="callme__list" data-rise>
+                <li><b>2 minutos</b> para responder</li>
+                <li><b>Grátis</b>, sem compromisso</li>
+                <li><b>Resposta</b> no seu WhatsApp</li>
+              </ul>
+              <div class="callme__actions" data-rise>
+                <a class="btn btn--paper" href="#diagnostico" data-diag>Fazer o diagnóstico<span class="btn__dot"><svg><use href="#i-ur" /></svg></span></a>
+                <a class="btn btn--glass" href="#contato" data-whatsapp>Chamar no WhatsApp<span class="btn__wa"><svg><use href="#i-wa" /></svg></span></a>
+              </div>
+            </div>
+            <div class="callme__stage" aria-hidden="true">
+              <div class="qdeck">
+                <div class="qcard qcard--back2"></div>
+                <div class="qcard qcard--back"></div>
+                <div class="qcard qcard--front" id="qcard"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- ================= MÉTODO ================= -->
       <section class="section method" id="metodo">
         <div class="wrap method__head">
@@ -406,8 +437,15 @@
             <span class="mstep__node"><svg><use href="#i-chart" /></svg></span>
             <span class="mstep__ghost">Medir</span>
           </div>
-          <div class="mtl__end">
-            <img src="./images/brand/wing-sm.webp" alt="" width="129" height="160" />
+          <div class="mtl__end" id="mtl-end">
+            <div class="mtl__logo" aria-hidden="true">
+              <i class="mtl__flare"></i>
+              <i class="mtl__pulse"></i>
+              <i class="mtl__pulse mtl__pulse--b"></i>
+              <i class="mtl__pulse mtl__pulse--c"></i>
+              <canvas class="mtl__sparks" id="mtl-sparks"></canvas>
+              <img src="./images/brand/wing-sm.webp" alt="" width="129" height="160" />
+            </div>
             <a class="btn btn--paper" href="#diagnostico" data-diag>Diagnóstico grátis<span class="btn__dot"><svg><use href="#i-ur" /></svg></span></a>
           </div>
         </div>
@@ -549,7 +587,7 @@
       <div class="diag__backdrop" data-diag-close></div>
       <div class="diag__box">
         <div class="diag__head">
-          <p class="mono" id="diag-step">Passo 1 de 7</p>
+          <p class="mono" id="diag-step">Passo 1 de 10</p>
           <button class="diag__x" type="button" data-diag-close aria-label="Fechar"><svg><use href="#i-x" /></svg></button>
         </div>
         <div class="diag__bars" id="diag-bars"></div>

@@ -11,6 +11,7 @@ import { initReveals } from './modules/reveals.js';
 import { initServices } from './modules/services.js';
 import { initMural } from './modules/mural.js';
 import { initCrmLive } from './modules/crm-live.js';
+import { initCallme } from './modules/callme.js';
 import { initMethod } from './modules/method.js';
 import { initFaq } from './modules/faq.js';
 import { initFinal } from './modules/final.js';
@@ -49,6 +50,7 @@ document.fonts.ready.then(() => {
   initServices(opts);
   initMural(opts);
   initCrmLive(opts);
+  initCallme(opts);
   initMethod(opts);
   initFaq(opts);
   initFinal(opts);

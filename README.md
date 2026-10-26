@@ -21,10 +21,11 @@ npm run preview  # testa a build
 4. **Serviços, "Quatro frentes. Um time só."**: quatro cartões lado a lado (sites e landing pages, funis de venda, CRM, automações e IA), cada um com ilustração animada e o que inclui; o cartão do funil mostra as etapas anúncio → página → WhatsApp → CRM → venda. No celular viram duas colunas e depois uma.
 5. **Mural de projetos**: três colunas inclinadas com a tela do site da Cento&Cinco Burger (hamburgueria de Canela, cópia estática em `public/demos/cento-cinco/`), do site de demonstração da Forja Box de dois sites externos (Ondo e Elena Voss) e dois cartões em vídeo (o site da Kairos e uma loja de moda como referência, em `public/media/mural/`, que só tocam na tela), cada uma rolando numa velocidade. Os cartões só apresentam (não abrem os sites); no celular o mural vira um carrossel que desliza com o dedo.
 6. **CRM, automações e IA ao vivo** ("Mais clientes chamando no seu WhatsApp"): um celular com a conversa acontecendo no WhatsApp e no Instagram (o cliente escreve, a automação responde em segundos, oferece opções, agenda), e ao lado o pipeline do Dalas CRM, onde o card da conversa entra em "Novo" e anda para "Em atendimento". As três regras (IA no atendimento, entrada no pipeline, follow-up em 24h) acendem quando disparam. Troca de canal sozinho ou pelas abas.
-7. **Como a Dalas trabalha**: linha do tempo central que se preenche com o scroll; cada etapa acende com a própria cor (ouro, prata, verde). No celular a linha fica à esquerda.
-8. **Quem cuida da sua conta**: Ryan Dalatea (CEO da Dalas Marketing) e Gustavo Licks (Kairos Growth), com mostradores girando em volta das fotos.
-9. **Chamada final** com fumaça sedosa em WebGL e mostradores girando (guardada em `secoes-salvas/`), e depois as **Dúvidas**.
-10. **Rodapé** com demonstrações e contato.
+7. **Chame a Dalas agora mesmo** (diagnóstico grátis): cartão com um feixe de luz correndo pela borda, brasas subindo e um baralho de perguntas do diagnóstico que se responde sozinho.
+8. **Como a Dalas trabalha**: linha do tempo central que se preenche com o scroll; cada etapa acende com a própria cor (ouro, prata, verde). Quando a ponta chega na asa, ela pula com clarão, ondas e faíscas. No celular a linha fica à esquerda.
+9. **Quem cuida da sua conta**: Ryan Dalatea (CEO da Dalas Marketing) e Gustavo Licks (Kairos Growth), com mostradores girando em volta das fotos.
+10. **Chamada final** com fumaça sedosa em WebGL e mostradores girando (guardada em `secoes-salvas/`), e depois as **Dúvidas**.
+11. **Rodapé** com demonstrações e contato.
 
 ## Onde editar
 
