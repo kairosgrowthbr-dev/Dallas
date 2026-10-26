@@ -2022,7 +2022,8 @@ svg use {
   box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.95);
 }
 
-.mural__item img {
+.mural__item img,
+.mural__item video {
   display: block;
   width: 100%;
   height: auto;
@@ -3784,6 +3785,7 @@ svg use {
     width: auto;
     transform: none;
     display: flex;
+    align-items: flex-start;
     gap: 14px;
     padding: 0 var(--gutter) 8px;
     overflow-x: auto;
