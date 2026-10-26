@@ -19,11 +19,11 @@ npm run preview  # testa a build
 2. **Hero**: a asa da Dalas no centro de dois mostradores que giram, com sete chips em volta como um mapa mental (Sites, Funis, CRM, Automações, IA, Anúncios, WhatsApp). Cada chip acende na sua vez, junto com a palavra do título (sites, funis, CRMs, automações, assistentes, anúncios, conversas). A logo tem raios de luz, faíscas em órbita, um reflexo metálico e inclina com o mouse. Ao fundo, a fumaça sedosa da chamada final, estrelas piscando e estrelas cadentes.
 3. **Faixa** com as mesmas sete palavras do mapa.
 4. **Serviços, "Quatro frentes. Um time só."**: quatro cartões lado a lado (sites e landing pages, funis de venda, CRM, automações e IA), cada um com ilustração animada e o que inclui; o cartão do funil mostra as etapas anúncio → página → WhatsApp → CRM → venda. No celular viram duas colunas e depois uma.
-5. **Mural de projetos**: três colunas inclinadas com a tela do site da Cento&Cinco Burger (hamburgueria de Canela, cópia estática em `public/demos/cento-cinco/`), dos sites de demonstração (Áurea Odonto, Nórdica Café, Vértice Arquitetura, Forja Box) e de dois sites externos (Ondo e Elena Voss), cada uma rolando numa velocidade. Tudo abre em nova aba.
+5. **Mural de projetos**: três colunas inclinadas com a tela do site da Cento&Cinco Burger (hamburgueria de Canela, cópia estática em `public/demos/cento-cinco/`), dos sites de demonstração (Áurea Odonto, Nórdica Café, Vértice Arquitetura, Forja Box) e de dois sites externos (Ondo e Elena Voss), cada uma rolando numa velocidade. Os cartões só apresentam (não abrem os sites); no celular o mural vira um carrossel que desliza com o dedo.
 6. **CRM, automações e IA ao vivo** ("Mais clientes chamando no seu WhatsApp"): um celular com a conversa acontecendo no WhatsApp e no Instagram (o cliente escreve, a automação responde em segundos, oferece opções, agenda), e ao lado o pipeline do Dalas CRM, onde o card da conversa entra em "Novo" e anda para "Em atendimento". As três regras (IA no atendimento, entrada no pipeline, follow-up em 24h) acendem quando disparam. Troca de canal sozinho ou pelas abas.
-7. **Como a Dalas trabalha**: linha do tempo central que se preenche com o scroll.
-8. **Quem cuida da sua conta**: Ryan Dalatea (CEO da Dalas Marketing) e Gustavo Licks (Kairos Growth).
-9. **Dúvidas** e **chamada final** com fumaça sedosa em WebGL e mostradores girando (guardada em `secoes-salvas/`).
+7. **Como a Dalas trabalha**: linha do tempo central que se preenche com o scroll; cada etapa acende com a própria cor (ouro, prata, verde). No celular a linha fica à esquerda.
+8. **Quem cuida da sua conta**: Ryan Dalatea (CEO da Dalas Marketing) e Gustavo Licks (Kairos Growth), com mostradores girando em volta das fotos.
+9. **Chamada final** com fumaça sedosa em WebGL e mostradores girando (guardada em `secoes-salvas/`), e depois as **Dúvidas**.
 10. **Rodapé** com demonstrações e contato.
 
 ## Onde editar
@@ -43,7 +43,7 @@ npm run preview  # testa a build
 
 ## Performance
 
-Scroll nativo. A seda, as estrelas e as faíscas do hero rodam em resolução baixa a 30 quadros por segundo e param fora da tela. Ilustrações dos serviços e a conversa ao vivo pausam fora da tela, a fumaça final roda em resolução baixa a 30 quadros por segundo. `prefers-reduced-motion` respeitado.
+Scroll nativo. No celular não há grão de filme, desfoque atrás do menu nem paralaxe no mural. A seda, as estrelas e as faíscas do hero rodam em resolução baixa a 30 quadros por segundo e param fora da tela. Ilustrações dos serviços e a conversa ao vivo pausam fora da tela, a fumaça final roda em resolução baixa a 30 quadros por segundo. `prefers-reduced-motion` respeitado.
 
 ## Versões guardadas
 

@@ -942,7 +942,9 @@ svg use {
   opacity: 0;
   visibility: hidden;
   transform: translateY(55%);
-  background: linear-gradient(180deg, #ffffff 0%, #f1f1f4 38%, #a2a2ad 100%);
+  background: linear-gradient(100deg, #fff8e6 0%, #f1dca6 28%, #d6b46a 50%, #f6e7bf 72%, #ffffff 100%);
+  background-size: 220% 100%;
+  background-position: 100% 0;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -952,11 +954,42 @@ svg use {
     visibility 0s 0.65s;
 }
 
+/* risco dourado que se desenha embaixo da palavra */
+.rot i::after {
+  content: '';
+  position: absolute;
+  left: 0.02em;
+  right: 0.05em;
+  bottom: -0.09em;
+  height: 0.07em;
+  border-radius: 1em;
+  background: linear-gradient(90deg, var(--gold-2), var(--gold) 55%, var(--green-2));
+  box-shadow: 0 0 14px rgba(214, 180, 106, 0.6);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.7s var(--ease);
+}
+
 .rot i.is-on {
   opacity: 1;
   visibility: visible;
   transform: none;
   transition-delay: 0s;
+  animation: word-shine 3.4s ease-in-out 0.5s infinite;
+}
+
+.rot i.is-on::after {
+  transform: scaleX(1);
+  transition-delay: 0.3s;
+}
+
+@keyframes word-shine {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: 0% 0;
+  }
 }
 
 .rot i.is-out {
@@ -1140,11 +1173,19 @@ svg use {
   color: var(--fog-300);
 }
 
+.onode {
+  scale: 1;
+  transition: scale 0.5s var(--ease);
+}
+
 .onode.is-lit {
-  border-color: rgba(241, 220, 166, 0.7);
+  scale: 1.12;
+  border-color: rgba(241, 220, 166, 0.85);
   color: #fff;
-  background: rgba(24, 22, 16, 0.95);
-  box-shadow: 0 0 34px -4px rgba(214, 180, 106, 0.55);
+  background: rgba(24, 22, 16, 0.97);
+  box-shadow:
+    0 0 0 1px rgba(241, 220, 166, 0.25),
+    0 0 40px -2px rgba(214, 180, 106, 0.7);
 }
 
 .onode.is-lit svg {
@@ -2790,29 +2831,64 @@ svg use {
   min-height: 240px;
 }
 
+/* cada etapa tem a própria cor: ouro, prata, verde (a linha é o primeiro div, por isso o +1) */
+.mstep {
+  --acc: #d6b46a;
+  --acc-rgb: 214, 180, 106;
+}
+
+.mstep:nth-of-type(3),
+.mstep:nth-of-type(7) {
+  --acc: #ececf0;
+  --acc-rgb: 236, 236, 240;
+}
+
+.mstep:nth-of-type(4),
+.mstep:nth-of-type(6) {
+  --acc: #8ee6a8;
+  --acc-rgb: 142, 230, 168;
+}
+
 .mstep__text {
   grid-column: 1;
   text-align: right;
-  padding-right: 10px;
-  opacity: 0.25;
-  filter: blur(2px);
+  padding: 18px 22px;
+  border-radius: 18px;
+  border: 1px solid transparent;
+  opacity: 0.3;
+  transform: translateX(18px);
   transition:
     opacity 0.7s var(--ease),
-    filter 0.7s var(--ease);
+    transform 0.9s var(--ease),
+    border-color 0.6s,
+    background 0.6s,
+    box-shadow 0.6s;
 }
 
 .mstep:nth-of-type(even) .mstep__text {
   grid-column: 3;
   text-align: left;
-  padding: 0 0 0 10px;
+  transform: translateX(-18px);
 }
 
 .mstep__text small {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   font-family: var(--mono);
   font-size: 11px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--acc);
+}
+
+.mstep__text small::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--acc);
+  box-shadow: 0 0 10px var(--acc);
 }
 
 .mstep__text h3 {
@@ -2879,17 +2955,21 @@ svg use {
 
 .mstep.is-on .mstep__text {
   opacity: 1;
-  filter: none;
+  transform: none;
+  border-color: rgba(var(--acc-rgb), 0.35);
+  background: linear-gradient(180deg, rgba(var(--acc-rgb), 0.09), rgba(var(--acc-rgb), 0.02));
+  box-shadow: 0 20px 50px -30px rgba(var(--acc-rgb), 0.55);
 }
 
 .mstep.is-on .mstep__node {
-  background: var(--paper);
-  color: var(--ink-950);
-  box-shadow: 0 0 30px rgba(255, 255, 255, 0.35);
+  background: var(--acc);
+  border-color: var(--acc);
+  color: #0b0b0e;
+  box-shadow: 0 0 34px rgba(var(--acc-rgb), 0.55);
 }
 
 .mstep.is-on .mstep__ghost {
-  color: rgba(255, 255, 255, 0.1);
+  color: rgba(var(--acc-rgb), 0.14);
 }
 
 .mtl__end {
@@ -2933,9 +3013,46 @@ svg use {
   text-align: center;
 }
 
+.team__orb {
+  position: relative;
+  width: min(210px, 100%);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+}
+
+.team__orb::before {
+  content: '';
+  position: absolute;
+  inset: 8%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(214, 180, 106, 0.32) 0%, rgba(63, 191, 110, 0.14) 45%, transparent 70%);
+  animation: glow 5s ease-in-out infinite alternate;
+}
+
+/* mostradores finos girando em volta da foto, como no hero */
+.team__ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: repeating-conic-gradient(from 0deg, rgba(241, 220, 166, 0.75) 0deg 1.1deg, transparent 1.1deg 6deg);
+  -webkit-mask: radial-gradient(circle closest-side, transparent 92%, #000 93%, #000 100%);
+  mask: radial-gradient(circle closest-side, transparent 92%, #000 93%, #000 100%);
+  animation: spin 50s linear infinite;
+  will-change: transform;
+}
+
+.team__ring--b {
+  inset: 5%;
+  background: repeating-conic-gradient(from 0deg, rgba(142, 230, 168, 0.6) 0deg 0.8deg, transparent 0.8deg 12deg);
+  -webkit-mask: radial-gradient(circle closest-side, transparent 94%, #000 95%, #000 100%);
+  mask: radial-gradient(circle closest-side, transparent 94%, #000 95%, #000 100%);
+  animation: spin 34s linear infinite reverse;
+}
+
 .team__photo {
   position: relative;
-  width: min(200px, 100%);
+  width: 82%;
   aspect-ratio: 1;
   border-radius: 50%;
   overflow: hidden;
@@ -2964,6 +3081,11 @@ svg use {
   height: 100%;
   object-fit: cover;
   object-position: 50% 25%;
+  transition: transform 0.8s var(--ease);
+}
+
+.team__fig:hover .team__photo img {
+  transform: scale(1.06);
 }
 
 .team__fig figcaption {
@@ -3634,9 +3756,115 @@ svg use {
 }
 
 @media (max-width: 900px) {
+  /* leveza: nada de camada fixa com textura nem desfoque atrás do menu */
+  .grain {
+    display: none;
+  }
+
+  .nav.is-solid {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: rgba(5, 5, 6, 0.94);
+  }
+
   .nav__links,
   .nav__right {
     display: none;
+  }
+
+  /* mural: um carrossel que desliza com o dedo, cada site com o nome embaixo */
+  .mural__stage {
+    height: auto;
+    margin-top: 30px;
+    overflow: visible;
+  }
+
+  .mural__grid {
+    position: static;
+    width: auto;
+    transform: none;
+    display: flex;
+    gap: 14px;
+    padding: 0 var(--gutter) 8px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .mural__grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mural__col {
+    display: contents;
+  }
+
+  .mural__item {
+    flex: none;
+    width: min(80vw, 400px);
+    scroll-snap-align: center;
+    box-shadow: none;
+  }
+
+  .mural__item span {
+    position: static;
+    display: block;
+    padding: 10px 12px 12px;
+    background: none;
+    opacity: 1;
+    transform: none;
+    color: var(--fog-300);
+  }
+
+  .mural__fade {
+    display: none;
+  }
+
+  .mural__links {
+    margin-top: 22px;
+    padding-inline: var(--gutter);
+  }
+
+  /* método: linha à esquerda, texto à direita */
+  .mtl__line {
+    left: 21px;
+    bottom: 90px;
+  }
+
+  .mstep {
+    grid-template-columns: 44px minmax(0, 1fr);
+    column-gap: 14px;
+    min-height: 0;
+    padding: 10px 0;
+  }
+
+  .mstep__text,
+  .mstep:nth-of-type(even) .mstep__text {
+    grid-column: 2;
+    text-align: left;
+    padding: 16px 18px;
+    transform: translateX(14px);
+  }
+
+  .mstep__text p,
+  .mstep:nth-of-type(even) .mstep__text p {
+    margin-left: 0;
+  }
+
+  .mstep__node {
+    grid-column: 1;
+    align-self: start;
+    margin-top: 10px;
+  }
+
+  .mstep__ghost {
+    display: none;
+  }
+
+  .mtl__end {
+    justify-items: start;
+    padding-left: 58px;
   }
 
   .nav__burger {
@@ -3701,25 +3929,6 @@ svg use {
     width: 12px;
     height: 12px;
     padding: 2px;
-  }
-
-  .mural__stage {
-    height: 70vh;
-  }
-
-  .mural__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    width: 150vw;
-    gap: 14px;
-    transform: translate(-50%, -50%) rotate(-6deg);
-  }
-
-  .mural__col {
-    gap: 14px;
-  }
-
-  .mural__col:nth-child(3) {
-    display: none;
   }
 
   .live {
@@ -3929,7 +4138,13 @@ svg use {
 
   .mstep__text {
     opacity: 1;
-    filter: none;
+    transform: none;
+  }
+
+  .team__ring,
+  .team__orb::before,
+  .rot i.is-on {
+    animation: none;
   }
 
   .band-fill {
