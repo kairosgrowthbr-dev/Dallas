@@ -23,8 +23,8 @@ export function initMural({ reduceMotion = false } = {}) {
     const speed = parseFloat(col.dataset.speed || '1');
     gsap.fromTo(
       col,
-      { y: 140 * speed },
-      { y: -240 * speed, ease: 'none', scrollTrigger: { trigger: stage, start: 'top bottom', end: 'bottom top', scrub: true } }
+      { y: 90 * speed },
+      { y: -150 * speed, ease: 'none', scrollTrigger: { trigger: stage, start: 'top bottom', end: 'bottom top', scrub: true } }
     );
   });
 }
