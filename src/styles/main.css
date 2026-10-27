@@ -3876,6 +3876,70 @@ svg use {
   filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.8));
 }
 
+/* barra fixa do diagnóstico no celular: aparece depois do topo, some perto das chamadas */
+.cta-bar {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .cta-bar {
+    position: fixed;
+    left: max(1rem, env(safe-area-inset-left));
+    right: calc(max(1rem, env(safe-area-inset-right)) + 66px);
+    bottom: max(1rem, env(safe-area-inset-bottom));
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 54px;
+    padding: 0 16px 0 8px;
+    border-radius: 16px;
+    border: 1px solid rgba(214, 180, 106, 0.55);
+    background: linear-gradient(180deg, rgba(34, 28, 16, 0.97), rgba(14, 12, 8, 0.97));
+    box-shadow: 0 18px 40px -16px rgba(0, 0, 0, 0.9), 0 0 30px -12px rgba(214, 180, 106, 0.6);
+    color: var(--gold-2);
+    opacity: 0;
+    transform: translateY(120%);
+    transition:
+      opacity 0.4s,
+      transform 0.6s var(--ease);
+    pointer-events: none;
+  }
+
+  .cta-bar.is-on {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+
+  .cta-bar b {
+    display: block;
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .cta-bar small {
+    display: block;
+    font-size: 11px;
+    color: var(--fog-300);
+  }
+
+  .cta-bar > svg {
+    margin-left: auto;
+    width: 16px;
+    height: 16px;
+    flex: none;
+  }
+
+  /* o cronômetro sobe para cima do WhatsApp */
+  .totop {
+    right: max(1rem, env(safe-area-inset-right));
+    bottom: calc(max(1rem, env(safe-area-inset-bottom)) + 64px);
+    width: 54px;
+  }
+}
+
 /* ---------- diagnóstico ---------- */
 .diag {
   position: fixed;
@@ -4084,6 +4148,37 @@ svg use {
 .diag__next--wa {
   background: linear-gradient(100deg, #2fd36f, #7ee49c);
   color: #06150b;
+}
+.diag__next--wa.is-off {
+  opacity: 0.45;
+}
+
+.diag__done {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+}
+
+.diag__done p {
+  max-width: 40ch;
+}
+
+.diag__ok {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  margin-bottom: 18px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2fd36f, #8ee6a8);
+  color: #06150b;
+  box-shadow: 0 0 0 8px rgba(63, 191, 110, 0.14), 0 0 50px rgba(63, 191, 110, 0.5);
+}
+
+.diag__ok svg {
+  width: 30px;
+  height: 30px;
+  stroke-width: 2.6;
 }
 
 .diag__links {

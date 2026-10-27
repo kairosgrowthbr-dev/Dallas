@@ -2,8 +2,8 @@ import { gsap } from 'gsap';
 
 /**
  * Botões flutuantes: o cronômetro volta ao topo e o ponteiro dele marca o
- * quanto da página já foi lido; o botão do WhatsApp pode ser arrastado e
- * volta para o canto quando solto.
+ * quanto da página já foi lido; no celular, uma barra leva ao diagnóstico;
+ * o botão do WhatsApp pode ser arrastado e volta para o canto quando solto.
  */
 export function initFloating({ reduceMotion = false } = {}) {
   const top = document.getElementById('totop');
@@ -22,6 +22,31 @@ export function initFloating({ reduceMotion = false } = {}) {
     }, { passive: true });
     update();
     top.addEventListener('click', () => window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' }));
+  }
+
+  // barra do diagnóstico no celular: depois do topo, e some quando uma chamada grande ou o rodapé está na tela
+  const bar = document.getElementById('cta-bar');
+  if (bar) {
+    const blockers = new Set();
+    let past = false;
+    const sync = () => bar.classList.toggle('is-on', past && blockers.size === 0);
+    window.addEventListener('scroll', () => {
+      const p = window.scrollY > window.innerHeight * 0.8;
+      if (p !== past) {
+        past = p;
+        sync();
+      }
+    }, { passive: true });
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => (e.isIntersecting ? blockers.add(e.target) : blockers.delete(e.target)));
+      sync();
+    });
+    ['chame', 'contato'].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) io.observe(el);
+    });
+    const footer = document.querySelector('.footer');
+    if (footer) io.observe(footer);
   }
 
   const wa = document.getElementById('wa-float');

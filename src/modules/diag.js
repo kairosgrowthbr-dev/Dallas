@@ -216,15 +216,49 @@ export function initDiag(config, { reduceMotion = false } = {}) {
       setTimeout(() => body.querySelector('[data-opt]').focus(), 60);
     } else {
       const send = document.getElementById('diag-send');
+      const ready = () => answers.nome.length >= 2;
       const sync = () => {
         answers.nome = input.value.trim();
         const link = waLink(config, message());
-        if (link) send.href = link;
+        if (link && ready()) send.href = link;
         else send.removeAttribute('href');
+        send.classList.toggle('is-off', !ready());
       };
       input.addEventListener('input', sync);
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && ready()) send.click();
+      });
       sync();
+      // sem nome não envia: o campo treme e ganha foco
+      send.addEventListener('click', (e) => {
+        if (!ready()) {
+          e.preventDefault();
+          input.focus();
+          if (!reduceMotion) gsap.fromTo(input.parentElement, { x: -8 }, { x: 0, duration: 0.5, ease: 'elastic.out(1, 0.3)' });
+          return;
+        }
+        // o WhatsApp abre em outra aba; aqui fica a confirmação
+        setTimeout(() => done(send.href), 250);
+      });
       setTimeout(() => input.focus(), 60);
+    }
+  }
+
+  function done(link) {
+    const first = (answers.nome || '').split(' ')[0];
+    label.textContent = 'Diagnóstico enviado';
+    barEls.forEach((b) => b.classList.add('is-on'));
+    body.innerHTML = `<div class="diag__done">
+      <span class="diag__ok"><svg><use href="#i-check" /></svg></span>
+      <h3 id="diag-q">Pronto${first ? `, ${esc(first)}` : ''}!</h3>
+      <p>O WhatsApp abriu com a sua mensagem e todas as respostas. É só tocar em <b>enviar</b> por lá. A Dalas responde com o diagnóstico e por onde começar.</p>
+      <a class="diag__next diag__next--wa" href="${esc(link)}" target="_blank" rel="noopener"><svg><use href="#i-wa" /></svg>Abrir o WhatsApp de novo</a>
+      <div class="diag__links"><button type="button" data-diag-close>Voltar ao site</button></div>
+    </div>`;
+    body.querySelector('[data-diag-close]').addEventListener('click', close);
+    if (!reduceMotion) {
+      gsap.fromTo(body, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' });
+      gsap.fromTo(body.querySelector('.diag__ok'), { scale: 0.4, rotate: -30 }, { scale: 1, rotate: 0, duration: 0.8, ease: 'back.out(2.2)' });
     }
   }
 
