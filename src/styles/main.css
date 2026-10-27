@@ -2015,6 +2015,19 @@ svg use {
   will-change: transform;
 }
 
+/* coluna do meio: a Kairos (segundo cartão) fica no centro do mural, inteira */
+.mural__col--mid {
+  position: relative;
+  top: calc(((min(1900px, 150vw) - 44px) / 4.8 + 22px) / -2);
+}
+
+.mural__item--kairos {
+  box-shadow:
+    0 0 0 1px rgba(241, 220, 166, 0.25),
+    0 40px 80px -30px rgba(0, 0, 0, 0.95),
+    0 0 60px -20px rgba(214, 180, 106, 0.35);
+}
+
 .mural__item {
   position: relative;
   display: block;
@@ -4326,6 +4339,18 @@ svg use {
 
   .mural__col {
     display: contents;
+  }
+
+  .mural__item {
+    order: 2;
+  }
+
+  .mural__item--cento {
+    order: 0;
+  }
+
+  .mural__item--kairos {
+    order: 1;
   }
 
   .mural__item {
