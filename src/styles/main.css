@@ -230,6 +230,9 @@ svg use {
   background: linear-gradient(180deg, #ffffff 0%, #f1f1f4 38%, #a2a2ad 100%);
   -webkit-background-clip: text;
   background-clip: text;
+  /* sem isso o degradê termina na linha e corta o pé do ç, g, p, j e o topo dos acentos */
+  padding: 0.12em 0.06em 0.22em;
+  margin: -0.12em -0.06em -0.22em;
 }
 
 .h3 {
@@ -2800,28 +2803,36 @@ svg use {
   background: rgba(255, 255, 255, 0.08);
 }
 
+.mtl {
+  --live: #f1dca6;
+  --live-rgb: 241, 220, 166;
+}
+
 .mtl__fill {
   position: absolute;
   left: 0;
   top: 0;
   width: 1px;
   height: 100%;
-  background: linear-gradient(180deg, rgba(214, 180, 106, 0), rgba(214, 180, 106, 0.8) 60%, #fff);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.35) 40%, var(--live));
   transform-origin: top;
   transform: scaleY(0);
+  transition: background 0.6s;
 }
 
+/* a ponta da linha fica na cor da etapa em que está */
 .mtl__tip {
   position: absolute;
-  left: -5px;
+  left: -6px;
   top: 0;
-  width: 11px;
-  height: 11px;
+  width: 13px;
+  height: 13px;
   border-radius: 50%;
-  background: #fff;
+  background: var(--live);
   box-shadow:
-    0 0 0 4px rgba(255, 255, 255, 0.08),
-    0 0 24px rgba(255, 255, 255, 0.9);
+    0 0 0 5px rgba(var(--live-rgb), 0.14),
+    0 0 30px rgba(var(--live-rgb), 0.95);
+  transition: background 0.5s, box-shadow 0.5s;
 }
 
 .mstep {
@@ -2832,25 +2843,41 @@ svg use {
   min-height: 240px;
 }
 
-/* cada etapa tem a própria cor: ouro, prata, verde (a linha é o primeiro div, por isso o +1) */
+/* cada etapa tem a própria cor (a linha é o primeiro div, por isso o +1):
+   ouro, ciano, verde, lilás, laranja, azul-gelo */
 .mstep {
-  --acc: #d6b46a;
-  --acc-rgb: 214, 180, 106;
+  --acc: #f1dca6;
+  --acc-rgb: 241, 220, 166;
 }
 
-.mstep:nth-of-type(3),
-.mstep:nth-of-type(7) {
-  --acc: #ececf0;
-  --acc-rgb: 236, 236, 240;
+.mstep:nth-of-type(3) {
+  --acc: #6fe3ff;
+  --acc-rgb: 111, 227, 255;
 }
 
-.mstep:nth-of-type(4),
-.mstep:nth-of-type(6) {
+.mstep:nth-of-type(4) {
   --acc: #8ee6a8;
   --acc-rgb: 142, 230, 168;
 }
 
+.mstep:nth-of-type(5) {
+  --acc: #c9a6ff;
+  --acc-rgb: 201, 166, 255;
+}
+
+.mstep:nth-of-type(6) {
+  --acc: #ffb86b;
+  --acc-rgb: 255, 184, 107;
+}
+
+.mstep:nth-of-type(7) {
+  --acc: #9fc4ff;
+  --acc-rgb: 159, 196, 255;
+}
+
 .mstep__text {
+  position: relative;
+  isolation: isolate;
   grid-column: 1;
   text-align: right;
   padding: 18px 22px;
@@ -2954,12 +2981,30 @@ svg use {
   padding: 0 20px 0 0;
 }
 
+.mstep__text::before {
+  content: '';
+  position: absolute;
+  inset: -40% -20%;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(var(--acc-rgb), 0.22), transparent);
+  opacity: 0;
+  transition: opacity 0.8s;
+  pointer-events: none;
+}
+
 .mstep.is-on .mstep__text {
   opacity: 1;
   transform: none;
-  border-color: rgba(var(--acc-rgb), 0.35);
-  background: linear-gradient(180deg, rgba(var(--acc-rgb), 0.09), rgba(var(--acc-rgb), 0.02));
-  box-shadow: 0 20px 50px -30px rgba(var(--acc-rgb), 0.55);
+  border-color: rgba(var(--acc-rgb), 0.45);
+  background: linear-gradient(180deg, rgba(var(--acc-rgb), 0.12), rgba(var(--acc-rgb), 0.03));
+  box-shadow:
+    0 0 0 1px rgba(var(--acc-rgb), 0.08),
+    0 24px 60px -30px rgba(var(--acc-rgb), 0.7);
+}
+
+.mstep.is-on .mstep__text::before {
+  opacity: 1;
 }
 
 .mstep.is-on .mstep__node {
@@ -2970,11 +3015,67 @@ svg use {
 }
 
 .mstep.is-on .mstep__ghost {
-  color: rgba(var(--acc-rgb), 0.14);
+  color: rgba(var(--acc-rgb), 0.16);
+  text-shadow: 0 0 40px rgba(var(--acc-rgb), 0.25);
+}
+
+.mstep.is-on .mstep__text h3 {
+  color: #fff;
+  text-shadow: 0 0 24px rgba(var(--acc-rgb), 0.35);
 }
 
 .method {
+  position: relative;
+  isolation: isolate;
   overflow: hidden;
+}
+
+/* fundo: a seda do hero (em resolução baixa) e raios girando atrás da linha */
+.method__silk {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1.2s;
+  -webkit-mask-image: radial-gradient(70% 60% at 50% 50%, #000 30%, transparent 100%);
+  mask-image: radial-gradient(70% 60% at 50% 50%, #000 30%, transparent 100%);
+}
+
+.method__silk.is-on {
+  opacity: 0.55;
+}
+
+.method__rays {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: -1;
+  width: min(1400px, 160vw);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  -webkit-mask-image: radial-gradient(circle, #000 10%, rgba(0, 0, 0, 0.5) 35%, transparent 62%);
+  mask-image: radial-gradient(circle, #000 10%, rgba(0, 0, 0, 0.5) 35%, transparent 62%);
+}
+
+.method__rays i {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: repeating-conic-gradient(from 0deg, rgba(241, 220, 166, 0.09) 0deg 1.6deg, transparent 1.6deg 18deg);
+  animation: spin 140s linear infinite;
+  will-change: transform;
+}
+
+.method__rays i:nth-child(2) {
+  background: repeating-conic-gradient(from 9deg, rgba(111, 227, 255, 0.08) 0deg 1.2deg, transparent 1.2deg 24deg);
+  animation: spin 110s linear infinite reverse;
+}
+
+.method.is-off .method__rays i {
+  animation-play-state: paused;
 }
 
 .mtl__end {
@@ -4295,44 +4396,6 @@ svg use {
     grid-template-columns: 1fr;
   }
 
-  .mtl__line {
-    left: 22px;
-  }
-
-  .mstep,
-  .mstep:nth-of-type(even) {
-    grid-template-columns: 44px minmax(0, 1fr);
-    gap: 18px;
-    min-height: 0;
-    padding-bottom: 54px;
-    align-items: start;
-  }
-
-  .mstep__node {
-    grid-column: 1;
-  }
-
-  .mstep__text,
-  .mstep:nth-of-type(even) .mstep__text {
-    grid-column: 2;
-    grid-row: 1;
-    text-align: left;
-    padding: 0;
-  }
-
-  .mstep__text p {
-    margin-left: 0;
-  }
-
-  .mstep__ghost {
-    display: none;
-  }
-
-  .mtl__end {
-    justify-items: start;
-    padding-left: 2px;
-  }
-
   .footer__grid {
     grid-template-columns: 1fr;
   }
@@ -4493,8 +4556,13 @@ svg use {
   }
 
   .callme__sparks,
-  .mtl__sparks {
+  .mtl__sparks,
+  .method__silk {
     display: none;
+  }
+
+  .method__rays i {
+    animation: none;
   }
 
   .band-fill {

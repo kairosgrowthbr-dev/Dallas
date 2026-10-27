@@ -60,7 +60,7 @@ function compile(gl, type, src) {
   return sh;
 }
 
-function initSilk(canvas, scale) {
+export function initSilk(canvas, scale) {
   let gl = null;
   try {
     gl = canvas.getContext('webgl', { alpha: false, antialias: false, depth: false, stencil: false, powerPreference: 'low-power' });

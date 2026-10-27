@@ -153,7 +153,7 @@ export function initDiag(config, { reduceMotion = false } = {}) {
     if (step.type === 'input') {
       html += `<label class="diag__field${step.prefix ? '' : ' diag__field--plain'}">${step.prefix ? `<span>${step.prefix}</span>` : ''}<input id="diag-input" type="text" autocomplete="off" placeholder="${esc(step.placeholder)}" value="${esc(answers[step.key] === 'não tem' ? '' : answers[step.key] || '')}" /></label>`;
       html += `<button class="diag__next" type="button" id="diag-next"${step.optional ? '' : ' disabled'}>Continuar <svg><use href="#i-r" /></svg></button>`;
-      html += `<div class="diag__links"><button type="button" id="diag-skip">${esc(step.skip)}</button><a class="wa" href="#contato" data-diag-wa><svg><use href="#i-wa" /></svg>Prefiro falar direto no WhatsApp</a></div>`;
+      html += `<div class="diag__links"><button type="button" id="diag-skip">${esc(step.skip)}</button></div>`;
     } else if (step.type === 'choice') {
       html += `<div class="diag__opts">${step.options
         .map((o) => `<button type="button" class="diag__opt${answers[step.key] === o ? ' is-on' : ''}" data-opt="${esc(o)}">${esc(o)}</button>`)
@@ -204,15 +204,6 @@ export function initDiag(config, { reduceMotion = false } = {}) {
         answers[step.key] = 'não tem';
         next();
       });
-      const wa = body.querySelector('[data-diag-wa]');
-      const link = waLink(config);
-      if (link) {
-        wa.href = link;
-        wa.target = '_blank';
-        wa.rel = 'noopener';
-      } else {
-        wa.addEventListener('click', close);
-      }
       setTimeout(() => input.focus(), 60);
     } else if (step.type === 'choice') {
       body.querySelectorAll('[data-opt]').forEach((b) =>
