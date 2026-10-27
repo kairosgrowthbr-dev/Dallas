@@ -3211,6 +3211,10 @@ svg use {
 }
 
 /* ---------- chame a Dalas: diagnóstico grátis ---------- */
+.section.callme {
+  padding-top: 0;
+}
+
 .callme__card {
   position: relative;
   isolation: isolate;
