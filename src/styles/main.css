@@ -686,28 +686,30 @@ svg use {
   gap: 22px;
 }
 
-/* seletor de idioma: PT · EN · ES */
+/* seletor de idioma: globo e PT · EN · ES, o ativo num círculo (como no site da Kairos) */
 .lang {
   display: inline-flex;
   align-items: center;
-  gap: 2px;
-  padding: 3px;
-  border-radius: 999px;
-  border: 1px solid var(--line-2);
-  background: rgba(255, 255, 255, 0.03);
+  gap: 4px;
+}
+
+.lang__globe {
+  width: 18px;
+  height: 18px;
+  margin-right: 6px;
+  color: var(--fog-400);
 }
 
 .lang a {
   display: grid;
   place-items: center;
-  min-width: 34px;
-  height: 30px;
-  padding: 0 8px;
-  border-radius: 999px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
   font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  color: var(--fog-400);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: var(--fog-500);
   transition: color 0.3s, background 0.3s;
 }
 
@@ -716,8 +718,8 @@ svg use {
 }
 
 .lang a[aria-current='true'] {
-  color: #141009;
-  background: linear-gradient(135deg, #f1dca6, #d6b46a);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.09);
 }
 
 /* botão do diagnóstico: vidro dourado com um mostrador girando dentro */
@@ -4629,10 +4631,20 @@ svg use {
     display: none;
   }
 
+  .nav__right .lang {
+    gap: 0;
+  }
+
   .nav__right .lang a {
-    min-width: 30px;
-    height: 28px;
-    padding: 0 6px;
+    width: 34px;
+    height: 34px;
+    font-size: 12px;
+  }
+
+  .lang__globe {
+    width: 16px;
+    height: 16px;
+    margin-right: 2px;
   }
 
   .nav__burger {

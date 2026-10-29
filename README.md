@@ -29,12 +29,17 @@ npm run preview  # testa a build
 12. **Grupo Kairos**: cartão apresentando o grupo (Kairos Growth e Dalas Marketing), com o monograma da Kairos entre dois mostradores girando, a asa da Dalas em contorno atrás do texto (mostradores girando, brilho e um raio de luz percorrendo as linhas), feixe de luz na borda e link para o site da Kairos.
 13. **Rodapé** com contato, selo "Uma empresa do Grupo Kairos" e links da Kairos.
 
+## Idiomas
+
+Português na raiz, inglês em `/en/` e espanhol em `/es/`, com o seletor (globo · PT · EN · ES) no cabeçalho, também no celular. As páginas em inglês e espanhol são geradas na build por `scripts/i18n-pages.mjs` a partir de `src/i18n/en.json` e `src/i18n/es.json`; o diagnóstico, a conversa do CRM e a mensagem do WhatsApp usam os mesmos dicionários via `src/i18n.js`. Para mudar um texto: altere no `index.html` e a mesma chave nos dois dicionários (sem tradução, aparece o português).
+
 ## Onde editar
 
 | O quê | Onde |
 | --- | --- |
 | WhatsApp, e-mail, Instagram | `src/config.js` |
 | Textos de todas as seções | `index.html` |
+| Traduções (inglês e espanhol) | `src/i18n/en.json` e `src/i18n/es.json` (a chave é o texto em português) |
 | Perguntas do diagnóstico | `src/modules/diag.js` (`STEPS`) |
 | Conversa e pipeline da seção ao vivo | `src/modules/crm-live.js` (`SCENES`) e `index.html` (`#pipe`) |
 | Cores, tipografia, espaçamentos | `src/styles/main.css` (bloco `:root`) |
