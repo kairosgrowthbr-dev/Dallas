@@ -3524,6 +3524,16 @@ svg use {
   transition: transform 0.8s var(--ease);
 }
 
+.team__photo--ryan img {
+  object-position: 58% 18%;
+  transform: scale(1.35);
+  transform-origin: 58% 18%;
+}
+
+.team__fig:hover .team__photo--ryan img {
+  transform: scale(1.42);
+}
+
 .team__fig:hover .team__photo img {
   transform: scale(1.06);
 }
@@ -3760,13 +3770,160 @@ svg use {
 }
 
 .footer__brand .footer__group {
-  margin-top: 10px;
+  margin-top: 14px;
   max-width: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px 6px 6px;
+  border-radius: 999px;
+  border: 1px solid rgba(214, 180, 106, 0.35);
+  background: rgba(214, 180, 106, 0.06);
   font-family: var(--mono);
   font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--gold);
+}
+
+.footer__brand .footer__group img {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+}
+
+/* ---------- grupo kairos ---------- */
+.kairos {
+  padding-top: 0;
+}
+
+.kairos__card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(30px, 5vw, 70px);
+  align-items: center;
+  padding: clamp(28px, 4.5vw, 64px);
+  border-radius: var(--radius);
+}
+
+/* feixe prateado correndo pela borda, como no cartão do diagnóstico */
+.kairos__beam {
+  position: absolute;
+  inset: -60%;
+  z-index: -2;
+  background: conic-gradient(from 180deg, transparent 0deg, transparent 240deg, rgba(255, 255, 255, 0.18) 265deg, #f5f5f7 300deg, #d6b46a 330deg, transparent 360deg);
+  animation: spin 9s linear infinite;
+  will-change: transform;
+}
+
+.kairos__card::before {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  z-index: -1;
+  border-radius: calc(var(--radius) - 1px);
+  background:
+    radial-gradient(55% 60% at 20% 50%, rgba(255, 255, 255, 0.06), transparent 70%),
+    radial-gradient(50% 40% at 90% 100%, rgba(214, 180, 106, 0.1), transparent 60%),
+    linear-gradient(180deg, #0f0f12, #09090b);
+}
+
+/* o monograma da Kairos entre dois mostradores finos */
+.kairos__mark {
+  position: relative;
+  width: min(300px, 70vw);
+  aspect-ratio: 1;
+  margin-inline: auto;
+  display: grid;
+  place-items: center;
+}
+
+.kairos__mark::before {
+  content: '';
+  position: absolute;
+  inset: 10%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.16), rgba(214, 180, 106, 0.08) 45%, transparent 70%);
+  animation: glow 6s ease-in-out infinite alternate;
+}
+
+.kairos__ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: repeating-conic-gradient(from 0deg, rgba(255, 255, 255, 0.6) 0deg 1deg, transparent 1deg 6deg);
+  -webkit-mask: radial-gradient(circle closest-side, transparent 93%, #000 94%, #000 100%);
+  mask: radial-gradient(circle closest-side, transparent 93%, #000 94%, #000 100%);
+  animation: spin 60s linear infinite;
+  will-change: transform;
+}
+
+.kairos__ring--b {
+  inset: 6%;
+  background: repeating-conic-gradient(from 0deg, rgba(214, 180, 106, 0.55) 0deg 0.8deg, transparent 0.8deg 12deg);
+  -webkit-mask: radial-gradient(circle closest-side, transparent 95%, #000 96%, #000 100%);
+  mask: radial-gradient(circle closest-side, transparent 95%, #000 96%, #000 100%);
+  animation: spin 40s linear infinite reverse;
+}
+
+.kairos__mark img {
+  position: relative;
+  width: 52%;
+  height: auto;
+  border-radius: 22%;
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  animation: float 7s ease-in-out infinite;
+}
+
+.kairos__text .h2 {
+  margin-top: 16px;
+}
+
+.kairos__text .p-lead b {
+  color: #fff;
+  font-weight: 600;
+}
+
+.kairos__list {
+  margin-top: 24px;
+  display: grid;
+  gap: 12px;
+}
+
+.kairos__list li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--fog-300);
+}
+
+.kairos__list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #f5f5f7;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+}
+
+.kairos__list b {
+  color: #fff;
+  font-weight: 700;
+}
+
+.kairos__actions {
+  margin-top: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 24px;
 }
 
 .footer__col {
@@ -4278,7 +4435,8 @@ svg use {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .callme__card {
+  .callme__card,
+  .kairos__card {
     grid-template-columns: 1fr;
   }
 
@@ -4424,8 +4582,13 @@ svg use {
     padding-left: 14px;
   }
 
-  .callme__card {
+  .callme__card,
+  .kairos__card {
     padding: 26px 20px;
+  }
+
+  .kairos__mark {
+    width: min(220px, 60vw);
   }
 
   .callme__actions .btn {
@@ -4673,6 +4836,10 @@ svg use {
   .team__orb::before,
   .rot i.is-on,
   .callme__beam,
+  .kairos__beam,
+  .kairos__ring,
+  .kairos__mark::before,
+  .kairos__mark img,
   .mtl__end.is-hit img,
   .mtl__end.is-hit .mtl__pulse,
   .mtl__end.is-hit .mtl__flare {
