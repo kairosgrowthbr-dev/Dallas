@@ -3804,6 +3804,7 @@ svg use {
 /* ---------- grupo kairos ---------- */
 .kairos {
   padding-top: 0;
+  padding-bottom: clamp(40px, 6vw, 80px);
 }
 
 .kairos__card {
