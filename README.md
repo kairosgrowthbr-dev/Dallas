@@ -23,11 +23,10 @@ npm run preview  # testa a build
 6. **CRM, automações e IA ao vivo** ("Mais clientes chamando no seu WhatsApp"): um celular com a conversa acontecendo no WhatsApp e no Instagram (o cliente escreve, a automação responde em segundos, oferece opções, agenda), e ao lado o pipeline do Dalas CRM, onde o card da conversa entra em "Novo" e anda para "Em atendimento". As três regras (IA no atendimento, entrada no pipeline, follow-up em 24h) acendem quando disparam. Troca de canal sozinho ou pelas abas.
 7. **Como a Dalas trabalha**: linha do tempo central que se preenche com o scroll, com a fumaça sedosa do hero e raios girando ao fundo; cada etapa acende com a própria cor (ouro, ciano, verde, lilás, laranja, azul) e a ponta da linha muda de cor junto. Quando a ponta chega na asa, ela pula com clarão, ondas e faíscas. No celular a linha fica à esquerda.
 8. **Quem cuida da sua conta**: Ryan Dalatea (CEO da Dalas Marketing) e Gustavo Licks (Kairos Growth), com mostradores girando em volta das fotos.
-9. **Chame a Dalas agora mesmo** (diagnóstico grátis): cartão com um feixe de luz correndo pela borda, brasas subindo e um baralho de perguntas do diagnóstico que se responde sozinho.
-10. **Chamada final** com fumaça sedosa em WebGL e mostradores girando, de ponta a ponta e com a altura da tela (guardada em `secoes-salvas/`).
-11. **Dúvidas**.
-12. **Grupo Kairos**: cartão apresentando o grupo (Kairos Growth e Dalas Marketing), com o monograma da Kairos entre dois mostradores girando, a asa da Dalas em contorno atrás do texto (mostradores girando, brilho e um raio de luz percorrendo as linhas), feixe de luz na borda e link para o site da Kairos.
-13. **Rodapé** com contato, selo "Uma empresa do Grupo Kairos" e links da Kairos.
+9. **Chamada final** com fumaça sedosa em WebGL e mostradores girando, de ponta a ponta e com a altura da tela (guardada em `secoes-salvas/`).
+10. **Dúvidas**.
+11. **Grupo Kairos**: cartão apresentando o grupo (Kairos Growth e Dalas Marketing), com o monograma da Kairos entre dois mostradores girando, a asa da Dalas em contorno atrás do texto (mostradores girando, brilho e um raio de luz percorrendo as linhas), feixe de luz na borda e link para o site da Kairos.
+12. **Rodapé** com contato, selo "Uma empresa do Grupo Kairos" e links da Kairos.
 
 ## Idiomas
 

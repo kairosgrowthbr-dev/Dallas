@@ -41,7 +41,7 @@ export function initFloating({ reduceMotion = false } = {}) {
       entries.forEach((e) => (e.isIntersecting ? blockers.add(e.target) : blockers.delete(e.target)));
       sync();
     });
-    ['chame', 'contato'].forEach((id) => {
+    ['contato'].forEach((id) => {
       const el = document.getElementById(id);
       if (el) io.observe(el);
     });
