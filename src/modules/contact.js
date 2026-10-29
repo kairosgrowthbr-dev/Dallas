@@ -1,8 +1,10 @@
+import { t } from '../i18n.js';
+
 /** Monta o link do WhatsApp com uma mensagem (vazio se o número não foi configurado). */
 export function waLink(config, text) {
   const digits = (config.whatsapp || '').replace(/\D/g, '');
   if (!digits) return '';
-  return `https://wa.me/${digits}?text=${encodeURIComponent(text || config.whatsappMessage || '')}`;
+  return `https://wa.me/${digits}?text=${encodeURIComponent(text || t(config.whatsappMessage || ''))}`;
 }
 
 /** Liga os botões de contato aos dados de src/config.js. */

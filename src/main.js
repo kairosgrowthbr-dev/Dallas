@@ -33,6 +33,15 @@ initNav();
 initDiag(siteConfig, opts);
 initFloating(opts);
 
+// recortes no formato de uma imagem: a máscara usa o endereço já resolvido da imagem vizinha
+document.querySelectorAll('[data-mask-from]').forEach((el) => {
+  const img = el.parentElement.querySelector(el.dataset.maskFrom);
+  if (!img) return;
+  const url = `url("${img.src}")`;
+  el.style.webkitMaskImage = url;
+  el.style.maskImage = url;
+});
+
 // foto que ainda não está no site: fica o monograma
 document.querySelectorAll('.team__photo img').forEach((img) => {
   const hide = () => {

@@ -1,11 +1,12 @@
 import { gsap } from 'gsap';
+import { t } from '../i18n.js';
 
 /**
  * "Chame a Dalas agora mesmo": um baralho de perguntas do diagnóstico que
  * se responde sozinho (a opção acende, o cartão sai, o próximo entra) e
  * brasas douradas subindo pelo cartão. Tudo pausa fora da tela.
  */
-const QS = [
+const RAW_QS = [
   ['Qual é a maior dor do seu negócio hoje?', ['Chegam poucos clientes', 'Chegam clientes, mas poucos fecham', 'Demoro para responder e perco venda'], 2],
   ['O que você mais quer nos próximos 3 meses?', ['Mais clientes chamando no WhatsApp', 'Vender mais para quem já chega', 'Organizar o atendimento num CRM'], 0],
   ['Como a maioria dos clientes chega até você?', ['Indicação', 'Instagram', 'Google'], 1],
@@ -13,6 +14,7 @@ const QS = [
   ['Você já anuncia hoje?', ['Sim, todo mês', 'Já anunciei e parei', 'Nunca anunciei'], 1],
   ['O que você mais precisa agora?', ['Site ou landing page', 'Anúncios no Instagram e no Google', 'CRM e automações no WhatsApp'], 2],
 ];
+const QS = RAW_QS.map(([q, opts, tap]) => [t(q), opts.map((o) => t(o)), tap]);
 const TOTAL = 9;
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 
@@ -98,7 +100,7 @@ export function initCallme({ reduceMotion = false, lowPower = false } = {}) {
   function paint(i) {
     const [q, opts, tap] = QS[i % QS.length];
     const n = (i % TOTAL) + 1;
-    front.innerHTML = `<div class="qcard__top"><span>Pergunta ${n} de ${TOTAL}</span><svg class="qring" viewBox="0 0 34 34"><circle class="bg" cx="17" cy="17" r="14" /><circle class="fg" id="qring-fg" cx="17" cy="17" r="14" stroke-dasharray="${RING}" stroke-dashoffset="${RING * (1 - n / TOTAL)}" /></svg></div><p class="qcard__q">${esc(q)}</p><div class="qcard__opts">${opts.map((o, k) => `<span data-k="${k}">${esc(o)}</span>`).join('')}</div>`;
+    front.innerHTML = `<div class="qcard__top"><span>${t('Pergunta {n} de {total}', { n, total: TOTAL })}</span><svg class="qring" viewBox="0 0 34 34"><circle class="bg" cx="17" cy="17" r="14" /><circle class="fg" id="qring-fg" cx="17" cy="17" r="14" stroke-dasharray="${RING}" stroke-dashoffset="${RING * (1 - n / TOTAL)}" /></svg></div><p class="qcard__q">${esc(q)}</p><div class="qcard__opts">${opts.map((o, k) => `<span data-k="${k}">${esc(o)}</span>`).join('')}</div>`;
     front.dataset.tap = tap;
   }
 

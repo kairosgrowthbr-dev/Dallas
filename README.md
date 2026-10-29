@@ -26,7 +26,7 @@ npm run preview  # testa a build
 9. **Chame a Dalas agora mesmo** (diagnóstico grátis): cartão com um feixe de luz correndo pela borda, brasas subindo e um baralho de perguntas do diagnóstico que se responde sozinho.
 10. **Chamada final** com fumaça sedosa em WebGL e mostradores girando, de ponta a ponta e com a altura da tela (guardada em `secoes-salvas/`).
 11. **Dúvidas**.
-12. **Grupo Kairos**: cartão apresentando o grupo (Kairos Growth e Dalas Marketing), com o monograma da Kairos entre dois mostradores girando, o mesmo monograma em contorno como marca d'água atrás do texto, feixe de luz na borda e link para o site da Kairos.
+12. **Grupo Kairos**: cartão apresentando o grupo (Kairos Growth e Dalas Marketing), com o monograma da Kairos entre dois mostradores girando, a asa da Dalas em contorno atrás do texto (mostradores girando, brilho e um raio de luz percorrendo as linhas), feixe de luz na borda e link para o site da Kairos.
 13. **Rodapé** com contato, selo "Uma empresa do Grupo Kairos" e links da Kairos.
 
 ## Onde editar

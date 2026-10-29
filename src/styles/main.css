@@ -686,6 +686,40 @@ svg use {
   gap: 22px;
 }
 
+/* seletor de idioma: PT · EN · ES */
+.lang {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 999px;
+  border: 1px solid var(--line-2);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.lang a {
+  display: grid;
+  place-items: center;
+  min-width: 34px;
+  height: 30px;
+  padding: 0 8px;
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--fog-400);
+  transition: color 0.3s, background 0.3s;
+}
+
+.lang a:hover {
+  color: #fff;
+}
+
+.lang a[aria-current='true'] {
+  color: #141009;
+  background: linear-gradient(135deg, #f1dca6, #d6b46a);
+}
+
 /* botão do diagnóstico: vidro dourado com um mostrador girando dentro */
 .nav__cta {
   position: relative;
@@ -3841,21 +3875,95 @@ svg use {
     linear-gradient(180deg, #0f0f12, #09090b);
 }
 
-/* marca d'água: o monograma em contorno, grande, atrás do texto */
-.kairos__ghost {
+/* a asa da Dalas em contorno atrás do texto, no estilo prata da Kairos:
+   mostradores girando, brilho respirando e um raio de luz percorrendo as linhas */
+.kairos__wing {
   position: absolute;
-  left: 38%;
+  left: 50%;
   top: 50%;
   z-index: 0;
-  width: min(640px, 62%);
-  height: auto;
-  translate: 0 -52%;
-  rotate: -5deg;
-  opacity: 0.16;
+  width: min(560px, 44%);
+  aspect-ratio: 588 / 730;
+  translate: 0 -50%;
   pointer-events: none;
-  -webkit-mask-image: radial-gradient(60% 60% at 50% 50%, #000 40%, transparent 100%);
-  mask-image: radial-gradient(60% 60% at 50% 50%, #000 40%, transparent 100%);
-  animation: float 12s ease-in-out infinite;
+  animation: float 11s ease-in-out infinite;
+}
+
+.kairos__wing::before {
+  content: '';
+  position: absolute;
+  inset: -10%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(255, 255, 255, 0.1), rgba(214, 180, 106, 0.05) 50%, transparent 75%);
+  animation: glow 5s ease-in-out infinite alternate;
+}
+
+.kairos__dial {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 118%;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: repeating-conic-gradient(from 0deg, rgba(255, 255, 255, 0.4) 0deg 0.7deg, transparent 0.7deg 6deg);
+  -webkit-mask: radial-gradient(circle closest-side, transparent 95%, #000 96%, #000 100%);
+  mask: radial-gradient(circle closest-side, transparent 95%, #000 96%, #000 100%);
+  opacity: 0.55;
+  animation: spin 90s linear infinite;
+  will-change: transform;
+}
+
+.kairos__dial--b {
+  width: 96%;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  -webkit-mask: none;
+  mask: none;
+  opacity: 1;
+  animation: none;
+}
+
+.kairos__wing img {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+  opacity: 0.3;
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.25));
+}
+
+/* raio de luz recortado no desenho da asa (a máscara vem do JS, para funcionar em /en/ e /es/) */
+.kairos__sweep {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+.kairos__sweep::before {
+  content: '';
+  position: absolute;
+  left: -20%;
+  right: -20%;
+  top: 0;
+  height: 45%;
+  background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.95) 45%, rgba(241, 220, 166, 0.85) 55%, transparent);
+  transform: translateY(-110%);
+  animation: wing-sweep 6s ease-in-out infinite;
+}
+
+@keyframes wing-sweep {
+  0% {
+    transform: translateY(-110%);
+  }
+  55%,
+  100% {
+    transform: translateY(240%);
+  }
 }
 
 .kairos__mark,
@@ -4507,9 +4615,28 @@ svg use {
     background: rgba(8, 8, 10, 0.78);
   }
 
-  .nav__links,
-  .nav__right {
+  .nav__links {
     display: none;
+  }
+
+  /* no celular fica só o seletor de idioma ao lado do menu */
+  .nav__right {
+    margin-left: auto;
+    gap: 8px;
+  }
+
+  .nav__right .nav__cta {
+    display: none;
+  }
+
+  .nav__right .lang a {
+    min-width: 30px;
+    height: 28px;
+    padding: 0 6px;
+  }
+
+  .nav__burger {
+    margin-left: 6px;
   }
 
   /* mural: um carrossel que desliza com o dedo, cada site com o nome embaixo */
@@ -4629,11 +4756,15 @@ svg use {
     width: min(220px, 60vw);
   }
 
-  .kairos__ghost {
-    left: -5%;
-    top: 58%;
-    width: 110%;
-    opacity: 0.12;
+  .kairos__wing {
+    left: 50%;
+    top: 62%;
+    width: min(420px, 92%);
+    translate: -50% -50%;
+  }
+
+  .kairos__wing img {
+    opacity: 0.18;
   }
 
   .callme__actions .btn {
@@ -4884,7 +5015,10 @@ svg use {
   .rot i.is-on,
   .callme__beam,
   .kairos__beam,
-  .kairos__ghost,
+  .kairos__wing,
+  .kairos__wing::before,
+  .kairos__dial,
+  .kairos__sweep::before,
   .kairos__ring,
   .kairos__mark::before,
   .kairos__mark img,

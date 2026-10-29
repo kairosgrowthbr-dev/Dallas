@@ -1,7 +1,8 @@
 import { gsap } from 'gsap';
 import { waLink } from './contact.js';
+import { t } from '../i18n.js';
 
-const STEPS = [
+const RAW_STEPS = [
   {
     key: 'perfil',
     type: 'input',
@@ -83,7 +84,17 @@ const STEPS = [
   },
 ];
 
-const LABELS = {
+// textos no idioma da página
+const STEPS = RAW_STEPS.map((st) => ({
+  ...st,
+  q: t(st.q),
+  sub: st.sub && t(st.sub),
+  placeholder: st.placeholder && t(st.placeholder),
+  skip: st.skip && t(st.skip),
+  options: st.options && st.options.map((o) => t(o)),
+}));
+
+const RAW_LABELS = {
   perfil: 'Instagram ou site',
   ramo: 'Ramo',
   dor: 'Maior dor hoje',
@@ -94,6 +105,7 @@ const LABELS = {
   resposta: 'Tempo de resposta',
   detalhe: 'Mais detalhes',
 };
+const LABELS = Object.fromEntries(Object.entries(RAW_LABELS).map(([k, v]) => [k, t(v)]));
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 
@@ -119,40 +131,40 @@ export function initDiag(config, { reduceMotion = false } = {}) {
       return r.length ? [`*${title}*`, ...r, ''] : [];
     };
     const lines = [
-      '*Diagnóstico grátis · Dalas Marketing*',
+      t('*Diagnóstico grátis · Dalas Marketing*'),
       '',
-      'Olá, Ryan! Acabei de responder o diagnóstico no site e quero a análise da Dalas para o meu negócio.',
+      t('Olá, Ryan! Acabei de responder o diagnóstico no site e quero a análise da Dalas para o meu negócio.'),
       '',
-      ...block('Quem sou', [
-        ['Nome', a.nome],
-        ['Instagram ou site', perfil],
-        ['Ramo', a.ramo],
+      ...block(t('Quem sou'), [
+        [t('Nome'), a.nome],
+        [LABELS.perfil, perfil],
+        [LABELS.ramo, a.ramo],
       ]),
-      ...block('Meu momento', [
-        ['Maior dor hoje', a.dor],
-        ['O que mais quero', a.quer],
-        ['Preciso agora de', a.precisa],
+      ...block(t('Meu momento'), [
+        [LABELS.dor, a.dor],
+        [t('O que mais quero'), a.quer],
+        [LABELS.precisa, a.precisa],
       ]),
-      ...block('Como está hoje', [
-        ['Já anuncia', a.anuncia],
-        ['Clientes chegam por', a.origem],
-        ['Tempo de resposta', a.resposta],
+      ...block(t('Como está hoje'), [
+        [LABELS.anuncia, a.anuncia],
+        [LABELS.origem, a.origem],
+        [LABELS.resposta, a.resposta],
       ]),
-      ...(a.detalhe && a.detalhe !== 'não tem' ? ['*Mais detalhes*', a.detalhe, ''] : []),
-      'Pode me responder por aqui com o diagnóstico e por onde começar?',
+      ...(a.detalhe && a.detalhe !== 'não tem' ? [`*${LABELS.detalhe}*`, a.detalhe, ''] : []),
+      t('Pode me responder por aqui com o diagnóstico e por onde começar?'),
     ];
     return lines.join('\n');
   }
 
   function render(dir = 1) {
     const step = STEPS[index];
-    label.textContent = `Passo ${index + 1} de ${STEPS.length}`;
+    label.textContent = t('Passo {n} de {total}', { n: index + 1, total: STEPS.length });
     barEls.forEach((b, i) => b.classList.toggle('is-on', i <= index));
     let html = `<h3 id="diag-q">${esc(step.q)}</h3>`;
     if (step.sub) html += `<p>${esc(step.sub)}</p>`;
     if (step.type === 'input') {
       html += `<label class="diag__field${step.prefix ? '' : ' diag__field--plain'}">${step.prefix ? `<span>${step.prefix}</span>` : ''}<input id="diag-input" type="text" autocomplete="off" placeholder="${esc(step.placeholder)}" value="${esc(answers[step.key] === 'não tem' ? '' : answers[step.key] || '')}" /></label>`;
-      html += `<button class="diag__next" type="button" id="diag-next"${step.optional ? '' : ' disabled'}>Continuar <svg><use href="#i-r" /></svg></button>`;
+      html += `<button class="diag__next" type="button" id="diag-next"${step.optional ? '' : ' disabled'}>${t('Continuar')} <svg><use href="#i-r" /></svg></button>`;
       html += `<div class="diag__links"><button type="button" id="diag-skip">${esc(step.skip)}</button></div>`;
     } else if (step.type === 'choice') {
       html += `<div class="diag__opts">${step.options
@@ -164,10 +176,10 @@ export function initDiag(config, { reduceMotion = false } = {}) {
         .filter(([k]) => answers[k] && answers[k] !== 'não tem')
         .map(([k, l]) => `<span>${esc(l)}: <b>${esc(answers[k])}</b></span>`)
         .join('')}</div>`;
-      html += `<a class="diag__next diag__next--wa" id="diag-send" href="#" target="_blank" rel="noopener"><svg><use href="#i-wa" /></svg>Enviar no WhatsApp</a>`;
+      html += `<a class="diag__next diag__next--wa" id="diag-send" href="#" target="_blank" rel="noopener"><svg><use href="#i-wa" /></svg>${t('Enviar no WhatsApp')}</a>`;
       if (!waLink(config)) html += `<p class="diag__note">O número do WhatsApp ainda não foi configurado no site.</p>`;
     }
-    if (index > 0) html += `<div class="diag__links"><button type="button" id="diag-back">Voltar</button></div>`;
+    if (index > 0) html += `<div class="diag__links"><button type="button" id="diag-back">${t('Voltar')}</button></div>`;
     body.innerHTML = html;
     if (!reduceMotion) gsap.fromTo(body, { opacity: 0, x: 18 * dir }, { opacity: 1, x: 0, duration: 0.45, ease: 'power3.out' });
     wire(step);
@@ -246,14 +258,14 @@ export function initDiag(config, { reduceMotion = false } = {}) {
 
   function done(link) {
     const first = (answers.nome || '').split(' ')[0];
-    label.textContent = 'Diagnóstico enviado';
+    label.textContent = t('Diagnóstico enviado');
     barEls.forEach((b) => b.classList.add('is-on'));
     body.innerHTML = `<div class="diag__done">
       <span class="diag__ok"><svg><use href="#i-check" /></svg></span>
-      <h3 id="diag-q">Pronto${first ? `, ${esc(first)}` : ''}!</h3>
-      <p>O WhatsApp abriu com a sua mensagem e todas as respostas. É só tocar em <b>enviar</b> por lá. A Dalas responde com o diagnóstico e por onde começar.</p>
-      <a class="diag__next diag__next--wa" href="${esc(link)}" target="_blank" rel="noopener"><svg><use href="#i-wa" /></svg>Abrir o WhatsApp de novo</a>
-      <div class="diag__links"><button type="button" data-diag-close>Voltar ao site</button></div>
+      <h3 id="diag-q">${t('Pronto{name}!', { name: first ? `, ${esc(first)}` : '' })}</h3>
+      <p>${t('O WhatsApp abriu com a sua mensagem e todas as respostas. É só tocar em <b>enviar</b> por lá. A Dalas responde com o diagnóstico e por onde começar.')}</p>
+      <a class="diag__next diag__next--wa" href="${esc(link)}" target="_blank" rel="noopener"><svg><use href="#i-wa" /></svg>${t('Abrir o WhatsApp de novo')}</a>
+      <div class="diag__links"><button type="button" data-diag-close>${t('Voltar ao site')}</button></div>
     </div>`;
     body.querySelector('[data-diag-close]').addEventListener('click', close);
     if (!reduceMotion) {

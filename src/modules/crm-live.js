@@ -1,6 +1,8 @@
 // CRM ao vivo: a conversa no WhatsApp ou no Instagram, a automação respondendo
 // e o card andando no pipeline. Tudo ilustrativo, com nomes fictícios.
 
+import { t } from '../i18n.js';
+
 const SCENES = {
   wa: {
     ini: 'CL',
@@ -52,6 +54,18 @@ const SCENES = {
     ],
   },
 };
+
+// textos da conversa no idioma da página (nomes e horários ficam)
+Object.values(SCENES).forEach((sc) => {
+  sc.status = t(sc.status);
+  sc.steps = sc.steps.map((st) => {
+    const [kind] = st;
+    if (kind === 'in' || kind === 'auto') return [kind, t(st[1]), st[2], st[3] && st[3].map((o) => t(o))].filter((v) => v !== undefined);
+    if (kind === 'sys') return [kind, st[1], t(st[2]), ...st.slice(3)];
+    if (kind === 'card') return [kind, st[1], t(st[2])];
+    return st;
+  });
+});
 
 const ORDER = ['wa', 'ig'];
 
@@ -154,7 +168,7 @@ export function initCrmLive({ reduceMotion }) {
   const bubble = (step) => {
     const [kind, text, time, opts] = step;
     const out = kind === 'auto';
-    const tag = out ? '<span class="auto"><svg><use href="#i-bolt" /></svg>IA · resposta automática</span>' : '';
+    const tag = out ? '<span class="auto"><svg><use href="#i-bolt" /></svg>' + t('IA · resposta automática') + '</span>' : '';
     const list = opts ? `<div class="cmsg__opts">${opts.map((o) => `<span>${o}</span>`).join('')}</div>` : '';
     return el(`cmsg${out ? ' cmsg--out' : ''}`, `${text}${list}<em>${tag}${time}</em>`);
   };
@@ -171,7 +185,7 @@ export function initCrmLive({ reduceMotion }) {
       const [kind] = step;
       if (kind === 'typing') {
         const typing = push(el(`ctyping${step[1] === 'out' ? ' is-out' : ''}`, '<i></i><i></i><i></i>'));
-        if (step[1] === 'in') $('chat-status').textContent = 'digitando...';
+        if (step[1] === 'in') $('chat-status').textContent = t('digitando...');
         await wait(step[2]);
         if (id !== run) return;
         typing.remove();

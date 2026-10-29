@@ -1,4 +1,5 @@
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { t } from '../i18n.js';
 
 /** Barra que ganha fundo ao rolar, link ativo conforme a seção na tela e o menu do celular. */
 export function initNav() {
@@ -27,7 +28,7 @@ export function initNav() {
   const set = (open) => {
     menu.hidden = !open;
     burger.setAttribute('aria-expanded', String(open));
-    burger.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+    burger.setAttribute('aria-label', open ? t('Fechar menu') : t('Abrir menu'));
     icon.setAttribute('href', open ? '#i-x' : '#i-menu');
     document.body.style.overflow = open ? 'hidden' : '';
   };
