@@ -549,50 +549,59 @@ svg use {
 
 /* ---------- navegação ---------- */
 /* barra inteira, transparente no topo; ao rolar ganha fundo e um risco dourado na base */
+/* cabeçalho flutuante: transparente no topo; ao rolar vira um vidro translúcido
+   solto da borda, com um risco dourado embaixo */
 .nav {
   position: fixed;
   inset-inline: 0;
   top: 0;
   z-index: 50;
-  padding: env(safe-area-inset-top) var(--gutter) 0;
-  transition: background 0.5s, box-shadow 0.5s;
+  padding: calc(env(safe-area-inset-top) + 12px) max(16px, calc(var(--gutter) - 12px)) 0;
+  pointer-events: none;
 }
 
-.nav::after {
+.nav__bar {
+  position: relative;
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  width: min(calc(var(--maxw) + 24px), 100%);
+  height: 76px;
+  margin-inline: auto;
+  padding: 0 12px;
+  border-radius: 20px;
+  border: 1px solid transparent;
+  transition:
+    height 0.5s var(--ease),
+    background 0.5s,
+    border-color 0.5s,
+    box-shadow 0.5s;
+}
+
+.nav__bar::after {
   content: '';
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  left: 18px;
+  right: 18px;
+  bottom: -1px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(214, 180, 106, 0.5) 25%, rgba(214, 180, 106, 0.5) 75%, transparent);
+  background: linear-gradient(90deg, transparent, rgba(214, 180, 106, 0.6) 25%, rgba(214, 180, 106, 0.6) 75%, transparent);
   opacity: 0;
   transition: opacity 0.5s;
 }
 
-.nav.is-solid {
-  background: rgba(5, 5, 6, 0.8);
-  -webkit-backdrop-filter: blur(16px) saturate(1.3);
-  backdrop-filter: blur(16px) saturate(1.3);
-  box-shadow: 0 20px 50px -30px rgba(0, 0, 0, 0.9);
-}
-
-.nav.is-solid::after {
-  opacity: 1;
-}
-
-.nav__bar {
-  display: flex;
-  align-items: center;
-  gap: 28px;
-  width: min(var(--maxw), 100%);
-  height: 80px;
-  margin-inline: auto;
-  transition: height 0.5s var(--ease);
-}
-
 .nav.is-solid .nav__bar {
-  height: 64px;
+  height: 62px;
+  background: rgba(10, 10, 12, 0.42);
+  border-color: rgba(255, 255, 255, 0.08);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  backdrop-filter: blur(18px) saturate(1.4);
+  box-shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.9);
+}
+
+.nav.is-solid .nav__bar::after {
+  opacity: 1;
 }
 
 .nav__brand {
@@ -3645,13 +3654,13 @@ svg use {
 .final {
   position: relative;
   isolation: isolate;
-  margin: 0 clamp(12px, 1.7vw, 24px) clamp(12px, 1.7vw, 24px);
-  min-height: 92svh;
+  margin: 0;
+  min-height: max(100svh, 760px);
   display: grid;
   place-items: center;
   overflow: hidden;
-  border-radius: 26px;
-  border: 1px solid var(--line);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
   background: radial-gradient(70% 60% at 50% 45%, #1a1a1f, #070708 75%);
 }
 
@@ -3680,7 +3689,7 @@ svg use {
 
 .final__ring {
   position: absolute;
-  width: min(1300px, 125vmin);
+  width: min(1700px, 150vmin);
   height: auto;
   aspect-ratio: 1;
 }
@@ -3692,7 +3701,7 @@ svg use {
 
 .final__ring--b {
   color: rgba(255, 255, 255, 0.18);
-  width: min(1000px, 96vmin);
+  width: min(1300px, 115vmin);
   animation: spin 200s linear infinite reverse;
 }
 
@@ -3704,7 +3713,7 @@ svg use {
 
 .final__mark {
   position: absolute;
-  width: min(560px, 60vmin);
+  width: min(760px, 78vmin);
   height: auto;
   opacity: 0.16;
 }
@@ -3718,7 +3727,7 @@ svg use {
 }
 
 .final__title {
-  font-size: clamp(3rem, 7.6vw, 7rem);
+  font-size: clamp(3rem, 8.4vw, 8rem);
   line-height: 0.98;
   letter-spacing: -0.05em;
   font-weight: 300;
@@ -4463,10 +4472,15 @@ svg use {
     display: none;
   }
 
-  .nav.is-solid {
+  .nav {
+    padding-top: calc(env(safe-area-inset-top) + 10px);
+  }
+
+  /* sem desfoque no celular (pesa); o vidro fica um pouco mais fechado para ler bem */
+  .nav.is-solid .nav__bar {
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
-    background: rgba(5, 5, 6, 0.94);
+    background: rgba(8, 8, 10, 0.78);
   }
 
   .nav__links,
@@ -4601,11 +4615,13 @@ svg use {
   }
 
   .nav__bar {
-    height: 66px;
+    height: 64px;
+    padding: 0 6px 0 10px;
+    border-radius: 18px;
   }
 
   .nav.is-solid .nav__bar {
-    height: 60px;
+    height: 58px;
   }
 
   .hero {

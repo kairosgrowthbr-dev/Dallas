@@ -24,7 +24,7 @@ npm run preview  # testa a build
 7. **Como a Dalas trabalha**: linha do tempo central que se preenche com o scroll, com a fumaça sedosa do hero e raios girando ao fundo; cada etapa acende com a própria cor (ouro, ciano, verde, lilás, laranja, azul) e a ponta da linha muda de cor junto. Quando a ponta chega na asa, ela pula com clarão, ondas e faíscas. No celular a linha fica à esquerda.
 8. **Quem cuida da sua conta**: Ryan Dalatea (CEO da Dalas Marketing) e Gustavo Licks (Kairos Growth), com mostradores girando em volta das fotos.
 9. **Chame a Dalas agora mesmo** (diagnóstico grátis): cartão com um feixe de luz correndo pela borda, brasas subindo e um baralho de perguntas do diagnóstico que se responde sozinho.
-10. **Chamada final** com fumaça sedosa em WebGL e mostradores girando (guardada em `secoes-salvas/`).
+10. **Chamada final** com fumaça sedosa em WebGL e mostradores girando, de ponta a ponta e com a altura da tela (guardada em `secoes-salvas/`).
 11. **Grupo Kairos**: cartão apresentando a Kairos Growth (Gustavo Licks), com o monograma da Kairos entre dois mostradores girando, feixe de luz na borda e links para o site e o Instagram.
 12. **Dúvidas**.
 13. **Rodapé** com contato, selo "Uma empresa do Grupo Kairos" e links da Kairos.
