@@ -3841,6 +3841,29 @@ svg use {
     linear-gradient(180deg, #0f0f12, #09090b);
 }
 
+/* marca d'água: o monograma em contorno, grande, atrás do texto */
+.kairos__ghost {
+  position: absolute;
+  left: 38%;
+  top: 50%;
+  z-index: 0;
+  width: min(640px, 62%);
+  height: auto;
+  translate: 0 -52%;
+  rotate: -5deg;
+  opacity: 0.16;
+  pointer-events: none;
+  -webkit-mask-image: radial-gradient(60% 60% at 50% 50%, #000 40%, transparent 100%);
+  mask-image: radial-gradient(60% 60% at 50% 50%, #000 40%, transparent 100%);
+  animation: float 12s ease-in-out infinite;
+}
+
+.kairos__mark,
+.kairos__text {
+  position: relative;
+  z-index: 1;
+}
+
 /* o monograma da Kairos entre dois mostradores finos */
 .kairos__mark {
   position: relative;
@@ -4606,6 +4629,13 @@ svg use {
     width: min(220px, 60vw);
   }
 
+  .kairos__ghost {
+    left: -5%;
+    top: 58%;
+    width: 110%;
+    opacity: 0.12;
+  }
+
   .callme__actions .btn {
     width: 100%;
     justify-content: space-between;
@@ -4854,6 +4884,7 @@ svg use {
   .rot i.is-on,
   .callme__beam,
   .kairos__beam,
+  .kairos__ghost,
   .kairos__ring,
   .kairos__mark::before,
   .kairos__mark img,
