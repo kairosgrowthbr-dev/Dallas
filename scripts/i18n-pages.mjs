@@ -7,7 +7,7 @@ import { resolve } from 'node:path';
  * src/i18n/<idioma>.json (a chave é o texto em português), ajusta os caminhos
  * relativos para a subpasta, o idioma da página, o link canônico e o seletor.
  */
-const SITE = 'https://ryandalatea1.github.io/Dallas/';
+const SITE = 'https://kairosgrowthbr-dev.github.io/Dallas/';
 const LANGS = {
   en: { html: 'en', locale: 'en_US' },
   es: { html: 'es', locale: 'es_ES' },
