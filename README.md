@@ -68,5 +68,6 @@ Para voltar a uma delas: `git checkout versao-lobo`, ou peça que ela seja resta
 
 - **GitHub Pages**: o workflow em `.github/workflows/deploy.yml` publica a cada push na `main`.
 - **Vercel / Netlify**: build `npm run build`, saída `dist/`.
+- **Hostinger (ou qualquer hospedagem com Apache)**: `npm run build` e envie o conteúdo de `dist/` (não a pasta em si) para `public_html`. O `.htaccess` (em `public/`) já vai junto, com compressão, cache e os tipos de vídeo. Com domínio próprio, troque o endereço `kairosgrowthbr-dev.github.io/Dallas/` pelo domínio no `index.html` (canonical, og:url, og:image, hreflang) e em `scripts/i18n-pages.mjs` (`SITE`).
 
 Caminhos relativos (`base: './'`): a mesma build funciona em subpasta ou domínio próprio. Com domínio, atualize `og:image` e `canonical` no `index.html`.

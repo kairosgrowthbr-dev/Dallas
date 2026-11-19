@@ -1,0 +1,28 @@
+# Dalas Marketing: configuração para hospedagem Apache (Hostinger)
+DirectoryIndex index.html
+Options -Indexes
+
+# tipos de arquivo que nem todo servidor conhece
+AddType video/webm .webm
+AddType image/webp .webp
+AddType application/manifest+json .webmanifest
+
+# compressão
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain application/javascript application/json image/svg+xml
+</IfModule>
+
+# cache: a página sempre nova; estilos, scripts, imagens e vídeos guardados no navegador
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault "access plus 7 days"
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/css "access plus 7 days"
+  ExpiresByType application/javascript "access plus 7 days"
+  ExpiresByType image/jpeg "access plus 30 days"
+  ExpiresByType image/png "access plus 30 days"
+  ExpiresByType image/webp "access plus 30 days"
+  ExpiresByType image/svg+xml "access plus 30 days"
+  ExpiresByType video/mp4 "access plus 30 days"
+  ExpiresByType video/webm "access plus 30 days"
+</IfModule>

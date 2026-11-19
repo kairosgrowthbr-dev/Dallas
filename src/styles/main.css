@@ -3353,14 +3353,11 @@ svg use {
   transition: transform 0.8s var(--ease);
 }
 
-.team__photo--ryan img {
-  object-position: 45% 22%;
-  transform: scale(1.5);
-  transform-origin: 45% 22%;
-}
-
+/* foto do Ryan inteira, sem aproximar (nem no hover), com o cabelo todo dentro do círculo */
+.team__photo--ryan img,
 .team__fig:hover .team__photo--ryan img {
-  transform: scale(1.57);
+  object-position: 50% 0;
+  transform: none;
 }
 
 .team__fig:hover .team__photo img {
