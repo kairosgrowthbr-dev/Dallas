@@ -1,0 +1,21 @@
+DALAS MARKETING - SITE NO SEU COMPUTADOR
+========================================
+
+1. Descompacte este zip inteiro numa pasta (por exemplo, na Área de Trabalho).
+
+WINDOWS
+2. Dê dois cliques em "Abrir-site-Windows.bat".
+   Se aparecer "O Windows protegeu o computador", clique em "Mais informações"
+   e depois em "Executar assim mesmo".
+3. O site abre sozinho no navegador em http://localhost:8080
+   Inglês: http://localhost:8080/en/   Espanhol: http://localhost:8080/es/
+4. Para parar, feche a janela preta.
+
+MAC
+2. Clique com o botão direito em "Abrir-site-Mac.command" e escolha "Abrir"
+   (na primeira vez o Mac pede essa confirmação).
+3. O site abre sozinho no navegador em http://localhost:8080
+4. Para parar, feche a janela do Terminal.
+
+Não abra o index.html com dois cliques direto: o site precisa desse
+"servidorzinho" para carregar os efeitos, os vídeos e os idiomas.
