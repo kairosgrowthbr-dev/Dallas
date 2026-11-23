@@ -6,7 +6,8 @@
   "description": "Site oficial da Dalas Marketing — sites, painéis, sistemas e tráfego.",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && vite build --config grupo/vite.config.js",
+    "dev:grupo": "vite --config grupo/vite.config.js",
     "preview": "vite preview"
   },
   "dependencies": {

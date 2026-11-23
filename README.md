@@ -64,6 +64,20 @@ A logo animada em vídeo (quadrado e vertical) está em `secoes-salvas/logo-anim
 
 Para voltar a uma delas: `git checkout versao-lobo`, ou peça que ela seja restaurada na `main`.
 
+## Página do Grupo Kairos (`grupo/`)
+
+O Grupo Kairos une a Kairos Growth e a Dalas Marketing. A página dele fica em `grupo/`, com build própria, para não mexer em nada do site da Dalas: `npm run build` gera as duas, e a do grupo sai em `dist/grupo/` (no GitHub Pages, `.../Dallas/grupo/`).
+
+```bash
+npm run dev:grupo   # só a página do grupo, em http://localhost:5173
+```
+
+- `grupo/index.html`: textos, links das duas empresas, CEOs e contatos. A marca do grupo (logo 01, "Asa no tempo") está no `<symbol id="gk-mark">` do começo do arquivo.
+- `grupo/src/mind.js`: a "mente" em 3D (three.js), que vira a marca do grupo no scroll. A forma da marca está em `MARK`, no topo do arquivo.
+- `grupo/src/main.js` e `grupo/src/style.css`: animações e estilo.
+- `grupo/public/img/`: fotos dos CEOs, logos e as telas dos dois sites. As fotos são cópias das de `public/images/team/`; se trocar uma lá, troque aqui também.
+- As 50 propostas de logo estão em `secoes-salvas/grupo-kairos-logos/`. Trocando a logo, mude o `<symbol id="gk-mark">`, o `MARK` do `mind.js`, o `favicon.svg`, o `apple-touch-icon.png` e o `og.jpg`.
+
 ## Rodar no computador (Windows ou Mac)
 
 A pasta `local/` tem os atalhos que abrem o site gerado (`dist/`) num servidorzinho em http://localhost:8080 (ou a próxima porta livre), sem instalar nada:
