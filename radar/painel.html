@@ -1369,12 +1369,27 @@ function criarLocal() {
     return q;
   };
   window.addEventListener('storage', e => { if (e.key === CH) { try { dados = JSON.parse(e.newValue || '{}') || {}; } catch (x) {} avisar(); } });
-  if (novo && location.protocol !== 'file:') {
+  // Junta as empresas do pacote (dados/leads.json) às do navegador. Cada empresa entra uma vez só:
+  // a que você excluiu não volta, e a que você já mexeu não é sobrescrita.
+  if (location.protocol !== 'file:') {
     fetch('dados/leads.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : null).then(j => {
       if (!j) return;
-      for (const x of Array.isArray(j.leads) ? j.leads : []) { if (x && typeof x.id === 'string') { const { id, ...d } = x; if (!dados['leads/' + id]) dados['leads/' + id] = d; } }
-      if (j.config && !dados['config/principal']) dados['config/principal'] = j.config;
-      salvar(); avisar();
+      let vistos; try { vistos = new Set(JSON.parse(localStorage.getItem('radar.semeados') || '[]')); } catch (e) { vistos = new Set(); }
+      if (!novo && !vistos.size) {
+        // navegador da versão anterior: conta como já recebido tudo o que veio até o último pacote aberto aqui
+        let corte = '';
+        for (const [k, d] of Object.entries(dados)) if (k.startsWith('leads/')) { vistos.add(k.slice(6)); if (/^garimpo/.test(d.origem || '') && String(d.criado_em || '') > corte) corte = String(d.criado_em); }
+        for (const x of Array.isArray(j.leads) ? j.leads : []) if (x && typeof x.id === 'string' && corte && String(x.criado_em || '') <= corte) vistos.add(x.id);
+      }
+      let mudou = false;
+      for (const x of Array.isArray(j.leads) ? j.leads : []) {
+        if (!x || typeof x.id !== 'string' || vistos.has(x.id)) continue;
+        const { id, ...d } = x; vistos.add(id);
+        if (!dados['leads/' + id]) { dados['leads/' + id] = d; mudou = true; }
+      }
+      if (j.config && !dados['config/principal']) { dados['config/principal'] = j.config; mudou = true; }
+      try { localStorage.setItem('radar.semeados', JSON.stringify([...vistos])); } catch (e) {}
+      if (mudou) { salvar(); avisar(); }
     }).catch(() => {});
   }
 
