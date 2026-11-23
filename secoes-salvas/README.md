@@ -10,5 +10,6 @@ Partes do site guardadas para usar de novo. Cada pasta tem:
 | --- | --- |
 | Chamada final com fumaça sedosa ("Sua próxima venda começa agora.") | `chamada-final-fumaca/` |
 | Logo animada (asa, mostradores, faíscas e DALAS letra por letra), em vídeo quadrado e vertical | `logo-animada/` |
+| 50 propostas de logo do Grupo Kairos, em galeria | `grupo-kairos-logos/` |
 
 Esta pasta não entra no site publicado.

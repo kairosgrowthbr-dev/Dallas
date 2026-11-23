@@ -1,0 +1,516 @@
+<title>Logos Grupo Kairos</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:wght@500;600&family=JetBrains+Mono:wght@400;500&family=Marcellus&family=Plus+Jakarta+Sans:wght@300;400;500;700;800&family=Syne:wght@600;700&family=Unbounded:wght@400;600&display=swap">
+<style>
+  /* Galeria de bancada: uma grade de "pranchas" escuras, cada uma com uma logo; um painel abre a logo em uso real. */
+  :root {
+    --ink: #060607;
+    --panel: #0d0d10;
+    --panel-2: #131317;
+    --line: rgba(236, 232, 245, 0.08);
+    --fg: #f2f1f6;
+    --muted: #8d8b98;
+    --gold: #d8b46a;
+    --violet: #a78bfa;
+    --green: #4fbf86;
+    /* tintas das logos (o painel claro troca estas) */
+    --m1: #ffffff; --m2: #a9aab3; --m3: #e9e9ef;
+    --g1: #f6e2a8; --g2: #c9a058; --g3: #8f6a2e;
+    --v1: #c4b5fd; --v2: #7c5cf0;
+    --e1: #7fe0ac; --e2: #1f8a55;
+    --t1: #ffffff; --t2: #b9bac4;
+    --display: "Cinzel", "Times New Roman", serif;
+    --sans: "Plus Jakarta Sans", system-ui, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, monospace;
+    color-scheme: dark;
+  }
+  .paper {
+    --ink: #f3f1ec;
+    --fg: #141317;
+    --m1: #2a2a30; --m2: #08080a; --m3: #4b4c53;
+    --g1: #b8893a; --g2: #8c6420; --g3: #c49a50;
+    --v1: #7c5cf0; --v2: #5b3bd1;
+    --e1: #23935a; --e2: #146b40;
+    --t1: #121215; --t2: #3b3b42;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--ink);
+    color: var(--fg);
+    font-family: var(--sans);
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1240px; margin: 0 auto; padding-block: 56px 80px; }
+  header.top { display: grid; gap: 18px; max-width: 760px; }
+  .eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold); display: flex; align-items: center; gap: 10px; }
+  .eyebrow::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 12px var(--gold); }
+  h1 { margin: 0; font-weight: 300; font-size: clamp(2.2rem, 6vw, 4.2rem); line-height: 0.98; letter-spacing: -0.04em; text-wrap: balance; }
+  h1 b { font-weight: 800; background: linear-gradient(180deg, #fff, #9c9ca8); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .lead { margin: 0; color: var(--muted); font-size: 17px; line-height: 1.6; max-width: 62ch; }
+  .lead strong { color: var(--fg); font-weight: 600; }
+
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 36px; position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; padding-block: 12px; background: linear-gradient(var(--ink) 70%, transparent); }
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--ink); }
+  .filters button {
+    font: 500 13px var(--sans); color: var(--muted); background: transparent; border: 1px solid var(--line);
+    padding: 9px 14px; border-radius: 999px; cursor: pointer; display: inline-flex; gap: 8px; align-items: center;
+  }
+  .filters button span { font-family: var(--mono); font-size: 11px; opacity: 0.7; }
+  .filters button[aria-pressed="true"] { color: var(--ink); background: var(--fg); border-color: var(--fg); }
+  .filters button:focus-visible, .card:focus-visible, .close:focus-visible, .nav-btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 14px; margin-top: 18px; }
+  .card {
+    all: unset; cursor: pointer; display: grid; grid-template-rows: auto 1fr; border-radius: 20px; overflow: hidden;
+    background: var(--panel); border: 1px solid var(--line); transition: border-color .3s, transform .3s;
+    position: relative;
+  }
+  .card:hover { border-color: rgba(216, 180, 106, 0.35); transform: translateY(-2px); }
+  .stage {
+    height: 190px; display: grid; place-items: center; padding: 20px;
+    background: radial-gradient(120% 90% at 50% 0%, #17171c 0%, var(--panel) 60%);
+    border-bottom: 1px solid var(--line);
+  }
+  .meta { padding: 14px 16px 16px; display: grid; gap: 6px; }
+  .meta-row { display: flex; align-items: baseline; gap: 10px; }
+  .num { font-family: var(--mono); font-size: 12px; color: var(--gold); font-variant-numeric: tabular-nums; }
+  .name { font-weight: 600; font-size: 15px; }
+  .fam { margin-left: auto; font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+  .idea { margin: 0; font-size: 13px; line-height: 1.5; color: var(--muted); }
+  .chip { position: absolute; top: 12px; left: 12px; font: 600 10.5px var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: #121212; background: var(--gold); padding: 5px 8px; border-radius: 999px; }
+
+  /* logo (símbolo + nome) */
+  .lk { display: flex; align-items: center; gap: 0.5em; color: var(--t1); font-size: 22px; line-height: 1; }
+  .lk svg.sym { width: 2.8em; height: 2.8em; flex: none; overflow: visible; }
+  .lk .txt { display: grid; gap: 0.32em; }
+  .lk .g { font-family: var(--mono); font-size: 0.42em; letter-spacing: 0.5em; text-transform: uppercase; color: var(--t2); }
+  .lk .k { font-size: 1em; white-space: nowrap; }
+  .lk.stack { flex-direction: column; gap: 0.55em; text-align: center; }
+  .lk.stack .txt { justify-items: center; }
+  .lk.line .txt { display: flex; gap: 0.38em; align-items: baseline; }
+  .lk.line .g { font: inherit; letter-spacing: inherit; text-transform: inherit; color: inherit; }
+  .lk.rule .txt { border-left: 1px solid currentColor; padding-left: 0.6em; border-color: color-mix(in srgb, var(--t1) 25%, transparent); }
+  .chrome { background: linear-gradient(180deg, var(--t1) 20%, var(--t2) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .goldtxt { background: linear-gradient(180deg, var(--g1), var(--g2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+  /* painel de detalhe */
+  dialog {
+    width: min(1040px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); padding: 0; border: 1px solid var(--line);
+    border-radius: 24px; background: var(--panel); color: var(--fg); overflow: auto;
+  }
+  dialog::backdrop { background: rgba(3, 3, 4, 0.78); backdrop-filter: blur(6px); }
+  .dhead { display: flex; align-items: center; gap: 12px; padding: 16px 18px; border-bottom: 1px solid var(--line); position: sticky; top: 0; background: var(--panel); z-index: 2; }
+  .dhead h2 { margin: 0; font-size: 17px; font-weight: 600; }
+  .dhead .num { font-size: 13px; }
+  .dhead .sp { flex: 1; }
+  .nav-btn, .close { all: unset; cursor: pointer; width: 38px; height: 38px; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--line); color: var(--fg); }
+  .nav-btn svg, .close svg { width: 16px; height: 16px; }
+  .dbody { display: grid; grid-template-columns: 1.3fr 1fr; gap: 12px; padding: 12px; }
+  .dbody > * { min-width: 0; }
+  .tile { border-radius: 18px; border: 1px solid var(--line); padding: 18px; display: grid; gap: 14px; align-content: start; }
+  .tile .lbl { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+  .tile.paper .lbl { color: #6f6d76; }
+  .tile.big { grid-row: span 2; background: radial-gradient(100% 80% at 50% 10%, #18181e, var(--ink)); }
+  .tile.paper { background: #f3f1ec; border-color: #e2dfd7; }
+  .tile .show { display: grid; place-items: center; min-height: 150px; }
+  .tile.big .show { min-height: 300px; }
+  .tile.big .lk { font-size: clamp(26px, 4.4vw, 40px); }
+  .icons { display: flex; align-items: end; gap: 18px; flex-wrap: wrap; }
+  .app { width: 96px; height: 96px; border-radius: 24px; background: linear-gradient(160deg, #18181d, #050506); border: 1px solid rgba(255,255,255,0.1); display: grid; place-items: center; box-shadow: 0 18px 40px -18px rgba(0,0,0,.9), inset 0 1px 0 rgba(255,255,255,.08); }
+  .app svg { width: 64px; height: 64px; }
+  .fav { display: grid; justify-items: center; gap: 6px; font: 10px var(--mono); color: var(--muted); }
+  .fav i { display: grid; place-items: center; background: #1b1b20; border-radius: 6px; }
+  .navmock { display: flex; align-items: center; gap: 18px; padding: 10px 14px; border-radius: 999px; background: rgba(255,255,255,0.03); border: 1px solid var(--line); overflow: hidden; }
+  .navmock .lk { font-size: 13px; }
+  .navmock nav { display: flex; gap: 14px; font-size: 12px; color: var(--muted); margin-left: auto; white-space: nowrap; }
+  .story { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
+  .story b { color: var(--fg); font-weight: 600; }
+  footer.note { margin-top: 48px; color: var(--muted); font-size: 14px; line-height: 1.6; max-width: 70ch; }
+  @media (max-width: 760px) {
+    .dbody { grid-template-columns: 1fr; }
+    .tile.big { grid-row: auto; }
+    .tile.big .show { min-height: 200px; }
+    .navmock nav { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { .card { transition: none; } }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <p class="eyebrow">Grupo Kairos · identidade</p>
+    <h1>50 caminhos para a logo do <b>Grupo Kairos.</b></h1>
+    <p class="lead">Kairos, em grego, é <strong>o momento certo</strong>, e o deus Kairos é desenhado com asas. Por isso as ideias misturam o mostrador e a constelação da Kairos Growth com a asa e o dourado da Dalas Marketing. Toque numa logo para ver no fundo claro, como ícone de app e no menu do site. Depois me diga os números de que você mais gostou.</p>
+  </header>
+
+  <div class="filters" id="filters" role="group" aria-label="Filtrar por família"></div>
+  <div class="grid" id="grid"></div>
+
+  <footer class="note">A <b>01</b> já está aplicada na página do Grupo Kairos. Quando você escolher outra, eu troco na página, no ícone do navegador e na imagem de compartilhamento. Dá para misturar também: o símbolo de uma com o nome de outra.</footer>
+</div>
+
+<dialog id="detail" aria-labelledby="d-title">
+  <div class="dhead">
+    <span class="num" id="d-num"></span>
+    <h2 id="d-title"></h2>
+    <span class="sp"></span>
+    <button class="nav-btn" id="d-prev" type="button" aria-label="Logo anterior"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3 5 8l5 5"/></svg></button>
+    <button class="nav-btn" id="d-next" type="button" aria-label="Próxima logo"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 3 5 5-5 5"/></svg></button>
+    <button class="close" id="d-close" type="button" aria-label="Fechar"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m4 4 8 8M12 4l-8 8"/></svg></button>
+  </div>
+  <div class="dbody">
+    <div class="tile big"><span class="lbl">Fundo escuro</span><div class="show" id="d-dark"></div><p class="story" id="d-story"></p></div>
+    <div class="tile paper"><span class="lbl">Fundo claro</span><div class="show" id="d-light"></div></div>
+    <div class="tile"><span class="lbl">Ícone e favicon</span><div class="icons" id="d-icons"></div><span class="lbl">No menu do site</span><div class="navmock" id="d-nav"></div></div>
+  </div>
+</dialog>
+
+<script>
+(() => {
+  // ---------- geometria ----------
+  const r2 = (n) => Math.round(n * 100) / 100;
+  const P = (cx, cy, r, deg) => [r2(cx + r * Math.sin((deg * Math.PI) / 180)), r2(cy - r * Math.cos((deg * Math.PI) / 180))];
+  function ticks(cx, cy, rIn, rOut, n, paint, w = 1, op = 1, major = 0, rMajor = rIn, wMajor = w) {
+    let s = '';
+    for (let i = 0; i < n; i++) {
+      const a = (360 / n) * i;
+      const isMaj = major && i % major === 0;
+      const [x1, y1] = P(cx, cy, isMaj ? rMajor : rIn, a);
+      const [x2, y2] = P(cx, cy, rOut, a);
+      s += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${paint}" stroke-width="${isMaj ? wMajor : w}" opacity="${op}"/>`;
+    }
+    return s;
+  }
+  // folha/pena: forma de lente entre dois pontos, com curvatura opcional
+  function leaf(x1, y1, x2, y2, w, bend = 0) {
+    const dx = x2 - x1, dy = y2 - y1, len = Math.hypot(dx, dy) || 1;
+    const nx = -dy / len, ny = dx / len;
+    const mx = (x1 + x2) / 2 + nx * bend, my = (y1 + y2) / 2 + ny * bend;
+    return `M${r2(x1)} ${r2(y1)}Q${r2(mx + nx * w)} ${r2(my + ny * w)} ${r2(x2)} ${r2(y2)}Q${r2(mx - nx * w)} ${r2(my - ny * w)} ${r2(x1)} ${r2(y1)}Z`;
+  }
+  function wing(rx, ry, tips, w, paint, bend = -3, op = 1) {
+    return tips.map(([x, y], i) => `<path d="${leaf(rx, ry, x, y, w * (1 - i * 0.08), bend)}" fill="${paint}" opacity="${op}"/>`).join('');
+  }
+  function star4(cx, cy, r, k = 0.18) {
+    const q = r * k;
+    return `M${cx} ${cy - r}C${cx + q} ${cy - q} ${cx + q} ${cy - q} ${cx + r} ${cy}C${cx + q} ${cy + q} ${cx + q} ${cy + q} ${cx} ${cy + r}C${cx - q} ${cy + q} ${cx - q} ${cy + q} ${cx - r} ${cy}C${cx - q} ${cy - q} ${cx - q} ${cy - q} ${cx} ${cy - r}Z`;
+  }
+  function arc(cx, cy, r, a0, a1) {
+    const [x0, y0] = P(cx, cy, r, a0), [x1, y1] = P(cx, cy, r, a1);
+    const large = ((a1 - a0 + 360) % 360) > 180 ? 1 : 0;
+    return `M${x0} ${y0}A${r} ${r} 0 ${large} 1 ${x1} ${y1}`;
+  }
+  // gerador pseudoaleatório com semente (a rede sai sempre igual)
+  function rng(seed) { return () => ((seed = (seed * 16807) % 2147483647) - 1) / 2147483646; }
+
+  // ---------- tintas por instância ----------
+  let uid = 0;
+  function paints() {
+    const p = 'k' + ++uid;
+    const lg = (id, stops) => `<linearGradient id="${p}${id}" gradientUnits="userSpaceOnUse" x1="10" y1="6" x2="90" y2="96">${stops.map(([o, v]) => `<stop offset="${o}" style="stop-color:var(${v})"/>`).join('')}</linearGradient>`;
+    const defs = `<defs>${lg('m', [[0, '--m1'], [0.55, '--m2'], [1, '--m3']])}${lg('g', [[0, '--g1'], [0.55, '--g2'], [1, '--g3']])}${lg('v', [[0, '--v1'], [1, '--v2']])}${lg('e', [[0, '--e1'], [1, '--e2']])}<filter id="${p}f" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="2.4"/></filter></defs>`;
+    return { p, defs, M: `url(#${p}m)`, G: `url(#${p}g)`, V: `url(#${p}v)`, E: `url(#${p}e)`, I: 'var(--ink)', W: 'var(--t1)', F: `url(#${p}f)` };
+  }
+
+  // ---------- os 50 símbolos (viewBox 0 0 100 100) ----------
+  const L = [
+    // ===== MONOGRAMA =====
+    { fam: 'mono', name: 'Asa no tempo', idea: 'O K é a haste da Kairos com a asa da Dalas no lugar do braço, dentro de um mostrador de 60 marcas.', lk: 'row', font: 'cinzel', txt: 'chrome', pick: true,
+      s: (c) => `${ticks(50, 50, 45, 48.5, 60, c.M, 0.7, 0.55, 5, 42.5, 1.1)}
+        <rect x="28" y="22" width="8" height="56" rx="1" fill="${c.M}"/>
+        ${wing(37, 54, [[76, 16], [81, 29], [80, 42]], 6.4, c.G, -3.5)}
+        <path d="M42 56 49 52 76 78H66Z" fill="${c.M}"/>
+        <circle cx="38" cy="54" r="6" fill="${c.G}" filter="${c.F}" opacity=".55"/>` },
+    { fam: 'mono', name: 'GK entrelaçado', idea: 'O G de Grupo abraça o K de Kairos: um arco cromado com o K dourado dentro.', lk: 'row', font: 'jakarta', txt: 'chrome',
+      s: (c) => `<path d="${arc(50, 50, 38, 96, 402)}" fill="none" stroke="${c.M}" stroke-width="6" stroke-linecap="round"/>
+        <path d="M87.8 54H70" stroke="${c.M}" stroke-width="6" stroke-linecap="round"/>
+        <path d="M36 33V67M36 52 54 33M42 46 56 67" fill="none" stroke="${c.G}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>` },
+    { fam: 'mono', name: 'Ícone de app', idea: 'O K geométrico no quadrado escuro, como o ícone da Kairos, com um ponto dourado marcando a hora.', lk: 'row', font: 'jakarta-light', txt: 'chrome',
+      s: (c) => `<rect x="8" y="8" width="84" height="84" rx="22" fill="${c.I}" stroke="${c.M}" stroke-width="1.6"/>
+        <rect x="28" y="27" width="8" height="46" fill="${c.M}"/>
+        <path d="M36 52 62 27H72L42 56Z" fill="${c.M}"/>
+        <path d="M44 50 51 47 74 73H64Z" fill="${c.M}"/>
+        <circle cx="72" cy="27" r="4.6" fill="${c.G}"/>` },
+    { fam: 'mono', name: 'K bicolor', idea: 'Cada braço do K é uma empresa: roxo para a Kairos Growth, dourado para a Dalas, unidos na mesma haste.', lk: 'row', font: 'syne', txt: 'chrome',
+      s: (c) => `<path d="M28 20 37 25V75L28 80Z" fill="${c.M}"/>
+        <path d="M40 50 70 20 79 24 49 53Z" fill="${c.V}"/>
+        <path d="M40 50 49 47 79 76 70 80Z" fill="${c.G}"/>` },
+    { fam: 'mono', name: 'K com o ponto', idea: 'Um K de traço fino e um ponto de luz onde os braços se encontram: o instante exato.', lk: 'rule', font: 'cinzel', txt: 'chrome',
+      s: (c) => `<path d="M34 20V80M34 56 70 20M47 43 72 80" fill="none" stroke="${c.M}" stroke-width="3.2" stroke-linecap="round"/>
+        <circle cx="47" cy="43" r="8" fill="${c.G}" filter="${c.F}" opacity=".8"/><circle cx="47" cy="43" r="4.4" fill="${c.G}"/>` },
+    { fam: 'mono', name: 'Corte de luz', idea: 'Um K sólido atravessado por um feixe dourado, como o brilho que passa pelos títulos dos dois sites.', lk: 'row', font: 'unbounded', txt: 'chrome',
+      s: (c) => `<mask id="${c.p}cut"><rect width="100" height="100" fill="#fff"/><path d="M14 74 86 30" stroke="#000" stroke-width="5"/></mask>
+        <g mask="url(#${c.p}cut)"><rect x="26" y="20" width="12" height="60" fill="${c.M}"/><path d="M38 50 66 20H82L46 58Z" fill="${c.M}"/><path d="M48 46 56 40 82 80H66Z" fill="${c.M}"/></g>
+        <path d="M14 74 86 30" stroke="${c.G}" stroke-width="1.4"/>` },
+    { fam: 'mono', name: 'Infinito', idea: 'Um laço sem fim: metade roxa, metade dourada. As duas empresas num ciclo contínuo.', lk: 'line', font: 'jakarta', txt: 'chrome',
+      s: (c) => `<path d="M50 50C38 31 14 31 14 50S38 69 50 50" fill="none" stroke="${c.V}" stroke-width="6" stroke-linecap="round"/>
+        <path d="M50 50C62 31 86 31 86 50S62 69 50 50" fill="none" stroke="${c.G}" stroke-width="6" stroke-linecap="round"/>
+        <circle cx="50" cy="50" r="3.2" fill="${c.W}"/>` },
+    { fam: 'mono', name: 'K no hexágono', idea: 'O hexágono é estrutura e encaixe. O K dourado fica no centro, como peça que une as outras.', lk: 'row', font: 'marcellus', txt: 'chrome',
+      s: (c) => `<path d="M50 10 84.6 30V70L50 90 15.4 70V30Z" fill="none" stroke="${c.M}" stroke-width="2.4" stroke-linejoin="round"/>
+        <path d="M41 31V69M41 53 61 31M48 46 62 69" fill="none" stroke="${c.G}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>` },
+    { fam: 'mono', name: 'Ponteiros', idea: 'A haste do K é o eixo do relógio e os braços são os ponteiros: o K marca a hora.', lk: 'row', font: 'cinzel', txt: 'goldtxt',
+      s: (c) => `<circle cx="50" cy="50" r="41" fill="none" stroke="${c.M}" stroke-width="1.6"/>${ticks(50, 50, 35, 38.5, 12, c.M, 1.6, 0.8)}
+        <path d="M42 22V78" stroke="${c.M}" stroke-width="5" stroke-linecap="round"/>
+        <path d="M42 50 64 31" stroke="${c.G}" stroke-width="5.2" stroke-linecap="round"/>
+        <path d="M42 50 70 74" stroke="${c.M}" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="42" cy="50" r="3.6" fill="${c.G}"/>` },
+    { fam: 'mono', name: 'Moeda K', idea: 'Um disco de metal com o K vazado. Funciona bem pequeno, como selo e ícone.', lk: 'row', font: 'jakarta', txt: 'chrome',
+      s: (c) => `<circle cx="50" cy="50" r="42" fill="${c.M}"/><circle cx="50" cy="50" r="36" fill="none" stroke="${c.I}" stroke-width="1" opacity=".5"/>
+        <rect x="34" y="28" width="8" height="44" fill="${c.I}"/><path d="M42 52 63 28H73L46 56Z" fill="${c.I}"/><path d="M49 49 55 45 73 72H63Z" fill="${c.I}"/>` },
+
+    // ===== TEMPO =====
+    { fam: 'tempo', name: 'O instante', idea: 'Sessenta marcas e só uma acesa. Kairos é esse minuto certo no meio de todos os outros.', lk: 'row', font: 'cinzel', txt: 'chrome',
+      s: (c) => `${ticks(50, 50, 36, 43, 60, c.M, 1, 0.45, 5, 33, 1.6)}
+        <path d="M${P(50, 50, 30, 60).join(' ')}L${P(50, 50, 47, 60).join(' ')}" stroke="${c.G}" stroke-width="3.4" stroke-linecap="round"/>
+        <circle cx="${P(50, 50, 47, 60)[0]}" cy="${P(50, 50, 47, 60)[1]}" r="6" fill="${c.G}" filter="${c.F}"/>
+        <circle cx="50" cy="50" r="4" fill="${c.W}"/>` },
+    { fam: 'tempo', name: 'Ampulheta dupla', idea: 'A parte de cima é dourada, a de baixo é roxa: duas empresas passando pelo mesmo ponto.', lk: 'row', font: 'marcellus', txt: 'chrome',
+      s: (c) => `<path d="M22 14H78M22 86H78" stroke="${c.M}" stroke-width="3" stroke-linecap="round"/>
+        <path d="M29 20H71L50 48Z" fill="${c.G}"/><path d="M50 52 71 80H29Z" fill="${c.V}"/>
+        <circle cx="50" cy="50" r="2.6" fill="${c.W}"/>` },
+    { fam: 'tempo', name: 'Eclipse', idea: 'O momento raro em que dois astros se alinham. Um crescente dourado dentro de um anel fino.', lk: 'rule', font: 'cormorant', txt: 'chrome',
+      s: (c) => `<circle cx="50" cy="50" r="42" fill="none" stroke="${c.M}" stroke-width="1.2" opacity=".7"/>
+        <mask id="${c.p}ec"><rect width="100" height="100" fill="#fff"/><circle cx="59" cy="44" r="26" fill="#000"/></mask>
+        <circle cx="50" cy="50" r="30" fill="${c.G}" mask="url(#${c.p}ec)"/>
+        <circle cx="59" cy="44" r="26" fill="none" stroke="${c.M}" stroke-width=".8" opacity=".5"/>` },
+    { fam: 'tempo', name: 'Proporção áurea', idea: 'A espiral de ouro: crescimento que segue uma ordem. Tempo, natureza e método no mesmo desenho.', lk: 'row', font: 'cormorant', txt: 'goldtxt',
+      s: (c) => `<g fill="none" stroke="${c.M}" stroke-width=".7" opacity=".35"><rect x="5.8" y="22.7" width="88.4" height="54.6"/><path d="M60.4 22.7V77.3M60.4 56.5H94.2M73.4 56.5V77.3M60.4 64.3H73.4M68.2 56.5V64.3"/></g>
+        <path d="M5.8 77.3A54.6 54.6 0 0 1 60.4 22.7A33.8 33.8 0 0 1 94.2 56.5A20.8 20.8 0 0 1 73.4 77.3A13 13 0 0 1 60.4 64.3A7.8 7.8 0 0 1 68.2 56.5A5.2 5.2 0 0 1 73.4 61.7" fill="none" stroke="${c.G}" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="70.8" cy="61" r="2.6" fill="${c.W}"/>` },
+    { fam: 'tempo', name: 'Relógio de bolso', idea: 'O relógio de bolso dos fundadores antigos: clássico, guardado perto, com o K no mostrador.', lk: 'stack', font: 'cinzel', txt: 'chrome',
+      s: (c) => `<circle cx="50" cy="12" r="4.4" fill="none" stroke="${c.M}" stroke-width="2"/><rect x="45" y="16" width="10" height="7" rx="1.5" fill="${c.M}"/>
+        <circle cx="50" cy="58" r="34" fill="none" stroke="${c.M}" stroke-width="3.4"/>${ticks(50, 58, 27, 30, 12, c.M, 1.4, 0.7)}
+        <path d="M43 44V72M43 59 57 44M48 54 58 72" fill="none" stroke="${c.G}" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>` },
+    { fam: 'tempo', name: 'Relógio de sol', idea: 'A primeira forma de medir o tempo. A sombra do ponteiro dourado aponta para o momento certo.', lk: 'row', font: 'marcellus', txt: 'chrome',
+      s: (c) => `<path d="M12 74H88" stroke="${c.M}" stroke-width="2.6" stroke-linecap="round"/>
+        ${[-70, -45, -20, 20, 45, 70].map((a) => { const [x1, y1] = P(50, 74, 30, a), [x2, y2] = P(50, 74, 36, a); return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${c.M}" stroke-width="1.6" stroke-linecap="round" opacity=".8"/>`; }).join('')}
+        <path d="M50 74 50 30 70 74Z" fill="${c.G}"/>
+        <path d="M50 74 ${P(50, 74, 34, -45).join(' ')}" stroke="${c.M}" stroke-width="1.2" stroke-dasharray="2 2.5" opacity=".7"/>` },
+    { fam: 'tempo', name: 'Duas órbitas', idea: 'A mente do grupo no centro e as duas empresas girando em volta, cada uma na sua órbita.', lk: 'row', font: 'unbounded', txt: 'chrome',
+      s: (c) => `<g transform="rotate(-28 50 50)"><ellipse cx="50" cy="50" rx="42" ry="15" fill="none" stroke="${c.G}" stroke-width="1.8"/><circle cx="92" cy="50" r="4" fill="${c.G}"/></g>
+        <g transform="rotate(28 50 50)"><ellipse cx="50" cy="50" rx="42" ry="15" fill="none" stroke="${c.V}" stroke-width="1.8"/><circle cx="8" cy="50" r="4" fill="${c.V}"/></g>
+        <circle cx="50" cy="50" r="10" fill="${c.M}"/><circle cx="50" cy="50" r="15" fill="${c.W}" opacity=".12" filter="${c.F}"/>` },
+    { fam: 'tempo', name: 'Hora exata', idea: 'Os dois ponteiros juntos apontando para uma estrela: quando tudo se alinha.', lk: 'row', font: 'cinzel', txt: 'chrome',
+      s: (c) => `${ticks(50, 50, 37, 42, 12, c.M, 2, 0.75)}
+        <path d="${star4(50, 9, 8)}" fill="${c.G}"/>
+        <path d="M50 52V22" stroke="${c.G}" stroke-width="4.4" stroke-linecap="round"/><path d="M50 52V30" stroke="${c.M}" stroke-width="7" stroke-linecap="round" opacity=".35"/>
+        <circle cx="50" cy="52" r="4.6" fill="${c.W}"/>` },
+    { fam: 'tempo', name: 'Pêndulo', idea: 'O vai e vem do pêndulo dá o ritmo. A bola dourada está no ponto mais alto, pronta para descer.', lk: 'rule', font: 'jakarta-light', txt: 'chrome',
+      s: (c) => `<path d="${arc(50, 14, 64, 146, 214)}" fill="none" stroke="${c.M}" stroke-width="1.4" stroke-dasharray="1.5 3.5" stroke-linecap="round" opacity=".8"/>
+        <path d="M50 14 ${P(50, 14, 56, 200).join(' ')}" stroke="${c.M}" stroke-width="1.2" opacity=".35"/><circle cx="${P(50, 14, 56, 200)[0]}" cy="${P(50, 14, 56, 200)[1]}" r="8" fill="none" stroke="${c.M}" stroke-width="1" opacity=".4"/>
+        <path d="M50 14 ${P(50, 14, 56, 160).join(' ')}" stroke="${c.M}" stroke-width="2.2"/><circle cx="50" cy="14" r="3.6" fill="${c.W}"/>
+        <circle cx="${P(50, 14, 56, 160)[0]}" cy="${P(50, 14, 56, 160)[1]}" r="10" fill="${c.G}"/>` },
+    { fam: 'tempo', name: 'Crescimento', idea: 'Uma curva que sobe dentro do mostrador: resultado que cresce com o tempo.', lk: 'row', font: 'syne', txt: 'chrome',
+      s: (c) => `${ticks(50, 50, 38, 43, 36, c.M, 1, 0.45)}
+        <path d="M22 74C46 72 58 58 70 30" fill="none" stroke="${c.G}" stroke-width="4.6" stroke-linecap="round"/>
+        <path d="M60 32 71 27 75 39" fill="none" stroke="${c.G}" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="22" cy="74" r="3.6" fill="${c.W}"/>` },
+
+    // ===== ASA =====
+    { fam: 'asa', name: 'Asa', idea: 'Kairos, na mitologia, tem asas: o momento passa voando. Cinco penas douradas, a mesma família da asa da Dalas.', lk: 'row', font: 'cinzel', txt: 'chrome',
+      s: (c) => wing(22, 76, [[80, 18], [86, 32], [86, 46], [80, 58], [68, 68]], 5.4, c.G, -4) },
+    { fam: 'asa', name: 'Asas gêmeas', idea: 'Duas asas nascendo do mesmo ponto: a roxa é a Kairos Growth, a dourada é a Dalas.', lk: 'stack', font: 'cinzel', txt: 'chrome',
+      s: (c) => `${wing(48, 78, [[12, 26], [10, 42], [16, 56]], 4.6, c.V, 3)}${wing(52, 78, [[88, 26], [90, 42], [84, 56]], 4.6, c.G, -3)}<circle cx="50" cy="80" r="3.4" fill="${c.W}"/>` },
+    { fam: 'asa', name: 'Asa com halo', idea: 'A asa dentro de um anel, como uma moeda antiga com a figura do deus Kairos.', lk: 'row', font: 'cormorant', txt: 'goldtxt',
+      s: (c) => `<circle cx="50" cy="50" r="43" fill="none" stroke="${c.M}" stroke-width="1.6"/><circle cx="50" cy="50" r="38" fill="none" stroke="${c.M}" stroke-width=".6" opacity=".5"/>${wing(30, 70, [[70, 26], [74, 37], [73, 48], [66, 58]], 4.2, c.G, -3)}` },
+    { fam: 'asa', name: 'Ampulheta alada', idea: 'O tempo que voa. Uma ampulheta pequena com uma asa de cada lado.', lk: 'row', font: 'marcellus', txt: 'chrome',
+      s: (c) => `${wing(40, 50, [[6, 30], [6, 42], [10, 53]], 3.6, c.M, 2)}${wing(60, 50, [[94, 30], [94, 42], [90, 53]], 3.6, c.M, -2)}
+        <path d="M40 26H60M40 74H60" stroke="${c.G}" stroke-width="2.6" stroke-linecap="round"/><path d="M42 30H58L50 49Z" fill="${c.G}"/><path d="M50 51 58 70H42Z" fill="${c.G}"/>` },
+    { fam: 'asa', name: 'Pena', idea: 'Uma pena só, desenhada à mão. Leve, elegante e fácil de reconhecer.', lk: 'rule', font: 'cormorant', txt: 'chrome',
+      s: (c) => `<path d="${leaf(22, 84, 80, 14, 13, -3)}" fill="${c.G}"/>
+        <path d="M22 84 80 14" stroke="${c.I}" stroke-width="1.6" opacity=".8"/>
+        ${[0.3, 0.42, 0.54, 0.66].map((t) => { const x = 22 + 58 * t, y = 84 - 70 * t; return `<path d="M${r2(x)} ${r2(y)}l7 3" stroke="${c.I}" stroke-width="1" opacity=".55"/>`; }).join('')}
+        <path d="M14 92 24 81" stroke="${c.M}" stroke-width="2.4" stroke-linecap="round"/>` },
+    { fam: 'asa', name: 'Escudo alado', idea: 'Proteção e velocidade: um escudo com a asa dourada dentro.', lk: 'row', font: 'cinzel', txt: 'chrome',
+      s: (c) => `<path d="M50 9 83 20V47C83 70 67 84 50 91 33 84 17 70 17 47V20Z" fill="none" stroke="${c.M}" stroke-width="2.6" stroke-linejoin="round"/>${wing(32, 70, [[68, 28], [72, 39], [70, 50], [63, 59]], 4, c.G, -3)}` },
+    { fam: 'asa', name: 'Três penas', idea: 'Três arcos que lembram a asa da Dalas, sem o detalhe. Simples o bastante para bordar ou gravar.', lk: 'row', font: 'jakarta', txt: 'chrome',
+      s: (c) => `<path d="M20 80C24 44 44 24 82 18" fill="none" stroke="${c.G}" stroke-width="7" stroke-linecap="round"/>
+        <path d="M34 82C38 56 54 40 84 34" fill="none" stroke="${c.G}" stroke-width="5.6" stroke-linecap="round" opacity=".85"/>
+        <path d="M48 84C52 66 64 56 84 50" fill="none" stroke="${c.M}" stroke-width="4.4" stroke-linecap="round"/>` },
+    { fam: 'asa', name: 'Ascensão', idea: 'Três divisas apontando para cima, como penas em voo: o crescimento do grupo.', lk: 'row', font: 'unbounded', txt: 'chrome',
+      s: (c) => `<path d="M18 50 50 18 82 50" fill="none" stroke="${c.M}" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M24 68 50 42 76 68" fill="none" stroke="${c.G}" stroke-width="5.2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M32 84 50 66 68 84" fill="none" stroke="${c.G}" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round" opacity=".7"/>` },
+    { fam: 'asa', name: 'Disco alado', idea: 'O sol com asas abertas para os dois lados: um grupo que olha para o Brasil e para fora.', lk: 'stack', font: 'marcellus', txt: 'chrome',
+      s: (c) => `${wing(38, 50, [[2, 40], [6, 50], [12, 59]], 3.4, c.M, 1.5)}${wing(62, 50, [[98, 40], [94, 50], [88, 59]], 3.4, c.M, -1.5)}
+        <circle cx="50" cy="50" r="12" fill="${c.G}"/><circle cx="50" cy="50" r="17" fill="none" stroke="${c.G}" stroke-width="1" opacity=".6"/>` },
+    { fam: 'asa', name: 'Pena e estrela', idea: 'A pena que escreve a história e a estrela que marca o momento de agir.', lk: 'row', font: 'cormorant', txt: 'goldtxt',
+      s: (c) => `<path d="${leaf(20, 86, 66, 30, 11, -2)}" fill="${c.M}"/><path d="M20 86 66 30" stroke="${c.I}" stroke-width="1.4" opacity=".7"/>
+        <path d="${star4(78, 18, 13)}" fill="${c.G}"/><circle cx="78" cy="18" r="5" fill="${c.G}" filter="${c.F}"/>` },
+
+    // ===== MENTE =====
+    { fam: 'mente', name: 'Constelação', idea: 'O K desenhado como uma constelação, com a rede de pontos do site da Kairos.', lk: 'row', font: 'jakarta-light', txt: 'chrome',
+      s: (c) => { const n = [[30, 20], [30, 50], [30, 80], [51, 34], [72, 18], [46, 46], [59, 63], [73, 82]]; const e = [[0, 1], [1, 2], [1, 3], [3, 4], [5, 6], [6, 7]];
+        return `${[[12, 30], [88, 46], [16, 64], [86, 70], [62, 8]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="1.1" fill="${c.W}" opacity=".5"/>`).join('')}
+          ${e.map(([a, b]) => `<line x1="${n[a][0]}" y1="${n[a][1]}" x2="${n[b][0]}" y2="${n[b][1]}" stroke="${c.M}" stroke-width="1.3" opacity=".75"/>`).join('')}
+          ${n.map(([x, y], i) => i === 3 ? `<circle cx="${x}" cy="${y}" r="7" fill="${c.G}" filter="${c.F}" opacity=".9"/><circle cx="${x}" cy="${y}" r="4.2" fill="${c.G}"/>` : `<circle cx="${x}" cy="${y}" r="3.2" fill="${c.M}"/>`).join('')}`; } },
+    { fam: 'mente', name: 'Duas mentes', idea: 'Um cérebro com duas metades: a roxa cuida do tráfego e da IA, a dourada do site e do CRM.', lk: 'row', font: 'syne', txt: 'chrome',
+      s: (c) => `<path d="M46 16C26 16 14 32 16 50 14 68 26 84 46 84" fill="none" stroke="${c.V}" stroke-width="4.4" stroke-linecap="round"/>
+        <path d="M46 32C36 32 30 38 30 44M46 52C34 50 26 56 26 62M46 70C40 68 34 70 33 76" fill="none" stroke="${c.V}" stroke-width="3" stroke-linecap="round"/>
+        <path d="M54 16C74 16 86 32 84 50 86 68 74 84 54 84" fill="none" stroke="${c.G}" stroke-width="4.4" stroke-linecap="round"/>
+        <path d="M54 32C64 32 70 38 70 44M54 52C66 50 74 56 74 62M54 70C60 68 66 70 67 76" fill="none" stroke="${c.G}" stroke-width="3" stroke-linecap="round"/>
+        <path d="M50 22V78" stroke="${c.M}" stroke-width="1.2" stroke-dasharray="2 3"/>` },
+    { fam: 'mente', name: 'Rede', idea: 'Uma esfera de conexões, como neurônios. Alguns nós dourados são as decisões que importam.', lk: 'row', font: 'jakarta', txt: 'chrome',
+      s: (c) => { const rnd = rng(7); const pts = []; let tries = 0; while (pts.length < 24 && tries++ < 4000) { const a = rnd() * Math.PI * 2, d = Math.sqrt(rnd()) * 36, q = [r2(50 + Math.cos(a) * d), r2(50 + Math.sin(a) * d)]; if (pts.every((o) => Math.hypot(o[0] - q[0], o[1] - q[1]) > 11)) pts.push(q); }
+        let s = `<circle cx="50" cy="50" r="42" fill="none" stroke="${c.M}" stroke-width="1.4"/>`;
+        for (let i = 0; i < pts.length; i++) for (let j = i + 1; j < pts.length; j++) { const d = Math.hypot(pts[i][0] - pts[j][0], pts[i][1] - pts[j][1]); if (d < 19) s += `<line x1="${pts[i][0]}" y1="${pts[i][1]}" x2="${pts[j][0]}" y2="${pts[j][1]}" stroke="${c.M}" stroke-width=".8" opacity=".55"/>`; }
+        return s + pts.map(([x, y], i) => `<circle cx="${x}" cy="${y}" r="${i % 6 === 0 ? 3.4 : 2}" fill="${i % 6 === 0 ? c.G : c.M}"/>`).join(''); } },
+    { fam: 'mente', name: 'Visão', idea: 'Um olho com o mostrador na íris: enxergar o momento antes dos outros.', lk: 'row', font: 'cinzel', txt: 'chrome',
+      s: (c) => `<path d="M8 50Q50 10 92 50Q50 90 8 50Z" fill="none" stroke="${c.M}" stroke-width="2.8" stroke-linejoin="round"/>
+        <circle cx="50" cy="50" r="17" fill="none" stroke="${c.G}" stroke-width="2"/>${ticks(50, 50, 11.5, 15, 24, c.G, 1, 0.8)}
+        <circle cx="50" cy="50" r="7" fill="${c.G}"/><circle cx="53" cy="47" r="2" fill="${c.W}"/>` },
+    { fam: 'mente', name: 'Interseção', idea: 'Dois círculos, duas empresas. O grupo é a área do meio, onde as duas trabalham juntas.', lk: 'row', font: 'marcellus', txt: 'chrome',
+      s: (c) => `<circle cx="38" cy="50" r="26" fill="none" stroke="${c.V}" stroke-width="2.6"/><circle cx="62" cy="50" r="26" fill="none" stroke="${c.G}" stroke-width="2.6"/>
+        <path d="M50 26.93A26 26 0 0 1 50 73.07A26 26 0 0 1 50 26.93Z" fill="${c.M}"/>` },
+    { fam: 'mente', name: 'Núcleo', idea: 'Um núcleo com três órbitas: estratégia, tráfego e tecnologia girando em volta da mesma ideia.', lk: 'row', font: 'unbounded', txt: 'chrome',
+      s: (c) => `${[0, 60, 120].map((a, i) => `<g transform="rotate(${a} 50 50)"><ellipse cx="50" cy="50" rx="42" ry="14" fill="none" stroke="${c.M}" stroke-width="1.5" opacity=".85"/><circle cx="${i === 1 ? 8 : 92}" cy="50" r="3" fill="${i === 0 ? c.G : c.M}"/></g>`).join('')}
+        <circle cx="50" cy="50" r="8" fill="${c.G}"/>` },
+    { fam: 'mente', name: 'Insight', idea: 'O brilho de uma boa ideia. Uma estrela de quatro pontas dentro de um anel fino.', lk: 'rule', font: 'jakarta', txt: 'chrome',
+      s: (c) => `<circle cx="50" cy="50" r="40" fill="none" stroke="${c.M}" stroke-width="1.4"/>
+        <circle cx="50" cy="50" r="16" fill="${c.G}" opacity=".35" filter="${c.F}"/>
+        <path d="${star4(50, 50, 32, 0.12)}" fill="${c.G}"/><path d="${star4(80, 22, 8, 0.15)}" fill="${c.W}"/>` },
+    { fam: 'mente', name: 'Estratégia', idea: 'Um labirinto redondo com a saída no centro: o grupo pensa o caminho antes de andar.', lk: 'row', font: 'syne', txt: 'chrome',
+      s: (c) => `${[[38, 30, 300], [29, 120, 470], [20, 210, 520], [11, 20, 300]].map(([r, a0, a1]) => `<path d="${arc(50, 50, r, a0, a1)}" fill="none" stroke="${c.M}" stroke-width="3.4" stroke-linecap="round"/>`).join('')}
+        <circle cx="50" cy="50" r="4.4" fill="${c.G}"/>` },
+    { fam: 'mente', name: 'Tríade', idea: 'Três pontos ligados: o grupo em cima, a Kairos e a Dalas na base. Cada um sustenta os outros.', lk: 'row', font: 'jakarta-light', txt: 'chrome',
+      s: (c) => `<path d="M50 18 18 76H82Z" fill="none" stroke="${c.M}" stroke-width="1.6" stroke-linejoin="round" opacity=".7"/>
+        <path d="M50 18V56M18 76 50 56 82 76" stroke="${c.M}" stroke-width="1" opacity=".45"/>
+        <circle cx="50" cy="18" r="8.4" fill="${c.M}"/><circle cx="18" cy="76" r="7" fill="${c.V}"/><circle cx="82" cy="76" r="7" fill="${c.G}"/><circle cx="50" cy="56" r="3" fill="${c.W}"/>` },
+    { fam: 'mente', name: 'Radar', idea: 'O radar que acha a oportunidade. Um ponto dourado aparece no rastro da varredura.', lk: 'row', font: 'unbounded', txt: 'chrome',
+      s: (c) => `${[14, 27, 40].map((r) => `<circle cx="50" cy="50" r="${r}" fill="none" stroke="${c.M}" stroke-width="1.2" opacity=".55"/>`).join('')}
+        <path d="M50 50L${P(50, 50, 40, 20).join(' ')}A40 40 0 0 1 ${P(50, 50, 40, 70).join(' ')}Z" fill="${c.G}" opacity=".35"/>
+        <path d="M50 50 ${P(50, 50, 40, 70).join(' ')}" stroke="${c.G}" stroke-width="2.4" stroke-linecap="round"/>
+        <circle cx="${P(50, 50, 30, 45)[0]}" cy="${P(50, 50, 30, 45)[1]}" r="4.6" fill="${c.G}"/><circle cx="50" cy="50" r="3" fill="${c.W}"/>` },
+
+    // ===== CLÁSSICO =====
+    { fam: 'classico', name: 'Kappa e louros', idea: 'A letra grega Kappa, inicial de Kairos, dentro de uma coroa de louros: vitória no momento certo.', lk: 'stack', font: 'cinzel', txt: 'goldtxt',
+      s: (c) => { let s = `<path d="${arc(50, 52, 36, 202, 318)}" fill="none" stroke="${c.G}" stroke-width="1.4" stroke-linecap="round"/><path d="${arc(50, 52, 36, 42, 158)}" fill="none" stroke="${c.G}" stroke-width="1.4" stroke-linecap="round"/>`;
+        for (const side of [-1, 1]) for (let i = 0; i < 7; i++) { const a = 180 + side * (24 + i * 17), rad = (a * Math.PI) / 180; const [x, y] = P(50, 52, 36, a); const tx = side * Math.cos(rad), ty = side * Math.sin(rad), ox = Math.sin(rad), oy = -Math.cos(rad);
+          s += `<path d="${leaf(x, y, x + tx * 9 + ox * 4.5, y + ty * 9 + oy * 4.5, 2.4)}" fill="${c.G}"/><path d="${leaf(x, y, x + tx * 8 - ox * 3.5, y + ty * 8 - oy * 3.5, 2.1)}" fill="${c.G}" opacity=".8"/>`; }
+        return s + `<text x="50" y="66" text-anchor="middle" font-family="Cinzel, serif" font-weight="600" font-size="40" fill="${c.M}">K</text>`; } },
+    { fam: 'classico', name: 'Pilar', idea: 'Uma coluna grega: o grupo é o pilar que segura as duas empresas.', lk: 'row', font: 'cinzel', txt: 'chrome',
+      s: (c) => `<path d="M24 20H76" stroke="${c.G}" stroke-width="5" stroke-linecap="round"/><path d="M30 27C30 31 36 31 36 27M70 27C70 31 64 31 64 27" fill="none" stroke="${c.M}" stroke-width="2"/>
+        <path d="M32 27H68" stroke="${c.M}" stroke-width="2.4"/>
+        <path d="M37 33V72M45 33V72M55 33V72M63 33V72" stroke="${c.M}" stroke-width="3.6" stroke-linecap="round"/>
+        <path d="M30 78H70M24 85H76" stroke="${c.M}" stroke-width="3.6" stroke-linecap="round"/>` },
+    { fam: 'classico', name: 'Grega', idea: 'Os cantos com o desenho da grega, o padrão dos templos. O K dourado no meio.', lk: 'row', font: 'marcellus', txt: 'goldtxt',
+      s: (c) => `<rect x="12" y="12" width="76" height="76" fill="none" stroke="${c.M}" stroke-width="2"/>
+        ${[[0, 0], [1, 0], [1, 1], [0, 1]].map(([i, j]) => `<path d="M10 10h14v14h-8v-6h-2" fill="none" stroke="${c.M}" stroke-width="2.2" transform="translate(${i ? 100 : 0} ${j ? 100 : 0}) scale(${i ? -1 : 1} ${j ? -1 : 1})"/>`).join('')}
+        <text x="50" y="65" text-anchor="middle" font-family="Cinzel, serif" font-weight="700" font-size="42" fill="${c.G}">K</text>` },
+    { fam: 'classico', name: 'Medalha', idea: 'Uma medalha com o lema escrito na borda. Fica bonita em convite, selo e bordado.', lk: 'row', font: 'cinzel', txt: 'chrome',
+      s: (c) => `<circle cx="50" cy="50" r="46" fill="none" stroke="${c.M}" stroke-width="1.2"/><circle cx="50" cy="50" r="31" fill="none" stroke="${c.G}" stroke-width="1.6"/>
+        <path id="${c.p}tp" d="M50 12A38 38 0 1 1 49.9 12" fill="none"/>
+        <text font-family="JetBrains Mono, monospace" font-size="7.6" letter-spacing="2.2" fill="${c.M}"><textPath href="#${c.p}tp">GRUPO KAIROS · O MOMENTO CERTO ·</textPath></text>
+        <text x="50" y="62" text-anchor="middle" font-family="Cinzel, serif" font-weight="600" font-size="32" fill="${c.G}">K</text>` },
+    { fam: 'classico', name: 'Brasão', idea: 'Um brasão com o K e duas estrelas, uma para cada empresa do grupo.', lk: 'stack', font: 'cinzel', txt: 'chrome',
+      s: (c) => `<path d="M50 8 84 18V46C84 70 68 84 50 92 32 84 16 70 16 46V18Z" fill="${c.I}" stroke="${c.G}" stroke-width="2.4" stroke-linejoin="round"/>
+        <path d="M22 24 50 15.5 78 24" fill="none" stroke="${c.G}" stroke-width="1" opacity=".6"/>
+        <path d="${star4(38, 30, 5)}" fill="${c.V}"/><path d="${star4(62, 30, 5)}" fill="${c.G}"/>
+        <text x="50" y="72" text-anchor="middle" font-family="Cinzel, serif" font-weight="700" font-size="36" fill="${c.M}">K</text>` },
+    { fam: 'classico', name: 'Louro', idea: 'Um ramo de louro curvado e um ponto dourado na ponta: a conquista que chega na hora certa.', lk: 'row', font: 'cormorant', txt: 'chrome',
+      s: (c) => { const B = [[46, 90], [16, 76], [10, 40], [36, 12]]; let s = `<path d="M46 90C16 76 10 40 36 12" fill="none" stroke="${c.M}" stroke-width="2" stroke-linecap="round"/>`;
+        for (let i = 0; i < 6; i++) { const t = 0.14 + i * 0.15, u = 1 - t; const x = u ** 3 * B[0][0] + 3 * u * u * t * B[1][0] + 3 * u * t * t * B[2][0] + t ** 3 * B[3][0], y = u ** 3 * B[0][1] + 3 * u * u * t * B[1][1] + 3 * u * t * t * B[2][1] + t ** 3 * B[3][1];
+          const dx = 3 * u * u * (B[1][0] - B[0][0]) + 6 * u * t * (B[2][0] - B[1][0]) + 3 * t * t * (B[3][0] - B[2][0]), dy = 3 * u * u * (B[1][1] - B[0][1]) + 6 * u * t * (B[2][1] - B[1][1]) + 3 * t * t * (B[3][1] - B[2][1]); const l = Math.hypot(dx, dy), tx = dx / l, ty = dy / l;
+          s += `<path d="${leaf(x, y, x + tx * 10 - ty * 6, y + ty * 10 + tx * 6, 2.8)}" fill="${c.G}"/><path d="${leaf(x, y, x + tx * 10 + ty * 6, y + ty * 10 - tx * 6, 2.8)}" fill="${c.G}" opacity=".8"/>`; }
+        s += `<path d="${leaf(36, 12, 40, 3, 2.4)}" fill="${c.G}"/>`;
+        return s + `<circle cx="66" cy="50" r="9" fill="${c.G}"/><circle cx="66" cy="50" r="15" fill="${c.G}" opacity=".25" filter="${c.F}"/>`; } },
+    { fam: 'classico', name: 'Templo', idea: 'A fachada de um templo: base firme, quatro colunas e o frontão dourado no topo.', lk: 'row', font: 'marcellus', txt: 'chrome',
+      s: (c) => `<path d="M12 38 50 14 88 38Z" fill="${c.G}"/><path d="M14 43H86" stroke="${c.M}" stroke-width="3" stroke-linecap="round"/>
+        <path d="M24 49V76M41 49V76M59 49V76M76 49V76" stroke="${c.M}" stroke-width="5" stroke-linecap="round"/>
+        <path d="M14 82H86M8 89H92" stroke="${c.M}" stroke-width="3" stroke-linecap="round"/>` },
+    { fam: 'classico', name: 'Coruja', idea: 'A coruja é o símbolo grego da sabedoria. É a mente do negócio, que enxerga no escuro.', lk: 'row', font: 'syne', txt: 'chrome',
+      s: (c) => `<path d="M18 22 36 34 50 28 64 34 82 22 80 58C76 78 64 88 50 88 36 88 24 78 20 58Z" fill="none" stroke="${c.M}" stroke-width="2.6" stroke-linejoin="round"/>
+        <circle cx="36" cy="50" r="12" fill="none" stroke="${c.M}" stroke-width="2.6"/><circle cx="64" cy="50" r="12" fill="none" stroke="${c.M}" stroke-width="2.6"/>
+        <circle cx="36" cy="50" r="5" fill="${c.G}"/><circle cx="64" cy="50" r="5" fill="${c.G}"/>
+        <path d="M45 60H55L50 69Z" fill="${c.G}"/>` },
+    { fam: 'classico', name: 'Chave', idea: 'A chave que abre a porta certa. Os dentes da chave formam um K.', lk: 'row', font: 'cinzel', txt: 'chrome',
+      s: (c) => `<circle cx="27" cy="50" r="15" fill="none" stroke="${c.M}" stroke-width="6"/><circle cx="27" cy="50" r="4" fill="${c.G}"/>
+        <path d="M42 50H88" stroke="${c.M}" stroke-width="6" stroke-linecap="round"/>
+        <path d="M70 53V70M70 61 80 53M73 59 81 70" fill="none" stroke="${c.G}" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>` },
+    { fam: 'classico', name: 'Selo', idea: 'Um selo de qualidade com as marcas do mostrador e o K no centro, para assinar os projetos do grupo.', lk: 'rule', font: 'cinzel', txt: 'goldtxt',
+      s: (c) => `${ticks(50, 50, 42, 47, 72, c.G, 1, 0.8)}<circle cx="50" cy="50" r="38" fill="none" stroke="${c.M}" stroke-width="1.6"/>
+        <circle cx="50" cy="50" r="33" fill="none" stroke="${c.M}" stroke-width=".7" opacity=".6"/>
+        <text x="50" y="62" text-anchor="middle" font-family="Cinzel, serif" font-weight="700" font-size="34" fill="${c.M}">K</text>
+        <path d="${star4(50, 22, 3.6)}" fill="${c.G}"/><path d="${star4(50, 78, 3.6)}" fill="${c.G}"/>` },
+  ];
+
+  const FAMS = { mono: 'Monograma', tempo: 'Tempo', asa: 'Asa', mente: 'Mente', classico: 'Clássico' };
+  const FONTS = {
+    cinzel: { k: 'font-family:Cinzel,serif;font-weight:600;letter-spacing:.16em' },
+    cormorant: { k: 'font-family:"Cormorant Garamond",serif;font-weight:600;letter-spacing:.1em;font-size:1.12em' },
+    marcellus: { k: 'font-family:Marcellus,serif;letter-spacing:.18em' },
+    jakarta: { k: 'font-family:"Plus Jakarta Sans",sans-serif;font-weight:800;letter-spacing:-.02em;text-transform:none' },
+    'jakarta-light': { k: 'font-family:"Plus Jakarta Sans",sans-serif;font-weight:300;letter-spacing:.34em' },
+    syne: { k: 'font-family:Syne,sans-serif;font-weight:700;letter-spacing:.04em' },
+    unbounded: { k: 'font-family:Unbounded,sans-serif;font-weight:500;letter-spacing:.08em;font-size:.86em' },
+  };
+
+  function symbol(i) {
+    const c = paints();
+    return `<svg class="sym" viewBox="0 0 100 100" aria-hidden="true">${c.defs}${L[i].s(c)}</svg>`;
+  }
+  function lockup(i) {
+    const d = L[i];
+    const f = FONTS[d.font];
+    const word = d.font === 'jakarta' ? 'Kairos' : 'KAIROS';
+    if (d.lk === 'line') {
+      return `<div class="lk line">${symbol(i)}<span class="txt"><span class="g ${d.txt}" style="${f.k};font-weight:300">Grupo</span><span class="k ${d.txt}" style="${f.k}">${word}</span></span></div>`;
+    }
+    return `<div class="lk ${d.lk}">${symbol(i)}<span class="txt"><span class="g">Grupo</span><span class="k ${d.txt}" style="${f.k}">${word}</span></span></div>`;
+  }
+
+  // ---------- grade ----------
+  const grid = document.getElementById('grid');
+  grid.innerHTML = L.map((d, i) => `
+    <button class="card" type="button" data-i="${i}" data-fam="${d.fam}" aria-label="Logo ${String(i + 1).padStart(2, '0')}: ${d.name}">
+      ${d.pick ? '<span class="chip">Na página</span>' : ''}
+      <div class="stage">${lockup(i)}</div>
+      <div class="meta"><div class="meta-row"><span class="num">${String(i + 1).padStart(2, '0')}</span><span class="name">${d.name}</span><span class="fam">${FAMS[d.fam]}</span></div><p class="idea">${d.idea}</p></div>
+    </button>`).join('');
+
+  // ---------- filtros ----------
+  const filters = document.getElementById('filters');
+  const counts = L.reduce((a, d) => ((a[d.fam] = (a[d.fam] || 0) + 1), a), {});
+  filters.innerHTML = [['all', 'Todas', L.length], ...Object.entries(FAMS).map(([k, v]) => [k, v, counts[k]])]
+    .map(([k, v, n]) => `<button type="button" data-f="${k}" aria-pressed="${k === 'all'}">${v}<span>${n}</span></button>`).join('');
+  let saved = 'all';
+  try { saved = localStorage.getItem('gk-filter') || 'all'; } catch (e) {}
+  function applyFilter(f) {
+    filters.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.f === f)));
+    grid.querySelectorAll('.card').forEach((c) => { c.hidden = f !== 'all' && c.dataset.fam !== f; });
+    try { localStorage.setItem('gk-filter', f); } catch (e) {}
+  }
+  filters.addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) applyFilter(b.dataset.f); });
+  if (saved !== 'all' && FAMS[saved]) applyFilter(saved);
+
+  // ---------- detalhe ----------
+  const dlg = document.getElementById('detail');
+  let cur = 0;
+  function show(i) {
+    cur = (i + L.length) % L.length;
+    const d = L[cur];
+    document.getElementById('d-num').textContent = String(cur + 1).padStart(2, '0');
+    document.getElementById('d-title').textContent = d.name;
+    document.getElementById('d-dark').innerHTML = lockup(cur);
+    const light = document.getElementById('d-light');
+    light.innerHTML = lockup(cur);
+    light.parentElement.classList.add('paper');
+    document.getElementById('d-story').innerHTML = `<b>${FAMS[d.fam]}.</b> ${d.idea}`;
+    document.getElementById('d-icons').innerHTML = `<div class="app">${symbol(cur)}</div>
+      <div class="fav"><i style="width:40px;height:40px">${symbol(cur).replace('class="sym"', 'width="30" height="30"')}</i>32 px</div>
+      <div class="fav"><i style="width:24px;height:24px">${symbol(cur).replace('class="sym"', 'width="16" height="16"')}</i>16 px</div>`;
+    document.getElementById('d-nav').innerHTML = `${lockup(cur)}<nav><span>O grupo</span><span>Empresas</span><span>Fundadores</span></nav>`;
+  }
+  grid.addEventListener('click', (e) => { const c = e.target.closest('.card'); if (!c) return; show(+c.dataset.i); dlg.showModal(); });
+  document.getElementById('d-close').addEventListener('click', () => dlg.close());
+  document.getElementById('d-prev').addEventListener('click', () => show(cur - 1));
+  document.getElementById('d-next').addEventListener('click', () => show(cur + 1));
+  dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+  dlg.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') show(cur + 1); if (e.key === 'ArrowLeft') show(cur - 1); });
+})();
+</script>
