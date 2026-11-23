@@ -1,0 +1,1075 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+</head>
+<body>
+<!-- Gerado por montar.mjs a partir de painel.html. Edite o painel.html e rode: node radar/montar.mjs -->
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Radar Dalas</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: barra fixa no topo, quadro de colunas no centro, IA acoplada à direita, ficha do lead em gaveta. */
+:root {
+  --bg: #07070a; --surface: #101014; --surface-2: #17171d; --surface-3: #22222b;
+  --line: rgba(255,255,255,.08); --line-2: rgba(255,255,255,.15);
+  --fg: #ececf0; --fg-2: #b4b4bd; --fg-3: #8a8a94;
+  --gold: #d6b46a; --gold-ink: #1a1408; --gold-soft: rgba(214,180,106,.13);
+  --green: #3fbf6e; --green-ink: #04130a; --green-soft: rgba(63,191,110,.13);
+  --danger: #e8776f; --info: #86b6e8;
+  --overlay: rgba(0,0,0,.62); --shadow: 0 24px 70px rgba(0,0,0,.6);
+  --sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --brand: 'Cinzel', 'Trajan Pro', Georgia, serif;
+  --r: 14px; --chat-w: 400px;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #f4f3ef; --surface: #ffffff; --surface-2: #f1f0eb; --surface-3: #e3e1da;
+    --line: rgba(24,20,8,.10); --line-2: rgba(24,20,8,.20);
+    --fg: #15151a; --fg-2: #46464e; --fg-3: #6a6a73;
+    --gold: #8a6521; --gold-ink: #ffffff; --gold-soft: rgba(138,101,33,.12);
+    --green: #1c7a40; --green-ink: #ffffff; --green-soft: rgba(28,122,64,.12);
+    --danger: #b3392f; --info: #2c6aa3;
+    --overlay: rgba(24,20,8,.38); --shadow: 0 24px 60px rgba(24,20,8,.18);
+    color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+  --bg: #f4f3ef; --surface: #ffffff; --surface-2: #f1f0eb; --surface-3: #e3e1da;
+  --line: rgba(24,20,8,.10); --line-2: rgba(24,20,8,.20);
+  --fg: #15151a; --fg-2: #46464e; --fg-3: #6a6a73;
+  --gold: #8a6521; --gold-ink: #ffffff; --gold-soft: rgba(138,101,33,.12);
+  --green: #1c7a40; --green-ink: #ffffff; --green-soft: rgba(28,122,64,.12);
+  --danger: #b3392f; --info: #2c6aa3;
+  --overlay: rgba(24,20,8,.38); --shadow: 0 24px 60px rgba(24,20,8,.18);
+  color-scheme: light;
+}
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { margin: 0; }
+img { max-width: 100%; }
+body { background: var(--bg); color: var(--fg); font-family: var(--sans); font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+button, input, select, textarea { font: inherit; color: inherit; }
+h1, h2, h3, p { margin: 0; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+.app { transition: margin-right .25s ease; }
+.wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+/* Topo */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9; background: var(--bg); border-bottom: 1px solid var(--line); }
+.top-in { display: flex; align-items: center; gap: 12px 18px; flex-wrap: wrap; padding-block: 10px; }
+.brand { display: flex; align-items: center; gap: 10px; }
+.sweep { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--line-2); position: relative; flex: none;
+  background: radial-gradient(circle, transparent 0 34%, var(--line) 35% 37%, transparent 38% 66%, var(--line) 67% 69%, transparent 70%); overflow: hidden; }
+.sweep::before { content: ""; position: absolute; inset: 0; background: conic-gradient(from 0deg, transparent 0 78%, var(--gold) 100%); opacity: .75; animation: giro 5s linear infinite; }
+.sweep::after { content: ""; position: absolute; width: 4px; height: 4px; border-radius: 50%; background: var(--green); top: 8px; left: 18px; }
+@keyframes giro { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .sweep::before { animation: none; } .app { transition: none; } }
+.brand b { font-family: var(--brand); font-weight: 600; letter-spacing: .2em; font-size: 15px; }
+.brand span { font-family: var(--mono); font-size: 11px; letter-spacing: .16em; color: var(--fg-3); text-transform: uppercase; }
+.tabs { display: flex; gap: 2px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 3px; }
+.tabs button { border: 0; background: none; padding: 6px 13px; border-radius: 7px; cursor: pointer; color: var(--fg-2); font-weight: 500; }
+.tabs button[aria-selected="true"] { background: var(--surface-3); color: var(--fg); }
+.grow { flex: 1 1 0; min-width: 0; }
+.acts { display: flex; gap: 8px; flex-wrap: wrap; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; border: 1px solid var(--line-2); background: var(--surface); padding: 7px 13px; border-radius: 9px; cursor: pointer; font-weight: 600; text-decoration: none; white-space: nowrap; }
+.btn:hover { background: var(--surface-2); }
+.btn[disabled] { opacity: .5; cursor: default; }
+.btn.gold { background: var(--gold); border-color: var(--gold); color: var(--gold-ink); }
+.btn.green { background: var(--green); border-color: var(--green); color: var(--green-ink); }
+.btn.ghost { border-color: transparent; background: none; color: var(--fg-2); }
+.btn.ghost:hover { background: var(--surface-2); color: var(--fg); }
+.btn.sm { padding: 4px 9px; font-size: 12.5px; border-radius: 7px; }
+.btn.danger { color: var(--danger); }
+
+/* Resumo */
+.sum { display: flex; flex-wrap: wrap; gap: 6px 26px; padding-block: 14px 4px; align-items: baseline; }
+.sum div { display: flex; align-items: baseline; gap: 7px; }
+.sum strong { font-family: var(--mono); font-size: 20px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.sum span { color: var(--fg-3); font-size: 12.5px; }
+.sum .rot { margin-left: auto; color: var(--fg-3); font-size: 12.5px; }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; padding-block: 10px 14px; }
+.field { background: var(--surface); border: 1px solid var(--line); border-radius: 9px; padding: 7px 10px; min-width: 0; }
+.field:focus { border-color: var(--gold); outline: none; }
+#f-busca { flex: 1 1 200px; max-width: 340px; }
+.notice { border: 1px dashed var(--line-2); border-radius: var(--r); padding: 14px 16px; color: var(--fg-2); margin-bottom: 14px; }
+.notice b { color: var(--fg); }
+
+/* Quadro */
+.board { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(236px, 1fr); gap: 12px; overflow-x: auto; padding-bottom: 28px; align-items: start; scroll-snap-type: x proximity; }
+.col { min-width: 0; scroll-snap-align: start; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); display: flex; flex-direction: column; }
+.col.over { border-color: var(--gold); }
+.col-h { padding: 12px 14px 10px; border-bottom: 1px solid var(--line); }
+.col-h h2 { font-size: 13.5px; font-weight: 700; display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+.col-h h2 i { font-style: normal; font-family: var(--mono); font-weight: 400; color: var(--fg-3); font-size: 12px; }
+.col-h p { color: var(--fg-3); font-size: 12px; margin-top: 2px; }
+.col[data-col="max"] .col-h h2 { color: var(--gold); }
+.col-b { padding: 10px; display: flex; flex-direction: column; gap: 8px; min-height: 80px; }
+.vazio { color: var(--fg-3); font-size: 12.5px; padding: 10px 6px; }
+.card { background: var(--surface-2); border: 1px solid var(--line); border-radius: 11px; padding: 11px 12px; cursor: pointer; display: flex; flex-direction: column; gap: 8px; text-align: left; }
+.card:hover { border-color: var(--line-2); }
+.card.sel { border-color: var(--gold); }
+.card-t { display: flex; gap: 8px; justify-content: space-between; align-items: flex-start; }
+.card-t h3 { font-size: 14px; font-weight: 600; line-height: 1.3; overflow-wrap: anywhere; }
+.card-t .sc { font-family: var(--mono); font-size: 13px; color: var(--fg); background: var(--surface-3); border-radius: 6px; padding: 1px 6px; flex: none; }
+.meta { color: var(--fg-3); font-size: 12.5px; }
+.bars { display: grid; grid-template-columns: auto 1fr auto; gap: 4px 8px; align-items: center; font-family: var(--mono); font-size: 10.5px; letter-spacing: .06em; color: var(--fg-3); }
+.bar { height: 4px; border-radius: 2px; background: var(--surface-3); overflow: hidden; }
+.bar i { display: block; height: 100%; border-radius: 2px; }
+.bar.n i { background: var(--gold); } .bar.p i { background: var(--green); }
+.chips { display: flex; flex-wrap: wrap; gap: 5px; }
+.chip { font-size: 11.5px; padding: 2px 8px; border-radius: 99px; border: 1px solid var(--line-2); color: var(--fg-2); white-space: nowrap; }
+.chip.g { border-color: transparent; background: var(--gold-soft); color: var(--gold); }
+.chip.v { border-color: transparent; background: var(--green-soft); color: var(--green); }
+.chip.novo { border-color: transparent; background: var(--green); color: var(--green-ink); font-weight: 600; }
+.card-f { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.card-f .tel { font-family: var(--mono); font-size: 12px; color: var(--fg-2); white-space: nowrap; }
+
+/* Lista */
+.tbl-w { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); margin-bottom: 28px; }
+table { border-collapse: collapse; width: 100%; min-width: 860px; }
+th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+th { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--fg-3); font-weight: 400; cursor: pointer; user-select: none; }
+td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+tbody tr { cursor: pointer; } tbody tr:hover { background: var(--surface-2); }
+tbody tr:last-child td { border-bottom: 0; }
+td.nome { white-space: normal; min-width: 200px; font-weight: 600; }
+
+/* IA */
+.chat { position: fixed; top: 0; right: 0; bottom: 0; width: var(--chat-w); max-width: 100%; z-index: 20; background: var(--surface); border-left: 1px solid var(--line);
+  display: flex; flex-direction: column; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); padding-right: env(safe-area-inset-right, 0px); }
+.chat-h { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+.chat-h h2 { font-size: 14px; font-weight: 700; } .chat-h p { font-size: 12px; color: var(--fg-3); }
+.msgs { flex: 1 1 0; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 12px; }
+.msg { max-width: 92%; padding: 9px 12px; border-radius: 12px; overflow-wrap: anywhere; }
+.msg.u { align-self: flex-end; background: var(--gold-soft); border: 1px solid var(--line); }
+.msg.a { align-self: flex-start; background: var(--surface-2); border: 1px solid var(--line); }
+.msg p + p, .msg ul, .msg ol { margin-top: 7px; } .msg ul, .msg ol { padding-left: 20px; margin-bottom: 0; }
+.msg code { font-family: var(--mono); font-size: 12.5px; background: var(--surface-3); padding: 0 4px; border-radius: 4px; }
+.msg.err { color: var(--danger); background: none; border-style: dashed; }
+.sug { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 14px 10px; }
+.sug button { border: 1px solid var(--line-2); background: none; border-radius: 99px; padding: 4px 10px; font-size: 12px; color: var(--fg-2); cursor: pointer; }
+.sug button:hover { color: var(--fg); border-color: var(--gold); }
+.chat-f { border-top: 1px solid var(--line); padding: 10px 12px; display: flex; gap: 8px; align-items: flex-end; }
+.chat-f textarea { flex: 1 1 0; min-width: 0; resize: none; max-height: 140px; }
+.fab { position: fixed; right: calc(16px + env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 8; box-shadow: var(--shadow); }
+@media (min-width: 1180px) { body.chat-open .app { margin-right: var(--chat-w); } body.chat-open .fab { display: none; } }
+@media (max-width: 1179px) { .chat { width: 100%; border-left: 0; padding-left: env(safe-area-inset-left, 0px); } }
+
+/* Gaveta e modais */
+.veil { position: fixed; inset: 0; background: var(--overlay); z-index: 30; }
+.drawer { position: fixed; top: 0; right: 0; bottom: 0; width: 560px; max-width: 100%; z-index: 31; background: var(--surface); border-left: 1px solid var(--line-2); box-shadow: var(--shadow);
+  display: flex; flex-direction: column; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); padding-right: env(safe-area-inset-right, 0px); }
+.dr-h { padding: 14px 18px 12px; border-bottom: 1px solid var(--line); display: flex; gap: 10px; align-items: flex-start; }
+.dr-h h2 { font-size: 18px; font-weight: 700; line-height: 1.25; overflow-wrap: anywhere; }
+.dr-b { flex: 1 1 0; overflow-y: auto; padding: 16px 18px 22px; display: flex; flex-direction: column; gap: 18px; }
+.dr-f { border-top: 1px solid var(--line); padding: 10px 18px; display: flex; gap: 8px; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+.sec h4 { margin: 0 0 7px; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--fg-3); font-weight: 400; }
+.sec ul { margin: 0; padding-left: 18px; color: var(--fg-2); } .sec li + li { margin-top: 3px; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.gauge { background: var(--surface-2); border: 1px solid var(--line); border-radius: 11px; padding: 10px 12px; }
+.gauge b { font-family: var(--mono); font-size: 22px; font-weight: 500; display: block; }
+.gauge span { font-size: 12px; color: var(--fg-3); }
+.gauge .bar { margin-top: 7px; height: 5px; }
+.contact { display: flex; flex-direction: column; gap: 8px; }
+.row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.row .k { width: 86px; flex: none; color: var(--fg-3); font-size: 12.5px; }
+.row .v { font-family: var(--mono); user-select: all; overflow-wrap: anywhere; min-width: 0; }
+.row a.v { color: var(--info); user-select: auto; }
+textarea.field { width: 100%; resize: vertical; min-height: 84px; line-height: 1.45; }
+.hint { color: var(--fg-3); font-size: 12px; }
+.fontes a { color: var(--info); font-size: 12.5px; overflow-wrap: anywhere; }
+.modal { position: fixed; z-index: 41; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 480px; max-width: calc(100% - 32px); max-height: calc(100% - 48px); overflow-y: auto;
+  background: var(--surface); border: 1px solid var(--line-2); border-radius: 16px; box-shadow: var(--shadow); padding: 18px; display: flex; flex-direction: column; gap: 12px; }
+.modal h2 { font-size: 16px; } .veil.m { z-index: 40; }
+.modal label { display: flex; flex-direction: column; gap: 4px; font-size: 12.5px; color: var(--fg-2); }
+.modal .field { width: 100%; }
+.pend { border-top: 1px solid var(--line); padding-top: 10px; display: flex; flex-direction: column; gap: 6px; font-size: 12.5px; color: var(--fg-2); }
+.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(22px + env(safe-area-inset-bottom, 0px)); z-index: 50; background: var(--surface-3); border: 1px solid var(--line-2);
+  border-radius: 11px; padding: 9px 12px; box-shadow: var(--shadow); display: flex; gap: 12px; align-items: center; max-width: calc(100% - 32px); }
+@media (max-width: 560px) { .two { grid-template-columns: 1fr; } .sum .rot { margin-left: 0; width: 100%; } .brand span { display: none; } }
+</style>
+
+<div class="app" id="app">
+  <header class="top">
+    <div class="wrap top-in">
+      <div class="brand"><div class="sweep" aria-hidden="true"></div><div><b>DALAS</b> <span>Radar de clientes</span></div></div>
+      <nav class="tabs" role="tablist" aria-label="Visões">
+        <button role="tab" data-view="radar" aria-selected="true">Radar</button>
+        <button role="tab" data-view="funil" aria-selected="false">Funil</button>
+        <button role="tab" data-view="lista" aria-selected="false">Lista</button>
+      </nav>
+      <div class="grow"></div>
+      <div class="acts">
+        <button class="btn gold" id="btn-garimpar">Garimpar empresas</button>
+        <button class="btn" id="btn-novo">Novo lead</button>
+        <button class="btn" id="btn-ia">Conversar com a IA</button>
+        <button class="btn ghost" id="btn-cfg" aria-label="Configurações">Configurar</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <section class="sum" id="sum" aria-label="Resumo"></section>
+    <section class="filters" aria-label="Filtros">
+      <select class="field" id="f-regiao" aria-label="Região"><option value="serra">Serra Gaúcha</option><option value="">Brasil inteiro</option></select>
+      <input class="field" id="f-busca" type="search" placeholder="Buscar empresa, cidade ou nicho" aria-label="Buscar">
+      <select class="field" id="f-uf" aria-label="Estado"></select>
+      <select class="field" id="f-nicho" aria-label="Nicho"></select>
+      <select class="field" id="f-tel" aria-label="Tipo de telefone">
+        <option value="">Qualquer telefone</option><option value="celular">Só celular (WhatsApp)</option>
+      </select>
+      <button class="btn" id="btn-lote" hidden>Preparar abordagens com IA</button>
+      <button class="btn" id="btn-csv" hidden>Baixar planilha</button>
+    </section>
+    <div id="aviso"></div>
+    <main id="main"></main>
+  </div>
+</div>
+
+<button class="btn gold fab" id="fab-ia">IA</button>
+
+<aside class="chat" id="chat" hidden aria-label="Conversa com a IA">
+  <div class="chat-h">
+    <div class="grow"><h2>IA da Dalas</h2><p id="chat-sub">Conhece todos os leads do painel</p></div>
+    <button class="btn ghost sm" id="chat-limpar">Limpar</button>
+    <button class="btn ghost sm" id="chat-fechar" aria-label="Fechar conversa">Fechar</button>
+  </div>
+  <div class="msgs" id="msgs"></div>
+  <div class="sug" id="sug"></div>
+  <form class="chat-f" id="chat-form">
+    <textarea class="field" id="chat-in" rows="2" placeholder="Pergunte qualquer coisa. Ex.: quem eu abordo hoje?" aria-label="Mensagem para a IA"></textarea>
+    <button class="btn gold" id="chat-send" type="submit">Enviar</button>
+  </form>
+</aside>
+
+<div id="camada"></div>
+<div id="toasts"></div>
+
+<script>
+(() => {
+'use strict';
+
+/* ---------- Constantes ---------- */
+const ETAPAS = [
+  { id: 'novo', nome: 'Na fila' }, { id: 'abordado', nome: 'Abordado' }, { id: 'conversando', nome: 'Em conversa' },
+  { id: 'reuniao', nome: 'Reunião marcada' }, { id: 'proposta', nome: 'Proposta enviada' }, { id: 'fechado', nome: 'Fechado' },
+  { id: 'descartado', nome: 'Descartado' },
+];
+const ETAPA = Object.fromEntries(ETAPAS.map(e => [e.id, e.nome]));
+const PRESENCA = { sem_site: 'Sem site', so_instagram: 'Só Instagram', so_linktree: 'Só Linktree', site_fraco: 'Site fraco', tem_site: 'Tem site', nao_encontrado: 'Site não encontrado' };
+const NICHOS = ['Odontologia', 'Estética', 'Saúde', 'Restaurante', 'Hospedagem', 'Pet', 'Fitness', 'Automotivo', 'Jurídico/Contábil', 'Imobiliária', 'Varejo', 'Beleza', 'Outro'];
+const UFS = 'AC AL AP AM BA CE DF ES GO MA MT MS MG PA PB PR PE PI RJ RN RS RO RR SC SP SE TO'.split(' ');
+const SERRA_CIDADES = ['Caxias do Sul', 'Bento Gonçalves', 'Gramado', 'Canela', 'Farroupilha', 'Garibaldi', 'Carlos Barbosa', 'Flores da Cunha', 'Nova Petrópolis', 'Veranópolis', 'Nova Prata', 'São Marcos', 'Antônio Prado', 'Vacaria', 'São Francisco de Paula', 'Cambará do Sul', 'Picada Café', 'Pinto Bandeira', 'Monte Belo do Sul', 'Nova Pádua', 'Cotiporã', 'Guaporé', 'Serafina Corrêa', 'Nova Roma do Sul', 'Bom Jesus', 'Ipê', 'Santa Tereza', 'Boa Vista do Sul', 'Fagundes Varela', 'Vila Flores', 'Nova Bassano', 'Paraí', 'Jaquirana', 'São José dos Ausentes', 'Linha Nova', 'Presidente Lucena', 'Morro Reuter', 'Santa Maria do Herval'];
+const semAcento = s => String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+const SERRA = new Set(SERRA_CIDADES.map(semAcento));
+const naSerra = l => l.uf === 'RS' && SERRA.has(semAcento(l.cidade));
+const MODO_LOCAL = !(window.claude && typeof window.claude.use === 'function');
+const CORTE_N = 72, CORTE_P = 50;
+const COLS = [
+  { id: 'max', nome: 'Prioridade máxima', dica: 'Precisam muito e têm caixa para pagar', t: l => l.necessidade >= CORTE_N && l.potencial >= CORTE_P },
+  { id: 'precisam', nome: 'Mais precisam', dica: 'Presença digital fraca. Confirme o orçamento', t: l => l.necessidade >= CORTE_N && l.potencial < CORTE_P },
+  { id: 'compram', nome: 'Tendem a comprar', dica: 'Negócio com movimento. Venda melhoria', t: l => l.necessidade < CORTE_N && l.potencial >= CORTE_P },
+  { id: 'aquecer', nome: 'Para aquecer', dica: 'Sinais ainda fracos', t: () => true },
+];
+const CFG_PADRAO = { empresa: 'Dalas Marketing', remetente: '', servicos: 'Sites e landing pages, funis de venda, CRM, automações de WhatsApp e IA, tráfego pago, painéis e sistemas sob medida, Google Meu Negócio', instrucoes: '' };
+
+/* ---------- Estado ---------- */
+const S = {
+  leads: new Map(), config: { ...CFG_PADRAO }, pedidos: [], rotina: null,
+  view: 'radar', f: { regiao: mem('radar.regiao') ?? 'serra', busca: '', uf: '', nicho: '', tel: '' }, sort: { campo: 'score', dir: -1 },
+  sel: null, ordem: [], modal: null,
+  db: null, sample: null, mcp: null, dl: null, tools: false,
+  dbState: 'carregando', chat: { turns: [], busy: false, ctl: null, parcial: '' }, lote: false,
+};
+const $ = (s, r = document) => r.querySelector(s);
+
+function el(tag, props, ...kids) {
+  const n = document.createElement(tag);
+  if (props) for (const [k, v] of Object.entries(props)) {
+    if (v == null || v === false) continue;
+    if (k === 'class') n.className = v;
+    else if (k === 'text') n.textContent = v;
+    else if (k === 'value') n.value = v;
+    else if (k.startsWith('on')) n.addEventListener(k.slice(2), v);
+    else if (v === true) n.setAttribute(k, '');
+    else n.setAttribute(k, v);
+  }
+  for (const c of kids.flat(Infinity)) if (c != null && c !== false) n.append(c.nodeType ? c : document.createTextNode(String(c)));
+  return n;
+}
+
+/* ---------- Utilidades ---------- */
+const clamp = n => Math.max(0, Math.min(100, Math.round(n)));
+function pontuar(l) {
+  const P = { sem_site: 45, so_instagram: 40, so_linktree: 38, nao_encontrado: 30, site_fraco: 28, tem_site: 5 };
+  let n = P[l.site_status] ?? 25;
+  if (!l.instagram) n += 15; else if (l.seguidores != null && l.seguidores < 1000) n += 8;
+  if (l.google_nota != null && l.google_nota < 4.2) n += 10;
+  n += Math.min((l.problemas || []).length, 4) * 6 + Math.min((l.servicos_sugeridos || []).length, 4) * 3;
+  const T = { 'Odontologia': 30, 'Estética': 30, 'Saúde': 30, 'Jurídico/Contábil': 28, 'Imobiliária': 28, 'Hospedagem': 27, 'Automotivo': 22, 'Fitness': 22, 'Restaurante': 20, 'Varejo': 20, 'Pet': 20, 'Beleza': 16 };
+  let p = T[l.nicho] ?? 15;
+  const a = Math.max(l.google_avaliacoes ?? -1, l.avaliacoes_total ?? -1); p += a >= 500 ? 30 : a >= 200 ? 24 : a >= 80 ? 18 : a >= 30 ? 10 : 4;
+  const s = l.seguidores ?? 0; p += s >= 20000 ? 15 : s >= 5000 ? 11 : s >= 1000 ? 6 : 0;
+  p += Math.min((l.sinais_de_caixa || []).length, 3) * 6;
+  if (l.telefone_tipo === 'celular') p += 5;
+  if (l.confianca === 'alta') p += 5; else if (l.confianca === 'baixa') p -= 8;
+  return { necessidade: clamp(n), potencial: clamp(p) };
+}
+const arr = v => Array.isArray(v) ? v.filter(x => typeof x === 'string' && x.trim()) : [];
+const num = v => (typeof v === 'number' && isFinite(v)) ? v : null;
+const str = v => (typeof v === 'string' && v.trim()) ? v.trim() : '';
+function normalizar(id, x) {
+  const l = {
+    id, nome: str(x.nome) || '(sem nome)', nicho: str(x.nicho) || 'Outro', cidade: str(x.cidade), uf: str(x.uf).toUpperCase().slice(0, 2),
+    endereco: str(x.endereco), telefone: str(String(x.telefone ?? '')).replace(/\D/g, ''), telefone_tipo: str(x.telefone_tipo),
+    instagram: str(x.instagram), seguidores: num(x.seguidores), site: str(x.site), site_status: str(x.site_status) || 'nao_encontrado',
+    google_nota: num(x.google_nota), google_avaliacoes: num(x.google_avaliacoes), avaliacoes_total: num(x.avaliacoes_total),
+    sinais_de_caixa: arr(x.sinais_de_caixa), problemas: arr(x.problemas), servicos_sugeridos: arr(x.servicos_sugeridos), fontes: arr(x.fontes),
+    resumo: str(x.resumo), confianca: str(x.confianca) || 'media', etapa: ETAPA[x.etapa] ? x.etapa : 'novo',
+    notas: typeof x.notas === 'string' ? x.notas : '', mensagem: typeof x.mensagem === 'string' ? x.mensagem : '',
+    criado_em: str(x.criado_em), atualizado_em: str(x.atualizado_em), origem: str(x.origem),
+  };
+  if (l.telefone.startsWith('55') && l.telefone.length > 11) l.telefone = l.telefone.slice(2);
+  if (!l.telefone_tipo && l.telefone.length === 11 && l.telefone[2] === '9') l.telefone_tipo = 'celular';
+  const p = pontuar(l);
+  l.necessidade = num(x.necessidade) ?? p.necessidade; l.potencial = num(x.potencial) ?? p.potencial;
+  l.score = Math.round((l.necessidade + l.potencial) / 2);
+  return l;
+}
+function fone(t) {
+  if (t.length === 11) return `(${t.slice(0, 2)}) ${t.slice(2, 7)}-${t.slice(7)}`;
+  if (t.length === 10) return `(${t.slice(0, 2)}) ${t.slice(2, 6)}-${t.slice(6)}`;
+  return t;
+}
+const waLink = (l, msg) => `https://wa.me/55${l.telefone}${msg ? '?text=' + encodeURIComponent(msg) : ''}`;
+const igUser = l => { const u = l.instagram.replace(/^@/, '').replace(/^https?:\/\/(www\.)?instagram\.com\//i, '').replace(/[/?].*$/, ''); return /^[A-Za-z0-9._]{1,30}$/.test(u) ? u : ''; };
+const seguro = u => /^https:\/\//i.test(u) ? u : '';
+const buscaGoogle = l => 'https://www.google.com/search?q=' + encodeURIComponent(`${l.nome} ${l.cidade} ${l.uf}`);
+const local = l => [l.cidade, l.uf].filter(Boolean).join('/');
+const agora = () => new Date().toISOString();
+const recente = l => l.criado_em && (Date.now() - Date.parse(l.criado_em)) < 48 * 3600e3;
+function quando(iso) {
+  const t = Date.parse(iso); if (!t) return '';
+  return new Date(t).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+}
+function saudacao() { const h = new Date().getHours(); return h < 12 ? 'Bom dia' : h < 18 ? 'Boa tarde' : 'Boa noite'; }
+function slug(s) { return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 70) || 'lead'; }
+function mem(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
+
+function toast(msg, acao) {
+  const box = $('#toasts');
+  const t = el('div', { class: 'toast', role: 'status' }, el('span', { text: msg }));
+  if (acao) t.append(el('button', { class: 'btn sm gold', text: acao.rotulo, onclick: () => { t.remove(); acao.fn(); } }));
+  box.replaceChildren(t);
+  setTimeout(() => t.remove(), acao ? 12000 : 4500);
+}
+
+/* ---------- Banco ---------- */
+const filas = new Map();
+function gravar(path, dados, modo) {
+  if (!S.db) { toast('O banco de dados não está disponível nesta visualização.'); return Promise.reject(new Error('sem db')); }
+  const antes = filas.get(path) || Promise.resolve();
+  const p = antes.catch(() => {}).then(() => modo === 'set' ? S.db.doc(path).set(dados) : S.db.doc(path).update(dados));
+  filas.set(path, p);
+  return p.catch(e => {
+    toast(e && e.code === 'quota_exceeded' ? 'O banco está cheio. Exclua leads descartados para liberar espaço.' : 'Não consegui salvar agora. Tente de novo em instantes.');
+    throw e;
+  });
+}
+const atualizarLead = (id, patch) => gravar('leads/' + id, { ...patch, atualizado_em: agora() });
+
+function initDb(db) {
+  S.db = db;
+  if (!db) { S.dbState = 'ausente'; render(); return; }
+  const lento = setTimeout(() => { if (S.dbState === 'carregando') { S.dbState = 'lento'; render(); } }, 10000);
+  db.collection('leads').limit(1000).onSnapshot(snap => {
+    const m = new Map();
+    for (const d of snap.docs) { const x = d.data(); if (x) m.set(d.id, normalizar(d.id, x)); }
+    S.leads = m;
+    if (!snap.metadata.fromCache) { clearTimeout(lento); S.dbState = 'ok'; }
+    render();
+  }, e => { clearTimeout(lento); S.dbState = 'erro'; render(); });
+  db.doc('config/principal').onSnapshot(s => { S.config = { ...CFG_PADRAO, ...(s.exists ? s.data() : {}) }; render(); }, () => {});
+  db.collection('pedidos').limit(200).onSnapshot(s => {
+    S.pedidos = s.docs.map(d => ({ id: d.id, ...d.data() })).sort((a, b) => String(b.criado_em).localeCompare(String(a.criado_em)));
+    if (S.modal === 'garimpar') renderPedidos();
+  }, () => {});
+  db.doc('rotina/ultima').onSnapshot(s => { S.rotina = s.exists ? s.data() : null; renderSum(); }, () => {});
+  db.doc('conversas/principal').get().then(s => {
+    const t = s.exists ? s.data().turns : null;
+    if (Array.isArray(t) && !S.chat.turns.length) { S.chat.turns = t.filter(x => x && (x.role === 'user' || x.role === 'assistant') && typeof x.content === 'string' && x.content); renderChat(); }
+  }).catch(() => {});
+}
+
+/* ---------- Filtros ---------- */
+function filtrados() {
+  const q = S.f.busca.trim().toLowerCase();
+  return [...S.leads.values()].filter(l => (!S.f.regiao || naSerra(l)) &&
+    (!S.f.uf || l.uf === S.f.uf) && (!S.f.nicho || l.nicho === S.f.nicho) && (!S.f.tel || l.telefone_tipo === S.f.tel) &&
+    (!q || `${l.nome} ${l.cidade} ${l.uf} ${l.nicho}`.toLowerCase().includes(q)));
+}
+function opcoes(sel, rotulo, valores, atual) {
+  const cur = [...sel.options].map(o => o.value).join('|'), novo = ['', ...valores].join('|');
+  if (cur !== novo) sel.replaceChildren(el('option', { value: '', text: rotulo }), ...valores.map(v => el('option', { value: v, text: v })));
+  sel.value = atual;
+}
+
+/* ---------- Render ---------- */
+let pend = false;
+function render() { if (pend) return; pend = true; requestAnimationFrame(() => { pend = false; desenhar(); }); }
+function desenhar() {
+  renderSum();
+  const todos = [...S.leads.values()];
+  opcoes($('#f-uf'), 'Todos os estados', [...new Set(todos.map(l => l.uf).filter(Boolean))].sort(), S.f.uf);
+  opcoes($('#f-nicho'), 'Todos os nichos', [...new Set(todos.map(l => l.nicho))].sort(), S.f.nicho);
+  $('#f-regiao').value = S.f.regiao;
+  document.querySelectorAll('.tabs button').forEach(b => b.setAttribute('aria-selected', String(b.dataset.view === S.view)));
+  $('#btn-lote').hidden = !(S.sample && S.view === 'radar' && S.leads.size);
+  $('#btn-lote').disabled = S.lote;
+  $('#btn-lote').textContent = S.lote ? 'Escrevendo abordagens…' : 'Preparar abordagens com IA';
+  $('#btn-csv').hidden = !(S.dl && S.leads.size);
+  renderAviso();
+  const main = $('#main');
+  if (S.view === 'radar') main.replaceChildren(viewRadar());
+  else if (S.view === 'funil') main.replaceChildren(viewFunil());
+  else main.replaceChildren(viewLista());
+  if (S.sel) {
+    const a = document.activeElement, dr = $('#drawer');
+    const editando = dr && dr.contains(a) && /TEXTAREA|INPUT|SELECT/.test(a.tagName);
+    if (!editando && !S.gerando) renderDrawer();
+  }
+}
+function renderSum() {
+  const base = [...S.leads.values()].filter(l => !S.f.regiao || naSerra(l));
+  const c = {}; for (const l of base) c[l.etapa] = (c[l.etapa] || 0) + 1;
+  const item = (n, t) => el('div', null, el('strong', { text: String(n) }), el('span', { text: t }));
+  const conv = (c.conversando || 0) + (c.reuniao || 0) + (c.proposta || 0);
+  const kids = [item(base.length, S.f.regiao ? 'empresas na Serra Gaúcha' : 'empresas no radar'), item(c.novo || 0, 'na fila para abordar'), item(c.abordado || 0, 'abordadas'), item(conv, 'em negociação'), item(c.fechado || 0, 'fechadas')];
+  const r = S.rotina;
+  const ult = r && r.em ? `Última busca: ${quando(r.em)}${typeof r.novos === 'number' ? ` · ${r.novos} novas` : ''}` : '';
+  kids.push(el('div', { class: 'rot', text: ult || (MODO_LOCAL ? 'Versão local · busca automática diária fica no painel online' : 'Busca automática: dias úteis pela manhã') }));
+  $('#sum').replaceChildren(...kids);
+}
+function renderAviso() {
+  const box = $('#aviso'); let n = null;
+  if (S.dbState === 'ausente') n = el('div', { class: 'notice' }, el('b', { text: 'Abra este painel dentro do Claude. ' }), 'Os leads ficam guardados no banco do painel, que só carrega com você conectado em claude.ai.');
+  else if (S.dbState === 'lento') n = el('div', { class: 'notice' }, 'Ainda não consegui falar com o banco de dados. Continuo tentando; se você estiver sem internet, os dados aparecem quando ela voltar.');
+  else if (S.dbState === 'erro') n = el('div', { class: 'notice' }, 'Perdi o acesso ao banco de dados nesta sessão. Recarregue a página para tentar de novo.');
+  else if (MODO_LOCAL && location.protocol === 'file:') n = el('div', { class: 'notice' }, el('b', { text: 'Abra pelo atalho. ' }), 'Use “Abrir-Radar-Windows” ou “Abrir-Radar-Mac” da pasta do Radar; aberto direto pelo arquivo, a IA e os dados iniciais não carregam.');
+  else if (MODO_LOCAL && S.dbState === 'ok' && !mem('radar.apikey')) n = el('div', { class: 'notice' }, el('b', { text: 'Falta a chave da API do Claude. ' }), 'Sem ela o painel funciona, mas a IA e a busca de empresas ficam desligadas aqui no computador. ', el('button', { class: 'btn sm', text: 'Colocar a chave', onclick: abrirConfig }));
+  else if (S.dbState === 'ok' && !S.config.remetente && S.leads.size) n = el('div', { class: 'notice' }, el('b', { text: 'Falta o seu nome. ' }), 'A IA assina as mensagens de abordagem com ele. ', el('button', { class: 'btn sm', text: 'Preencher agora', onclick: abrirConfig }));
+  box.replaceChildren(...(n ? [n] : []));
+}
+function vazioGeral() {
+  if (S.dbState === 'carregando') return el('div', { class: 'notice', text: 'Carregando as empresas do radar…' });
+  if (S.leads.size) {
+    if (S.f.regiao && ![...S.leads.values()].some(naSerra)) return el('div', { class: 'notice' }, el('b', { text: 'Nenhuma empresa da Serra Gaúcha no radar ainda. ' }), 'Peça uma busca em “Garimpar empresas” ou troque o filtro para Brasil inteiro.');
+    return null;
+  }
+  return el('div', { class: 'notice' }, el('b', { text: 'Nenhuma empresa no radar ainda. ' }),
+    'Aqui aparecem as empresas encontradas, separadas por quem mais precisa e quem tende a comprar. Use “Garimpar empresas” para pedir uma busca por nicho e cidade, ou “Novo lead” para cadastrar uma que você já conhece.');
+}
+function barras(l) {
+  return el('div', { class: 'bars' },
+    el('span', { text: 'NEC', title: 'Necessidade do serviço' }), el('div', { class: 'bar n' }, el('i', { style: `width:${l.necessidade}%` })), el('span', { text: String(l.necessidade) }),
+    el('span', { text: 'POT', title: 'Potencial de compra' }), el('div', { class: 'bar p' }, el('i', { style: `width:${l.potencial}%` })), el('span', { text: String(l.potencial) }));
+}
+function card(l, opt = {}) {
+  const chips = [];
+  if (recente(l) && l.etapa === 'novo') chips.push(el('span', { class: 'chip novo', text: 'Novo' }));
+  chips.push(el('span', { class: 'chip g', text: PRESENCA[l.site_status] || 'Site não encontrado' }));
+  if (!l.instagram) chips.push(el('span', { class: 'chip', text: 'Sem Instagram' }));
+  const av = Math.max(l.google_avaliacoes ?? 0, l.avaliacoes_total ?? 0);
+  if (av) chips.push(el('span', { class: 'chip v', text: `${av.toLocaleString('pt-BR')} avaliações` }));
+  if (l.mensagem) chips.push(el('span', { class: 'chip', text: 'Abordagem pronta' }));
+  const c = el('article', { class: 'card' + (S.sel === l.id ? ' sel' : ''), tabindex: '0', 'data-id': l.id, draggable: opt.arrasta ? 'true' : null, 'aria-label': `${l.nome}, pontuação ${l.score}` },
+    el('div', { class: 'card-t' }, el('h3', { text: l.nome }), el('span', { class: 'sc', title: 'Pontuação geral', text: String(l.score) })),
+    el('p', { class: 'meta', text: [l.nicho, local(l)].filter(Boolean).join(' · ') }),
+    barras(l), el('div', { class: 'chips' }, chips),
+    el('div', { class: 'card-f' }, el('span', { class: 'tel', text: l.telefone ? fone(l.telefone) : 'sem telefone' }),
+      l.telefone ? el('a', { class: 'btn sm green', href: waLink(l, l.mensagem), target: '_blank', rel: 'noopener', text: 'WhatsApp', onclick: e => { e.stopPropagation(); aposWhats(l); } }) : null));
+  c.addEventListener('click', () => abrirLead(l.id));
+  c.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target === c) abrirLead(l.id); });
+  if (opt.arrasta) c.addEventListener('dragstart', e => { e.dataTransfer.setData('text/plain', l.id); e.dataTransfer.effectAllowed = 'move'; });
+  return c;
+}
+function coluna(id, nome, dica, itens, opt = {}) {
+  const corpo = el('div', { class: 'col-b' }, itens.length ? itens.map(l => card(l, opt)) : el('p', { class: 'vazio', text: opt.vazio || 'Nada aqui por enquanto.' }));
+  const col = el('section', { class: 'col', 'data-col': id }, el('div', { class: 'col-h' }, el('h2', null, nome, el('i', { text: String(itens.length) })), dica ? el('p', { text: dica }) : null), corpo);
+  if (opt.solta) {
+    col.addEventListener('dragover', e => { e.preventDefault(); col.classList.add('over'); });
+    col.addEventListener('dragleave', () => col.classList.remove('over'));
+    col.addEventListener('drop', e => { e.preventDefault(); col.classList.remove('over'); const lid = e.dataTransfer.getData('text/plain'); const l = S.leads.get(lid); if (l && l.etapa !== id) atualizarLead(lid, { etapa: id }).catch(() => {}); });
+  }
+  return col;
+}
+function viewRadar() {
+  const v = vazioGeral(); if (v) { S.ordem = []; return v; }
+  const fila = filtrados().filter(l => l.etapa === 'novo').sort((a, b) => b.score - a.score);
+  const g = Object.fromEntries(COLS.map(c => [c.id, []]));
+  for (const l of fila) g[COLS.find(c => c.t(l)).id].push(l);
+  S.ordem = COLS.flatMap(c => g[c.id].map(l => l.id));
+  return el('div', { class: 'board' }, COLS.map(c => coluna(c.id, c.nome, c.dica, g[c.id], { vazio: fila.length ? 'Nenhuma empresa neste grupo com os filtros atuais.' : 'A fila está vazia. Peça uma nova busca em “Garimpar empresas”.' })));
+}
+function viewFunil() {
+  const v = vazioGeral(); if (v) { S.ordem = []; return v; }
+  const ls = filtrados(); const ids = ['abordado', 'conversando', 'reuniao', 'proposta', 'fechado', 'descartado'];
+  const g = Object.fromEntries(ids.map(i => [i, ls.filter(l => l.etapa === i).sort((a, b) => String(b.atualizado_em).localeCompare(String(a.atualizado_em)))]));
+  S.ordem = ids.flatMap(i => g[i].map(l => l.id));
+  return el('div', { class: 'board' }, ids.map(i => coluna(i, ETAPA[i], '', g[i], { arrasta: true, solta: true, vazio: i === 'abordado' ? 'Aborde uma empresa do Radar e ela aparece aqui.' : 'Arraste um cartão para cá.' })));
+}
+function viewLista() {
+  const v = vazioGeral(); if (v) { S.ordem = []; return v; }
+  const { campo, dir } = S.sort;
+  const ls = filtrados().sort((a, b) => { const x = a[campo], y = b[campo]; return (typeof x === 'number' ? x - y : String(x).localeCompare(String(y), 'pt-BR')) * dir; });
+  S.ordem = ls.map(l => l.id);
+  const cols = [['nome', 'Empresa'], ['nicho', 'Nicho'], ['cidade', 'Cidade'], ['telefone', 'Telefone'], ['site_status', 'Presença'], ['necessidade', 'Necessidade'], ['potencial', 'Potencial'], ['score', 'Geral'], ['etapa', 'Etapa']];
+  const th = cols.map(([k, t]) => el('th', { scope: 'col', onclick: () => { S.sort = { campo: k, dir: S.sort.campo === k ? -S.sort.dir : (['necessidade', 'potencial', 'score'].includes(k) ? -1 : 1) }; render(); }, text: t + (campo === k ? (dir > 0 ? ' ↑' : ' ↓') : '') }));
+  const tr = ls.map(l => el('tr', { onclick: () => abrirLead(l.id) },
+    el('td', { class: 'nome', text: l.nome }), el('td', { text: l.nicho }), el('td', { text: local(l) }), el('td', { class: 'num', text: l.telefone ? fone(l.telefone) : '' }),
+    el('td', { text: PRESENCA[l.site_status] || '' }), el('td', { class: 'num', text: String(l.necessidade) }), el('td', { class: 'num', text: String(l.potencial) }), el('td', { class: 'num', text: String(l.score) }), el('td', { text: ETAPA[l.etapa] })));
+  return el('div', { class: 'tbl-w' }, el('table', null, el('thead', null, el('tr', null, th)), el('tbody', null, tr.length ? tr : el('tr', null, el('td', { colspan: '9', class: 'vazio', text: 'Nenhuma empresa com os filtros atuais.' })))));
+}
+
+/* ---------- Ficha do lead ---------- */
+function aposWhats(l) {
+  if (l.etapa === 'novo') toast('Enviou a mensagem no WhatsApp?', { rotulo: 'Marcar como abordado', fn: () => atualizarLead(l.id, { etapa: 'abordado', abordado_em: agora() }).catch(() => {}) });
+}
+function abrirLead(id) { if (!S.leads.has(id)) return; fecharModal(); S.sel = id; renderDrawer(); render(); }
+function fecharLead() { salvarCampos(); S.sel = null; $('#camada').querySelectorAll('.veil.d, #drawer').forEach(n => n.remove()); render(); }
+let tSalvar = null;
+function salvarCampos() {
+  clearTimeout(tSalvar); tSalvar = null;
+  const l = S.leads.get(S.sel), m = $('#d-msg'), n = $('#d-notas'); if (!l || !m || !n) return;
+  const patch = {}; if (m.value !== l.mensagem) patch.mensagem = m.value; if (n.value !== l.notas) patch.notas = n.value;
+  if (Object.keys(patch).length) { Object.assign(l, patch); atualizarLead(l.id, patch).catch(() => {}); }
+}
+const agendarSalvar = () => { clearTimeout(tSalvar); tSalvar = setTimeout(salvarCampos, 900); };
+function copiar(texto, campo) {
+  navigator.clipboard.writeText(texto).then(() => toast('Copiado.'), () => { if (campo) { campo.focus(); campo.select && campo.select(); } toast('Selecione e copie manualmente.'); });
+}
+function renderDrawer() {
+  const l = S.leads.get(S.sel), cam = $('#camada');
+  cam.querySelectorAll('.veil.d, #drawer').forEach(n => n.remove());
+  if (!l) { S.sel = null; return; }
+  const i = S.ordem.indexOf(l.id);
+  const ir = d => { const id = S.ordem[i + d]; if (id) { salvarCampos(); S.sel = id; renderDrawer(); render(); } };
+  const ig = igUser(l), site = seguro(l.site);
+  const linha = (k, v) => el('div', { class: 'row' }, el('span', { class: 'k', text: k }), v);
+  const lista = (t, itens) => itens.length ? el('div', { class: 'sec' }, el('h4', { text: t }), el('ul', null, itens.map(x => el('li', { text: x })))) : null;
+  const msg = el('textarea', { class: 'field', id: 'd-msg', rows: '5', placeholder: 'Escreva aqui a primeira mensagem, ou peça para a IA escrever.', value: l.mensagem, oninput: () => { agendarSalvar(); wa.href = waLink(l, msg.value); } });
+  const wa = el('a', { class: 'btn green', href: waLink(l, l.mensagem), target: '_blank', rel: 'noopener', text: l.telefone_tipo === 'fixo' ? 'Tentar WhatsApp' : 'Abrir WhatsApp com a mensagem', onclick: () => { salvarCampos(); aposWhats(l); } });
+  const etapa = el('select', { class: 'field', id: 'd-etapa', 'aria-label': 'Etapa', onchange: e => atualizarLead(l.id, { etapa: e.target.value }).catch(() => {}) }, ETAPAS.map(e => el('option', { value: e.id, text: e.nome })));
+  etapa.value = l.etapa;
+  const btIA = S.sample ? el('button', { class: 'btn', id: 'd-ia', text: l.mensagem ? 'Reescrever com IA' : 'Escrever com IA', onclick: () => gerarMensagem(l.id) }) : null;
+  const excluir = el('button', { class: 'btn ghost sm danger', text: 'Excluir', onclick: () => { excluir.replaceWith(el('button', { class: 'btn sm danger', text: 'Confirmar exclusão', onclick: () => { const id = l.id; fecharLead(); S.db && S.db.doc('leads/' + id).delete().then(() => toast('Lead excluído.'), () => toast('Não consegui excluir agora.')); } })); } });
+  const dr = el('aside', { class: 'drawer', id: 'drawer', role: 'dialog', 'aria-label': 'Ficha de ' + l.nome },
+    el('div', { class: 'dr-h' },
+      el('div', { class: 'grow' }, el('h2', { text: l.nome }), el('p', { class: 'meta', text: [l.nicho, local(l), l.endereco].filter(Boolean).join(' · ') })),
+      el('button', { class: 'btn ghost sm', text: 'Fechar', onclick: fecharLead })),
+    el('div', { class: 'dr-b' },
+      l.resumo ? el('p', { text: l.resumo }) : null,
+      el('div', { class: 'two' },
+        el('div', { class: 'gauge' }, el('b', { text: String(l.necessidade) }), el('span', { text: 'Necessidade do serviço' }), el('div', { class: 'bar n' }, el('i', { style: `width:${l.necessidade}%` }))),
+        el('div', { class: 'gauge' }, el('b', { text: String(l.potencial) }), el('span', { text: 'Potencial de compra' }), el('div', { class: 'bar p' }, el('i', { style: `width:${l.potencial}%` })))),
+      el('div', { class: 'sec' }, el('h4', { text: 'Contato' }), el('div', { class: 'contact' },
+        linha('Telefone', l.telefone ? [el('span', { class: 'v', text: fone(l.telefone) }), el('span', { class: 'hint', text: l.telefone_tipo || '' }), el('button', { class: 'btn sm', text: 'Copiar', onclick: () => copiar(l.telefone) })] : el('span', { class: 'hint', text: 'não encontrado' })),
+        linha('Instagram', ig ? [el('a', { class: 'v', href: 'https://www.instagram.com/' + ig + '/', target: '_blank', rel: 'noopener', text: '@' + ig }), l.seguidores != null ? el('span', { class: 'hint', text: l.seguidores.toLocaleString('pt-BR') + ' seguidores' }) : null] : el('span', { class: 'hint', text: 'não encontrado' })),
+        linha('Site', site ? el('a', { class: 'v', href: site, target: '_blank', rel: 'noopener', text: site.replace(/^https:\/\//, '') }) : el('span', { class: 'hint', text: l.site || PRESENCA[l.site_status] || 'não encontrado' })),
+        linha('Google', [l.google_nota != null ? el('span', { class: 'v', text: `${l.google_nota.toLocaleString('pt-BR')} ★` }) : null, l.google_avaliacoes != null ? el('span', { class: 'hint', text: `${l.google_avaliacoes} avaliações` }) : null, el('a', { class: 'btn sm', href: buscaGoogle(l), target: '_blank', rel: 'noopener', text: 'Ver no Google' })]))),
+      lista('O que dá para melhorar', l.problemas),
+      lista('Sinais de que pode pagar', l.sinais_de_caixa),
+      l.servicos_sugeridos.length ? el('div', { class: 'sec' }, el('h4', { text: 'O que vender' }), el('div', { class: 'chips' }, l.servicos_sugeridos.map(s => el('span', { class: 'chip g', text: s })))) : null,
+      el('div', { class: 'sec' }, el('h4', { text: 'Primeira mensagem' }), msg,
+        el('div', { class: 'row', style: 'margin-top:8px' }, l.telefone ? wa : null, btIA, el('button', { class: 'btn', text: 'Copiar', onclick: () => copiar(msg.value, msg) })),
+        el('p', { class: 'hint', style: 'margin-top:6px', text: 'O WhatsApp abre no seu número com o texto pronto. Você confere e envia.' })),
+      el('div', { class: 'sec' }, el('h4', { text: 'Etapa e anotações' }), etapa,
+        el('textarea', { class: 'field', id: 'd-notas', rows: '3', style: 'margin-top:8px', placeholder: 'Anotações da conversa, objeções, próximo passo…', value: l.notas, oninput: agendarSalvar, onblur: salvarCampos })),
+      l.fontes.length ? el('div', { class: 'sec fontes' }, el('h4', { text: 'Fontes' + (l.confianca ? ` · confiança ${l.confianca}` : '') }), l.fontes.slice(0, 6).map(u => seguro(u) ? el('div', null, el('a', { href: u, target: '_blank', rel: 'noopener', text: u.replace(/^https:\/\/(www\.)?/, '').slice(0, 70) })) : el('div', { class: 'hint', text: u.slice(0, 70) }))) : null),
+    el('div', { class: 'dr-f' },
+      el('div', { class: 'row' }, el('button', { class: 'btn sm', text: '← Anterior', disabled: i <= 0, onclick: () => ir(-1) }), el('button', { class: 'btn sm', text: 'Próximo →', disabled: i < 0 || i >= S.ordem.length - 1, onclick: () => ir(1) })),
+      el('div', { class: 'row' }, S.sample ? el('button', { class: 'btn sm', text: 'Analisar com a IA', onclick: () => { abrirChat(); enviarChat(`Analise a empresa "${l.nome}" (id ${l.id}) e me diga: o que vender primeiro, quanto cobrar e como conduzir a conversa.`); } }) : null, excluir)));
+  cam.append(el('div', { class: 'veil d', onclick: fecharLead }), dr);
+}
+
+/* ---------- IA ---------- */
+const ERRO_IA = { not_granted: 'Você não liberou o uso do Claude neste painel. Recarregue a página e permita para usar a IA.', sampling_disabled: 'O Claude não está disponível para esta conta.', rate_limited: 'Muitas chamadas agora, ou seu limite de uso acabou. Tente de novo mais tarde.', session_expired: 'Sua sessão expirou. Entre de novo no Claude.', refused: 'A IA não respondeu a esse pedido. Tente reformular.', prompt_too_large: 'A conversa ficou grande demais. Limpe a conversa e tente de novo.', empty_completion: 'A IA não escreveu nada. Tente reformular.', invalid_json: 'A resposta veio em formato inesperado. Tente de novo.' };
+Object.assign(ERRO_IA, { sem_chave: 'Coloque sua chave da API do Claude em Configurar para usar a IA aqui no computador.', chave_invalida: 'A chave da API do Claude foi recusada. Confira em Configurar.', sem_credito: 'Sua conta da API do Claude está sem créditos. Adicione créditos em console.anthropic.com.' });
+const erroIA = e => ERRO_IA[e && e.code] || (e && e.code === 'api' && e.message ? 'A API do Claude respondeu: ' + e.message : 'A conexão com a IA falhou. Tente de novo.');
+function dadosLead(l) {
+  return { id: l.id, nome: l.nome, nicho: l.nicho, cidade: l.cidade, uf: l.uf, presenca: PRESENCA[l.site_status], instagram: l.instagram || null, seguidores: l.seguidores, site: l.site || null,
+    google_nota: l.google_nota, google_avaliacoes: l.google_avaliacoes, avaliacoes_em_outras_plataformas: l.avaliacoes_total, problemas: l.problemas, sinais_de_caixa: l.sinais_de_caixa, servicos_sugeridos: l.servicos_sugeridos, resumo: l.resumo, etapa: ETAPA[l.etapa], notas: l.notas || null };
+}
+function regrasMensagem() {
+  const c = S.config, quem = c.remetente ? `${c.remetente}, da ${c.empresa}` : `a equipe da ${c.empresa}`;
+  return `Você escreve a PRIMEIRA mensagem de WhatsApp de ${quem}, para o dono de uma empresa que ainda não nos conhece. A ${c.empresa} vende: ${c.servicos}.
+Objetivo: abrir conversa, não vender na primeira mensagem.
+Regras:
+- Comece com "${saudacao()}".
+- De 3 a 5 linhas curtas, no máximo 420 caracteres, tom humano e brasileiro, sem formalidade excessiva.
+- Diga quem está falando (${quem}) e cite UMA observação concreta sobre a presença digital da empresa, tirada só dos dados fornecidos.
+- Proponha algo pequeno e específico (por exemplo, mandar uma ideia ou um rascunho sem compromisso) e termine com uma pergunta simples.
+- Não invente fatos, números ou elogios, não diga que é cliente, não prometa resultado. No máximo 1 emoji. Sem links.
+${c.instrucoes ? 'Instruções extras do dono: ' + c.instrucoes + '\n' : ''}`;
+}
+async function gerarMensagem(id) {
+  const l = S.leads.get(id), campo = $('#d-msg'), bt = $('#d-ia'); if (!l || !S.sample || !campo) return;
+  S.gerando = true; bt.disabled = true; bt.textContent = 'Escrevendo…'; const antes = campo.value; campo.value = '';
+  try {
+    const { text } = await S.sample(regrasMensagem() + 'Responda só com o texto da mensagem.\n\nDADOS DA EMPRESA:\n' + JSON.stringify(dadosLead(l)), { cache: false, onText: ({ text }) => { if (S.sel === id) campo.value = text; } });
+    const final = text.trim().replace(/^["“]|["”]$/g, '');
+    if (S.sel === id) campo.value = final;
+    await atualizarLead(id, { mensagem: final });
+  } catch (e) { if (S.sel === id) campo.value = antes; toast(erroIA(e)); }
+  finally { S.gerando = false; if (S.sel === id) renderDrawer(); render(); }
+}
+async function gerarLote() {
+  if (!S.sample || S.lote) return;
+  const alvo = S.ordem.map(id => S.leads.get(id)).filter(l => l && l.etapa === 'novo' && !l.mensagem && l.telefone).slice(0, 8);
+  if (!alvo.length) { toast('Todas as empresas da fila já têm abordagem escrita.'); return; }
+  S.lote = true; render();
+  try {
+    const res = await S.sample.json(regrasMensagem() + `Escreva uma mensagem diferente para CADA empresa abaixo.\nResponda só com um array JSON de objetos {"id": string, "mensagem": string}, um por empresa, usando os mesmos ids.\n\nEMPRESAS:\n` + JSON.stringify(alvo.map(dadosLead)), { cache: false });
+    let n = 0;
+    for (const r of Array.isArray(res) ? res : []) {
+      const id = r && String(r.id), m = r && typeof r.mensagem === 'string' ? r.mensagem.trim() : '';
+      if (m && alvo.some(l => l.id === id)) { await atualizarLead(id, { mensagem: m }).then(() => n++, () => {}); }
+    }
+    toast(n ? `${n} abordagens prontas. Abra cada empresa, confira e envie.` : 'A IA não devolveu mensagens. Tente de novo.');
+  } catch (e) { toast(erroIA(e)); }
+  finally { S.lote = false; render(); }
+}
+
+/* Conversa */
+function md(texto) {
+  const frag = document.createDocumentFragment(); let lista = null;
+  const inline = (alvo, t) => { for (const parte of t.split(/(\*\*[^*\n]+\*\*|`[^`\n]+`)/)) { if (!parte) continue; if (parte.startsWith('**')) alvo.append(el('strong', { text: parte.slice(2, -2) })); else if (parte.startsWith('`')) alvo.append(el('code', { text: parte.slice(1, -1) })); else alvo.append(parte); } };
+  for (const bruta of texto.split('\n')) {
+    const ln = bruta.trimEnd(); const li = ln.match(/^\s*(?:[-*•]|(\d+)[.)])\s+(.*)$/);
+    if (li) { const tipo = li[1] ? 'ol' : 'ul'; if (!lista || lista.tagName.toLowerCase() !== tipo) { lista = el(tipo); frag.append(lista); } const item = el('li'); inline(item, li[2]); lista.append(item); continue; }
+    lista = null; if (!ln.trim()) continue;
+    const h = ln.match(/^#{1,4}\s+(.*)$/); const p = el('p'); if (h) p.append(el('strong', { text: h[1].replace(/\*\*/g, '') })); else inline(p, ln); frag.append(p);
+  }
+  return frag;
+}
+const SUGESTOES = ['Quem eu abordo hoje e por quê?', 'Quais nichos estão mais quentes no radar?', 'Monte um roteiro de ligação para a empresa aberta', 'Como responder “já tenho quem faz isso”?'];
+function renderChat() {
+  const box = $('#msgs'), c = S.chat, kids = [];
+  if (!S.sample) kids.push(el('div', { class: 'msg a', text: 'A conversa com a IA funciona com o painel aberto dentro do Claude.' }));
+  else if (!c.turns.length && !c.busy) kids.push(el('div', { class: 'msg a' }, md('Sou a IA do painel. Enxergo todas as empresas do radar e posso:\n- dizer quem abordar primeiro e por quê\n- escrever mensagens, roteiros e propostas\n- mover empresas de etapa e anotar o que você me contar\n- pedir novas buscas por nicho e cidade\n\nPode falar comigo sobre qualquer assunto.')));
+  for (const t of c.turns) kids.push(el('div', { class: 'msg ' + (t.role === 'user' ? 'u' : 'a') + (t.erro ? ' err' : '') }, t.role === 'user' ? t.content : md(t.content)));
+  if (c.busy) kids.push(el('div', { class: 'msg a', id: 'msg-viva' }, c.parcial ? md(c.parcial) : 'Pensando…'));
+  box.replaceChildren(...kids); box.scrollTop = box.scrollHeight;
+  $('#sug').replaceChildren(...(S.sample && !c.busy && c.turns.length < 2 ? SUGESTOES.map(s => el('button', { type: 'button', text: s, onclick: () => enviarChat(s) })) : []));
+  const bt = $('#chat-send'); bt.textContent = c.busy ? 'Parar' : 'Enviar'; bt.disabled = !S.sample; $('#chat-in').disabled = !S.sample;
+}
+function contexto() {
+  const c = S.config, ab = S.leads.get(S.sel);
+  const linhas = [...S.leads.values()].sort((a, b) => b.score - a.score).slice(0, 400).map(l =>
+    `${l.id} | ${l.nome} | ${l.nicho} | ${local(l)} | nec ${l.necessidade} | pot ${l.potencial} | ${ETAPA[l.etapa]} | ${PRESENCA[l.site_status] || '?'} | ${l.telefone ? (l.telefone_tipo || 'tel') : 'sem tel'}${l.mensagem ? ' | abordagem pronta' : ''}${naSerra(l) ? ' | Serra' : ''}`);
+  return `Você é a IA do Radar Dalas, o painel de prospecção da ${c.empresa}. Você conversa com ${c.remetente || 'o dono da empresa'}.
+Fale em português do Brasil, de forma direta, como um sócio comercial experiente. Converse sobre qualquer assunto que ele trouxer, mas o seu trabalho principal é ajudar a encontrar, priorizar e fechar clientes.
+A ${c.empresa} vende: ${c.servicos}.
+Foco comercial: Serra Gaúcha (Caxias do Sul, Bento Gonçalves, Gramado, Canela, Farroupilha, Garibaldi, Nova Petrópolis e região). Quando ele não disser a região, priorize empresas de lá.
+${c.instrucoes ? 'Instruções do dono: ' + c.instrucoes + '\n' : ''}Regras:
+- Ao falar de uma empresa do painel, use só os dados do painel. Não invente telefone, números, avaliações nem fatos. Se faltar um dado, diga que falta.
+- "nec" é a necessidade do serviço (presença digital fraca) e "pot" é o potencial de compra, de 0 a 100.
+- Mensagens de abordagem: curtas, humanas, identificando quem fala, sem promessa de resultado.
+- Você não navega na internet. Para trazer empresas novas, use a ferramenta pedir_garimpo, que coloca o pedido na fila da busca automática.
+- Use as ferramentas quando ele pedir uma ação (mover de etapa, anotar, salvar mensagem, abrir a ficha). Para detalhes de uma empresa, use ver_lead.
+- Respostas objetivas. Use listas curtas quando ajudar.
+Agora: ${new Date().toLocaleString('pt-BR')}. Empresa aberta na tela: ${ab ? `${ab.nome} (id ${ab.id})` : 'nenhuma'}.
+
+PAINEL (${S.leads.size} empresas) — id | empresa | nicho | cidade/UF | nec | pot | etapa | presença | telefone:
+${linhas.join('\n') || '(vazio)'}`;
+}
+function ferramentas() {
+  const achar = id => { const l = S.leads.get(String(id)); if (!l) throw new Error('Não existe empresa com esse id no painel.'); return l; };
+  return [
+    { name: 'ver_lead', description: 'Devolve todos os dados de uma empresa do painel (contato, problemas, sinais de caixa, serviços sugeridos, mensagem e anotações). Use antes de escrever algo específico sobre ela.',
+      inputSchema: { type: 'object', properties: { id: { type: 'string' } }, required: ['id'] }, execute: ({ id }) => { const l = achar(id); return { ...dadosLead(l), telefone: l.telefone || null, mensagem: l.mensagem || null, fontes: l.fontes.slice(0, 4) }; } },
+    { name: 'atualizar_lead', description: 'Altera uma empresa do painel: muda a etapa do funil, salva o texto da primeira mensagem e/ou acrescenta uma anotação. Devolve "ok".',
+      inputSchema: { type: 'object', properties: { id: { type: 'string' }, etapa: { type: 'string', enum: ETAPAS.map(e => e.id) }, mensagem: { type: 'string' }, nota: { type: 'string' } }, required: ['id'] },
+      execute: async ({ id, etapa, mensagem, nota }) => { const l = achar(id), p = {}; if (ETAPA[etapa]) p.etapa = etapa; if (typeof mensagem === 'string' && mensagem.trim()) p.mensagem = mensagem.trim(); if (typeof nota === 'string' && nota.trim()) p.notas = (l.notas ? l.notas + '\n' : '') + nota.trim(); if (!Object.keys(p).length) throw new Error('Nada para alterar.'); await atualizarLead(l.id, p); return 'ok'; } },
+    { name: 'abrir_lead', description: 'Abre na tela a ficha de uma empresa do painel. Devolve "ok".', inputSchema: { type: 'object', properties: { id: { type: 'string' } }, required: ['id'] }, execute: ({ id }) => { abrirLead(achar(id).id); return 'ok'; } },
+    { name: 'pedir_garimpo', description: 'Pede uma busca de empresas novas por nicho e cidade e tenta iniciar na hora. Sem cidade dita, use uf "RS" e cidade vazia (toda a Serra Gaúcha). Devolve se a busca começou agora ou ficou para depois.',
+      inputSchema: { type: 'object', properties: { nicho: { type: 'string' }, cidade: { type: 'string' }, uf: { type: 'string' }, quantidade: { type: 'number' }, observacao: { type: 'string' } }, required: ['nicho'] },
+      execute: async i => { const r = await pedirGarimpo({ nicho: String(i.nicho || ''), cidade: String(i.cidade || ''), uf: String(i.uf || ''), quantidade: Number(i.quantidade) || 10, obs: String(i.observacao || '') }, true); return r.msg; } },
+  ];
+}
+async function enviarChat(texto) {
+  const c = S.chat; texto = (texto || '').trim(); if (!texto || c.busy || !S.sample) return;
+  c.turns = c.turns.filter(t => !t.erro); c.turns.push({ role: 'user', content: texto });
+  c.busy = true; c.parcial = ''; c.ctl = new AbortController(); renderChat();
+  const hist = c.turns.slice(-18).map(t => ({ role: t.role, content: t.content.slice(0, 8000) }));
+  while (hist.length && hist[0].role !== 'user') hist.shift();
+  const opts = { signal: c.ctl.signal, onText: ({ text }) => { c.parcial = text; const v = $('#msg-viva'); if (v) { v.replaceChildren(md(text)); const b = $('#msgs'); b.scrollTop = b.scrollHeight; } } };
+  if (S.tools) opts.tools = ferramentas(); else opts.cache = false;
+  try {
+    const { text, truncated } = await S.sample([{ role: 'user', content: contexto() }, ...hist], opts);
+    c.turns.push({ role: 'assistant', content: text + (truncated ? '\n\n(resposta cortada; peça para continuar)' : '') });
+  } catch (e) {
+    if (e && e.text) c.turns.push({ role: 'assistant', content: e.text });
+    if (!e || e.code !== 'cancelled') c.turns.push({ role: 'assistant', content: erroIA(e), erro: true });
+  } finally {
+    c.busy = false; c.parcial = ''; c.ctl = null; renderChat();
+    if (S.db) gravar('conversas/principal', { turns: c.turns.filter(t => !t.erro).slice(-30).map(t => ({ role: t.role, content: t.content.slice(0, 6000) })), atualizado_em: agora() }, 'set').catch(() => {});
+  }
+}
+function abrirChat() { $('#chat').hidden = false; document.body.classList.add('chat-open'); mem('radar.chat', '1'); renderChat(); }
+function fecharChat() { $('#chat').hidden = true; document.body.classList.remove('chat-open'); mem('radar.chat', '0'); }
+
+/* ---------- Garimpo ---------- */
+async function dispararRotina(texto) {
+  const tid = S.config.trigger_id;
+  if (!S.mcp || !tid) return 'sem_rotina';
+  try { await S.mcp.callTool('Claude Code Remote', 'fire_trigger', { trigger_id: tid, text: texto }); return 'ok'; }
+  catch (e) { return (e && e.code) || 'upstream_error'; }
+}
+async function pedirGarimpo(p, agoraMesmo) {
+  if (!p.nicho.trim()) return { ok: false, msg: 'Diga pelo menos o nicho.' };
+  const doc = { nicho: p.nicho.trim(), cidade: p.cidade.trim(), uf: p.uf.trim().toUpperCase().slice(0, 2), quantidade: Math.max(3, Math.min(20, p.quantidade || 10)), obs: p.obs.trim(), status: 'pendente', criado_em: agora() };
+  doc.regiao = !doc.cidade && doc.uf === 'RS' ? 'Serra Gaúcha' : '';
+  if (MODO_LOCAL && !mem('radar.apikey')) return { ok: false, msg: 'Coloque sua chave da API do Claude em Configurar para buscar empresas aqui no computador.' };
+  let ref;
+  try { ref = await S.db.collection('pedidos').add(doc); } catch (e) { return { ok: false, msg: 'Não consegui salvar o pedido agora.' }; }
+  if (MODO_LOCAL) { garimpoLocal(ref.id, doc); return { ok: true, msg: 'Busca iniciada aqui no computador. Leva alguns minutos; as empresas aparecem no radar quando terminar. Pode fechar esta janela.' }; }
+  if (!agoraMesmo) return { ok: true, msg: 'Pedido na fila. A próxima busca automática atende.' };
+  const r = await dispararRotina(`Pedido feito no painel: ${doc.quantidade} empresas de "${doc.nicho}"${doc.cidade ? ' em ' + doc.cidade : ''}${doc.uf ? '/' + doc.uf : ''}${doc.regiao ? ' (região: ' + doc.regiao + ')' : ''}.${doc.obs ? ' Observação: ' + doc.obs : ''} Atenda os pedidos pendentes da fila.`);
+  if (r === 'ok') return { ok: true, msg: 'Busca iniciada. As empresas entram no radar em alguns minutos.' };
+  const porque = r === 'server_not_connected' || r === 'needs_reauth' ? 'Para buscar na hora, conecte o Claude Code em claude.ai → Configurações → Conectores.'
+    : r === 'not_in_manifest' || r === 'approval_required' || r === 'not_granted' ? 'Para buscar na hora, permita que o painel use o Claude Code quando ele pedir.'
+    : r === 'sem_rotina' ? '' : 'Não consegui iniciar a busca na hora.';
+  return { ok: true, msg: `Pedido salvo na fila. ${porque} A próxima busca automática atende.`.replace(/\s+/g, ' ') };
+}
+async function garimpoLocal(pid, p) {
+  const ref = S.db.doc('pedidos/' + pid);
+  ref.update({ status: 'buscando' }).catch(() => {});
+  toast('Buscando empresas na web… pode continuar usando o painel.');
+  const onde = p.cidade ? `${p.cidade}/${p.uf || 'RS'}` : p.regiao ? `${p.regiao} (RS): Caxias do Sul, Bento Gonçalves, Gramado, Canela, Farroupilha, Garibaldi, Carlos Barbosa, Flores da Cunha, Nova Petrópolis, Veranópolis, Nova Prata, São Francisco de Paula e vizinhas` : p.uf ? `estado ${p.uf}` : 'Brasil, várias cidades';
+  const jaTem = [...S.leads.values()].filter(l => !p.uf || l.uf === p.uf).slice(0, 300).map(l => `${l.nome} (${l.cidade})`).join('; ');
+  const prompt = `Você é o pesquisador de prospecção da ${S.config.empresa}, agência que vende: ${S.config.servicos}.
+Encontre ${p.quantidade} empresas REAIS de "${p.nicho}" em ${onde}, com presença digital fraca e sinais de que podem pagar.${p.obs ? '\nObservação do dono: ' + p.obs : ''}
+
+Bom lead = (1) presença fraca: sem site próprio, só Instagram/Linktree, site antigo ou quebrado, reservas só por OTA, ficha do Google incompleta; E (2) capacidade de pagar: negócio estabelecido, muitas avaliações, seguidores, anos de mercado, mais de uma unidade, ticket alto. Evite microempreendedores muito pequenos, negócios fechados e grandes redes/franquias.
+Pesquise com web_search e abra páginas com web_fetch: benditoguia.com.br, solutudo.com.br, guiamais.com.br, apontador.com.br, tripadvisor.com.br, doctoralia.com.br, cardapio.menu e perfis do Instagram (a bio costuma ter o WhatsApp). Se um diretório mostrar o celular cortado, abra a página ou busque o nome + "whatsapp" para achar o número completo. Para cada candidata, confira se tem site e Instagram.
+REGRA ABSOLUTA: não invente nada. Todo telefone tem que ter aparecido completo numa fonte citada; número cortado não vale. Campo não encontrado fica null. Só inclua empresas com telefone.
+Já estão no painel (não repita): ${jaTem || 'nenhuma'}.
+
+Responda só com um array JSON, um objeto por empresa:
+{"nome":"","nicho":"Odontologia | Estética | Saúde | Restaurante | Hospedagem | Pet | Fitness | Automotivo | Jurídico/Contábil | Imobiliária | Varejo | Beleza | Outro","cidade":"","uf":"","endereco":"ou null","telefone":"só dígitos com DDD","telefone_tipo":"celular | fixo","instagram":"@handle ou null","seguidores":número ou null,"site":"url ou null","site_status":"sem_site | so_instagram | so_linktree | site_fraco | tem_site | nao_encontrado","google_nota":número ou null,"google_avaliacoes":número ou null,"avaliacoes_total":maior número de avaliações visto em qualquer plataforma ou null,"sinais_de_caixa":["fatos concretos"],"problemas":["problemas concretos"],"servicos_sugeridos":["Site | Landing page | Google Meu Negócio | Tráfego pago | CRM | Automação WhatsApp | Cardápio/Pedido online | Sistema/Painel | Loja online"],"resumo":"2 frases: por que é bom lead e o que vender primeiro","fontes":["urls"],"confianca":"alta | media | baixa"}`;
+  try {
+    const res = await S.sample.json(prompt, { effort: 'high', maxTokens: 64000, serverTools: [
+      { type: 'web_search_20260209', name: 'web_search', max_uses: 30, user_location: { type: 'approximate', country: 'BR' } },
+      { type: 'web_fetch_20260209', name: 'web_fetch', max_uses: 20 },
+    ] });
+    const nomes = new Set([...S.leads.values()].map(l => semAcento(l.nome + '|' + l.cidade)));
+    let n = 0;
+    for (const x of Array.isArray(res) ? res : []) {
+      if (!x || typeof x !== 'object' || !str(x.nome)) continue;
+      const tel = String(x.telefone ?? '').replace(/\D/g, '').replace(/^55(?=\d{10,11}$)/, '');
+      if (tel.length !== 10 && tel.length !== 11) continue;
+      const id = slug(`${x.nome}-${x.cidade || ''}-${x.uf || ''}`);
+      if (S.leads.has(id) || nomes.has(semAcento(x.nome + '|' + (x.cidade || '')))) continue;
+      const l = { ...x, telefone: tel, telefone_tipo: x.telefone_tipo || (tel.length === 11 ? 'celular' : 'fixo'), instagram: x.instagram || '', site: x.site || '', endereco: x.endereco || '',
+        etapa: 'novo', notas: '', mensagem: '', origem: 'busca-local', criado_em: agora(), atualizado_em: agora() };
+      l.avaliacoes_total = Math.max(num(x.google_avaliacoes) ?? 0, num(x.avaliacoes_total) ?? 0) || null;
+      Object.assign(l, pontuar(normalizar(id, l)));
+      try { await gravar('leads/' + id, l, 'set'); n++; nomes.add(semAcento(x.nome + '|' + (x.cidade || ''))); } catch (e) { break; }
+    }
+    await ref.update({ status: 'feito', encontrados: n, feito_em: agora() }).catch(() => {});
+    await S.db.doc('rotina/ultima').set({ em: agora(), novos: n, resumo: `${p.nicho} em ${p.cidade || p.regiao || p.uf || 'Brasil'}` }).catch(() => {});
+    toast(n ? `${n} empresas novas no radar (${p.nicho}).` : 'A busca terminou sem empresas novas com telefone completo. Tente outro nicho ou cidade.');
+  } catch (e) {
+    await ref.update({ status: 'pendente', erro: erroIA(e) }).catch(() => {});
+    toast('A busca falhou: ' + erroIA(e));
+  }
+}
+function renderPedidos() {
+  const box = $('#g-pend'); if (!box) return;
+  const ps = S.pedidos.slice(0, 6);
+  box.replaceChildren(...(ps.length ? [el('b', { text: 'Pedidos recentes' }), ...ps.map(p => el('div', { class: 'row' }, el('span', { class: 'grow', text: `${p.quantidade || ''} ${p.nicho || ''}${p.cidade ? ' · ' + p.cidade : ''}${p.uf ? '/' + p.uf : ''}` }), el('span', { class: 'chip' + (p.status === 'feito' ? ' v' : ''), title: p.erro || '', text: p.status === 'feito' ? `feito${typeof p.encontrados === 'number' ? ' · ' + p.encontrados : ''}` : p.status === 'buscando' ? 'buscando…' : p.erro ? 'falhou' : 'na fila' })))] : []));
+  box.hidden = !ps.length;
+}
+
+/* ---------- Modais ---------- */
+function fecharModal() { S.modal = null; $('#camada').querySelectorAll('.veil.m, .modal').forEach(n => n.remove()); }
+function abrirModal(nome, titulo, corpo, rodape) {
+  fecharModal(); S.modal = nome;
+  const m = el('form', { class: 'modal', role: 'dialog', 'aria-label': titulo, onsubmit: e => e.preventDefault() }, el('h2', { text: titulo }), corpo, el('div', { class: 'row', style: 'justify-content:flex-end' }, el('button', { class: 'btn ghost', type: 'button', text: 'Fechar', onclick: fecharModal }), rodape));
+  $('#camada').append(el('div', { class: 'veil m', onclick: fecharModal }), m);
+  const f = m.querySelector('input, textarea, select'); if (f) f.focus();
+}
+const campo = (rot, props) => { const c = el(props.rows ? 'textarea' : (props.opts ? 'select' : 'input'), { class: 'field', ...props, opts: null }, props.opts ? props.opts.map(o => el('option', { value: o[0] ?? o, text: o[1] ?? o })) : null); if (props.opts && props.value != null) c.value = props.value; return [el('label', null, rot, c), c]; };
+function abrirGarimpo() {
+  if (!S.db) { toast('O banco de dados não está disponível nesta visualização.'); return; }
+  const [l1, nicho] = campo('Nicho ou tipo de empresa', { id: 'g-nicho', placeholder: 'Ex.: clínicas de estética, pizzarias, pousadas', required: true });
+  const [l2, cidade] = campo('Cidade', { id: 'g-cidade', list: 'g-cidades', placeholder: 'Em branco = toda a Serra Gaúcha' });
+  const [l3, uf] = campo('Estado', { id: 'g-uf', opts: [['', 'Brasil inteiro'], ...UFS.map(u => [u, u])], value: 'RS' });
+  uf.addEventListener('change', () => { cidade.placeholder = uf.value === 'RS' ? 'Em branco = toda a Serra Gaúcha' : 'Em branco = várias cidades'; });
+  const cidades = el('datalist', { id: 'g-cidades' }, SERRA_CIDADES.map(c => el('option', { value: c })));
+  const [l4, qtd] = campo('Quantas empresas', { id: 'g-qtd', opts: [['5', '5'], ['10', '10'], ['15', '15'], ['20', '20']], value: '10' });
+  const [l5, obs] = campo('Observação para a busca (opcional)', { id: 'g-obs', rows: '2', placeholder: 'Ex.: só quem não tem site; evitar franquias' });
+  const status = el('p', { class: 'hint', id: 'g-status', text: MODO_LOCAL ? 'A busca roda aqui com a sua chave da API do Claude: pesquisa na web, confere site e Instagram e coloca as empresas no radar. Leva alguns minutos e costuma custar menos de 1 dólar em créditos.' : 'A busca roda na nuvem: pesquisa as empresas, confere site e Instagram, calcula as pontuações e coloca no radar.' });
+  const enviar = async (agoraMesmo, bt) => {
+    bt.disabled = true; status.textContent = agoraMesmo ? 'Salvando o pedido e iniciando a busca…' : 'Salvando o pedido…';
+    const r = await pedirGarimpo({ nicho: nicho.value, cidade: cidade.value, uf: uf.value, quantidade: Number(qtd.value), obs: obs.value }, agoraMesmo);
+    status.textContent = r.msg; bt.disabled = false; if (r.ok) { nicho.value = ''; obs.value = ''; }
+  };
+  const fila = el('button', { class: 'btn', type: 'button', text: 'Deixar na fila', onclick: e => enviar(false, e.currentTarget) });
+  const ja = el('button', { class: 'btn gold', type: 'submit', text: 'Buscar agora', onclick: e => enviar(true, e.currentTarget) });
+  abrirModal('garimpar', 'Garimpar empresas', [l1, el('div', { class: 'two' }, l2, l3), cidades, l4, l5, status, el('div', { class: 'pend', id: 'g-pend', hidden: true })], MODO_LOCAL ? [ja] : [fila, ja]);
+  renderPedidos();
+}
+function abrirNovo() {
+  if (!S.db) { toast('O banco de dados não está disponível nesta visualização.'); return; }
+  const [l1, nome] = campo('Nome da empresa', { id: 'n-nome', required: true });
+  const [l2, nicho] = campo('Nicho', { id: 'n-nicho', opts: NICHOS });
+  const [l3, cidade] = campo('Cidade', { id: 'n-cidade' });
+  const [l4, uf] = campo('Estado', { id: 'n-uf', opts: [['', '—'], ...UFS.map(u => [u, u])] });
+  const [l5, tel] = campo('Telefone com DDD', { id: 'n-tel', inputmode: 'tel', placeholder: '(54) 99999-9999' });
+  const [l6, ig] = campo('Instagram', { id: 'n-ig', placeholder: '@empresa' });
+  const [l7, pres] = campo('Presença digital', { id: 'n-pres', opts: Object.entries(PRESENCA) });
+  const [l8, obs] = campo('O que você observou', { id: 'n-obs', rows: '2', placeholder: 'Um problema por linha. Ex.: perfil do Google sem fotos' });
+  const salvar = el('button', { class: 'btn gold', type: 'submit', text: 'Adicionar ao radar', onclick: async () => {
+    if (!nome.value.trim()) { nome.focus(); return; }
+    const t = tel.value.replace(/\D/g, '').replace(/^55(?=\d{10,11}$)/, '');
+    const l = { nome: nome.value.trim(), nicho: nicho.value, cidade: cidade.value.trim(), uf: uf.value, telefone: t, telefone_tipo: t.length === 11 ? 'celular' : (t.length === 10 ? 'fixo' : ''), instagram: ig.value.trim(), site_status: pres.value,
+      problemas: obs.value.split('\n').map(s => s.trim()).filter(Boolean), sinais_de_caixa: [], servicos_sugeridos: [], fontes: [], confianca: 'media', etapa: 'novo', origem: 'manual', criado_em: agora(), atualizado_em: agora() };
+    Object.assign(l, pontuar(l));
+    const id = slug(`${l.nome}-${l.cidade}-${l.uf}`);
+    if (S.leads.has(id)) { toast('Essa empresa já está no radar.'); abrirLead(id); return; }
+    try { await gravar('leads/' + id, l, 'set'); fecharModal(); toast('Empresa adicionada.'); } catch (e) {}
+  } });
+  abrirModal('novo', 'Novo lead', [l1, el('div', { class: 'two' }, l2, l7), el('div', { class: 'two' }, l3, l4), el('div', { class: 'two' }, l5, l6), l8], salvar);
+}
+function abrirConfig() {
+  if (!S.db) { toast('O banco de dados não está disponível nesta visualização.'); return; }
+  const c = S.config;
+  const [l1, emp] = campo('Nome da sua empresa', { id: 'c-emp', value: c.empresa });
+  const [l2, rem] = campo('Seu nome (assina as mensagens)', { id: 'c-rem', value: c.remetente, placeholder: 'Ex.: Ryan' });
+  const [l3, serv] = campo('O que vocês vendem', { id: 'c-serv', rows: '3', value: c.servicos });
+  const [l4, inst] = campo('Instruções para a IA (tom de voz, preços, o que evitar)', { id: 'c-inst', rows: '3', value: c.instrucoes, placeholder: 'Ex.: tom descontraído; site a partir de R$ 1.500; não oferecer desconto na primeira conversa' });
+  const extras = [];
+  let chave = null;
+  if (MODO_LOCAL) {
+    const [l5, k] = campo('Chave da API do Claude (fica só neste computador)', { id: 'c-chave', type: 'password', autocomplete: 'off', placeholder: 'sk-ant-…', value: mem('radar.apikey') || '' });
+    chave = k;
+    extras.push(l5, el('p', { class: 'hint', text: 'Crie a chave em console.anthropic.com → API Keys. Ela liga a IA e a busca de empresas nesta versão local, e os gastos saem dos créditos da sua conta.' }));
+  }
+  const arquivo = el('input', { type: 'file', id: 'c-arquivo', accept: '.json,application/json', hidden: true, onchange: e => { const f = e.target.files && e.target.files[0]; if (f) importarBackup(f); e.target.value = ''; } });
+  extras.push(el('div', { class: 'pend' }, el('b', { text: 'Backup das empresas' }),
+    el('span', { text: 'Leve os leads entre o painel online e a versão do computador.' }),
+    el('div', { class: 'row' }, el('button', { class: 'btn sm', type: 'button', text: 'Exportar backup', onclick: exportarBackup }), el('button', { class: 'btn sm', type: 'button', text: 'Importar backup', onclick: () => arquivo.click() }), arquivo)));
+  const salvar = el('button', { class: 'btn gold', type: 'submit', text: 'Salvar', onclick: async () => {
+    if (chave) mem('radar.apikey', chave.value.trim());
+    try { await gravar('config/principal', { ...c, empresa: emp.value.trim() || CFG_PADRAO.empresa, remetente: rem.value.trim(), servicos: serv.value.trim() || CFG_PADRAO.servicos, instrucoes: inst.value.trim() }, 'set'); fecharModal(); toast('Configurações salvas.'); render(); } catch (e) {}
+  } });
+  abrirModal('config', 'Configurações', [l1, l2, l3, l4, ...extras], salvar);
+}
+function dadosBackup() {
+  const c = S.config;
+  return { app: 'radar-dalas', versao: 1, exportado_em: agora(), config: { empresa: c.empresa, remetente: c.remetente, servicos: c.servicos, instrucoes: c.instrucoes },
+    leads: [...S.leads.values()].map(l => { const { score, ...r } = l; return r; }) };
+}
+async function exportarBackup() {
+  if (!S.dl) { toast('Baixar arquivos não está disponível nesta visualização.'); return; }
+  try { await S.dl.save({ filename: `radar-dalas-backup-${new Date().toISOString().slice(0, 10)}.json`, data: JSON.stringify(dadosBackup(), null, 1) }); }
+  catch (e) { if (!e || e.code !== 'declined') toast('Não consegui gerar o backup agora.'); }
+}
+async function importarBackup(file) {
+  let j; try { j = JSON.parse(await file.text()); } catch (e) { toast('Esse arquivo não é um backup do Radar.'); return; }
+  const ls = Array.isArray(j) ? j : (j && Array.isArray(j.leads)) ? j.leads : null;
+  if (!ls) { toast('Esse arquivo não é um backup do Radar.'); return; }
+  toast('Importando empresas…');
+  let n = 0;
+  for (const x of ls) {
+    if (!x || typeof x !== 'object' || !str(x.nome)) continue;
+    const id = (typeof x.id === 'string' && /^[a-z0-9-]{1,70}$/.test(x.id)) ? x.id : slug(`${x.nome}-${x.cidade || ''}-${x.uf || ''}`);
+    const atual = S.leads.get(id);
+    if (atual && String(atual.atualizado_em || '') >= String(x.atualizado_em || '')) continue;
+    const { id: _id, score: _s, ...dados } = x;
+    try { await gravar('leads/' + id, dados, 'set'); n++; } catch (e) { break; }
+  }
+  toast(n ? `${n} empresas importadas.` : 'Nada novo nesse backup: o radar já tem tudo.');
+}
+async function baixarCsv() {
+  if (!S.dl) return;
+  const cab = ['Empresa', 'Nicho', 'Cidade', 'UF', 'Telefone', 'Tipo', 'Instagram', 'Site', 'Presença', 'Nota Google', 'Avaliações', 'Necessidade', 'Potencial', 'Etapa', 'Resumo', 'Anotações'];
+  const cel = v => { let s = v == null ? '' : String(v); if (/^[=+\-@]/.test(s)) s = "'" + s; return '"' + s.replace(/"/g, '""') + '"'; };
+  const linhas = filtrados().sort((a, b) => b.score - a.score).map(l => [l.nome, l.nicho, l.cidade, l.uf, l.telefone, l.telefone_tipo, l.instagram, l.site, PRESENCA[l.site_status], l.google_nota, l.google_avaliacoes, l.necessidade, l.potencial, ETAPA[l.etapa], l.resumo, l.notas].map(cel).join(';'));
+  try { await S.dl.save({ filename: 'radar-dalas-leads.csv', data: '﻿' + cab.map(cel).join(';') + '\r\n' + linhas.join('\r\n') }); }
+  catch (e) { if (!e || e.code !== 'declined') toast('Não consegui gerar a planilha agora.'); }
+}
+
+/* ---------- Eventos ---------- */
+function irPara(v) { S.view = ['radar', 'funil', 'lista'].includes(v) ? v : 'radar'; render(); }
+document.querySelectorAll('.tabs button').forEach(b => b.addEventListener('click', () => { location.hash = b.dataset.view; irPara(b.dataset.view); }));
+window.addEventListener('hashchange', () => irPara(location.hash.slice(1)));
+$('#f-regiao').addEventListener('change', e => { S.f.regiao = e.target.value; mem('radar.regiao', S.f.regiao); render(); });
+$('#f-busca').addEventListener('input', e => { S.f.busca = e.target.value; render(); });
+$('#f-uf').addEventListener('change', e => { S.f.uf = e.target.value; render(); });
+$('#f-nicho').addEventListener('change', e => { S.f.nicho = e.target.value; render(); });
+$('#f-tel').addEventListener('change', e => { S.f.tel = e.target.value; render(); });
+$('#btn-garimpar').addEventListener('click', abrirGarimpo);
+$('#btn-novo').addEventListener('click', abrirNovo);
+$('#btn-cfg').addEventListener('click', abrirConfig);
+$('#btn-lote').addEventListener('click', gerarLote);
+$('#btn-csv').addEventListener('click', baixarCsv);
+$('#btn-ia').addEventListener('click', () => $('#chat').hidden ? abrirChat() : fecharChat());
+$('#fab-ia').addEventListener('click', abrirChat);
+$('#chat-fechar').addEventListener('click', fecharChat);
+$('#chat-limpar').addEventListener('click', () => { if (S.chat.busy) return; S.chat.turns = []; renderChat(); if (S.db) gravar('conversas/principal', { turns: [], atualizado_em: agora() }, 'set').catch(() => {}); });
+$('#chat-form').addEventListener('submit', e => { e.preventDefault(); if (S.chat.busy) { S.chat.ctl && S.chat.ctl.abort(); return; } const i = $('#chat-in'); const t = i.value; i.value = ''; enviarChat(t); });
+$('#chat-in').addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); $('#chat-form').requestSubmit(); } });
+document.addEventListener('keydown', e => { if (e.key !== 'Escape') return; if (S.modal) fecharModal(); else if (S.sel) fecharLead(); });
+
+/* ---------- Versão local (fora do claude.ai) ---------- */
+function criarLocal() {
+  const CH = 'radar.db.v1';
+  let dados = null;
+  try { dados = JSON.parse(localStorage.getItem(CH) || 'null'); } catch (e) { dados = null; }
+  const novo = !dados; dados = dados || {};
+  const ouvintes = new Set();
+  const salvar = () => { try { localStorage.setItem(CH, JSON.stringify(dados)); } catch (e) { toast('O navegador não deixou salvar. Exporte um backup em Configurar.'); } };
+  const avisar = () => ouvintes.forEach(f => { try { f(); } catch (e) {} });
+  const meta = { fromCache: false, hasPendingWrites: false };
+  const copia = d => JSON.parse(JSON.stringify(d));
+  const snapDoc = path => { const d = dados[path]; return { id: path.split('/').pop(), exists: !!d, data: () => d ? copia(d) : undefined, metadata: meta }; };
+  const snapCol = (path, lim) => { const pre = path + '/'; const docs = Object.keys(dados).filter(k => k.startsWith(pre) && !k.slice(pre.length).includes('/')).sort().slice(0, lim).map(snapDoc); return { docs, size: docs.length, empty: !docs.length, metadata: meta, docChanges: () => [] }; };
+  const ouvir = f => { ouvintes.add(f); setTimeout(f, 0); return () => ouvintes.delete(f); };
+  const docRef = path => ({
+    id: path.split('/').pop(), path,
+    get: async () => snapDoc(path),
+    set: async d => { dados[path] = copia(d); salvar(); avisar(); },
+    update: async d => { if (!dados[path]) throw { code: 'invalid_argument', message: 'documento não existe' }; dados[path] = { ...dados[path], ...copia(d) }; salvar(); avisar(); },
+    delete: async () => { delete dados[path]; salvar(); avisar(); },
+    onSnapshot: next => ouvir(() => next(snapDoc(path))),
+  });
+  const colRef = (path, lim = 1000) => {
+    const q = { path, limit: n => colRef(path, n), where: () => q, orderBy: () => q, get: async () => snapCol(path, lim),
+      doc: id => docRef(path + '/' + (id || Date.now().toString(36) + Math.random().toString(36).slice(2, 8))),
+      add: async d => { const r = q.doc(); await r.set(d); return r; },
+      onSnapshot: next => ouvir(() => next(snapCol(path, lim))) };
+    return q;
+  };
+  window.addEventListener('storage', e => { if (e.key === CH) { try { dados = JSON.parse(e.newValue || '{}') || {}; } catch (x) {} avisar(); } });
+  if (novo && location.protocol !== 'file:') {
+    fetch('dados/leads.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : null).then(j => {
+      if (!j) return;
+      for (const x of Array.isArray(j.leads) ? j.leads : []) { if (x && typeof x.id === 'string') { const { id, ...d } = x; if (!dados['leads/' + id]) dados['leads/' + id] = d; } }
+      if (j.config && !dados['config/principal']) dados['config/principal'] = j.config;
+      salvar(); avisar();
+    }).catch(() => {});
+  }
+
+  /* IA: chama a API do Claude direto do navegador, com o SDK oficial que vem na pasta vendor/ */
+  let sdk = null;
+  const carregarSdk = () => sdk || (sdk = import('./vendor/anthropic-sdk.mjs').then(m => m.Anthropic).catch(e => { sdk = null; throw e; }));
+  async function erroApi(e, texto) {
+    const A = await carregarSdk().catch(() => null);
+    const base = texto ? { text: texto } : {};
+    if (e && (e.name === 'AbortError' || (A && e instanceof A.APIUserAbortError))) return { code: 'cancelled', ...base };
+    const st = e && e.status;
+    const msg = String((e && e.error && e.error.error && e.error.error.message) || (e && e.message) || '');
+    if (st === 401) return { code: 'chave_invalida', message: msg, ...base };
+    if (st === 429) return { code: 'rate_limited', message: msg, ...base };
+    if (/credit balance/i.test(msg)) return { code: 'sem_credito', message: msg, ...base };
+    if (st) return { code: 'api', message: msg.slice(0, 240), ...base };
+    return { code: 'upstream_error', message: msg, ...base };
+  }
+  // Depois de uma troca de modelo no meio da resposta, o histórico devolve só o que a API aceita antes do bloco "fallback".
+  function ecoSeguro(content) {
+    const iFb = content.map(b => b.type).lastIndexOf('fallback');
+    if (iFb < 0) return content;
+    const pares = new Set(content.filter(b => /_tool_result$/.test(b.type) && b.type !== 'tool_result').map(b => b.tool_use_id));
+    return content.filter((b, i) => i >= iFb || b.type === 'text' || (/_tool_result$/.test(b.type) && b.type !== 'tool_result') || (b.type === 'server_tool_use' && pares.has(b.id)));
+  }
+  async function sample(input, opts = {}) {
+    const k = mem('radar.apikey');
+    if (!k) throw { code: 'sem_chave', message: '' };
+    let A;
+    try { A = await carregarSdk(); } catch (e) { throw { code: 'api', message: 'não consegui carregar vendor/anthropic-sdk.mjs (abra pelo atalho do Radar)' }; }
+    const cli = new A({ apiKey: k, dangerouslyAllowBrowser: true, maxRetries: 2 });
+    const msgs = typeof input === 'string' ? [{ role: 'user', content: input }] : input.map(t => ({ role: t.role, content: t.content }));
+    const ferr = (opts.tools || []).map(t => ({ name: t.name, description: t.description, input_schema: t.inputSchema || { type: 'object', properties: {} } }));
+    const tools = [...(opts.serverTools || []), ...ferr];
+    let texto = '', truncated = false;
+    for (let volta = 0; volta < 12; volta++) {
+      if (opts.signal && opts.signal.aborted) throw { code: 'cancelled', ...(texto ? { text: texto } : {}) };
+      const params = { model: 'claude-opus-5-5', max_tokens: opts.maxTokens || 32000, messages: msgs, output_config: { effort: opts.effort || 'medium' },
+        betas: ['server-side-fallback-2026-07-01'], fallbacks: 'default' };
+      if (tools.length) params.tools = tools;
+      let sep = texto ? '\n\n' : '';
+      let msg;
+      try {
+        const stream = cli.beta.messages.stream(params, opts.signal ? { signal: opts.signal } : undefined);
+        stream.on('text', d => { if (!d) return; texto += sep + d; sep = ''; if (opts.onText) { try { opts.onText({ text: texto, delta: d }); } catch (e) {} } });
+        msg = await stream.finalMessage();
+      } catch (e) { throw await erroApi(e, texto); }
+      if (msg.stop_reason === 'refusal') throw { code: 'refused', message: '' };
+      if (msg.stop_reason === 'max_tokens') truncated = true;
+      if (msg.stop_reason === 'pause_turn') { msgs.push({ role: 'assistant', content: ecoSeguro(msg.content) }); continue; }
+      const usos = msg.content.filter(b => b.type === 'tool_use');
+      if (msg.stop_reason === 'tool_use' && usos.length) {
+        msgs.push({ role: 'assistant', content: ecoSeguro(msg.content) });
+        const sinal = opts.signal || new AbortController().signal;
+        const res = await Promise.all(usos.map(async u => {
+          const t = (opts.tools || []).find(x => x.name === u.name);
+          try {
+            if (!t) throw new Error('ferramenta desconhecida');
+            const r = await t.execute(u.input || {}, { signal: sinal });
+            return { type: 'tool_result', tool_use_id: u.id, content: typeof r === 'string' ? r : JSON.stringify(r ?? null) };
+          } catch (e) { return { type: 'tool_result', tool_use_id: u.id, content: 'Error: ' + ((e && e.message) || String(e)), is_error: true }; }
+        }));
+        msgs.push({ role: 'user', content: res });
+        continue;
+      }
+      break;
+    }
+    if (!texto.trim()) throw { code: 'empty_completion', message: '' };
+    return { text: texto, truncated, modelTierApplied: 'default' };
+  }
+  sample.json = async (input, opts) => {
+    const { text } = await sample(input, opts);
+    const t = text.trim(), tentar = s => { try { return { ok: true, v: JSON.parse(s) }; } catch (e) { return { ok: false }; } };
+    let r = tentar(t);
+    if (!r.ok) { const m = t.match(/```(?:json)?\s*([\s\S]*?)```/); if (m) r = tentar(m[1].trim()); }
+    if (!r.ok) { const i = t.search(/[\[{]/), j = Math.max(t.lastIndexOf(']'), t.lastIndexOf('}')); if (i >= 0 && j > i) r = tentar(t.slice(i, j + 1)); }
+    if (!r.ok) throw { code: 'invalid_json', message: '', text };
+    return r.v;
+  };
+  sample.limits = async () => ({ maxPromptBytes: 262144, tools: { maxCount: 16 } });
+
+  const downloads = { save: async ({ filename, data }) => {
+    const blob = data instanceof Blob ? data : new Blob([data], { type: /\.json$/.test(filename) ? 'application/json' : 'text/csv;charset=utf-8' });
+    const a = el('a', { href: URL.createObjectURL(blob), download: filename }); document.body.append(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+    return { status: 'saved' };
+  } };
+  return { db: { doc: docRef, collection: colRef }, sample, downloads };
+}
+
+/* ---------- Início ---------- */
+irPara(location.hash.slice(1));
+renderChat();
+if (mem('radar.chat') === '1' || (mem('radar.chat') == null && window.innerWidth >= 1280)) abrirChat();
+const LOCAL = MODO_LOCAL ? criarLocal() : {};
+const usar = n => MODO_LOCAL ? Promise.resolve(LOCAL[n] || null) : window.claude.use(n).catch(() => null);
+usar('db').then(initDb);
+usar('sample').then(async s => { S.sample = s; if (s) { const lim = await s.limits().catch(() => null); S.tools = !!(lim && lim.tools); } renderChat(); render(); });
+usar('mcp').then(m => { S.mcp = m; });
+usar('downloads').then(d => { S.dl = d; render(); });
+})();
+</script>
+
+</body>
+</html>

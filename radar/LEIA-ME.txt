@@ -1,0 +1,35 @@
+RADAR DALAS - PAINEL DE CLIENTES NO SEU COMPUTADOR
+==================================================
+
+1. Descompacte este zip inteiro numa pasta (por exemplo, na Área de Trabalho).
+
+WINDOWS
+2. Dê dois cliques em "Abrir-Radar-Windows.bat".
+   Se aparecer "O Windows protegeu o computador", clique em "Mais informações"
+   e depois em "Executar assim mesmo".
+3. O painel abre sozinho no navegador em http://localhost:8090
+4. Para parar, feche a janela preta.
+
+MAC (não precisa instalar nada: usa o Perl que já vem no Mac)
+2. Dê dois cliques em "Abrir-Radar-Mac.command".
+3. O painel abre sozinho no navegador em http://localhost:8090
+4. Para parar, feche a janela do Terminal.
+   Se o Mac não deixar abrir ("não foi possível verificar"):
+   Ajustes do Sistema > Privacidade e Segurança, role até o fim e clique em
+   "Abrir Mesmo Assim"; depois dê dois cliques de novo.
+
+LIGAR A IA E A BUSCA DE EMPRESAS
+- No painel, clique em "Configurar" e cole a sua chave da API do Claude
+  (crie em console.anthropic.com > API Keys). Ela fica só neste computador.
+- A IA conversa com você e escreve as abordagens; "Garimpar empresas"
+  pesquisa empresas novas na web e coloca no radar (leva alguns minutos).
+- Os gastos saem dos créditos da sua conta da API.
+
+SEUS DADOS
+- As empresas, etapas e anotações ficam salvas no navegador deste computador.
+- Para levar os leads entre o painel online (claude.ai) e este, use
+  Configurar > Exportar backup / Importar backup.
+- Limpar os dados do navegador apaga o radar local: exporte um backup antes.
+
+Não abra o index.html com dois cliques direto: use o atalho, senão a IA e os
+dados iniciais não carregam.

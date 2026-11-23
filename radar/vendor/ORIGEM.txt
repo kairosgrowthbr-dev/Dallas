@@ -1,0 +1,8 @@
+anthropic-sdk.mjs é o SDK oficial da Anthropic para TypeScript/JavaScript
+(@anthropic-ai/sdk 1.6.0, licença Apache-2.0), empacotado num arquivo só para o navegador:
+
+  npm install @anthropic-ai/sdk@1.6.0 esbuild
+  echo "export { default as Anthropic } from '@anthropic-ai/sdk';" > entry.mjs
+  npx esbuild entry.mjs --bundle --format=esm --platform=browser --minify --legal-comments=eof --outfile=anthropic-sdk.mjs
+
+Ele só é carregado na versão local do Radar (fora do claude.ai), para a IA e a busca de empresas.

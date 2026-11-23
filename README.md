@@ -95,3 +95,12 @@ Para montar o pacote: rode `npm run build`, copie `dist/` para uma pasta `site/`
 - **Hostinger (ou qualquer hospedagem com Apache)**: `npm run build` e envie o conteúdo de `dist/` (não a pasta em si) para `public_html`. O `.htaccess` (em `public/`) já vai junto, com compressão, cache e os tipos de vídeo. Com domínio próprio, troque o endereço `kairosgrowthbr-dev.github.io/Dallas/` pelo domínio no `index.html` (canonical, og:url, og:image, hreflang) e em `scripts/i18n-pages.mjs` (`SITE`).
 
 Caminhos relativos (`base: './'`): a mesma build funciona em subpasta ou domínio próprio. Com domínio, atualize `og:image` e `canonical` no `index.html`.
+
+## Radar Dalas: painel de clientes (`radar/`)
+
+Painel de prospecção: empresas (com foco na Serra Gaúcha) com presença digital fraca, separadas por quem mais precisa e quem tende a comprar, com contato, funil de vendas, IA e backup. Não entra na build do site.
+
+- `radar/painel.html`: a fonte. É o mesmo arquivo publicado no claude.ai, onde usa o banco de dados e o Claude do próprio claude.ai.
+- `radar/index.html`: a versão para abrir no computador, gerada a partir do painel com `node radar/montar.mjs`. Fora do claude.ai os dados ficam no navegador e a IA usa a chave da API do Claude informada em Configurar (SDK oficial em `radar/vendor/`).
+- `radar/dados/leads.json`: os leads iniciais da versão local. Fica fora do Git (o repositório é público); vai só no zip entregue.
+- Rodar: `Abrir-Radar-Windows.bat` ou `Abrir-Radar-Mac.command` (http://localhost:8090), ou `npm run radar` para quem tem Node.
