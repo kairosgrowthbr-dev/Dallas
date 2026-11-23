@@ -98,7 +98,7 @@ Caminhos relativos (`base: './'`): a mesma build funciona em subpasta ou domíni
 
 ## Radar Dalas: painel de clientes (`radar/`)
 
-Painel de prospecção: empresas (com foco na Serra Gaúcha) com presença digital fraca, separadas por quem mais precisa e quem tende a comprar, com contato, funil de vendas, IA e backup. Não entra na build do site.
+Painel de prospecção: empresas (com foco na Serra Gaúcha) com presença digital fraca ou que dá para melhorar, numa coluna por nicho, com radar 3D, prioridade, contato, funil de vendas, a assistente Lia (com voz), modo claro ou escuro e backup. Não entra na build do site.
 
 - `radar/painel.html`: a fonte. É o mesmo arquivo publicado no claude.ai, onde usa o banco de dados e o Claude do próprio claude.ai.
 - `radar/index.html`: a versão para abrir no computador, gerada a partir do painel com `node radar/montar.mjs`. Fora do claude.ai os dados ficam no navegador e a IA usa a chave da API do Claude informada em Configurar (SDK oficial em `radar/vendor/`).

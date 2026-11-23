@@ -19,9 +19,9 @@ MAC (não precisa instalar nada: usa o Perl que já vem no Mac)
    "Abrir Mesmo Assim"; depois dê dois cliques de novo.
 
 LIGAR A IA E A BUSCA DE EMPRESAS
-- No painel, clique em "Configurar" e cole a sua chave da API do Claude
+- No painel, clique na engrenagem (Configurar) e cole a sua chave da API do Claude
   (crie em console.anthropic.com > API Keys). Ela fica só neste computador.
-- A IA conversa com você e escreve as abordagens; "Garimpar empresas"
+- A assistente Lia conversa com você (também por voz, no Chrome) e escreve as abordagens; "Garimpar empresas"
   pesquisa empresas novas na web e coloca no radar (leva alguns minutos).
 - Os gastos saem dos créditos da sua conta da API.
 

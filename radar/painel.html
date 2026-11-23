@@ -1,244 +1,413 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <title>Radar Dalas</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
 <style>
-/* Layout: barra fixa no topo, quadro de colunas no centro, IA acoplada à direita, ficha do lead em gaveta. */
+/* Layout: cabeçalho de vidro, abertura com saudação + radar 3D das empresas, nichos em pílulas, quadro com uma coluna por nicho, assistente acoplada à direita. */
 :root {
-  --bg: #07070a; --surface: #101014; --surface-2: #17171d; --surface-3: #22222b;
-  --line: rgba(255,255,255,.08); --line-2: rgba(255,255,255,.15);
-  --fg: #ececf0; --fg-2: #b4b4bd; --fg-3: #8a8a94;
-  --gold: #d6b46a; --gold-ink: #1a1408; --gold-soft: rgba(214,180,106,.13);
-  --green: #3fbf6e; --green-ink: #04130a; --green-soft: rgba(63,191,110,.13);
-  --danger: #e8776f; --info: #86b6e8;
-  --overlay: rgba(0,0,0,.62); --shadow: 0 24px 70px rgba(0,0,0,.6);
+  --bg: #eef1f6; --bg-glow-1: rgba(214, 170, 80, .22); --bg-glow-2: rgba(20, 160, 136, .16);
+  --surface: #ffffff; --surface-2: #f5f7fb; --surface-3: #e7ebf3; --glass: rgba(255, 255, 255, .72);
+  --line: rgba(22, 32, 64, .09); --line-2: rgba(22, 32, 64, .16);
+  --fg: #141a2b; --fg-2: #47506a; --fg-3: #6b748f;
+  --gold: #9b6c16; --gold-fill-1: #f0cf7e; --gold-fill-2: #d2a043; --gold-ink: #2a1c04; --gold-soft: rgba(196, 146, 52, .14);
+  --teal: #0e8a76; --teal-soft: rgba(14, 138, 118, .12);
+  --wa: #1ba557; --wa-ink: #ffffff; --wa-soft: rgba(27, 165, 87, .12);
+  --danger: #c2413a; --info: #2563b8; --coral: #d4582c; --coral-soft: rgba(212, 88, 44, .12);
+  --shadow-1: 0 1px 2px rgba(22, 32, 64, .06), 0 4px 14px rgba(22, 32, 64, .06);
+  --shadow-2: 0 18px 50px rgba(22, 32, 64, .16);
+  --overlay: rgba(18, 24, 40, .38);
+  --nl: 40%; --ns: 72%; --nsoft: 94%; --ns2: 80%;
+  --radar-disc-1: rgba(14, 138, 118, .10); --radar-disc-2: rgba(14, 138, 118, .02); --radar-line: rgba(22, 32, 64, .14); --radar-sweep: 196, 146, 52;
+  --orb-1: #fff1c9; --orb-2: #d9a74a; --orb-3: #0e8a76; --orb-glow: rgba(214, 167, 74, .45); --orb-ring: rgba(155, 108, 22, .55); --orb-ring2: rgba(14, 138, 118, .5);
   --sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   --brand: 'Cinzel', 'Trajan Pro', Georgia, serif;
-  --r: 14px; --chat-w: 400px;
-  color-scheme: dark;
+  --r: 16px; --chat-w: 420px; --spring: cubic-bezier(.2, .9, .25, 1.15); --ease: cubic-bezier(.16, 1, .3, 1);
+  color-scheme: light;
 }
-@media (prefers-color-scheme: light) {
-  :root:not([data-theme="dark"]) {
-    --bg: #f4f3ef; --surface: #ffffff; --surface-2: #f1f0eb; --surface-3: #e3e1da;
-    --line: rgba(24,20,8,.10); --line-2: rgba(24,20,8,.20);
-    --fg: #15151a; --fg-2: #46464e; --fg-3: #6a6a73;
-    --gold: #8a6521; --gold-ink: #ffffff; --gold-soft: rgba(138,101,33,.12);
-    --green: #1c7a40; --green-ink: #ffffff; --green-soft: rgba(28,122,64,.12);
-    --danger: #b3392f; --info: #2c6aa3;
-    --overlay: rgba(24,20,8,.38); --shadow: 0 24px 60px rgba(24,20,8,.18);
-    color-scheme: light;
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1628; --bg-glow-1: rgba(214, 170, 80, .14); --bg-glow-2: rgba(40, 200, 170, .12);
+    --surface: #172038; --surface-2: #1c2743; --surface-3: #263354; --glass: rgba(20, 29, 52, .74);
+    --line: rgba(170, 190, 240, .12); --line-2: rgba(170, 190, 240, .22);
+    --fg: #ecf0fa; --fg-2: #b6c0d9; --fg-3: #8a95b3;
+    --gold: #ecc777; --gold-fill-1: #f3d48a; --gold-fill-2: #d7a54a; --gold-ink: #241803; --gold-soft: rgba(236, 199, 119, .14);
+    --teal: #45d4b8; --teal-soft: rgba(69, 212, 184, .13);
+    --wa: #29c86b; --wa-ink: #04170b; --wa-soft: rgba(41, 200, 107, .14);
+    --danger: #f08a82; --info: #8ab8f5; --coral: #f59a72; --coral-soft: rgba(245, 154, 114, .14);
+    --shadow-1: 0 1px 2px rgba(0, 0, 0, .25), 0 6px 18px rgba(0, 0, 0, .18);
+    --shadow-2: 0 22px 60px rgba(0, 0, 0, .45);
+    --overlay: rgba(4, 8, 18, .6);
+    --nl: 72%; --ns: 70%; --nsoft: 22%; --ns2: 40%;
+    --radar-disc-1: rgba(69, 212, 184, .12); --radar-disc-2: rgba(69, 212, 184, .02); --radar-line: rgba(170, 190, 240, .18); --radar-sweep: 236, 199, 119;
+    --orb-glow: rgba(236, 199, 119, .4); --orb-ring: rgba(236, 199, 119, .6); --orb-ring2: rgba(69, 212, 184, .55); --orb-3: #18a88f;
+    color-scheme: dark;
   }
 }
-:root[data-theme="light"] {
-  --bg: #f4f3ef; --surface: #ffffff; --surface-2: #f1f0eb; --surface-3: #e3e1da;
-  --line: rgba(24,20,8,.10); --line-2: rgba(24,20,8,.20);
-  --fg: #15151a; --fg-2: #46464e; --fg-3: #6a6a73;
-  --gold: #8a6521; --gold-ink: #ffffff; --gold-soft: rgba(138,101,33,.12);
-  --green: #1c7a40; --green-ink: #ffffff; --green-soft: rgba(28,122,64,.12);
-  --danger: #b3392f; --info: #2c6aa3;
-  --overlay: rgba(24,20,8,.38); --shadow: 0 24px 60px rgba(24,20,8,.18);
-  color-scheme: light;
+:root[data-theme="dark"] {
+  --bg: #0f1628; --bg-glow-1: rgba(214, 170, 80, .14); --bg-glow-2: rgba(40, 200, 170, .12);
+  --surface: #172038; --surface-2: #1c2743; --surface-3: #263354; --glass: rgba(20, 29, 52, .74);
+  --line: rgba(170, 190, 240, .12); --line-2: rgba(170, 190, 240, .22);
+  --fg: #ecf0fa; --fg-2: #b6c0d9; --fg-3: #8a95b3;
+  --gold: #ecc777; --gold-fill-1: #f3d48a; --gold-fill-2: #d7a54a; --gold-ink: #241803; --gold-soft: rgba(236, 199, 119, .14);
+  --teal: #45d4b8; --teal-soft: rgba(69, 212, 184, .13);
+  --wa: #29c86b; --wa-ink: #04170b; --wa-soft: rgba(41, 200, 107, .14);
+  --danger: #f08a82; --info: #8ab8f5; --coral: #f59a72; --coral-soft: rgba(245, 154, 114, .14);
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, .25), 0 6px 18px rgba(0, 0, 0, .18);
+  --shadow-2: 0 22px 60px rgba(0, 0, 0, .45);
+  --overlay: rgba(4, 8, 18, .6);
+  --nl: 72%; --ns: 70%; --nsoft: 22%; --ns2: 40%;
+  --radar-disc-1: rgba(69, 212, 184, .12); --radar-disc-2: rgba(69, 212, 184, .02); --radar-line: rgba(170, 190, 240, .18); --radar-sweep: 236, 199, 119;
+  --orb-glow: rgba(236, 199, 119, .4); --orb-ring: rgba(236, 199, 119, .6); --orb-ring2: rgba(69, 212, 184, .55); --orb-3: #18a88f;
+  color-scheme: dark;
 }
 *, *::before, *::after { box-sizing: border-box; }
 [hidden] { display: none !important; }
 html, body { margin: 0; }
 img { max-width: 100%; }
-body { background: var(--bg); color: var(--fg); font-family: var(--sans); font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+body { background: var(--bg); color: var(--fg); font-family: var(--sans); font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; transition: background-color .3s ease, color .3s ease; }
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
 button, input, select, textarea { font: inherit; color: inherit; }
-h1, h2, h3, p { margin: 0; }
+h1, h2, h3, h4, p { margin: 0; }
 a { color: inherit; }
-:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; border-radius: 6px; }
 .mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.ico { display: inline-flex; width: 1.15em; height: 1.15em; flex: none; }
+.ico svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
 
-.app { transition: margin-right .25s ease; }
-.wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+/* fundo vivo */
+.fundo { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.fundo i { position: absolute; width: 55vmax; height: 55vmax; border-radius: 50%; filter: blur(70px); opacity: .9; animation: deriva 26s ease-in-out infinite alternate; }
+.fundo i:nth-child(1) { background: radial-gradient(circle, var(--bg-glow-1), transparent 65%); top: -22vmax; left: -12vmax; }
+.fundo i:nth-child(2) { background: radial-gradient(circle, var(--bg-glow-2), transparent 65%); top: -10vmax; right: -18vmax; animation-duration: 32s; animation-delay: -8s; }
+.fundo i:nth-child(3) { background: radial-gradient(circle, var(--bg-glow-2), transparent 65%); bottom: -30vmax; left: 30vw; animation-duration: 38s; opacity: .5; }
+@keyframes deriva { from { transform: translate3d(0, 0, 0) scale(1); } to { transform: translate3d(6vmax, 4vmax, 0) scale(1.12); } }
 
-/* Topo */
-.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9; background: var(--bg); border-bottom: 1px solid var(--line); }
-.top-in { display: flex; align-items: center; gap: 12px 18px; flex-wrap: wrap; padding-block: 10px; }
-.brand { display: flex; align-items: center; gap: 10px; }
-.sweep { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--line-2); position: relative; flex: none;
-  background: radial-gradient(circle, transparent 0 34%, var(--line) 35% 37%, transparent 38% 66%, var(--line) 67% 69%, transparent 70%); overflow: hidden; }
-.sweep::before { content: ""; position: absolute; inset: 0; background: conic-gradient(from 0deg, transparent 0 78%, var(--gold) 100%); opacity: .75; animation: giro 5s linear infinite; }
-.sweep::after { content: ""; position: absolute; width: 4px; height: 4px; border-radius: 50%; background: var(--green); top: 8px; left: 18px; }
-@keyframes giro { to { transform: rotate(360deg); } }
-@media (prefers-reduced-motion: reduce) { .sweep::before { animation: none; } .app { transition: none; } }
-.brand b { font-family: var(--brand); font-weight: 600; letter-spacing: .2em; font-size: 15px; }
-.brand span { font-family: var(--mono); font-size: 11px; letter-spacing: .16em; color: var(--fg-3); text-transform: uppercase; }
-.tabs { display: flex; gap: 2px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 3px; }
-.tabs button { border: 0; background: none; padding: 6px 13px; border-radius: 7px; cursor: pointer; color: var(--fg-2); font-weight: 500; }
-.tabs button[aria-selected="true"] { background: var(--surface-3); color: var(--fg); }
+.app { transition: margin-right .35s var(--ease); }
+.wrap { max-width: 1480px; margin: 0 auto; padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); }
+
+/* cabeçalho */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9; background: var(--bg); background: color-mix(in srgb, var(--bg) 72%, transparent); -webkit-backdrop-filter: saturate(1.4) blur(16px); backdrop-filter: saturate(1.4) blur(16px); border-bottom: 1px solid var(--line); }
+.top-in { display: flex; align-items: center; gap: 10px 20px; flex-wrap: wrap; padding-block: 10px; }
+.marca { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.asa { width: 34px; height: 42px; position: relative; flex: none; display: grid; place-items: center; }
+.asa img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 4px 10px rgba(14, 138, 118, .25)); transition: transform .5s var(--spring); }
+.marca:hover .asa img { transform: rotate(-8deg) scale(1.06); }
+.marca b { font-family: var(--brand); font-weight: 700; letter-spacing: .28em; font-size: 19px; background: linear-gradient(100deg, var(--fg) 30%, var(--gold) 50%, var(--fg) 70%); background-size: 250% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: brilho 7s ease-in-out infinite; }
+@keyframes brilho { 0%, 60% { background-position: 100% 0; } 100% { background-position: -50% 0; } }
+.tabs { position: relative; display: flex; gap: 2px; background: var(--surface-3); border-radius: 12px; padding: 4px; }
+.tab-ind { position: absolute; top: 4px; bottom: 4px; left: var(--x, 4px); width: var(--w, 0); background: var(--surface); border-radius: 9px; box-shadow: var(--shadow-1); transition: left .45s var(--spring), width .45s var(--spring); }
+.tabs button { position: relative; z-index: 1; border: 0; background: none; padding: 7px 16px; border-radius: 9px; cursor: pointer; color: var(--fg-3); font-weight: 600; display: inline-flex; align-items: center; gap: 7px; transition: color .2s; }
+.tabs button:hover { color: var(--fg); }
+.tabs button[aria-selected="true"] { color: var(--fg); }
+.tabs button[aria-selected="true"] .ico { color: var(--teal); }
 .grow { flex: 1 1 0; min-width: 0; }
-.acts { display: flex; gap: 8px; flex-wrap: wrap; }
-.btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; border: 1px solid var(--line-2); background: var(--surface); padding: 7px 13px; border-radius: 9px; cursor: pointer; font-weight: 600; text-decoration: none; white-space: nowrap; }
-.btn:hover { background: var(--surface-2); }
-.btn[disabled] { opacity: .5; cursor: default; }
-.btn.gold { background: var(--gold); border-color: var(--gold); color: var(--gold-ink); }
-.btn.green { background: var(--green); border-color: var(--green); color: var(--green-ink); }
+.acts { display: flex; gap: 8px; align-items: center; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 1px solid var(--line-2); background: var(--surface); padding: 8px 14px; border-radius: 11px; cursor: pointer; font-weight: 600; text-decoration: none; white-space: nowrap; transition: transform .2s var(--spring), box-shadow .2s, background-color .2s, border-color .2s; }
+.btn:hover { background: var(--surface-2); transform: translateY(-1px); box-shadow: var(--shadow-1); }
+.btn:active { transform: translateY(0) scale(.98); }
+.btn[disabled] { opacity: .5; cursor: default; transform: none; box-shadow: none; }
+.btn.gold { border-color: transparent; background: linear-gradient(135deg, var(--gold-fill-1), var(--gold-fill-2)); color: var(--gold-ink); box-shadow: 0 6px 18px rgba(196, 146, 52, .3); position: relative; overflow: hidden; }
+.btn.gold::after { content: ""; position: absolute; inset: 0; background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, .55) 50%, transparent 70%); transform: translateX(-120%); transition: transform .7s var(--ease); }
+.btn.gold:hover::after { transform: translateX(120%); }
+.btn.wa { border-color: transparent; background: var(--wa); color: var(--wa-ink); position: relative; }
+.btn.wa:hover { box-shadow: 0 0 0 5px var(--wa-soft), var(--shadow-1); }
 .btn.ghost { border-color: transparent; background: none; color: var(--fg-2); }
-.btn.ghost:hover { background: var(--surface-2); color: var(--fg); }
-.btn.sm { padding: 4px 9px; font-size: 12.5px; border-radius: 7px; }
+.btn.ghost:hover { background: var(--surface-3); color: var(--fg); box-shadow: none; }
+.btn.sm { padding: 5px 10px; font-size: 12.5px; border-radius: 9px; gap: 6px; }
 .btn.danger { color: var(--danger); }
+.ib { width: 38px; height: 38px; display: inline-grid; place-items: center; border-radius: 11px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; color: var(--fg-2); transition: transform .25s var(--spring), color .2s, background-color .2s; }
+.ib:hover { color: var(--fg); transform: translateY(-1px) rotate(-6deg); }
+.ib .ico { width: 18px; height: 18px; }
+.ia-btn { display: inline-flex; align-items: center; gap: 8px; padding: 4px 14px 4px 5px; border-radius: 999px; border: 1px solid var(--line-2); background: var(--surface); cursor: pointer; font-weight: 700; }
+.ia-btn:hover { box-shadow: 0 0 0 4px var(--gold-soft); }
 
-/* Resumo */
-.sum { display: flex; flex-wrap: wrap; gap: 6px 26px; padding-block: 14px 4px; align-items: baseline; }
-.sum div { display: flex; align-items: baseline; gap: 7px; }
-.sum strong { font-family: var(--mono); font-size: 20px; font-weight: 500; font-variant-numeric: tabular-nums; }
-.sum span { color: var(--fg-3); font-size: 12.5px; }
-.sum .rot { margin-left: auto; color: var(--fg-3); font-size: 12.5px; }
-.filters { display: flex; flex-wrap: wrap; gap: 8px; padding-block: 10px 14px; }
-.field { background: var(--surface); border: 1px solid var(--line); border-radius: 9px; padding: 7px 10px; min-width: 0; }
-.field:focus { border-color: var(--gold); outline: none; }
-#f-busca { flex: 1 1 200px; max-width: 340px; }
-.notice { border: 1px dashed var(--line-2); border-radius: var(--r); padding: 14px 16px; color: var(--fg-2); margin-bottom: 14px; }
+/* abertura */
+.hero { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 22px; align-items: center; padding-block: 26px 10px; }
+.eyebrow { font-family: var(--mono); font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--teal); }
+.hero h1 { font-size: clamp(26px, 3.4vw, 40px); font-weight: 800; letter-spacing: -.02em; line-height: 1.1; margin-top: 6px; text-wrap: balance; }
+.hero h1 em { font-style: normal; background: linear-gradient(120deg, var(--gold), var(--teal)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.hero .sub { color: var(--fg-2); margin-top: 8px; font-size: 15px; max-width: 60ch; }
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 18px; }
+.kpi { background: var(--glass); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; display: flex; flex-direction: column; gap: 2px; box-shadow: var(--shadow-1); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); transition: transform .3s var(--spring); }
+.kpi:hover { transform: translateY(-3px); }
+.kpi b { font-family: var(--mono); font-size: 26px; font-weight: 500; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.kpi span { color: var(--fg-3); font-size: 12px; }
+.kpi .ico { color: var(--k, var(--teal)); width: 18px; height: 18px; margin-bottom: 4px; }
+.rot { color: var(--fg-3); font-size: 12.5px; margin-top: 12px; display: flex; align-items: center; gap: 6px; }
+.rot::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--wa); box-shadow: 0 0 0 0 var(--wa-soft); animation: ping 2.4s infinite; }
+@keyframes ping { 0% { box-shadow: 0 0 0 0 rgba(27, 165, 87, .45); } 70%, 100% { box-shadow: 0 0 0 8px rgba(27, 165, 87, 0); } }
+.radar-box { position: relative; background: var(--glass); border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow-1); padding: 10px 12px 12px; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); min-width: 0; }
+#radar { display: block; width: 100%; height: 270px; cursor: crosshair; }
+.radar-leg { color: var(--fg-3); font-size: 11.5px; text-align: center; }
+.radar-tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--line-2); border-radius: 10px; padding: 7px 10px; box-shadow: var(--shadow-2); font-size: 12.5px; max-width: 240px; transform: translate(-50%, calc(-100% - 12px)); z-index: 2; }
+.radar-tip b { display: block; font-size: 13px; }
+.radar-tip span { color: var(--fg-3); }
+
+/* nichos */
+.nichos { display: flex; gap: 8px; overflow-x: auto; padding: 14px 2px 6px; scrollbar-width: thin; }
+.pill { --h: 200; flex: none; display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px 7px 7px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; font-weight: 600; color: var(--fg-2); transition: transform .25s var(--spring), border-color .2s, background-color .2s, color .2s; }
+.pill:hover { transform: translateY(-2px); color: var(--fg); border-color: hsl(var(--h) var(--ns) var(--nl) / .5); }
+.pill .dot { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: hsl(var(--h) var(--ns2) var(--nsoft)); color: hsl(var(--h) var(--ns) var(--nl)); }
+.pill .dot .ico { width: 15px; height: 15px; }
+.pill i { font-style: normal; font-family: var(--mono); font-size: 12px; color: var(--fg-3); }
+.pill[aria-pressed="true"] { background: hsl(var(--h) var(--ns2) var(--nsoft)); border-color: hsl(var(--h) var(--ns) var(--nl)); color: var(--fg); }
+.pill.todos .dot { background: var(--surface-3); color: var(--fg-2); }
+
+/* filtros */
+.filters { display: flex; flex-wrap: wrap; gap: 8px; padding-block: 8px 16px; align-items: center; }
+.field { background: var(--surface); border: 1px solid var(--line); border-radius: 11px; padding: 8px 11px; min-width: 0; transition: border-color .2s, box-shadow .2s; }
+.field:focus { border-color: var(--teal); box-shadow: 0 0 0 4px var(--teal-soft); outline: none; }
+.busca { position: relative; flex: 1 1 220px; max-width: 360px; }
+.busca .ico { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--fg-3); width: 16px; height: 16px; }
+.busca input { width: 100%; padding-left: 34px; }
+.notice { border: 1px dashed var(--line-2); border-radius: var(--r); padding: 14px 16px; color: var(--fg-2); margin-bottom: 14px; background: var(--glass); }
 .notice b { color: var(--fg); }
 
-/* Quadro */
-.board { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(236px, 1fr); gap: 12px; overflow-x: auto; padding-bottom: 28px; align-items: start; scroll-snap-type: x proximity; }
-.col { min-width: 0; scroll-snap-align: start; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); display: flex; flex-direction: column; }
-.col.over { border-color: var(--gold); }
-.col-h { padding: 12px 14px 10px; border-bottom: 1px solid var(--line); }
-.col-h h2 { font-size: 13.5px; font-weight: 700; display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
-.col-h h2 i { font-style: normal; font-family: var(--mono); font-weight: 400; color: var(--fg-3); font-size: 12px; }
-.col-h p { color: var(--fg-3); font-size: 12px; margin-top: 2px; }
-.col[data-col="max"] .col-h h2 { color: var(--gold); }
-.col-b { padding: 10px; display: flex; flex-direction: column; gap: 8px; min-height: 80px; }
+/* quadro */
+.board { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(270px, 1fr); gap: 14px; overflow-x: auto; padding-bottom: 36px; align-items: start; scroll-snap-type: x proximity; }
+.board.entra .col { animation: sobe .55s var(--ease) both; }
+.board.entra .col:nth-child(2) { animation-delay: .04s; } .board.entra .col:nth-child(3) { animation-delay: .08s; } .board.entra .col:nth-child(4) { animation-delay: .12s; } .board.entra .col:nth-child(n+5) { animation-delay: .16s; }
+@keyframes sobe { from { transform: translateY(14px); opacity: .4; } to { transform: none; opacity: 1; } }
+.col { --h: 200; min-width: 0; scroll-snap-align: start; background: var(--glass); border: 1px solid var(--line); border-radius: 18px; display: flex; flex-direction: column; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+.col.over { border-color: var(--teal); box-shadow: 0 0 0 4px var(--teal-soft); }
+.col-h { padding: 12px 12px 10px; display: flex; gap: 10px; align-items: center; }
+.col-h .tile { width: 36px; height: 36px; border-radius: 11px; display: grid; place-items: center; background: hsl(var(--h) var(--ns2) var(--nsoft)); color: hsl(var(--h) var(--ns) var(--nl)); flex: none; }
+.col-h .tile .ico { width: 19px; height: 19px; }
+.col-h h2 { font-size: 14px; font-weight: 700; line-height: 1.2; }
+.col-h p { color: var(--fg-3); font-size: 12px; }
+.col-h .n { margin-left: auto; font-family: var(--mono); font-size: 12px; background: var(--surface-3); color: var(--fg-2); padding: 2px 8px; border-radius: 999px; }
+.col-b { padding: 4px 10px 10px; display: flex; flex-direction: column; gap: 10px; min-height: 80px; }
 .vazio { color: var(--fg-3); font-size: 12.5px; padding: 10px 6px; }
-.card { background: var(--surface-2); border: 1px solid var(--line); border-radius: 11px; padding: 11px 12px; cursor: pointer; display: flex; flex-direction: column; gap: 8px; text-align: left; }
-.card:hover { border-color: var(--line-2); }
-.card.sel { border-color: var(--gold); }
-.card-t { display: flex; gap: 8px; justify-content: space-between; align-items: flex-start; }
-.card-t h3 { font-size: 14px; font-weight: 600; line-height: 1.3; overflow-wrap: anywhere; }
-.card-t .sc { font-family: var(--mono); font-size: 13px; color: var(--fg); background: var(--surface-3); border-radius: 6px; padding: 1px 6px; flex: none; }
+.card { --rx: 0deg; --ry: 0deg; position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 12px; cursor: pointer; display: flex; flex-direction: column; gap: 9px; box-shadow: var(--shadow-1); transform: perspective(700px) rotateX(var(--rx)) rotateY(var(--ry)); transition: transform .35s var(--ease), box-shadow .3s, border-color .3s; transform-style: preserve-3d; }
+.card::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; background: radial-gradient(circle at var(--gx, 50%) var(--gy, 0%), rgba(255, 255, 255, .35), transparent 55%); opacity: 0; transition: opacity .3s; }
+.card:hover { box-shadow: var(--shadow-2); border-color: hsl(var(--h) var(--ns) var(--nl) / .45); }
+.card:hover::after { opacity: 1; }
+.card.sel { border-color: var(--teal); box-shadow: 0 0 0 3px var(--teal-soft), var(--shadow-1); }
+.card-t { display: flex; gap: 10px; align-items: flex-start; }
+.card-t h3 { font-size: 14px; font-weight: 700; line-height: 1.3; overflow-wrap: anywhere; }
+.card-t .meta { margin-top: 2px; }
+.anel { width: 40px; height: 40px; flex: none; position: relative; display: grid; place-items: center; }
+.anel svg { position: absolute; inset: 0; transform: rotate(-90deg); }
+.anel circle { fill: none; stroke-width: 3.5; }
+.anel .fundo-anel { stroke: var(--surface-3); }
+.anel .valor { stroke: var(--pc, var(--teal)); stroke-linecap: round; transition: stroke-dashoffset .8s var(--ease); }
+.anel b { font-family: var(--mono); font-size: 12px; font-weight: 500; }
 .meta { color: var(--fg-3); font-size: 12.5px; }
-.bars { display: grid; grid-template-columns: auto 1fr auto; gap: 4px 8px; align-items: center; font-family: var(--mono); font-size: 10.5px; letter-spacing: .06em; color: var(--fg-3); }
-.bar { height: 4px; border-radius: 2px; background: var(--surface-3); overflow: hidden; }
-.bar i { display: block; height: 100%; border-radius: 2px; }
-.bar.n i { background: var(--gold); } .bar.p i { background: var(--green); }
 .chips { display: flex; flex-wrap: wrap; gap: 5px; }
-.chip { font-size: 11.5px; padding: 2px 8px; border-radius: 99px; border: 1px solid var(--line-2); color: var(--fg-2); white-space: nowrap; }
-.chip.g { border-color: transparent; background: var(--gold-soft); color: var(--gold); }
-.chip.v { border-color: transparent; background: var(--green-soft); color: var(--green); }
-.chip.novo { border-color: transparent; background: var(--green); color: var(--green-ink); font-weight: 600; }
+.chip { font-size: 11.5px; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line-2); color: var(--fg-2); white-space: nowrap; display: inline-flex; align-items: center; gap: 4px; }
+.chip.p-max { border-color: transparent; background: var(--gold-soft); color: var(--gold); font-weight: 700; }
+.chip.p-precisa { border-color: transparent; background: var(--coral-soft); color: var(--coral); font-weight: 700; }
+.chip.p-compra { border-color: transparent; background: var(--teal-soft); color: var(--teal); font-weight: 700; }
+.chip.p-aquecer { border-color: transparent; background: var(--surface-3); color: var(--fg-2); font-weight: 600; }
+.chip.v { border-color: transparent; background: var(--wa-soft); color: var(--wa); }
+.chip.novo { border-color: transparent; background: var(--wa); color: var(--wa-ink); font-weight: 700; }
 .card-f { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
 .card-f .tel { font-family: var(--mono); font-size: 12px; color: var(--fg-2); white-space: nowrap; }
+.wa-r { width: 34px; height: 34px; border-radius: 50%; display: inline-grid; place-items: center; background: var(--wa); color: var(--wa-ink); text-decoration: none; position: relative; transition: transform .25s var(--spring); }
+.wa-r .ico { width: 17px; height: 17px; }
+.wa-r::before { content: ""; position: absolute; inset: 0; border-radius: 50%; border: 2px solid var(--wa); opacity: 0; }
+.wa-r:hover { transform: scale(1.1); }
+.wa-r:hover::before { animation: onda 1.2s ease-out infinite; }
+@keyframes onda { from { transform: scale(1); opacity: .7; } to { transform: scale(1.8); opacity: 0; } }
 
-/* Lista */
-.tbl-w { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); margin-bottom: 28px; }
-table { border-collapse: collapse; width: 100%; min-width: 860px; }
-th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; }
-th { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--fg-3); font-weight: 400; cursor: pointer; user-select: none; }
+/* lista */
+.tbl-w { overflow-x: auto; border: 1px solid var(--line); border-radius: 18px; background: var(--surface); margin-bottom: 36px; box-shadow: var(--shadow-1); }
+table { border-collapse: collapse; width: 100%; min-width: 900px; }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+th { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--fg-3); font-weight: 400; cursor: pointer; user-select: none; background: var(--surface-2); }
 td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
-tbody tr { cursor: pointer; } tbody tr:hover { background: var(--surface-2); }
+tbody tr { cursor: pointer; transition: background-color .15s; } tbody tr:hover { background: var(--surface-2); }
 tbody tr:last-child td { border-bottom: 0; }
-td.nome { white-space: normal; min-width: 200px; font-weight: 600; }
+td.nome { white-space: normal; min-width: 210px; font-weight: 700; }
+td .nicho-t { display: inline-flex; align-items: center; gap: 6px; }
+td .nicho-t .ico { color: hsl(var(--h) var(--ns) var(--nl)); width: 15px; height: 15px; }
 
-/* IA */
-.chat { position: fixed; top: 0; right: 0; bottom: 0; width: var(--chat-w); max-width: 100%; z-index: 20; background: var(--surface); border-left: 1px solid var(--line);
-  display: flex; flex-direction: column; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); padding-right: env(safe-area-inset-right, 0px); }
-.chat-h { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-bottom: 1px solid var(--line); }
-.chat-h h2 { font-size: 14px; font-weight: 700; } .chat-h p { font-size: 12px; color: var(--fg-3); }
-.msgs { flex: 1 1 0; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 12px; }
-.msg { max-width: 92%; padding: 9px 12px; border-radius: 12px; overflow-wrap: anywhere; }
-.msg.u { align-self: flex-end; background: var(--gold-soft); border: 1px solid var(--line); }
-.msg.a { align-self: flex-start; background: var(--surface-2); border: 1px solid var(--line); }
+/* orbe da assistente */
+.orb { --s: 40px; width: var(--s); height: var(--s); position: relative; flex: none; display: inline-block; perspective: 220px; }
+.orb::before { content: ""; position: absolute; inset: 14%; border-radius: 50%; background: radial-gradient(circle at 34% 28%, #ffffff 0 7%, var(--orb-1) 20%, var(--orb-2) 58%, var(--orb-3) 100%); box-shadow: 0 0 calc(var(--s) * .4) var(--orb-glow), inset -3px -4px 8px rgba(0, 0, 0, .18); animation: respira 4.5s ease-in-out infinite; }
+.orb i { position: absolute; inset: 0; border-radius: 50%; border: 1.5px solid var(--orb-ring); animation: anel 7s linear infinite; }
+.orb i:nth-child(2) { border-color: var(--orb-ring2); animation-duration: 10s; animation-direction: reverse; --t: 70deg; --y: 35deg; }
+@keyframes anel { from { transform: rotateY(var(--y, -20deg)) rotateX(var(--t, 66deg)) rotateZ(0deg); } to { transform: rotateY(var(--y, -20deg)) rotateX(var(--t, 66deg)) rotateZ(360deg); } }
+@keyframes respira { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+@keyframes fala { from { transform: scale(.96); } to { transform: scale(1.12); } }
+.pensando .orb i { animation-duration: 1.5s; }
+.pensando .orb i:nth-child(2) { animation-duration: 2.2s; }
+.falando .orb::before { animation: fala .32s ease-in-out infinite alternate; }
+.ouvindo .orb::before { box-shadow: 0 0 calc(var(--s) * .5) rgba(27, 165, 87, .6); }
+.orb.mini { --s: 30px; }
+.orb.g { --s: 96px; }
+
+/* assistente */
+.chat { position: fixed; top: 0; right: 0; bottom: 0; width: var(--chat-w); max-width: 100%; z-index: 20; background: var(--glass); -webkit-backdrop-filter: saturate(1.3) blur(22px); backdrop-filter: saturate(1.3) blur(22px); border-left: 1px solid var(--line); display: flex; flex-direction: column; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); padding-right: env(safe-area-inset-right, 0px); box-shadow: var(--shadow-2); animation: entra-d .45s var(--ease); }
+@keyframes entra-d { from { transform: translateX(40px); opacity: .3; } to { transform: none; opacity: 1; } }
+.chat-h { display: flex; align-items: center; gap: 12px; padding: 14px 14px 12px; border-bottom: 1px solid var(--line); }
+.chat-h h2 { font-size: 16px; font-weight: 800; }
+.chat-h p { font-size: 12px; color: var(--fg-3); display: flex; align-items: center; gap: 6px; }
+.chat-h p::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--wa); }
+.pensando .chat-h p::before { background: var(--gold-fill-2); animation: ping 1s infinite; }
+.chat-h .ib { width: 34px; height: 34px; }
+.chat-h .ib[aria-pressed="true"] { color: var(--teal); border-color: var(--teal); background: var(--teal-soft); }
+.msgs { flex: 1 1 0; overflow-y: auto; padding: 16px 14px; display: flex; flex-direction: column; gap: 14px; }
+.linha { display: flex; gap: 8px; align-items: flex-end; animation: sobe .35s var(--ease); }
+.linha.u { justify-content: flex-end; }
+.msg { max-width: 86%; padding: 10px 13px; border-radius: 16px; overflow-wrap: anywhere; }
+.msg.u { background: linear-gradient(135deg, var(--gold-fill-1), var(--gold-fill-2)); color: var(--gold-ink); border-bottom-right-radius: 5px; }
+.msg.a { background: var(--surface); border: 1px solid var(--line); border-bottom-left-radius: 5px; box-shadow: var(--shadow-1); }
 .msg p + p, .msg ul, .msg ol { margin-top: 7px; } .msg ul, .msg ol { padding-left: 20px; margin-bottom: 0; }
 .msg code { font-family: var(--mono); font-size: 12.5px; background: var(--surface-3); padding: 0 4px; border-radius: 4px; }
-.msg.err { color: var(--danger); background: none; border-style: dashed; }
-.sug { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 14px 10px; }
-.sug button { border: 1px solid var(--line-2); background: none; border-radius: 99px; padding: 4px 10px; font-size: 12px; color: var(--fg-2); cursor: pointer; }
-.sug button:hover { color: var(--fg); border-color: var(--gold); }
+.msg.err { color: var(--danger); border-style: dashed; }
+.msg-acts { display: flex; gap: 2px; margin-top: 6px; }
+.msg-acts button { border: 0; background: none; color: var(--fg-3); cursor: pointer; padding: 3px 6px; border-radius: 7px; display: inline-flex; align-items: center; gap: 4px; font-size: 11.5px; }
+.msg-acts button:hover { background: var(--surface-3); color: var(--fg); }
+.msg-acts .ico { width: 13px; height: 13px; }
+.digitando { display: inline-flex; gap: 4px; padding: 4px 2px; }
+.digitando i { width: 7px; height: 7px; border-radius: 50%; background: var(--fg-3); animation: pula 1.1s infinite; }
+.digitando i:nth-child(2) { animation-delay: .15s; } .digitando i:nth-child(3) { animation-delay: .3s; }
+@keyframes pula { 0%, 60%, 100% { transform: translateY(0); opacity: .5; } 30% { transform: translateY(-5px); opacity: 1; } }
+.ola { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 18px 6px 4px; }
+.ola h3 { font-size: 19px; font-weight: 800; }
+.ola p { color: var(--fg-2); max-width: 32ch; }
+.sug-g { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; width: 100%; margin-top: 8px; }
+.sug-g button { text-align: left; border: 1px solid var(--line); background: var(--surface); border-radius: 13px; padding: 10px; cursor: pointer; display: flex; flex-direction: column; gap: 6px; font-size: 12.5px; color: var(--fg-2); transition: transform .25s var(--spring), border-color .2s, color .2s; }
+.sug-g button:hover { transform: translateY(-2px); border-color: var(--gold); color: var(--fg); }
+.sug-g .ico { color: var(--teal); width: 17px; height: 17px; }
 .chat-f { border-top: 1px solid var(--line); padding: 10px 12px; display: flex; gap: 8px; align-items: flex-end; }
-.chat-f textarea { flex: 1 1 0; min-width: 0; resize: none; max-height: 140px; }
-.fab { position: fixed; right: calc(16px + env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 8; box-shadow: var(--shadow); }
-@media (min-width: 1180px) { body.chat-open .app { margin-right: var(--chat-w); } body.chat-open .fab { display: none; } }
-@media (max-width: 1179px) { .chat { width: 100%; border-left: 0; padding-left: env(safe-area-inset-left, 0px); } }
+.chat-f textarea { flex: 1 1 0; min-width: 0; resize: none; max-height: 150px; border-radius: 14px; }
+.redondo { width: 42px; height: 42px; flex: none; border-radius: 50%; border: 1px solid var(--line-2); background: var(--surface); display: grid; place-items: center; cursor: pointer; color: var(--fg-2); transition: transform .2s var(--spring), background-color .2s; }
+.redondo:hover { transform: scale(1.06); color: var(--fg); }
+.redondo .ico { width: 19px; height: 19px; }
+.redondo.enviar { border-color: transparent; background: linear-gradient(135deg, var(--gold-fill-1), var(--gold-fill-2)); color: var(--gold-ink); }
+.redondo.ativo { background: var(--wa); color: var(--wa-ink); border-color: transparent; box-shadow: 0 0 0 5px var(--wa-soft); }
+.fab { position: fixed; right: calc(18px + env(safe-area-inset-right, 0px)); bottom: calc(18px + env(safe-area-inset-bottom, 0px)); z-index: 8; display: inline-flex; align-items: center; gap: 10px; padding: 6px 18px 6px 6px; border-radius: 999px; border: 1px solid var(--line-2); background: var(--surface); box-shadow: var(--shadow-2); cursor: pointer; font-weight: 600; animation: flutua 5s ease-in-out infinite; }
+.fab:hover { box-shadow: 0 0 0 5px var(--gold-soft), var(--shadow-2); }
+@keyframes flutua { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+@media (min-width: 1240px) { body.chat-open .app { margin-right: var(--chat-w); } body.chat-open .fab { display: none; } }
+@media (max-width: 1239px) { .chat { width: 100%; border-left: 0; padding-left: env(safe-area-inset-left, 0px); } body.chat-open .fab { display: none; } }
 
-/* Gaveta e modais */
-.veil { position: fixed; inset: 0; background: var(--overlay); z-index: 30; }
-.drawer { position: fixed; top: 0; right: 0; bottom: 0; width: 560px; max-width: 100%; z-index: 31; background: var(--surface); border-left: 1px solid var(--line-2); box-shadow: var(--shadow);
-  display: flex; flex-direction: column; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); padding-right: env(safe-area-inset-right, 0px); }
-.dr-h { padding: 14px 18px 12px; border-bottom: 1px solid var(--line); display: flex; gap: 10px; align-items: flex-start; }
-.dr-h h2 { font-size: 18px; font-weight: 700; line-height: 1.25; overflow-wrap: anywhere; }
-.dr-b { flex: 1 1 0; overflow-y: auto; padding: 16px 18px 22px; display: flex; flex-direction: column; gap: 18px; }
+/* gaveta e modais */
+.veil { position: fixed; inset: 0; background: var(--overlay); z-index: 30; -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); animation: aparece .25s ease; }
+@keyframes aparece { from { opacity: 0; } to { opacity: 1; } }
+.drawer { --h: 200; position: fixed; top: 0; right: 0; bottom: 0; width: 580px; max-width: 100%; z-index: 31; background: var(--surface); border-left: 1px solid var(--line-2); box-shadow: var(--shadow-2); display: flex; flex-direction: column; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); padding-right: env(safe-area-inset-right, 0px); animation: entra-d .45s var(--ease); }
+.dr-h { padding: 16px 18px 14px; border-bottom: 1px solid var(--line); display: flex; gap: 12px; align-items: flex-start; background: linear-gradient(180deg, hsl(var(--h) var(--ns2) var(--nsoft)), transparent); }
+.dr-h .tile { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; background: var(--surface); color: hsl(var(--h) var(--ns) var(--nl)); box-shadow: var(--shadow-1); flex: none; }
+.dr-h .tile .ico { width: 24px; height: 24px; }
+.dr-h h2 { font-size: 19px; font-weight: 800; line-height: 1.25; overflow-wrap: anywhere; }
+.dr-b { flex: 1 1 0; overflow-y: auto; padding: 16px 18px 24px; display: flex; flex-direction: column; gap: 18px; }
 .dr-f { border-top: 1px solid var(--line); padding: 10px 18px; display: flex; gap: 8px; justify-content: space-between; align-items: center; flex-wrap: wrap; }
-.sec h4 { margin: 0 0 7px; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--fg-3); font-weight: 400; }
+.sec h4 { margin: 0 0 8px; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--fg-3); font-weight: 400; }
 .sec ul { margin: 0; padding-left: 18px; color: var(--fg-2); } .sec li + li { margin-top: 3px; }
 .two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.gauge { background: var(--surface-2); border: 1px solid var(--line); border-radius: 11px; padding: 10px 12px; }
-.gauge b { font-family: var(--mono); font-size: 22px; font-weight: 500; display: block; }
-.gauge span { font-size: 12px; color: var(--fg-3); }
-.gauge .bar { margin-top: 7px; height: 5px; }
-.contact { display: flex; flex-direction: column; gap: 8px; }
+.gauge { background: var(--surface-2); border: 1px solid var(--line); border-radius: 14px; padding: 12px; display: flex; align-items: center; gap: 12px; }
+.gauge .anel { width: 54px; height: 54px; } .gauge .anel b { font-size: 15px; }
+.gauge span { font-size: 12.5px; color: var(--fg-2); font-weight: 600; }
+.contato { background: var(--surface-2); border: 1px solid var(--line); border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 12px; }
+.contato .fone { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.contato .fone b { font-family: var(--mono); font-size: 20px; font-weight: 500; user-select: all; }
+.contato .acoes { display: flex; gap: 8px; flex-wrap: wrap; }
 .row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .row .k { width: 86px; flex: none; color: var(--fg-3); font-size: 12.5px; }
-.row .v { font-family: var(--mono); user-select: all; overflow-wrap: anywhere; min-width: 0; }
-.row a.v { color: var(--info); user-select: auto; }
-textarea.field { width: 100%; resize: vertical; min-height: 84px; line-height: 1.45; }
+.row .v { font-family: var(--mono); overflow-wrap: anywhere; min-width: 0; }
+.row a.v { color: var(--info); }
+textarea.field { width: 100%; resize: vertical; min-height: 88px; line-height: 1.45; }
 .hint { color: var(--fg-3); font-size: 12px; }
 .fontes a { color: var(--info); font-size: 12.5px; overflow-wrap: anywhere; }
-.modal { position: fixed; z-index: 41; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 480px; max-width: calc(100% - 32px); max-height: calc(100% - 48px); overflow-y: auto;
-  background: var(--surface); border: 1px solid var(--line-2); border-radius: 16px; box-shadow: var(--shadow); padding: 18px; display: flex; flex-direction: column; gap: 12px; }
-.modal h2 { font-size: 16px; } .veil.m { z-index: 40; }
-.modal label { display: flex; flex-direction: column; gap: 4px; font-size: 12.5px; color: var(--fg-2); }
-.modal .field { width: 100%; }
+.modal { position: fixed; z-index: 41; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 500px; max-width: calc(100% - 32px); max-height: calc(100% - 48px); overflow-y: auto; background: var(--surface); border: 1px solid var(--line-2); border-radius: 20px; box-shadow: var(--shadow-2); padding: 20px; display: flex; flex-direction: column; gap: 12px; animation: pop .4s var(--spring); }
+@keyframes pop { from { transform: translate(-50%, -46%) scale(.96); opacity: 0; } to { transform: translate(-50%, -50%); opacity: 1; } }
+.modal h2 { font-size: 18px; font-weight: 800; } .veil.m { z-index: 40; }
+.modal label { display: flex; flex-direction: column; gap: 4px; font-size: 12.5px; color: var(--fg-2); font-weight: 600; }
+.modal .field { width: 100%; font-weight: 400; }
 .pend { border-top: 1px solid var(--line); padding-top: 10px; display: flex; flex-direction: column; gap: 6px; font-size: 12.5px; color: var(--fg-2); }
-.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(22px + env(safe-area-inset-bottom, 0px)); z-index: 50; background: var(--surface-3); border: 1px solid var(--line-2);
-  border-radius: 11px; padding: 9px 12px; box-shadow: var(--shadow); display: flex; gap: 12px; align-items: center; max-width: calc(100% - 32px); }
-@media (max-width: 560px) { .two { grid-template-columns: 1fr; } .sum .rot { margin-left: 0; width: 100%; } .brand span { display: none; } }
+.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(24px + env(safe-area-inset-bottom, 0px)); z-index: 50; background: var(--fg); color: var(--bg); border-radius: 13px; padding: 10px 14px; box-shadow: var(--shadow-2); display: flex; gap: 12px; align-items: center; max-width: calc(100% - 32px); animation: toast .45s var(--spring); }
+@keyframes toast { from { transform: translate(-50%, 20px); opacity: 0; } to { transform: translate(-50%, 0); opacity: 1; } }
+
+@media (max-width: 980px) { .hero { grid-template-columns: 1fr; } #radar { height: 230px; } }
+@media (max-width: 720px) {
+  .tabs { order: 3; width: 100%; } .tabs button { flex: 1 1 0; justify-content: center; padding: 7px 8px; }
+  .acts .lbl { display: none; } .btn.gold { padding: 8px 11px; }
+  .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .two { grid-template-columns: 1fr; } .sug-g { grid-template-columns: 1fr; }
+  .ia-btn span:last-child { display: none; } .ia-btn { padding: 4px; }
+  .fab { padding: 6px; } .fab .lbl { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .card { transform: none !important; }
+}
 </style>
+
+<div class="fundo" aria-hidden="true"><i></i><i></i><i></i></div>
 
 <div class="app" id="app">
   <header class="top">
     <div class="wrap top-in">
-      <div class="brand"><div class="sweep" aria-hidden="true"></div><div><b>DALAS</b> <span>Radar de clientes</span></div></div>
+      <a class="marca" href="#radar" aria-label="Dalas"><span class="asa"><img src="data:image/webp;base64,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" alt=""></span><b>DALAS</b></a>
       <nav class="tabs" role="tablist" aria-label="Visões">
-        <button role="tab" data-view="radar" aria-selected="true">Radar</button>
-        <button role="tab" data-view="funil" aria-selected="false">Funil</button>
-        <button role="tab" data-view="lista" aria-selected="false">Lista</button>
+        <span class="tab-ind" aria-hidden="true"></span>
+        <button role="tab" data-view="radar" aria-selected="true"><span class="ico" data-i="radar"></span>Radar</button>
+        <button role="tab" data-view="funil" aria-selected="false"><span class="ico" data-i="funil"></span>Funil</button>
+        <button role="tab" data-view="lista" aria-selected="false"><span class="ico" data-i="lista"></span>Lista</button>
       </nav>
       <div class="grow"></div>
       <div class="acts">
-        <button class="btn gold" id="btn-garimpar">Garimpar empresas</button>
-        <button class="btn" id="btn-novo">Novo lead</button>
-        <button class="btn" id="btn-ia">Conversar com a IA</button>
-        <button class="btn ghost" id="btn-cfg" aria-label="Configurações">Configurar</button>
+        <button class="btn gold" id="btn-garimpar"><span class="ico" data-i="brilho"></span><span class="lbl">Garimpar empresas</span></button>
+        <button class="ib" id="btn-novo" title="Novo lead" aria-label="Novo lead"><span class="ico" data-i="mais"></span></button>
+        <button class="ib" id="btn-tema" title="Modo escuro" aria-label="Alternar modo claro ou escuro"><span class="ico" data-i="lua"></span></button>
+        <button class="ib" id="btn-cfg" title="Configurações" aria-label="Configurações"><span class="ico" data-i="engrenagem"></span></button>
+        <button class="ia-btn" id="btn-ia"><span class="orb mini"><i></i><i></i></span><span class="nome-ia">Lia</span></button>
       </div>
     </div>
   </header>
 
   <div class="wrap">
-    <section class="sum" id="sum" aria-label="Resumo"></section>
+    <section class="hero" aria-label="Resumo">
+      <div>
+        <p class="eyebrow" id="hero-data"></p>
+        <h1 id="hero-ola">Olá</h1>
+        <p class="sub" id="hero-sub">Carregando as empresas do radar…</p>
+        <div class="kpis" id="kpis"></div>
+        <p class="rot" id="rot"></p>
+      </div>
+      <div class="radar-box">
+        <canvas id="radar" aria-label="Radar das empresas: cada ponto é uma empresa"></canvas>
+        <div class="radar-tip" id="radar-tip" hidden></div>
+        <p class="radar-leg">Perto do centro = pontuação maior · altura do pino = potencial de compra</p>
+      </div>
+    </section>
+
+    <nav class="nichos" id="nichos" aria-label="Nichos"></nav>
+
     <section class="filters" aria-label="Filtros">
+      <div class="busca"><span class="ico" data-i="busca"></span><input class="field" id="f-busca" type="search" placeholder="Buscar empresa, cidade ou nicho" aria-label="Buscar"></div>
       <select class="field" id="f-regiao" aria-label="Região"><option value="serra">Serra Gaúcha</option><option value="">Brasil inteiro</option></select>
-      <input class="field" id="f-busca" type="search" placeholder="Buscar empresa, cidade ou nicho" aria-label="Buscar">
       <select class="field" id="f-uf" aria-label="Estado"></select>
-      <select class="field" id="f-nicho" aria-label="Nicho"></select>
-      <select class="field" id="f-tel" aria-label="Tipo de telefone">
-        <option value="">Qualquer telefone</option><option value="celular">Só celular (WhatsApp)</option>
+      <select class="field" id="f-prio" aria-label="Prioridade">
+        <option value="">Toda prioridade</option><option value="max">Prioridade máxima</option><option value="precisa">Precisa muito</option><option value="compra">Tende a comprar</option><option value="aquecer">Para aquecer</option>
       </select>
-      <button class="btn" id="btn-lote" hidden>Preparar abordagens com IA</button>
-      <button class="btn" id="btn-csv" hidden>Baixar planilha</button>
+      <select class="field" id="f-tel" aria-label="Tipo de telefone"><option value="">Qualquer telefone</option><option value="celular">Só celular (WhatsApp)</option></select>
+      <div class="grow"></div>
+      <button class="btn" id="btn-lote" hidden><span class="ico" data-i="brilho"></span>Preparar abordagens</button>
+      <button class="btn" id="btn-csv" hidden><span class="ico" data-i="baixar"></span>Planilha</button>
     </section>
     <div id="aviso"></div>
     <main id="main"></main>
   </div>
 </div>
 
-<button class="btn gold fab" id="fab-ia">IA</button>
+<button class="fab" id="fab-ia"><span class="orb"><i></i><i></i></span><span class="lbl">Fale com a <b class="nome-ia">Lia</b></span></button>
 
-<aside class="chat" id="chat" hidden aria-label="Conversa com a IA">
+<aside class="chat" id="chat" hidden aria-label="Assistente">
   <div class="chat-h">
-    <div class="grow"><h2>IA da Dalas</h2><p id="chat-sub">Conhece todos os leads do painel</p></div>
-    <button class="btn ghost sm" id="chat-limpar">Limpar</button>
-    <button class="btn ghost sm" id="chat-fechar" aria-label="Fechar conversa">Fechar</button>
+    <span class="orb"><i></i><i></i></span>
+    <div class="grow"><h2 class="nome-ia">Lia</h2><p id="chat-sub">Online · conhece todas as empresas do radar</p></div>
+    <button class="ib" id="chat-voz" hidden title="Ler as respostas em voz alta" aria-label="Ler as respostas em voz alta" aria-pressed="false"><span class="ico" data-i="som"></span></button>
+    <button class="ib" id="chat-limpar" title="Limpar conversa" aria-label="Limpar conversa"><span class="ico" data-i="lixo"></span></button>
+    <button class="ib" id="chat-fechar" title="Fechar" aria-label="Fechar assistente"><span class="ico" data-i="x"></span></button>
   </div>
   <div class="msgs" id="msgs"></div>
-  <div class="sug" id="sug"></div>
   <form class="chat-f" id="chat-form">
-    <textarea class="field" id="chat-in" rows="2" placeholder="Pergunte qualquer coisa. Ex.: quem eu abordo hoje?" aria-label="Mensagem para a IA"></textarea>
-    <button class="btn gold" id="chat-send" type="submit">Enviar</button>
+    <button class="redondo" id="chat-mic" type="button" hidden title="Falar" aria-label="Falar com a assistente"><span class="ico" data-i="mic"></span></button>
+    <textarea class="field" id="chat-in" rows="2" placeholder="Pergunte qualquer coisa…" aria-label="Mensagem para a assistente"></textarea>
+    <button class="redondo enviar" id="chat-send" type="submit" title="Enviar" aria-label="Enviar"><span class="ico" data-i="enviar"></span></button>
   </form>
 </aside>
 
@@ -249,37 +418,93 @@ textarea.field { width: 100%; resize: vertical; min-height: 84px; line-height: 1
 (() => {
 'use strict';
 
+/* ---------- Ícones (traço, 24×24) ---------- */
+const ICONES = {
+  radar: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><path d="M12 12l6.5-6.5"/>',
+  funil: '<path d="M3 4h18l-7 8.5V19l-4 2v-8.5z"/>',
+  lista: '<path d="M9 6h12M9 12h12M9 18h12M4 6h.01M4 12h.01M4 18h.01"/>',
+  brilho: '<path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9zM19 15.5l.8 1.7 1.7.8-1.7.8-.8 1.7-.8-1.7-1.7-.8 1.7-.8z"/>',
+  mais: '<path d="M12 5v14M5 12h14"/>',
+  lua: '<path d="M20.5 13.2A8.5 8.5 0 1 1 10.8 3.5a6.6 6.6 0 0 0 9.7 9.7z"/>',
+  sol: '<circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"/>',
+  engrenagem: '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-2.8 1.2V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-2.9-1.2l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.7 1.7 0 0 0 3.2 14H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.2-2.9l-.1-.1A2 2 0 1 1 7 4.2l.1.1a1.7 1.7 0 0 0 2.9-1.2V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 2.9 1.2l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0 1.2 2.9H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>',
+  busca: '<circle cx="11" cy="11" r="7"/><path d="M20.5 20.5L16 16"/>',
+  baixar: '<path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/>',
+  som: '<path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18.5 6.5a7.5 7.5 0 0 1 0 11"/>',
+  lixo: '<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>',
+  x: '<path d="M6 6l12 12M18 6L6 18"/>',
+  mic: '<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/>',
+  enviar: '<path d="M4.5 12L20 4.5 15.5 20l-3-6.5z"/><path d="M12.5 13.5L20 4.5"/>',
+  copiar: '<rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M5 15H4.5A1.5 1.5 0 0 1 3 13.5v-9A1.5 1.5 0 0 1 4.5 3h9A1.5 1.5 0 0 1 15 4.5V5"/>',
+  wa: '<path d="M20 11.6A8.4 8.4 0 0 1 7.6 19L3.5 20.3l1.3-4A8.4 8.4 0 1 1 20 11.6z"/><path d="M9 8.6c.2-.4.5-.5.8-.5h.5l1 2.2-.7 1c.5 1 1.3 1.8 2.3 2.3l1-.7 2.2 1v.5c0 .3-.1.6-.5.8-.6.4-1.5.5-2.4.1-2-.8-3.5-2.3-4.3-4.3-.4-.9-.3-1.8.1-2.4z"/>',
+  fone: '<path d="M5.5 3.5h3.2l1.8 4.6-2.2 1.4a11 11 0 0 0 6.2 6.2l1.4-2.2 4.6 1.8v3.2a2 2 0 0 1-2 2A16.5 16.5 0 0 1 3.5 5.5a2 2 0 0 1 2-2z"/>',
+  insta: '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.3 6.7h.01"/>',
+  globo: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
+  alvo: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/>',
+  conversa: '<path d="M4 5h16v11H9l-5 4z"/>',
+  aperto: '<path d="M3 12l4-4 4 3 3-3 7 6M7 8l-4 4 5 5 3-2 3 2 6-5"/>',
+  check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+  raio: '<path d="M13 2.5L4.5 14H12l-1 7.5L19.5 10H12z"/>',
+  mapa: '<path d="M9 4.5L3.5 6.5v13L9 17.5l6 2 5.5-2v-13L15 6.5z"/><path d="M9 4.5v13M15 6.5v13"/>',
+  fila: '<path d="M4 6h16M4 12h10M4 18h6"/>',
+  garfo: '<path d="M7 3v8M4.5 3v5a2.5 2.5 0 0 0 5 0V3M7 11v10M17.5 21V3c-2.2 0-3.5 2.5-3.5 6v4h3.5"/>',
+  cama: '<path d="M3 18V7M3 14h18v4M21 18v-4.5A3.5 3.5 0 0 0 17.5 10H11v4"/><circle cx="7" cy="11.5" r="2"/>',
+  dente: '<path d="M8 3.5C5 3.5 4 5.5 4 8c0 4 2 5 2.3 9 .2 2 .9 3.5 1.8 3.5 1.2 0 1.3-3 2.3-5 .6-1.1 2.6-1.1 3.2 0 1 2 1.1 5 2.3 5 .9 0 1.6-1.5 1.8-3.5C18 13 20 12 20 8c0-2.5-1-4.5-4-4.5-2 0-2.6 1-4 1s-2-1-4-1z"/>',
+  pulso: '<path d="M3 12h4l2.2-4.5 4 9L15.5 12H21"/>',
+  pata: '<path d="M12 13.5c-3 0-5 3-5 5 0 1.5 1.4 2 3 2h4c1.6 0 3-.5 3-2 0-2-2-5-5-5z"/><circle cx="6" cy="10" r="1.7"/><circle cx="9.3" cy="5.8" r="1.7"/><circle cx="14.7" cy="5.8" r="1.7"/><circle cx="18" cy="10" r="1.7"/>',
+  peso: '<path d="M6.5 7.5v9M3.5 10v4M17.5 7.5v9M20.5 10v4M6.5 12h11"/>',
+  carro: '<path d="M5 15.5l1.6-5A2 2 0 0 1 8.5 9h7a2 2 0 0 1 1.9 1.5l1.6 5"/><rect x="3.5" y="15.5" width="17" height="3.5" rx="1"/><path d="M7 19v1.5M17 19v1.5"/>',
+  balanca: '<path d="M12 4v16M8 20h8M5 7h14M5 7l-2.8 6a2.8 2.8 0 0 0 5.6 0zM19 7l-2.8 6a2.8 2.8 0 0 0 5.6 0z"/>',
+  casa: '<path d="M3.5 11L12 4l8.5 7M5.5 9.5V20h13V9.5M10 20v-5.5h4V20"/>',
+  sacola: '<path d="M5 8h14l-1 12.5H6zM9 8V6.5a3 3 0 0 1 6 0V8"/>',
+  tesoura: '<circle cx="6" cy="6.5" r="2.5"/><circle cx="6" cy="17.5" r="2.5"/><path d="M8 8l12 10M8 16L20 6"/>',
+  ponto: '<circle cx="12" cy="12" r="3.5"/>',
+};
+function ico(nome, cls) { const s = document.createElement('span'); s.className = 'ico' + (cls ? ' ' + cls : ''); s.setAttribute('aria-hidden', 'true'); s.innerHTML = `<svg viewBox="0 0 24 24">${ICONES[nome] || ICONES.ponto}</svg>`; return s; }
+function pintarIcones(raiz) { raiz.querySelectorAll('.ico[data-i]').forEach(s => { if (!s.firstChild) s.innerHTML = `<svg viewBox="0 0 24 24">${ICONES[s.dataset.i] || ''}</svg>`; }); }
+
 /* ---------- Constantes ---------- */
 const ETAPAS = [
-  { id: 'novo', nome: 'Na fila' }, { id: 'abordado', nome: 'Abordado' }, { id: 'conversando', nome: 'Em conversa' },
-  { id: 'reuniao', nome: 'Reunião marcada' }, { id: 'proposta', nome: 'Proposta enviada' }, { id: 'fechado', nome: 'Fechado' },
-  { id: 'descartado', nome: 'Descartado' },
+  { id: 'novo', nome: 'Na fila' }, { id: 'abordado', nome: 'Abordado', h: 212 }, { id: 'conversando', nome: 'Em conversa', h: 172 },
+  { id: 'reuniao', nome: 'Reunião marcada', h: 265 }, { id: 'proposta', nome: 'Proposta enviada', h: 40 }, { id: 'fechado', nome: 'Fechado', h: 140 },
+  { id: 'descartado', nome: 'Descartado', h: 220 },
 ];
 const ETAPA = Object.fromEntries(ETAPAS.map(e => [e.id, e.nome]));
 const PRESENCA = { sem_site: 'Sem site', so_instagram: 'Só Instagram', so_linktree: 'Só Linktree', site_fraco: 'Site fraco', tem_site: 'Tem site', nao_encontrado: 'Site não encontrado' };
-const NICHOS = ['Odontologia', 'Estética', 'Saúde', 'Restaurante', 'Hospedagem', 'Pet', 'Fitness', 'Automotivo', 'Jurídico/Contábil', 'Imobiliária', 'Varejo', 'Beleza', 'Outro'];
+const NICHO = {
+  'Restaurante': { h: 22, i: 'garfo' }, 'Hospedagem': { h: 196, i: 'cama' }, 'Odontologia': { h: 172, i: 'dente' },
+  'Estética': { h: 326, i: 'brilho' }, 'Saúde': { h: 354, i: 'pulso' }, 'Pet': { h: 140, i: 'pata' }, 'Fitness': { h: 92, i: 'peso' },
+  'Automotivo': { h: 216, i: 'carro' }, 'Jurídico/Contábil': { h: 240, i: 'balanca' }, 'Imobiliária': { h: 268, i: 'casa' },
+  'Varejo': { h: 44, i: 'sacola' }, 'Beleza': { h: 296, i: 'tesoura' }, 'Outro': { h: 205, i: 'ponto' },
+};
+const NICHOS = Object.keys(NICHO);
+const nicho = n => NICHO[n] || NICHO.Outro;
 const UFS = 'AC AL AP AM BA CE DF ES GO MA MT MS MG PA PB PR PE PI RJ RN RS RO RR SC SP SE TO'.split(' ');
 const SERRA_CIDADES = ['Caxias do Sul', 'Bento Gonçalves', 'Gramado', 'Canela', 'Farroupilha', 'Garibaldi', 'Carlos Barbosa', 'Flores da Cunha', 'Nova Petrópolis', 'Veranópolis', 'Nova Prata', 'São Marcos', 'Antônio Prado', 'Vacaria', 'São Francisco de Paula', 'Cambará do Sul', 'Picada Café', 'Pinto Bandeira', 'Monte Belo do Sul', 'Nova Pádua', 'Cotiporã', 'Guaporé', 'Serafina Corrêa', 'Nova Roma do Sul', 'Bom Jesus', 'Ipê', 'Santa Tereza', 'Boa Vista do Sul', 'Fagundes Varela', 'Vila Flores', 'Nova Bassano', 'Paraí', 'Jaquirana', 'São José dos Ausentes', 'Linha Nova', 'Presidente Lucena', 'Morro Reuter', 'Santa Maria do Herval'];
-const semAcento = s => String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+const semAcento = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
 const SERRA = new Set(SERRA_CIDADES.map(semAcento));
 const naSerra = l => l.uf === 'RS' && SERRA.has(semAcento(l.cidade));
 const MODO_LOCAL = !(window.claude && typeof window.claude.use === 'function');
 const CORTE_N = 72, CORTE_P = 50;
-const COLS = [
-  { id: 'max', nome: 'Prioridade máxima', dica: 'Precisam muito e têm caixa para pagar', t: l => l.necessidade >= CORTE_N && l.potencial >= CORTE_P },
-  { id: 'precisam', nome: 'Mais precisam', dica: 'Presença digital fraca. Confirme o orçamento', t: l => l.necessidade >= CORTE_N && l.potencial < CORTE_P },
-  { id: 'compram', nome: 'Tendem a comprar', dica: 'Negócio com movimento. Venda melhoria', t: l => l.necessidade < CORTE_N && l.potencial >= CORTE_P },
-  { id: 'aquecer', nome: 'Para aquecer', dica: 'Sinais ainda fracos', t: () => true },
+const PRIO = [
+  { id: 'max', nome: 'Prioridade máxima', t: l => l.necessidade >= CORTE_N && l.potencial >= CORTE_P },
+  { id: 'precisa', nome: 'Precisa muito', t: l => l.necessidade >= CORTE_N },
+  { id: 'compra', nome: 'Tende a comprar', t: l => l.potencial >= CORTE_P },
+  { id: 'aquecer', nome: 'Para aquecer', t: () => true },
 ];
-const CFG_PADRAO = { empresa: 'Dalas Marketing', remetente: '', servicos: 'Sites e landing pages, funis de venda, CRM, automações de WhatsApp e IA, tráfego pago, painéis e sistemas sob medida, Google Meu Negócio', instrucoes: '' };
+const PRIO_RANK = { max: 0, precisa: 1, compra: 2, aquecer: 3 };
+const prio = l => PRIO.find(p => p.t(l));
+const COR_PRIO = { max: 'var(--gold)', precisa: 'var(--coral)', compra: 'var(--teal)', aquecer: 'var(--fg-3)' };
+const CFG_PADRAO = { empresa: 'Dalas Marketing', remetente: '', assistente: 'Lia', servicos: 'Sites e landing pages, funis de venda, CRM, automações de WhatsApp e IA, tráfego pago, painéis e sistemas sob medida, Google Meu Negócio, gestão de Instagram', instrucoes: '' };
+const calmo = matchMedia('(prefers-reduced-motion: reduce)');
 
 /* ---------- Estado ---------- */
 const S = {
   leads: new Map(), config: { ...CFG_PADRAO }, pedidos: [], rotina: null,
-  view: 'radar', f: { regiao: mem('radar.regiao') ?? 'serra', busca: '', uf: '', nicho: '', tel: '' }, sort: { campo: 'score', dir: -1 },
-  sel: null, ordem: [], modal: null,
-  db: null, sample: null, mcp: null, dl: null, tools: false,
-  dbState: 'carregando', chat: { turns: [], busy: false, ctl: null, parcial: '' }, lote: false,
+  view: 'radar', f: { regiao: mem('radar.regiao') ?? 'serra', busca: '', uf: '', nicho: '', prio: '', tel: '' }, sort: { campo: 'score', dir: -1 },
+  sel: null, ordem: [], modal: null, animar: true, kpi: {},
+  db: null, sample: null, mcp: null, dl: null, tools: false, tts: null, dict: null, voz: mem('radar.voz') === '1',
+  dbState: 'carregando', chat: { turns: [], busy: false, ctl: null, parcial: '', ouvindo: false, base: '' }, lote: false,
 };
 const $ = (s, r = document) => r.querySelector(s);
 
@@ -290,6 +515,7 @@ function el(tag, props, ...kids) {
     if (k === 'class') n.className = v;
     else if (k === 'text') n.textContent = v;
     else if (k === 'value') n.value = v;
+    else if (k === 'style' && typeof v === 'object') Object.entries(v).forEach(([p, x]) => n.style.setProperty(p, x));
     else if (k.startsWith('on')) n.addEventListener(k.slice(2), v);
     else if (v === true) n.setAttribute(k, '');
     else n.setAttribute(k, v);
@@ -301,9 +527,10 @@ function el(tag, props, ...kids) {
 /* ---------- Utilidades ---------- */
 const clamp = n => Math.max(0, Math.min(100, Math.round(n)));
 function pontuar(l) {
-  const P = { sem_site: 45, so_instagram: 40, so_linktree: 38, nao_encontrado: 30, site_fraco: 28, tem_site: 5 };
+  const P = { sem_site: 45, so_instagram: 40, so_linktree: 38, nao_encontrado: 30, site_fraco: 30, tem_site: 12 };
   let n = P[l.site_status] ?? 25;
-  if (!l.instagram) n += 15; else if (l.seguidores != null && l.seguidores < 1000) n += 8;
+  const ig = l.instagram_status || (l.instagram ? '' : 'sem_instagram');
+  if (ig === 'sem_instagram') n += 15; else if (ig === 'fraco') n += 12; else if (l.seguidores != null && l.seguidores < 1000) n += 8;
   if (l.google_nota != null && l.google_nota < 4.2) n += 10;
   n += Math.min((l.problemas || []).length, 4) * 6 + Math.min((l.servicos_sugeridos || []).length, 4) * 3;
   const T = { 'Odontologia': 30, 'Estética': 30, 'Saúde': 30, 'Jurídico/Contábil': 28, 'Imobiliária': 28, 'Hospedagem': 27, 'Automotivo': 22, 'Fitness': 22, 'Restaurante': 20, 'Varejo': 20, 'Pet': 20, 'Beleza': 16 };
@@ -320,9 +547,9 @@ const num = v => (typeof v === 'number' && isFinite(v)) ? v : null;
 const str = v => (typeof v === 'string' && v.trim()) ? v.trim() : '';
 function normalizar(id, x) {
   const l = {
-    id, nome: str(x.nome) || '(sem nome)', nicho: str(x.nicho) || 'Outro', cidade: str(x.cidade), uf: str(x.uf).toUpperCase().slice(0, 2),
+    id, nome: str(x.nome) || '(sem nome)', nicho: NICHO[str(x.nicho)] ? str(x.nicho) : 'Outro', cidade: str(x.cidade), uf: str(x.uf).toUpperCase().slice(0, 2),
     endereco: str(x.endereco), telefone: str(String(x.telefone ?? '')).replace(/\D/g, ''), telefone_tipo: str(x.telefone_tipo),
-    instagram: str(x.instagram), seguidores: num(x.seguidores), site: str(x.site), site_status: str(x.site_status) || 'nao_encontrado',
+    instagram: str(x.instagram), seguidores: num(x.seguidores), instagram_status: str(x.instagram_status), site: str(x.site), site_status: str(x.site_status) || 'nao_encontrado',
     google_nota: num(x.google_nota), google_avaliacoes: num(x.google_avaliacoes), avaliacoes_total: num(x.avaliacoes_total),
     sinais_de_caixa: arr(x.sinais_de_caixa), problemas: arr(x.problemas), servicos_sugeridos: arr(x.servicos_sugeridos), fontes: arr(x.fontes),
     resumo: str(x.resumo), confianca: str(x.confianca) || 'media', etapa: ETAPA[x.etapa] ? x.etapa : 'novo',
@@ -348,13 +575,13 @@ const buscaGoogle = l => 'https://www.google.com/search?q=' + encodeURIComponent
 const local = l => [l.cidade, l.uf].filter(Boolean).join('/');
 const agora = () => new Date().toISOString();
 const recente = l => l.criado_em && (Date.now() - Date.parse(l.criado_em)) < 48 * 3600e3;
-function quando(iso) {
-  const t = Date.parse(iso); if (!t) return '';
-  return new Date(t).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
-}
+const avaliacoes = l => Math.max(l.google_avaliacoes ?? 0, l.avaliacoes_total ?? 0);
+function quando(iso) { const t = Date.parse(iso); if (!t) return ''; return new Date(t).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }); }
 function saudacao() { const h = new Date().getHours(); return h < 12 ? 'Bom dia' : h < 18 ? 'Boa tarde' : 'Boa noite'; }
 function slug(s) { return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 70) || 'lead'; }
 function mem(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
+const nomeIA = () => str(S.config.assistente) || 'Lia';
+function hashN(s) { let h = 2166136261; for (const c of s) { h ^= c.charCodeAt(0); h = Math.imul(h, 16777619); } return (h >>> 0) / 4294967295; }
 
 function toast(msg, acao) {
   const box = $('#toasts');
@@ -362,6 +589,19 @@ function toast(msg, acao) {
   if (acao) t.append(el('button', { class: 'btn sm gold', text: acao.rotulo, onclick: () => { t.remove(); acao.fn(); } }));
   box.replaceChildren(t);
   setTimeout(() => t.remove(), acao ? 12000 : 4500);
+}
+function anel(valor, cor, r = 16) {
+  const c = 2 * Math.PI * r, w = (r + 4) * 2;
+  const svg = `<svg viewBox="0 0 ${w} ${w}"><circle class="fundo-anel" cx="${w / 2}" cy="${w / 2}" r="${r}"/><circle class="valor" cx="${w / 2}" cy="${w / 2}" r="${r}" stroke-dasharray="${c.toFixed(1)}" stroke-dashoffset="${(c * (1 - valor / 100)).toFixed(1)}"/></svg>`;
+  const d = el('div', { class: 'anel', style: { '--pc': cor } }); d.innerHTML = svg; d.append(el('b', { text: String(valor) })); return d;
+}
+
+/* ---------- Tema ---------- */
+function aplicarTema(t) {
+  document.documentElement.setAttribute('data-theme', t);
+  const b = $('#btn-tema'); b.replaceChildren(ico(t === 'dark' ? 'sol' : 'lua'));
+  b.title = t === 'dark' ? 'Modo claro' : 'Modo escuro';
+  radarCores();
 }
 
 /* ---------- Banco ---------- */
@@ -388,13 +628,13 @@ function initDb(db) {
     S.leads = m;
     if (!snap.metadata.fromCache) { clearTimeout(lento); S.dbState = 'ok'; }
     render();
-  }, e => { clearTimeout(lento); S.dbState = 'erro'; render(); });
-  db.doc('config/principal').onSnapshot(s => { S.config = { ...CFG_PADRAO, ...(s.exists ? s.data() : {}) }; render(); }, () => {});
+  }, () => { clearTimeout(lento); S.dbState = 'erro'; render(); });
+  db.doc('config/principal').onSnapshot(s => { S.config = { ...CFG_PADRAO, ...(s.exists ? s.data() : {}) }; document.querySelectorAll('.nome-ia').forEach(n => { n.textContent = nomeIA(); }); render(); renderChat(); }, () => {});
   db.collection('pedidos').limit(200).onSnapshot(s => {
     S.pedidos = s.docs.map(d => ({ id: d.id, ...d.data() })).sort((a, b) => String(b.criado_em).localeCompare(String(a.criado_em)));
     if (S.modal === 'garimpar') renderPedidos();
   }, () => {});
-  db.doc('rotina/ultima').onSnapshot(s => { S.rotina = s.exists ? s.data() : null; renderSum(); }, () => {});
+  db.doc('rotina/ultima').onSnapshot(s => { S.rotina = s.exists ? s.data() : null; renderHero(); }, () => {});
   db.doc('conversas/principal').get().then(s => {
     const t = s.exists ? s.data().turns : null;
     if (Array.isArray(t) && !S.chat.turns.length) { S.chat.turns = t.filter(x => x && (x.role === 'user' || x.role === 'assistant') && typeof x.content === 'string' && x.content); renderChat(); }
@@ -402,53 +642,83 @@ function initDb(db) {
 }
 
 /* ---------- Filtros ---------- */
-function filtrados() {
+function base() { return [...S.leads.values()].filter(l => !S.f.regiao || naSerra(l)); }
+function filtrados(semNicho) {
   const q = S.f.busca.trim().toLowerCase();
-  return [...S.leads.values()].filter(l => (!S.f.regiao || naSerra(l)) &&
-    (!S.f.uf || l.uf === S.f.uf) && (!S.f.nicho || l.nicho === S.f.nicho) && (!S.f.tel || l.telefone_tipo === S.f.tel) &&
-    (!q || `${l.nome} ${l.cidade} ${l.uf} ${l.nicho}`.toLowerCase().includes(q)));
+  return base().filter(l =>
+    (!S.f.uf || l.uf === S.f.uf) && (semNicho || !S.f.nicho || l.nicho === S.f.nicho) && (!S.f.tel || l.telefone_tipo === S.f.tel) &&
+    (!S.f.prio || prio(l).id === S.f.prio) && (!q || `${l.nome} ${l.cidade} ${l.uf} ${l.nicho}`.toLowerCase().includes(q)));
 }
 function opcoes(sel, rotulo, valores, atual) {
   const cur = [...sel.options].map(o => o.value).join('|'), novo = ['', ...valores].join('|');
   if (cur !== novo) sel.replaceChildren(el('option', { value: '', text: rotulo }), ...valores.map(v => el('option', { value: v, text: v })));
   sel.value = atual;
 }
+function mudarFiltro(k, v) { S.f[k] = v; S.animar = true; render(); }
 
 /* ---------- Render ---------- */
 let pend = false;
 function render() { if (pend) return; pend = true; requestAnimationFrame(() => { pend = false; desenhar(); }); }
 function desenhar() {
-  renderSum();
-  const todos = [...S.leads.values()];
-  opcoes($('#f-uf'), 'Todos os estados', [...new Set(todos.map(l => l.uf).filter(Boolean))].sort(), S.f.uf);
-  opcoes($('#f-nicho'), 'Todos os nichos', [...new Set(todos.map(l => l.nicho))].sort(), S.f.nicho);
-  $('#f-regiao').value = S.f.regiao;
+  renderHero();
+  opcoes($('#f-uf'), 'Todos os estados', [...new Set(base().map(l => l.uf).filter(Boolean))].sort(), S.f.uf);
+  $('#f-regiao').value = S.f.regiao; $('#f-prio').value = S.f.prio;
   document.querySelectorAll('.tabs button').forEach(b => b.setAttribute('aria-selected', String(b.dataset.view === S.view)));
+  moverIndicador();
+  renderNichos();
   $('#btn-lote').hidden = !(S.sample && S.view === 'radar' && S.leads.size);
   $('#btn-lote').disabled = S.lote;
-  $('#btn-lote').textContent = S.lote ? 'Escrevendo abordagens…' : 'Preparar abordagens com IA';
+  $('#btn-lote').lastChild.textContent = S.lote ? 'Escrevendo abordagens…' : 'Preparar abordagens';
   $('#btn-csv').hidden = !(S.dl && S.leads.size);
   renderAviso();
   const main = $('#main');
-  if (S.view === 'radar') main.replaceChildren(viewRadar());
-  else if (S.view === 'funil') main.replaceChildren(viewFunil());
-  else main.replaceChildren(viewLista());
+  const v = S.view === 'radar' ? viewRadar() : S.view === 'funil' ? viewFunil() : viewLista();
+  if (S.animar && v.classList.contains('board') && !calmo.matches) v.classList.add('entra');
+  S.animar = false;
+  main.replaceChildren(v);
+  radarPontos();
   if (S.sel) {
     const a = document.activeElement, dr = $('#drawer');
     const editando = dr && dr.contains(a) && /TEXTAREA|INPUT|SELECT/.test(a.tagName);
     if (!editando && !S.gerando) renderDrawer();
   }
 }
-function renderSum() {
-  const base = [...S.leads.values()].filter(l => !S.f.regiao || naSerra(l));
-  const c = {}; for (const l of base) c[l.etapa] = (c[l.etapa] || 0) + 1;
-  const item = (n, t) => el('div', null, el('strong', { text: String(n) }), el('span', { text: t }));
-  const conv = (c.conversando || 0) + (c.reuniao || 0) + (c.proposta || 0);
-  const kids = [item(base.length, S.f.regiao ? 'empresas na Serra Gaúcha' : 'empresas no radar'), item(c.novo || 0, 'na fila para abordar'), item(c.abordado || 0, 'abordadas'), item(conv, 'em negociação'), item(c.fechado || 0, 'fechadas')];
+function moverIndicador() {
+  const t = $('.tabs'), b = t.querySelector('button[aria-selected="true"]'); if (!b) return;
+  t.style.setProperty('--x', b.offsetLeft + 'px'); t.style.setProperty('--w', b.offsetWidth + 'px');
+}
+function contar(elm, alvo) {
+  const de = Number(elm.dataset.v || 0); elm.dataset.v = alvo;
+  if (de === alvo || calmo.matches) { elm.textContent = String(alvo); return; }
+  const t0 = performance.now(), dur = 700;
+  const passo = t => { const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3); elm.textContent = String(Math.round(de + (alvo - de) * e)); if (k < 1) requestAnimationFrame(passo); };
+  requestAnimationFrame(passo);
+}
+function renderHero() {
+  const nome = str(S.config.remetente);
+  const dia = new Date().toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' });
+  $('#hero-data').textContent = dia;
+  const h1 = $('#hero-ola'); h1.replaceChildren(`${saudacao()}${nome ? ', ' : ''}`, nome ? el('em', { text: nome }) : '', '.');
+  const b = base(), c = {}; for (const l of b) c[l.etapa] = (c[l.etapa] || 0) + 1;
+  const max = b.filter(l => l.etapa === 'novo' && prio(l).id === 'max').length;
+  const onde = S.f.regiao ? 'na Serra Gaúcha' : 'no radar';
+  $('#hero-sub').textContent = S.dbState === 'carregando' ? 'Carregando as empresas do radar…' : b.length ? `${b.length} empresas ${onde}, ${max} com prioridade máxima esperando o primeiro contato.` : `Nenhuma empresa ${onde} ainda.`;
+  const kp = $('#kpis');
+  const itens = [['fila', c.novo || 0, 'Na fila', 'fila', 'var(--teal)'], ['abordado', c.abordado || 0, 'Abordadas', 'conversa', 'var(--info)'],
+    ['negocio', (c.conversando || 0) + (c.reuniao || 0) + (c.proposta || 0), 'Em negociação', 'aperto', 'var(--gold)'], ['fechado', c.fechado || 0, 'Fechadas', 'check', 'var(--wa)']];
+  if (!kp.children.length) kp.append(...itens.map(([k, , rot, i, cor]) => el('div', { class: 'kpi', style: { '--k': cor } }, ico(i), el('b', { 'data-k': k, text: '0' }), el('span', { text: rot }))));
+  for (const [k, v] of itens) contar(kp.querySelector(`[data-k="${k}"]`), v);
   const r = S.rotina;
-  const ult = r && r.em ? `Última busca: ${quando(r.em)}${typeof r.novos === 'number' ? ` · ${r.novos} novas` : ''}` : '';
-  kids.push(el('div', { class: 'rot', text: ult || (MODO_LOCAL ? 'Versão local · busca automática diária fica no painel online' : 'Busca automática: dias úteis pela manhã') }));
-  $('#sum').replaceChildren(...kids);
+  $('#rot').textContent = r && r.em ? `Última busca: ${quando(r.em)}${typeof r.novos === 'number' ? ` · ${r.novos} novas` : ''}` : (MODO_LOCAL ? 'Versão local · a busca automática diária fica no painel online' : 'Busca automática: dias úteis pela manhã');
+}
+function renderNichos() {
+  const box = $('#nichos'), ls = filtrados(true), cont = {};
+  for (const l of ls) cont[l.nicho] = (cont[l.nicho] || 0) + 1;
+  const ord = Object.keys(cont).sort((a, b) => cont[b] - cont[a] || a.localeCompare(b));
+  if (S.f.nicho && !cont[S.f.nicho]) ord.push(S.f.nicho);
+  const pill = (n, rot, qtd, i, h) => el('button', { class: 'pill' + (n ? '' : ' todos'), type: 'button', 'aria-pressed': String(S.f.nicho === n), style: { '--h': String(h) }, onclick: () => mudarFiltro('nicho', S.f.nicho === n ? '' : n) },
+    el('span', { class: 'dot' }, ico(i)), rot, el('i', { text: String(qtd) }));
+  box.replaceChildren(pill('', 'Todos', ls.length, 'radar', 200), ...ord.map(n => pill(n, n, cont[n] || 0, nicho(n).i, nicho(n).h)));
 }
 function renderAviso() {
   const box = $('#aviso'); let n = null;
@@ -456,38 +726,34 @@ function renderAviso() {
   else if (S.dbState === 'lento') n = el('div', { class: 'notice' }, 'Ainda não consegui falar com o banco de dados. Continuo tentando; se você estiver sem internet, os dados aparecem quando ela voltar.');
   else if (S.dbState === 'erro') n = el('div', { class: 'notice' }, 'Perdi o acesso ao banco de dados nesta sessão. Recarregue a página para tentar de novo.');
   else if (MODO_LOCAL && location.protocol === 'file:') n = el('div', { class: 'notice' }, el('b', { text: 'Abra pelo atalho. ' }), 'Use “Abrir-Radar-Windows” ou “Abrir-Radar-Mac” da pasta do Radar; aberto direto pelo arquivo, a IA e os dados iniciais não carregam.');
-  else if (MODO_LOCAL && S.dbState === 'ok' && !mem('radar.apikey')) n = el('div', { class: 'notice' }, el('b', { text: 'Falta a chave da API do Claude. ' }), 'Sem ela o painel funciona, mas a IA e a busca de empresas ficam desligadas aqui no computador. ', el('button', { class: 'btn sm', text: 'Colocar a chave', onclick: abrirConfig }));
-  else if (S.dbState === 'ok' && !S.config.remetente && S.leads.size) n = el('div', { class: 'notice' }, el('b', { text: 'Falta o seu nome. ' }), 'A IA assina as mensagens de abordagem com ele. ', el('button', { class: 'btn sm', text: 'Preencher agora', onclick: abrirConfig }));
+  else if (MODO_LOCAL && S.dbState === 'ok' && !mem('radar.apikey')) n = el('div', { class: 'notice' }, el('b', { text: 'Falta a chave da API do Claude. ' }), 'Sem ela o painel funciona, mas a assistente e a busca de empresas ficam desligadas aqui no computador. ', el('button', { class: 'btn sm', text: 'Colocar a chave', onclick: abrirConfig }));
+  else if (S.dbState === 'ok' && !S.config.remetente && S.leads.size) n = el('div', { class: 'notice' }, el('b', { text: 'Falta o seu nome. ' }), 'A assistente assina as mensagens de abordagem com ele. ', el('button', { class: 'btn sm', text: 'Preencher agora', onclick: abrirConfig }));
   box.replaceChildren(...(n ? [n] : []));
 }
 function vazioGeral() {
   if (S.dbState === 'carregando') return el('div', { class: 'notice', text: 'Carregando as empresas do radar…' });
   if (S.leads.size) {
-    if (S.f.regiao && ![...S.leads.values()].some(naSerra)) return el('div', { class: 'notice' }, el('b', { text: 'Nenhuma empresa da Serra Gaúcha no radar ainda. ' }), 'Peça uma busca em “Garimpar empresas” ou troque o filtro para Brasil inteiro.');
+    if (S.f.regiao && !base().length) return el('div', { class: 'notice' }, el('b', { text: 'Nenhuma empresa da Serra Gaúcha no radar ainda. ' }), 'Peça uma busca em “Garimpar empresas” ou troque o filtro para Brasil inteiro.');
     return null;
   }
   return el('div', { class: 'notice' }, el('b', { text: 'Nenhuma empresa no radar ainda. ' }),
-    'Aqui aparecem as empresas encontradas, separadas por quem mais precisa e quem tende a comprar. Use “Garimpar empresas” para pedir uma busca por nicho e cidade, ou “Novo lead” para cadastrar uma que você já conhece.');
-}
-function barras(l) {
-  return el('div', { class: 'bars' },
-    el('span', { text: 'NEC', title: 'Necessidade do serviço' }), el('div', { class: 'bar n' }, el('i', { style: `width:${l.necessidade}%` })), el('span', { text: String(l.necessidade) }),
-    el('span', { text: 'POT', title: 'Potencial de compra' }), el('div', { class: 'bar p' }, el('i', { style: `width:${l.potencial}%` })), el('span', { text: String(l.potencial) }));
+    'Aqui aparecem as empresas encontradas, uma coluna por nicho. Use “Garimpar empresas” para pedir uma busca, ou o botão + para cadastrar uma que você já conhece.');
 }
 function card(l, opt = {}) {
+  const p = prio(l), nc = nicho(l.nicho);
   const chips = [];
   if (recente(l) && l.etapa === 'novo') chips.push(el('span', { class: 'chip novo', text: 'Novo' }));
-  chips.push(el('span', { class: 'chip g', text: PRESENCA[l.site_status] || 'Site não encontrado' }));
+  chips.push(el('span', { class: 'chip p-' + p.id, text: p.nome }));
+  chips.push(el('span', { class: 'chip', text: PRESENCA[l.site_status] || 'Site não encontrado' }));
   if (!l.instagram) chips.push(el('span', { class: 'chip', text: 'Sem Instagram' }));
-  const av = Math.max(l.google_avaliacoes ?? 0, l.avaliacoes_total ?? 0);
-  if (av) chips.push(el('span', { class: 'chip v', text: `${av.toLocaleString('pt-BR')} avaliações` }));
+  else if (l.instagram_status === 'fraco') chips.push(el('span', { class: 'chip', text: 'Instagram fraco' }));
+  const av = avaliacoes(l); if (av) chips.push(el('span', { class: 'chip v', text: `${av.toLocaleString('pt-BR')} avaliações` }));
   if (l.mensagem) chips.push(el('span', { class: 'chip', text: 'Abordagem pronta' }));
-  const c = el('article', { class: 'card' + (S.sel === l.id ? ' sel' : ''), tabindex: '0', 'data-id': l.id, draggable: opt.arrasta ? 'true' : null, 'aria-label': `${l.nome}, pontuação ${l.score}` },
-    el('div', { class: 'card-t' }, el('h3', { text: l.nome }), el('span', { class: 'sc', title: 'Pontuação geral', text: String(l.score) })),
-    el('p', { class: 'meta', text: [l.nicho, local(l)].filter(Boolean).join(' · ') }),
-    barras(l), el('div', { class: 'chips' }, chips),
+  const c = el('article', { class: 'card' + (S.sel === l.id ? ' sel' : ''), tabindex: '0', 'data-id': l.id, draggable: opt.arrasta ? 'true' : null, style: { '--h': String(nc.h) }, 'aria-label': `${l.nome}, pontuação ${l.score}, ${p.nome}` },
+    el('div', { class: 'card-t' }, anel(l.score, COR_PRIO[p.id]), el('div', { class: 'grow' }, el('h3', { text: l.nome }), el('p', { class: 'meta', text: [opt.mostrarNicho ? l.nicho : '', local(l)].filter(Boolean).join(' · ') }))),
+    el('div', { class: 'chips' }, chips),
     el('div', { class: 'card-f' }, el('span', { class: 'tel', text: l.telefone ? fone(l.telefone) : 'sem telefone' }),
-      l.telefone ? el('a', { class: 'btn sm green', href: waLink(l, l.mensagem), target: '_blank', rel: 'noopener', text: 'WhatsApp', onclick: e => { e.stopPropagation(); aposWhats(l); } }) : null));
+      l.telefone ? el('a', { class: 'wa-r', href: waLink(l, l.mensagem), target: '_blank', rel: 'noopener', title: 'Abrir no WhatsApp', 'aria-label': 'Abrir conversa no WhatsApp', onclick: e => { e.stopPropagation(); aposWhats(l); } }, ico('wa')) : null));
   c.addEventListener('click', () => abrirLead(l.id));
   c.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target === c) abrirLead(l.id); });
   if (opt.arrasta) c.addEventListener('dragstart', e => { e.dataTransfer.setData('text/plain', l.id); e.dataTransfer.effectAllowed = 'move'; });
@@ -495,7 +761,8 @@ function card(l, opt = {}) {
 }
 function coluna(id, nome, dica, itens, opt = {}) {
   const corpo = el('div', { class: 'col-b' }, itens.length ? itens.map(l => card(l, opt)) : el('p', { class: 'vazio', text: opt.vazio || 'Nada aqui por enquanto.' }));
-  const col = el('section', { class: 'col', 'data-col': id }, el('div', { class: 'col-h' }, el('h2', null, nome, el('i', { text: String(itens.length) })), dica ? el('p', { text: dica }) : null), corpo);
+  const col = el('section', { class: 'col', 'data-col': id, style: { '--h': String(opt.h ?? 200) } },
+    el('div', { class: 'col-h' }, el('span', { class: 'tile' }, ico(opt.i || 'ponto')), el('div', null, el('h2', { text: nome }), dica ? el('p', { text: dica }) : null), el('span', { class: 'n', text: String(itens.length) })), corpo);
   if (opt.solta) {
     col.addEventListener('dragover', e => { e.preventDefault(); col.classList.add('over'); });
     col.addEventListener('dragleave', () => col.classList.remove('over'));
@@ -505,18 +772,23 @@ function coluna(id, nome, dica, itens, opt = {}) {
 }
 function viewRadar() {
   const v = vazioGeral(); if (v) { S.ordem = []; return v; }
-  const fila = filtrados().filter(l => l.etapa === 'novo').sort((a, b) => b.score - a.score);
-  const g = Object.fromEntries(COLS.map(c => [c.id, []]));
-  for (const l of fila) g[COLS.find(c => c.t(l)).id].push(l);
-  S.ordem = COLS.flatMap(c => g[c.id].map(l => l.id));
-  return el('div', { class: 'board' }, COLS.map(c => coluna(c.id, c.nome, c.dica, g[c.id], { vazio: fila.length ? 'Nenhuma empresa neste grupo com os filtros atuais.' : 'A fila está vazia. Peça uma nova busca em “Garimpar empresas”.' })));
+  const fila = filtrados().filter(l => l.etapa === 'novo').sort((a, b) => PRIO_RANK[prio(a).id] - PRIO_RANK[prio(b).id] || b.score - a.score);
+  const g = {}; for (const l of fila) (g[l.nicho] = g[l.nicho] || []).push(l);
+  const ord = Object.keys(g).sort((a, b) => g[b].length - g[a].length || a.localeCompare(b));
+  S.ordem = ord.flatMap(n => g[n].map(l => l.id));
+  if (!ord.length) return el('div', { class: 'notice' }, el('b', { text: 'A fila está vazia com esses filtros. ' }), 'Limpe os filtros ou peça uma nova busca em “Garimpar empresas”.');
+  return el('div', { class: 'board' }, ord.map(n => {
+    const ls = g[n], max = ls.filter(l => prio(l).id === 'max').length;
+    return coluna(n, n, max ? `${max} com prioridade máxima` : `média ${Math.round(ls.reduce((s, l) => s + l.score, 0) / ls.length)} pontos`, ls, { h: nicho(n).h, i: nicho(n).i });
+  }));
 }
 function viewFunil() {
   const v = vazioGeral(); if (v) { S.ordem = []; return v; }
   const ls = filtrados(); const ids = ['abordado', 'conversando', 'reuniao', 'proposta', 'fechado', 'descartado'];
+  const icones = { abordado: 'conversa', conversando: 'conversa', reuniao: 'alvo', proposta: 'raio', fechado: 'check', descartado: 'x' };
   const g = Object.fromEntries(ids.map(i => [i, ls.filter(l => l.etapa === i).sort((a, b) => String(b.atualizado_em).localeCompare(String(a.atualizado_em)))]));
   S.ordem = ids.flatMap(i => g[i].map(l => l.id));
-  return el('div', { class: 'board' }, ids.map(i => coluna(i, ETAPA[i], '', g[i], { arrasta: true, solta: true, vazio: i === 'abordado' ? 'Aborde uma empresa do Radar e ela aparece aqui.' : 'Arraste um cartão para cá.' })));
+  return el('div', { class: 'board' }, ids.map(i => coluna(i, ETAPA[i], '', g[i], { arrasta: true, solta: true, mostrarNicho: true, h: ETAPAS.find(e => e.id === i).h, i: icones[i], vazio: i === 'abordado' ? 'Aborde uma empresa do Radar e ela aparece aqui.' : 'Arraste um cartão para cá.' })));
 }
 function viewLista() {
   const v = vazioGeral(); if (v) { S.ordem = []; return v; }
@@ -526,9 +798,90 @@ function viewLista() {
   const cols = [['nome', 'Empresa'], ['nicho', 'Nicho'], ['cidade', 'Cidade'], ['telefone', 'Telefone'], ['site_status', 'Presença'], ['necessidade', 'Necessidade'], ['potencial', 'Potencial'], ['score', 'Geral'], ['etapa', 'Etapa']];
   const th = cols.map(([k, t]) => el('th', { scope: 'col', onclick: () => { S.sort = { campo: k, dir: S.sort.campo === k ? -S.sort.dir : (['necessidade', 'potencial', 'score'].includes(k) ? -1 : 1) }; render(); }, text: t + (campo === k ? (dir > 0 ? ' ↑' : ' ↓') : '') }));
   const tr = ls.map(l => el('tr', { onclick: () => abrirLead(l.id) },
-    el('td', { class: 'nome', text: l.nome }), el('td', { text: l.nicho }), el('td', { text: local(l) }), el('td', { class: 'num', text: l.telefone ? fone(l.telefone) : '' }),
+    el('td', { class: 'nome', text: l.nome }), el('td', null, el('span', { class: 'nicho-t', style: { '--h': String(nicho(l.nicho).h) } }, ico(nicho(l.nicho).i), l.nicho)), el('td', { text: local(l) }), el('td', { class: 'num', text: l.telefone ? fone(l.telefone) : '' }),
     el('td', { text: PRESENCA[l.site_status] || '' }), el('td', { class: 'num', text: String(l.necessidade) }), el('td', { class: 'num', text: String(l.potencial) }), el('td', { class: 'num', text: String(l.score) }), el('td', { text: ETAPA[l.etapa] })));
   return el('div', { class: 'tbl-w' }, el('table', null, el('thead', null, el('tr', null, th)), el('tbody', null, tr.length ? tr : el('tr', null, el('td', { colspan: '9', class: 'vazio', text: 'Nenhuma empresa com os filtros atuais.' })))));
+}
+
+/* inclinação 3D dos cartões */
+const tiltOk = matchMedia('(hover: hover) and (pointer: fine)');
+document.addEventListener('pointermove', e => {
+  if (!tiltOk.matches || calmo.matches) return;
+  const c = e.target.closest && e.target.closest('.card'); if (!c) return;
+  const r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+  c.style.setProperty('--ry', ((x - .5) * 9).toFixed(2) + 'deg'); c.style.setProperty('--rx', ((.5 - y) * 9).toFixed(2) + 'deg');
+  c.style.setProperty('--gx', (x * 100).toFixed(0) + '%'); c.style.setProperty('--gy', (y * 100).toFixed(0) + '%');
+}, { passive: true });
+document.addEventListener('pointerout', e => { const c = e.target.closest && e.target.closest('.card'); if (c && !c.contains(e.relatedTarget)) { c.style.setProperty('--rx', '0deg'); c.style.setProperty('--ry', '0deg'); } });
+
+/* ---------- Radar 3D ---------- */
+const radar = { cv: null, ctx: null, w: 0, h: 0, pts: [], hover: null, raf: 0, visivel: true, cor: {} };
+function radarCores() {
+  const cs = getComputedStyle(document.documentElement), g = n => cs.getPropertyValue(n).trim();
+  radar.cor = { d1: g('--radar-disc-1'), d2: g('--radar-disc-2'), line: g('--radar-line'), sweep: g('--radar-sweep'), fg3: g('--fg-3'), gold: g('--gold'), nl: g('--nl'), ns: g('--ns'), surface: g('--surface') };
+  if (radar.ctx) radarDesenhar(performance.now());
+}
+function radarGeo() { const w = radar.w, h = radar.h, k = .46; const R = Math.min(w * .46, (h - 20) / (2 * k + .5)); return { cx: w / 2, cy: h * .6, R, k }; }
+function radarPontos() {
+  if (!radar.ctx) return;
+  const ls = filtrados(), ns = [...new Set(ls.map(l => l.nicho))].sort(), n = Math.max(ns.length, 1);
+  radar.pts = ls.map(l => {
+    const i = ns.indexOf(l.nicho), a = (i / n) * Math.PI * 2 + (.15 + .7 * hashN(l.id)) * (Math.PI * 2 / n);
+    return { id: l.id, l, a, fr: .14 + (1 - l.score / 100) * .82, alt: .1 + l.potencial / 100, h: nicho(l.nicho).h };
+  });
+  if (calmo.matches || !radar.raf) radarDesenhar(performance.now());
+}
+function radarDesenhar(t) {
+  const { ctx, w, h } = radar; if (!ctx || !w) return;
+  const { cx, cy, R, k } = radarGeo(), c = radar.cor;
+  const ang = calmo.matches ? 4.2 : (t * .0009) % (Math.PI * 2);
+  ctx.clearRect(0, 0, w, h);
+  ctx.save(); ctx.translate(cx, cy); ctx.scale(1, k);
+  const gr = ctx.createRadialGradient(0, 0, 0, 0, 0, R); gr.addColorStop(0, c.d1); gr.addColorStop(1, c.d2);
+  ctx.fillStyle = gr; ctx.beginPath(); ctx.arc(0, 0, R, 0, Math.PI * 2); ctx.fill();
+  ctx.strokeStyle = c.line; ctx.lineWidth = 1 / k * .9;
+  for (const f of [.25, .5, .75, 1]) { ctx.beginPath(); ctx.arc(0, 0, R * f, 0, Math.PI * 2); ctx.stroke(); }
+  for (let i = 0; i < 6; i++) { const a = i * Math.PI / 3; ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(Math.cos(a) * R, Math.sin(a) * R); ctx.stroke(); }
+  for (let i = 0; i < 26; i++) { const a0 = ang - (i + 1) * .045, a1 = ang - i * .045; ctx.fillStyle = `rgba(${c.sweep}, ${(.32 * (1 - i / 26)).toFixed(3)})`; ctx.beginPath(); ctx.moveTo(0, 0); ctx.arc(0, 0, R, a0, a1); ctx.closePath(); ctx.fill(); }
+  ctx.strokeStyle = `rgba(${c.sweep}, .9)`; ctx.lineWidth = 2 / k; ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(Math.cos(ang) * R, Math.sin(ang) * R); ctx.stroke();
+  ctx.restore();
+  const pts = radar.pts.map(p => { const x = cx + Math.cos(p.a) * p.fr * R, yb = cy + Math.sin(p.a) * p.fr * R * k, hh = p.alt * R * .42; return { ...p, x, yb, yt: yb - hh }; }).sort((a, b) => a.yb - b.yb);
+  for (const p of pts) {
+    let d = (ang - p.a) % (Math.PI * 2); if (d < 0) d += Math.PI * 2;
+    const luz = calmo.matches ? .6 : Math.max(0, 1 - d / 2.2), cor = `hsl(${p.h} ${c.ns} ${c.nl}`;
+    ctx.fillStyle = 'rgba(0,0,0,.12)'; ctx.beginPath(); ctx.ellipse(p.x, p.yb, 4, 4 * k, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = cor + ' / .55)'; ctx.lineWidth = 1.4; ctx.beginPath(); ctx.moveTo(p.x, p.yb); ctx.lineTo(p.x, p.yt); ctx.stroke();
+    const sel = radar.hover && radar.hover.id === p.id, r = sel ? 6.5 : 4.2 + luz * 1.6;
+    if (luz > .05 || sel) { ctx.fillStyle = cor + ` / ${(.18 + luz * .3).toFixed(2)})`; ctx.beginPath(); ctx.arc(p.x, p.yt, r + 5 * luz + (sel ? 4 : 0), 0, Math.PI * 2); ctx.fill(); }
+    ctx.fillStyle = cor + ')'; ctx.beginPath(); ctx.arc(p.x, p.yt, r, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = c.surface; ctx.lineWidth = 1.5; ctx.stroke();
+  }
+  radar.desenhados = pts;
+  ctx.fillStyle = c.gold; ctx.beginPath(); ctx.arc(cx, cy, 4, 0, Math.PI * 2); ctx.fill();
+}
+function radarLoop() {
+  if (radar.raf || calmo.matches) return;
+  let ult = 0;
+  const passo = t => { radar.raf = 0; if (document.hidden || !radar.visivel) return; if (t - ult > 33) { ult = t; radarDesenhar(t); } radar.raf = requestAnimationFrame(passo); };
+  radar.raf = requestAnimationFrame(passo);
+}
+function radarIniciar() {
+  const cv = $('#radar'); radar.cv = cv; radar.ctx = cv.getContext('2d');
+  const ajustar = () => { const r = cv.getBoundingClientRect(), d = Math.min(window.devicePixelRatio || 1, 2); if (!r.width) return; radar.w = r.width; radar.h = r.height; cv.width = Math.round(r.width * d); cv.height = Math.round(r.height * d); radar.ctx.setTransform(d, 0, 0, d, 0, 0); radarDesenhar(performance.now()); };
+  if ('ResizeObserver' in window) new ResizeObserver(ajustar).observe(cv); ajustar();
+  const tip = $('#radar-tip');
+  const achar = e => { const r = cv.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top; let m = null, md = 14; for (const p of radar.desenhados || []) { const dd = Math.hypot(p.x - x, p.yt - y); if (dd < md) { md = dd; m = p; } } return m; };
+  cv.addEventListener('pointermove', e => {
+    const p = achar(e); radar.hover = p; cv.style.cursor = p ? 'pointer' : 'crosshair';
+    if (p) { tip.hidden = false; tip.replaceChildren(el('b', { text: p.l.nome }), el('span', { text: `${p.l.nicho} · ${local(p.l)} · ${p.l.score} pontos` })); tip.style.left = (p.x + cv.offsetLeft) + 'px'; tip.style.top = (p.yt + cv.offsetTop) + 'px'; }
+    else tip.hidden = true;
+    if (calmo.matches) radarDesenhar(performance.now());
+  });
+  cv.addEventListener('pointerleave', () => { radar.hover = null; tip.hidden = true; });
+  cv.addEventListener('click', e => { const p = achar(e); if (p) abrirLead(p.id); });
+  if ('IntersectionObserver' in window) new IntersectionObserver(es => { radar.visivel = es[0].isIntersecting; if (radar.visivel) radarLoop(); }).observe(cv);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) radarLoop(); });
+  radarCores(); radarLoop();
 }
 
 /* ---------- Ficha do lead ---------- */
@@ -545,60 +898,70 @@ function salvarCampos() {
   if (Object.keys(patch).length) { Object.assign(l, patch); atualizarLead(l.id, patch).catch(() => {}); }
 }
 const agendarSalvar = () => { clearTimeout(tSalvar); tSalvar = setTimeout(salvarCampos, 900); };
-function copiar(texto, campo) {
-  navigator.clipboard.writeText(texto).then(() => toast('Copiado.'), () => { if (campo) { campo.focus(); campo.select && campo.select(); } toast('Selecione e copie manualmente.'); });
+function copiar(texto, campo, bt) {
+  const ok = () => { if (bt) { const antes = [...bt.childNodes]; bt.replaceChildren(ico('check'), 'Copiado'); setTimeout(() => bt.replaceChildren(...antes), 1600); } else toast('Copiado.'); };
+  navigator.clipboard.writeText(texto).then(ok, () => { if (campo) { campo.focus(); campo.select && campo.select(); } toast('Selecione e copie manualmente.'); });
 }
 function renderDrawer() {
   const l = S.leads.get(S.sel), cam = $('#camada');
+  const jaAberta = !!cam.querySelector('#drawer');
   cam.querySelectorAll('.veil.d, #drawer').forEach(n => n.remove());
   if (!l) { S.sel = null; return; }
-  const i = S.ordem.indexOf(l.id);
+  const i = S.ordem.indexOf(l.id), p = prio(l), nc = nicho(l.nicho);
   const ir = d => { const id = S.ordem[i + d]; if (id) { salvarCampos(); S.sel = id; renderDrawer(); render(); } };
   const ig = igUser(l), site = seguro(l.site);
   const linha = (k, v) => el('div', { class: 'row' }, el('span', { class: 'k', text: k }), v);
   const lista = (t, itens) => itens.length ? el('div', { class: 'sec' }, el('h4', { text: t }), el('ul', null, itens.map(x => el('li', { text: x })))) : null;
-  const msg = el('textarea', { class: 'field', id: 'd-msg', rows: '5', placeholder: 'Escreva aqui a primeira mensagem, ou peça para a IA escrever.', value: l.mensagem, oninput: () => { agendarSalvar(); wa.href = waLink(l, msg.value); } });
-  const wa = el('a', { class: 'btn green', href: waLink(l, l.mensagem), target: '_blank', rel: 'noopener', text: l.telefone_tipo === 'fixo' ? 'Tentar WhatsApp' : 'Abrir WhatsApp com a mensagem', onclick: () => { salvarCampos(); aposWhats(l); } });
+  const msg = el('textarea', { class: 'field', id: 'd-msg', rows: '5', placeholder: `Escreva a primeira mensagem, ou peça para a ${nomeIA()} escrever.`, value: l.mensagem, oninput: () => { agendarSalvar(); if (wa) wa.href = waLink(l, msg.value); } });
+  const wa = l.telefone ? el('a', { class: 'btn wa', href: waLink(l, l.mensagem), target: '_blank', rel: 'noopener', onclick: () => { salvarCampos(); aposWhats(l); } }, ico('wa'), l.telefone_tipo === 'fixo' ? 'Tentar WhatsApp' : 'Abrir WhatsApp') : null;
   const etapa = el('select', { class: 'field', id: 'd-etapa', 'aria-label': 'Etapa', onchange: e => atualizarLead(l.id, { etapa: e.target.value }).catch(() => {}) }, ETAPAS.map(e => el('option', { value: e.id, text: e.nome })));
   etapa.value = l.etapa;
-  const btIA = S.sample ? el('button', { class: 'btn', id: 'd-ia', text: l.mensagem ? 'Reescrever com IA' : 'Escrever com IA', onclick: () => gerarMensagem(l.id) }) : null;
-  const excluir = el('button', { class: 'btn ghost sm danger', text: 'Excluir', onclick: () => { excluir.replaceWith(el('button', { class: 'btn sm danger', text: 'Confirmar exclusão', onclick: () => { const id = l.id; fecharLead(); S.db && S.db.doc('leads/' + id).delete().then(() => toast('Lead excluído.'), () => toast('Não consegui excluir agora.')); } })); } });
-  const dr = el('aside', { class: 'drawer', id: 'drawer', role: 'dialog', 'aria-label': 'Ficha de ' + l.nome },
+  const btIA = S.sample ? el('button', { class: 'btn', id: 'd-ia', onclick: () => gerarMensagem(l.id) }, ico('brilho'), l.mensagem ? `Reescrever com a ${nomeIA()}` : `Escrever com a ${nomeIA()}`) : null;
+  const btCop = el('button', { class: 'btn', onclick: e => copiar(msg.value, msg, e.currentTarget) }, ico('copiar'), 'Copiar');
+  const excluir = el('button', { class: 'btn ghost sm danger', onclick: () => { excluir.replaceWith(el('button', { class: 'btn sm danger', text: 'Confirmar exclusão', onclick: () => { const id = l.id; fecharLead(); S.db && S.db.doc('leads/' + id).delete().then(() => toast('Lead excluído.'), () => toast('Não consegui excluir agora.')); } })); } }, ico('lixo'), 'Excluir');
+  const dr = el('aside', { class: 'drawer', id: 'drawer', role: 'dialog', 'aria-label': 'Ficha de ' + l.nome, style: { '--h': String(nc.h) } },
     el('div', { class: 'dr-h' },
-      el('div', { class: 'grow' }, el('h2', { text: l.nome }), el('p', { class: 'meta', text: [l.nicho, local(l), l.endereco].filter(Boolean).join(' · ') })),
-      el('button', { class: 'btn ghost sm', text: 'Fechar', onclick: fecharLead })),
+      el('span', { class: 'tile' }, ico(nc.i)),
+      el('div', { class: 'grow' }, el('h2', { text: l.nome }), el('p', { class: 'meta', text: [l.nicho, local(l), l.endereco].filter(Boolean).join(' · ') }), el('div', { class: 'chips', style: { 'margin-top': '6px' } }, el('span', { class: 'chip p-' + p.id, text: p.nome }), el('span', { class: 'chip', text: ETAPA[l.etapa] }))),
+      el('button', { class: 'ib', title: 'Fechar', 'aria-label': 'Fechar ficha', onclick: fecharLead }, ico('x'))),
     el('div', { class: 'dr-b' },
       l.resumo ? el('p', { text: l.resumo }) : null,
       el('div', { class: 'two' },
-        el('div', { class: 'gauge' }, el('b', { text: String(l.necessidade) }), el('span', { text: 'Necessidade do serviço' }), el('div', { class: 'bar n' }, el('i', { style: `width:${l.necessidade}%` }))),
-        el('div', { class: 'gauge' }, el('b', { text: String(l.potencial) }), el('span', { text: 'Potencial de compra' }), el('div', { class: 'bar p' }, el('i', { style: `width:${l.potencial}%` })))),
-      el('div', { class: 'sec' }, el('h4', { text: 'Contato' }), el('div', { class: 'contact' },
-        linha('Telefone', l.telefone ? [el('span', { class: 'v', text: fone(l.telefone) }), el('span', { class: 'hint', text: l.telefone_tipo || '' }), el('button', { class: 'btn sm', text: 'Copiar', onclick: () => copiar(l.telefone) })] : el('span', { class: 'hint', text: 'não encontrado' })),
-        linha('Instagram', ig ? [el('a', { class: 'v', href: 'https://www.instagram.com/' + ig + '/', target: '_blank', rel: 'noopener', text: '@' + ig }), l.seguidores != null ? el('span', { class: 'hint', text: l.seguidores.toLocaleString('pt-BR') + ' seguidores' }) : null] : el('span', { class: 'hint', text: 'não encontrado' })),
+        el('div', { class: 'gauge' }, anel(l.necessidade, 'var(--coral)', 22), el('span', { text: 'Necessidade do serviço' })),
+        el('div', { class: 'gauge' }, anel(l.potencial, 'var(--teal)', 22), el('span', { text: 'Potencial de compra' }))),
+      el('div', { class: 'contato' },
+        el('div', { class: 'fone' }, ico('fone'), l.telefone ? el('b', { text: fone(l.telefone) }) : el('span', { class: 'hint', text: 'telefone não encontrado' }), l.telefone_tipo ? el('span', { class: 'chip', text: l.telefone_tipo }) : null),
+        el('div', { class: 'acoes' }, wa, l.telefone ? el('button', { class: 'btn', onclick: e => copiar(l.telefone, null, e.currentTarget) }, ico('copiar'), 'Copiar número') : null,
+          ig ? el('a', { class: 'btn', href: 'https://www.instagram.com/' + ig + '/', target: '_blank', rel: 'noopener' }, ico('insta'), '@' + ig) : null,
+          el('a', { class: 'btn', href: buscaGoogle(l), target: '_blank', rel: 'noopener' }, ico('globo'), 'Google')),
+        linha('Instagram', ig ? el('span', { class: 'v', text: '@' + ig + (l.seguidores != null ? ` · ${l.seguidores.toLocaleString('pt-BR')} seguidores` : '') + (l.instagram_status === 'fraco' ? ' · perfil fraco' : '') }) : el('span', { class: 'hint', text: 'não encontrado' })),
         linha('Site', site ? el('a', { class: 'v', href: site, target: '_blank', rel: 'noopener', text: site.replace(/^https:\/\//, '') }) : el('span', { class: 'hint', text: l.site || PRESENCA[l.site_status] || 'não encontrado' })),
-        linha('Google', [l.google_nota != null ? el('span', { class: 'v', text: `${l.google_nota.toLocaleString('pt-BR')} ★` }) : null, l.google_avaliacoes != null ? el('span', { class: 'hint', text: `${l.google_avaliacoes} avaliações` }) : null, el('a', { class: 'btn sm', href: buscaGoogle(l), target: '_blank', rel: 'noopener', text: 'Ver no Google' })]))),
+        linha('Google', el('span', { class: 'v', text: [l.google_nota != null ? `${l.google_nota.toLocaleString('pt-BR')} ★` : '', avaliacoes(l) ? `${avaliacoes(l).toLocaleString('pt-BR')} avaliações` : ''].filter(Boolean).join(' · ') || '—' }))),
       lista('O que dá para melhorar', l.problemas),
       lista('Sinais de que pode pagar', l.sinais_de_caixa),
-      l.servicos_sugeridos.length ? el('div', { class: 'sec' }, el('h4', { text: 'O que vender' }), el('div', { class: 'chips' }, l.servicos_sugeridos.map(s => el('span', { class: 'chip g', text: s })))) : null,
+      l.servicos_sugeridos.length ? el('div', { class: 'sec' }, el('h4', { text: 'O que vender' }), el('div', { class: 'chips' }, l.servicos_sugeridos.map(s => el('span', { class: 'chip p-max', text: s })))) : null,
       el('div', { class: 'sec' }, el('h4', { text: 'Primeira mensagem' }), msg,
-        el('div', { class: 'row', style: 'margin-top:8px' }, l.telefone ? wa : null, btIA, el('button', { class: 'btn', text: 'Copiar', onclick: () => copiar(msg.value, msg) })),
-        el('p', { class: 'hint', style: 'margin-top:6px', text: 'O WhatsApp abre no seu número com o texto pronto. Você confere e envia.' })),
+        el('div', { class: 'row', style: { 'margin-top': '8px' } }, wa ? wa.cloneNode(true) : null, btIA, btCop),
+        el('p', { class: 'hint', style: { 'margin-top': '6px' }, text: 'O WhatsApp abre no seu número com o texto pronto. Você confere e envia.' })),
       el('div', { class: 'sec' }, el('h4', { text: 'Etapa e anotações' }), etapa,
-        el('textarea', { class: 'field', id: 'd-notas', rows: '3', style: 'margin-top:8px', placeholder: 'Anotações da conversa, objeções, próximo passo…', value: l.notas, oninput: agendarSalvar, onblur: salvarCampos })),
+        el('textarea', { class: 'field', id: 'd-notas', rows: '3', style: { 'margin-top': '8px' }, placeholder: 'Anotações da conversa, objeções, próximo passo…', value: l.notas, oninput: agendarSalvar, onblur: salvarCampos })),
       l.fontes.length ? el('div', { class: 'sec fontes' }, el('h4', { text: 'Fontes' + (l.confianca ? ` · confiança ${l.confianca}` : '') }), l.fontes.slice(0, 6).map(u => seguro(u) ? el('div', null, el('a', { href: u, target: '_blank', rel: 'noopener', text: u.replace(/^https:\/\/(www\.)?/, '').slice(0, 70) })) : el('div', { class: 'hint', text: u.slice(0, 70) }))) : null),
     el('div', { class: 'dr-f' },
       el('div', { class: 'row' }, el('button', { class: 'btn sm', text: '← Anterior', disabled: i <= 0, onclick: () => ir(-1) }), el('button', { class: 'btn sm', text: 'Próximo →', disabled: i < 0 || i >= S.ordem.length - 1, onclick: () => ir(1) })),
-      el('div', { class: 'row' }, S.sample ? el('button', { class: 'btn sm', text: 'Analisar com a IA', onclick: () => { abrirChat(); enviarChat(`Analise a empresa "${l.nome}" (id ${l.id}) e me diga: o que vender primeiro, quanto cobrar e como conduzir a conversa.`); } }) : null, excluir)));
-  cam.append(el('div', { class: 'veil d', onclick: fecharLead }), dr);
+      el('div', { class: 'row' }, S.sample ? el('button', { class: 'btn sm', onclick: () => { abrirChat(); enviarChat(`Analise a empresa "${l.nome}" (id ${l.id}) e me diga: o que vender primeiro, quanto cobrar e como conduzir a conversa.`); } }, ico('brilho'), `Analisar com a ${nomeIA()}`) : null, excluir)));
+  const waRow = dr.querySelector('.sec .row .btn.wa'); if (waRow) waRow.addEventListener('click', () => { salvarCampos(); aposWhats(l); });
+  const veu = el('div', { class: 'veil d', onclick: fecharLead });
+  if (jaAberta) { dr.style.animation = 'none'; veu.style.animation = 'none'; }
+  cam.append(veu, dr);
 }
 
 /* ---------- IA ---------- */
-const ERRO_IA = { not_granted: 'Você não liberou o uso do Claude neste painel. Recarregue a página e permita para usar a IA.', sampling_disabled: 'O Claude não está disponível para esta conta.', rate_limited: 'Muitas chamadas agora, ou seu limite de uso acabou. Tente de novo mais tarde.', session_expired: 'Sua sessão expirou. Entre de novo no Claude.', refused: 'A IA não respondeu a esse pedido. Tente reformular.', prompt_too_large: 'A conversa ficou grande demais. Limpe a conversa e tente de novo.', empty_completion: 'A IA não escreveu nada. Tente reformular.', invalid_json: 'A resposta veio em formato inesperado. Tente de novo.' };
-Object.assign(ERRO_IA, { sem_chave: 'Coloque sua chave da API do Claude em Configurar para usar a IA aqui no computador.', chave_invalida: 'A chave da API do Claude foi recusada. Confira em Configurar.', sem_credito: 'Sua conta da API do Claude está sem créditos. Adicione créditos em console.anthropic.com.' });
+const ERRO_IA = { not_granted: 'Você não liberou o uso do Claude neste painel. Recarregue a página e permita para usar a assistente.', sampling_disabled: 'O Claude não está disponível para esta conta.', rate_limited: 'Muitas chamadas agora, ou seu limite de uso acabou. Tente de novo mais tarde.', session_expired: 'Sua sessão expirou. Entre de novo no Claude.', refused: 'A assistente não respondeu a esse pedido. Tente reformular.', prompt_too_large: 'A conversa ficou grande demais. Limpe a conversa e tente de novo.', empty_completion: 'A assistente não escreveu nada. Tente reformular.', invalid_json: 'A resposta veio em formato inesperado. Tente de novo.',
+  sem_chave: 'Coloque sua chave da API do Claude em Configurar para usar a assistente aqui no computador.', chave_invalida: 'A chave da API do Claude foi recusada. Confira em Configurar.', sem_credito: 'Sua conta da API do Claude está sem créditos. Adicione créditos em console.anthropic.com.' };
 const erroIA = e => ERRO_IA[e && e.code] || (e && e.code === 'api' && e.message ? 'A API do Claude respondeu: ' + e.message : 'A conexão com a IA falhou. Tente de novo.');
 function dadosLead(l) {
-  return { id: l.id, nome: l.nome, nicho: l.nicho, cidade: l.cidade, uf: l.uf, presenca: PRESENCA[l.site_status], instagram: l.instagram || null, seguidores: l.seguidores, site: l.site || null,
-    google_nota: l.google_nota, google_avaliacoes: l.google_avaliacoes, avaliacoes_em_outras_plataformas: l.avaliacoes_total, problemas: l.problemas, sinais_de_caixa: l.sinais_de_caixa, servicos_sugeridos: l.servicos_sugeridos, resumo: l.resumo, etapa: ETAPA[l.etapa], notas: l.notas || null };
+  return { id: l.id, nome: l.nome, nicho: l.nicho, cidade: l.cidade, uf: l.uf, presenca: PRESENCA[l.site_status], instagram: l.instagram || null, instagram_status: l.instagram_status || null, seguidores: l.seguidores, site: l.site || null,
+    google_nota: l.google_nota, google_avaliacoes: l.google_avaliacoes, avaliacoes_em_outras_plataformas: l.avaliacoes_total, problemas: l.problemas, sinais_de_caixa: l.sinais_de_caixa, servicos_sugeridos: l.servicos_sugeridos, resumo: l.resumo, etapa: ETAPA[l.etapa], prioridade: prio(l).nome, notas: l.notas || null };
 }
 function regrasMensagem() {
   const c = S.config, quem = c.remetente ? `${c.remetente}, da ${c.empresa}` : `a equipe da ${c.empresa}`;
@@ -607,14 +970,14 @@ Objetivo: abrir conversa, não vender na primeira mensagem.
 Regras:
 - Comece com "${saudacao()}".
 - De 3 a 5 linhas curtas, no máximo 420 caracteres, tom humano e brasileiro, sem formalidade excessiva.
-- Diga quem está falando (${quem}) e cite UMA observação concreta sobre a presença digital da empresa, tirada só dos dados fornecidos.
+- Diga quem está falando (${quem}) e cite UMA observação concreta sobre a presença digital da empresa (site, Instagram ou Google), tirada só dos dados fornecidos.
 - Proponha algo pequeno e específico (por exemplo, mandar uma ideia ou um rascunho sem compromisso) e termine com uma pergunta simples.
 - Não invente fatos, números ou elogios, não diga que é cliente, não prometa resultado. No máximo 1 emoji. Sem links.
 ${c.instrucoes ? 'Instruções extras do dono: ' + c.instrucoes + '\n' : ''}`;
 }
 async function gerarMensagem(id) {
   const l = S.leads.get(id), campo = $('#d-msg'), bt = $('#d-ia'); if (!l || !S.sample || !campo) return;
-  S.gerando = true; bt.disabled = true; bt.textContent = 'Escrevendo…'; const antes = campo.value; campo.value = '';
+  S.gerando = true; bt.disabled = true; bt.lastChild.textContent = 'Escrevendo…'; const antes = campo.value; campo.value = '';
   try {
     const { text } = await S.sample(regrasMensagem() + 'Responda só com o texto da mensagem.\n\nDADOS DA EMPRESA:\n' + JSON.stringify(dadosLead(l)), { cache: false, onText: ({ text }) => { if (S.sel === id) campo.value = text; } });
     const final = text.trim().replace(/^["“]|["”]$/g, '');
@@ -635,7 +998,7 @@ async function gerarLote() {
       const id = r && String(r.id), m = r && typeof r.mensagem === 'string' ? r.mensagem.trim() : '';
       if (m && alvo.some(l => l.id === id)) { await atualizarLead(id, { mensagem: m }).then(() => n++, () => {}); }
     }
-    toast(n ? `${n} abordagens prontas. Abra cada empresa, confira e envie.` : 'A IA não devolveu mensagens. Tente de novo.');
+    toast(n ? `${n} abordagens prontas. Abra cada empresa, confira e envie.` : 'A assistente não devolveu mensagens. Tente de novo.');
   } catch (e) { toast(erroIA(e)); }
   finally { S.lote = false; render(); }
 }
@@ -652,35 +1015,58 @@ function md(texto) {
   }
   return frag;
 }
-const SUGESTOES = ['Quem eu abordo hoje e por quê?', 'Quais nichos estão mais quentes no radar?', 'Monte um roteiro de ligação para a empresa aberta', 'Como responder “já tenho quem faz isso”?'];
+const textoLimpo = t => t.replace(/\*\*|`|^#+\s*/gm, '').replace(/^\s*[-*•]\s+/gm, '').slice(0, 1900);
+const SUGESTOES = [['alvo', 'Quem eu abordo hoje e por quê?'], ['mapa', 'Quais nichos da Serra estão mais quentes?'], ['fone', 'Monte um roteiro de ligação para a empresa aberta'], ['conversa', 'Como responder “já tenho quem faz isso”?']];
+function estadoAssistente() {
+  const c = S.chat, ch = $('#chat');
+  ch.classList.toggle('pensando', c.busy); ch.classList.toggle('ouvindo', c.ouvindo);
+  $('#chat-sub').textContent = c.ouvindo ? 'Ouvindo você…' : c.busy ? 'Pensando…' : `Online · conhece ${S.leads.size} empresas do radar`;
+}
+function bolha(t, i) {
+  const u = t.role === 'user';
+  const m = el('div', { class: 'msg ' + (u ? 'u' : 'a') + (t.erro ? ' err' : '') }, u ? t.content : md(t.content));
+  if (!u && !t.erro) {
+    const acts = el('div', { class: 'msg-acts' }, el('button', { type: 'button', onclick: e => copiar(t.content, null, e.currentTarget) }, ico('copiar'), 'Copiar'));
+    if (S.tts) acts.append(el('button', { type: 'button', onclick: () => falar(t.content) }, ico('som'), 'Ouvir'));
+    m.append(acts);
+  }
+  return el('div', { class: 'linha ' + (u ? 'u' : 'a') }, u ? null : el('span', { class: 'orb mini' }, el('i'), el('i')), m);
+}
 function renderChat() {
-  const box = $('#msgs'), c = S.chat, kids = [];
-  if (!S.sample) kids.push(el('div', { class: 'msg a', text: 'A conversa com a IA funciona com o painel aberto dentro do Claude.' }));
-  else if (!c.turns.length && !c.busy) kids.push(el('div', { class: 'msg a' }, md('Sou a IA do painel. Enxergo todas as empresas do radar e posso:\n- dizer quem abordar primeiro e por quê\n- escrever mensagens, roteiros e propostas\n- mover empresas de etapa e anotar o que você me contar\n- pedir novas buscas por nicho e cidade\n\nPode falar comigo sobre qualquer assunto.')));
-  for (const t of c.turns) kids.push(el('div', { class: 'msg ' + (t.role === 'user' ? 'u' : 'a') + (t.erro ? ' err' : '') }, t.role === 'user' ? t.content : md(t.content)));
-  if (c.busy) kids.push(el('div', { class: 'msg a', id: 'msg-viva' }, c.parcial ? md(c.parcial) : 'Pensando…'));
+  const box = $('#msgs'), c = S.chat, kids = [], nome = nomeIA(), dono = str(S.config.remetente);
+  if (!S.sample) kids.push(el('div', { class: 'ola' }, el('span', { class: 'orb g' }, el('i'), el('i')), el('h3', { text: `Oi! Eu sou a ${nome}.` }), el('p', { text: MODO_LOCAL ? 'Para eu funcionar aqui no computador, coloque a chave da API do Claude em Configurar.' : 'Eu funciono com o painel aberto dentro do Claude.' })));
+  else if (!c.turns.length && !c.busy) kids.push(el('div', { class: 'ola' }, el('span', { class: 'orb g' }, el('i'), el('i')),
+    el('h3', { text: `Oi${dono ? ', ' + dono : ''}! Eu sou a ${nome}.` }),
+    el('p', { text: 'Sua assistente comercial. Conheço todas as empresas do radar, escrevo abordagens, movo empresas no funil e peço novas buscas. Pode falar de qualquer assunto.' }),
+    el('div', { class: 'sug-g' }, SUGESTOES.map(([i, s]) => el('button', { type: 'button', onclick: () => enviarChat(s) }, ico(i), s)))));
+  c.turns.forEach((t, i) => kids.push(bolha(t, i)));
+  if (c.busy) kids.push(el('div', { class: 'linha a', id: 'linha-viva' }, el('span', { class: 'orb mini' }, el('i'), el('i')), el('div', { class: 'msg a', id: 'msg-viva' }, c.parcial ? md(c.parcial) : el('span', { class: 'digitando' }, el('i'), el('i'), el('i')))));
   box.replaceChildren(...kids); box.scrollTop = box.scrollHeight;
-  $('#sug').replaceChildren(...(S.sample && !c.busy && c.turns.length < 2 ? SUGESTOES.map(s => el('button', { type: 'button', text: s, onclick: () => enviarChat(s) })) : []));
-  const bt = $('#chat-send'); bt.textContent = c.busy ? 'Parar' : 'Enviar'; bt.disabled = !S.sample; $('#chat-in').disabled = !S.sample;
+  const bt = $('#chat-send'); bt.replaceChildren(ico(c.busy ? 'x' : 'enviar')); bt.title = c.busy ? 'Parar' : 'Enviar'; bt.disabled = !S.sample; $('#chat-in').disabled = !S.sample;
+  $('#chat-in').placeholder = `Pergunte qualquer coisa para a ${nome}…`;
+  $('#chat-mic').hidden = !(S.dict && S.sample); $('#chat-mic').classList.toggle('ativo', c.ouvindo);
+  $('#chat-voz').hidden = !S.tts; $('#chat-voz').setAttribute('aria-pressed', String(S.voz));
+  estadoAssistente();
 }
 function contexto() {
   const c = S.config, ab = S.leads.get(S.sel);
   const linhas = [...S.leads.values()].sort((a, b) => b.score - a.score).slice(0, 400).map(l =>
-    `${l.id} | ${l.nome} | ${l.nicho} | ${local(l)} | nec ${l.necessidade} | pot ${l.potencial} | ${ETAPA[l.etapa]} | ${PRESENCA[l.site_status] || '?'} | ${l.telefone ? (l.telefone_tipo || 'tel') : 'sem tel'}${l.mensagem ? ' | abordagem pronta' : ''}${naSerra(l) ? ' | Serra' : ''}`);
-  return `Você é a IA do Radar Dalas, o painel de prospecção da ${c.empresa}. Você conversa com ${c.remetente || 'o dono da empresa'}.
-Fale em português do Brasil, de forma direta, como um sócio comercial experiente. Converse sobre qualquer assunto que ele trouxer, mas o seu trabalho principal é ajudar a encontrar, priorizar e fechar clientes.
+    `${l.id} | ${l.nome} | ${l.nicho} | ${local(l)} | nec ${l.necessidade} | pot ${l.potencial} | ${prio(l).nome} | ${ETAPA[l.etapa]} | ${PRESENCA[l.site_status] || '?'}${l.instagram_status === 'fraco' ? ' + Instagram fraco' : l.instagram ? '' : ' + sem Instagram'} | ${l.telefone ? (l.telefone_tipo || 'tel') : 'sem tel'}${l.mensagem ? ' | abordagem pronta' : ''}${naSerra(l) ? ' | Serra' : ''}`);
+  return `Você é ${nomeIA()}, a assistente comercial do Radar Dalas, o painel de prospecção da ${c.empresa}. Você conversa com ${c.remetente || 'o dono da empresa'}.
+Fale em português do Brasil, de forma calorosa e direta, como uma sócia comercial experiente. Converse sobre qualquer assunto que ele trouxer, mas o seu trabalho principal é ajudar a encontrar, priorizar e fechar clientes.
 A ${c.empresa} vende: ${c.servicos}.
 Foco comercial: Serra Gaúcha (Caxias do Sul, Bento Gonçalves, Gramado, Canela, Farroupilha, Garibaldi, Nova Petrópolis e região). Quando ele não disser a região, priorize empresas de lá.
+Bons clientes não são só quem não tem nada: empresas com Instagram fraco (bio sem link ou sem WhatsApp, perfil parado) ou site que dá para melhorar também são ótimas oportunidades.
 ${c.instrucoes ? 'Instruções do dono: ' + c.instrucoes + '\n' : ''}Regras:
 - Ao falar de uma empresa do painel, use só os dados do painel. Não invente telefone, números, avaliações nem fatos. Se faltar um dado, diga que falta.
 - "nec" é a necessidade do serviço (presença digital fraca) e "pot" é o potencial de compra, de 0 a 100.
 - Mensagens de abordagem: curtas, humanas, identificando quem fala, sem promessa de resultado.
-- Você não navega na internet. Para trazer empresas novas, use a ferramenta pedir_garimpo, que coloca o pedido na fila da busca automática.
+- Você não navega na internet. Para trazer empresas novas, use a ferramenta pedir_garimpo.
 - Use as ferramentas quando ele pedir uma ação (mover de etapa, anotar, salvar mensagem, abrir a ficha). Para detalhes de uma empresa, use ver_lead.
-- Respostas objetivas. Use listas curtas quando ajudar.
+- Respostas objetivas, que funcionem também lidas em voz alta. Use listas curtas quando ajudar.
 Agora: ${new Date().toLocaleString('pt-BR')}. Empresa aberta na tela: ${ab ? `${ab.nome} (id ${ab.id})` : 'nenhuma'}.
 
-PAINEL (${S.leads.size} empresas) — id | empresa | nicho | cidade/UF | nec | pot | etapa | presença | telefone:
+PAINEL (${S.leads.size} empresas) — id | empresa | nicho | cidade/UF | nec | pot | prioridade | etapa | presença | telefone:
 ${linhas.join('\n') || '(vazio)'}`;
 }
 function ferramentas() {
@@ -705,19 +1091,42 @@ async function enviarChat(texto) {
   while (hist.length && hist[0].role !== 'user') hist.shift();
   const opts = { signal: c.ctl.signal, onText: ({ text }) => { c.parcial = text; const v = $('#msg-viva'); if (v) { v.replaceChildren(md(text)); const b = $('#msgs'); b.scrollTop = b.scrollHeight; } } };
   if (S.tools) opts.tools = ferramentas(); else opts.cache = false;
+  let resposta = '';
   try {
     const { text, truncated } = await S.sample([{ role: 'user', content: contexto() }, ...hist], opts);
+    resposta = text;
     c.turns.push({ role: 'assistant', content: text + (truncated ? '\n\n(resposta cortada; peça para continuar)' : '') });
   } catch (e) {
     if (e && e.text) c.turns.push({ role: 'assistant', content: e.text });
     if (!e || e.code !== 'cancelled') c.turns.push({ role: 'assistant', content: erroIA(e), erro: true });
   } finally {
     c.busy = false; c.parcial = ''; c.ctl = null; renderChat();
+    if (resposta && S.voz) falar(resposta);
     if (S.db) gravar('conversas/principal', { turns: c.turns.filter(t => !t.erro).slice(-30).map(t => ({ role: t.role, content: t.content.slice(0, 6000) })), atualizado_em: agora() }, 'set').catch(() => {});
   }
 }
-function abrirChat() { $('#chat').hidden = false; document.body.classList.add('chat-open'); mem('radar.chat', '1'); renderChat(); }
-function fecharChat() { $('#chat').hidden = true; document.body.classList.remove('chat-open'); mem('radar.chat', '0'); }
+function falar(texto) {
+  if (!S.tts) return;
+  const ch = $('#chat'); ch.classList.add('falando');
+  Promise.resolve().then(() => S.tts.speak(textoLimpo(texto), { language: 'pt-BR' })).catch(e => { if (e && e.code === 'not_granted') { S.tts = null; renderChat(); } }).finally(() => ch.classList.remove('falando'));
+}
+function microfone() {
+  const c = S.chat, d = S.dict; if (!d) return;
+  if (c.ouvindo) { d.stop(); return; }
+  c.base = $('#chat-in').value ? $('#chat-in').value.trim() + ' ' : '';
+  const p = d.start();
+  Promise.resolve(p).catch(e => { if (e && e.code === 'not_granted') { S.dict = null; toast('O microfone não foi liberado. Você pode continuar digitando.'); } c.ouvindo = false; renderChat(); });
+}
+function ligarVoz() {
+  if (S.dict && S.dict.onPartial) {
+    S.dict.onPartial(({ text }) => { $('#chat-in').value = S.chat.base + text; });
+    S.dict.onFinal(({ text }) => { S.chat.base = (S.chat.base + text).trim() + ' '; $('#chat-in').value = S.chat.base; });
+    S.dict.onState(({ state }) => { S.chat.ouvindo = state === 'listening'; renderChat(); });
+  }
+  if (S.tts && S.tts.onState) S.tts.onState(({ state }) => { $('#chat').classList.toggle('falando', state === 'speaking'); });
+}
+function abrirChat() { $('#chat').hidden = false; document.body.classList.add('chat-open'); mem('radar.chat', '1'); renderChat(); setTimeout(moverIndicador, 400); }
+function fecharChat() { $('#chat').hidden = true; document.body.classList.remove('chat-open'); mem('radar.chat', '0'); if (S.tts && S.tts.stop) S.tts.stop(); setTimeout(moverIndicador, 400); }
 
 /* ---------- Garimpo ---------- */
 async function dispararRotina(texto) {
@@ -749,15 +1158,15 @@ async function garimpoLocal(pid, p) {
   const onde = p.cidade ? `${p.cidade}/${p.uf || 'RS'}` : p.regiao ? `${p.regiao} (RS): Caxias do Sul, Bento Gonçalves, Gramado, Canela, Farroupilha, Garibaldi, Carlos Barbosa, Flores da Cunha, Nova Petrópolis, Veranópolis, Nova Prata, São Francisco de Paula e vizinhas` : p.uf ? `estado ${p.uf}` : 'Brasil, várias cidades';
   const jaTem = [...S.leads.values()].filter(l => !p.uf || l.uf === p.uf).slice(0, 300).map(l => `${l.nome} (${l.cidade})`).join('; ');
   const prompt = `Você é o pesquisador de prospecção da ${S.config.empresa}, agência que vende: ${S.config.servicos}.
-Encontre ${p.quantidade} empresas REAIS de "${p.nicho}" em ${onde}, com presença digital fraca e sinais de que podem pagar.${p.obs ? '\nObservação do dono: ' + p.obs : ''}
+Encontre ${p.quantidade} empresas REAIS de "${p.nicho}" em ${onde}, com presença digital fraca ou que dá para melhorar, e sinais de que podem pagar.${p.obs ? '\nObservação do dono: ' + p.obs : ''}
 
-Bom lead = (1) presença fraca: sem site próprio, só Instagram/Linktree, site antigo ou quebrado, reservas só por OTA, ficha do Google incompleta; E (2) capacidade de pagar: negócio estabelecido, muitas avaliações, seguidores, anos de mercado, mais de uma unidade, ticket alto. Evite microempreendedores muito pequenos, negócios fechados e grandes redes/franquias.
-Pesquise com web_search e abra páginas com web_fetch: benditoguia.com.br, solutudo.com.br, guiamais.com.br, apontador.com.br, tripadvisor.com.br, doctoralia.com.br, cardapio.menu e perfis do Instagram (a bio costuma ter o WhatsApp). Se um diretório mostrar o celular cortado, abra a página ou busque o nome + "whatsapp" para achar o número completo. Para cada candidata, confira se tem site e Instagram.
-REGRA ABSOLUTA: não invente nada. Todo telefone tem que ter aparecido completo numa fonte citada; número cortado não vale. Campo não encontrado fica null. Só inclua empresas com telefone.
+Bom lead = (1) presença digital com espaço para melhorar: sem site próprio; só Instagram/Linktree; Instagram com bio fraca (sem link, sem WhatsApp, sem dizer o que vende, perfil parado); site antigo, lento, ruim no celular, sem botão de WhatsApp, sem agendamento, reserva, cardápio ou loja online; reservas só por OTA; ficha do Google incompleta. Empresas que já têm Instagram ou site também servem, desde que dê para melhorar. E (2) capacidade de pagar: negócio estabelecido, muitas avaliações, seguidores, anos de mercado, mais de uma unidade, ticket alto. Evite microempreendedores muito pequenos, negócios fechados e grandes redes/franquias.
+Pesquise com web_search e abra páginas com web_fetch: perfis do Instagram (a bio costuma ter o WhatsApp), o site da empresa, solutudo.com.br, benditoguia.com.br, guiamais.com.br, tripadvisor.com.br, doctoralia.com.br, cardapio.menu. Se um diretório mostrar o celular cortado, abra a página ou busque o nome + "whatsapp" para achar o número completo.
+REGRA ABSOLUTA: não invente nada. Todo telefone tem que ter aparecido completo numa fonte citada; número cortado não vale. Campo não encontrado fica null. Só inclua empresas com telefone. Problemas precisam ser coisas que você viu.
 Já estão no painel (não repita): ${jaTem || 'nenhuma'}.
 
 Responda só com um array JSON, um objeto por empresa:
-{"nome":"","nicho":"Odontologia | Estética | Saúde | Restaurante | Hospedagem | Pet | Fitness | Automotivo | Jurídico/Contábil | Imobiliária | Varejo | Beleza | Outro","cidade":"","uf":"","endereco":"ou null","telefone":"só dígitos com DDD","telefone_tipo":"celular | fixo","instagram":"@handle ou null","seguidores":número ou null,"site":"url ou null","site_status":"sem_site | so_instagram | so_linktree | site_fraco | tem_site | nao_encontrado","google_nota":número ou null,"google_avaliacoes":número ou null,"avaliacoes_total":maior número de avaliações visto em qualquer plataforma ou null,"sinais_de_caixa":["fatos concretos"],"problemas":["problemas concretos"],"servicos_sugeridos":["Site | Landing page | Google Meu Negócio | Tráfego pago | CRM | Automação WhatsApp | Cardápio/Pedido online | Sistema/Painel | Loja online"],"resumo":"2 frases: por que é bom lead e o que vender primeiro","fontes":["urls"],"confianca":"alta | media | baixa"}`;
+{"nome":"","nicho":"Odontologia | Estética | Saúde | Restaurante | Hospedagem | Pet | Fitness | Automotivo | Jurídico/Contábil | Imobiliária | Varejo | Beleza | Outro","cidade":"","uf":"","endereco":"ou null","telefone":"só dígitos com DDD","telefone_tipo":"celular | fixo","instagram":"@handle ou null","seguidores":número ou null,"instagram_status":"sem_instagram | fraco | bom","site":"url ou null","site_status":"sem_site | so_instagram | so_linktree | site_fraco | tem_site | nao_encontrado","google_nota":número ou null,"google_avaliacoes":número ou null,"avaliacoes_total":maior número de avaliações visto em qualquer plataforma ou null,"sinais_de_caixa":["fatos concretos"],"problemas":["problemas concretos"],"servicos_sugeridos":["Site | Landing page | Google Meu Negócio | Tráfego pago | CRM | Automação WhatsApp | Cardápio/Pedido online | Sistema/Painel | Loja online | Gestão de Instagram"],"resumo":"2 frases: o que melhorar e o que vender primeiro","fontes":["urls"],"confianca":"alta | media | baixa"}`;
   try {
     const res = await S.sample.json(prompt, { effort: 'high', maxTokens: 64000, serverTools: [
       { type: 'web_search_20260209', name: 'web_search', max_uses: 30, user_location: { type: 'approximate', country: 'BR' } },
@@ -788,7 +1197,7 @@ Responda só com um array JSON, um objeto por empresa:
 function renderPedidos() {
   const box = $('#g-pend'); if (!box) return;
   const ps = S.pedidos.slice(0, 6);
-  box.replaceChildren(...(ps.length ? [el('b', { text: 'Pedidos recentes' }), ...ps.map(p => el('div', { class: 'row' }, el('span', { class: 'grow', text: `${p.quantidade || ''} ${p.nicho || ''}${p.cidade ? ' · ' + p.cidade : ''}${p.uf ? '/' + p.uf : ''}` }), el('span', { class: 'chip' + (p.status === 'feito' ? ' v' : ''), title: p.erro || '', text: p.status === 'feito' ? `feito${typeof p.encontrados === 'number' ? ' · ' + p.encontrados : ''}` : p.status === 'buscando' ? 'buscando…' : p.erro ? 'falhou' : 'na fila' })))] : []));
+  box.replaceChildren(...(ps.length ? [el('b', { text: 'Pedidos recentes' }), ...ps.map(p => el('div', { class: 'row' }, el('span', { class: 'grow', text: `${p.quantidade || ''} ${p.nicho || ''}${p.cidade ? ' · ' + p.cidade : p.regiao ? ' · ' + p.regiao : ''}${p.uf && !p.regiao ? '/' + p.uf : ''}` }), el('span', { class: 'chip' + (p.status === 'feito' ? ' v' : ''), title: p.erro || '', text: p.status === 'feito' ? `feito${typeof p.encontrados === 'number' ? ' · ' + p.encontrados : ''}` : p.status === 'buscando' ? 'buscando…' : p.erro ? 'falhou' : 'na fila' })))] : []));
   box.hidden = !ps.length;
 }
 
@@ -796,80 +1205,82 @@ function renderPedidos() {
 function fecharModal() { S.modal = null; $('#camada').querySelectorAll('.veil.m, .modal').forEach(n => n.remove()); }
 function abrirModal(nome, titulo, corpo, rodape) {
   fecharModal(); S.modal = nome;
-  const m = el('form', { class: 'modal', role: 'dialog', 'aria-label': titulo, onsubmit: e => e.preventDefault() }, el('h2', { text: titulo }), corpo, el('div', { class: 'row', style: 'justify-content:flex-end' }, el('button', { class: 'btn ghost', type: 'button', text: 'Fechar', onclick: fecharModal }), rodape));
+  const m = el('form', { class: 'modal', role: 'dialog', 'aria-label': titulo, onsubmit: e => e.preventDefault() }, el('h2', { text: titulo }), corpo, el('div', { class: 'row', style: { 'justify-content': 'flex-end' } }, el('button', { class: 'btn ghost', type: 'button', text: 'Fechar', onclick: fecharModal }), rodape));
   $('#camada').append(el('div', { class: 'veil m', onclick: fecharModal }), m);
   const f = m.querySelector('input, textarea, select'); if (f) f.focus();
 }
 const campo = (rot, props) => { const c = el(props.rows ? 'textarea' : (props.opts ? 'select' : 'input'), { class: 'field', ...props, opts: null }, props.opts ? props.opts.map(o => el('option', { value: o[0] ?? o, text: o[1] ?? o })) : null); if (props.opts && props.value != null) c.value = props.value; return [el('label', null, rot, c), c]; };
 function abrirGarimpo() {
   if (!S.db) { toast('O banco de dados não está disponível nesta visualização.'); return; }
-  const [l1, nicho] = campo('Nicho ou tipo de empresa', { id: 'g-nicho', placeholder: 'Ex.: clínicas de estética, pizzarias, pousadas', required: true });
+  const [l1, nichoF] = campo('Nicho ou tipo de empresa', { id: 'g-nicho', placeholder: 'Ex.: clínicas de estética, pizzarias, pousadas', required: true });
   const [l2, cidade] = campo('Cidade', { id: 'g-cidade', list: 'g-cidades', placeholder: 'Em branco = toda a Serra Gaúcha' });
   const [l3, uf] = campo('Estado', { id: 'g-uf', opts: [['', 'Brasil inteiro'], ...UFS.map(u => [u, u])], value: 'RS' });
   uf.addEventListener('change', () => { cidade.placeholder = uf.value === 'RS' ? 'Em branco = toda a Serra Gaúcha' : 'Em branco = várias cidades'; });
   const cidades = el('datalist', { id: 'g-cidades' }, SERRA_CIDADES.map(c => el('option', { value: c })));
   const [l4, qtd] = campo('Quantas empresas', { id: 'g-qtd', opts: [['5', '5'], ['10', '10'], ['15', '15'], ['20', '20']], value: '10' });
-  const [l5, obs] = campo('Observação para a busca (opcional)', { id: 'g-obs', rows: '2', placeholder: 'Ex.: só quem não tem site; evitar franquias' });
+  const [l5, obs] = campo('Observação para a busca (opcional)', { id: 'g-obs', rows: '2', placeholder: 'Ex.: só quem tem Instagram fraco; evitar franquias' });
   const status = el('p', { class: 'hint', id: 'g-status', text: MODO_LOCAL ? 'A busca roda aqui com a sua chave da API do Claude: pesquisa na web, confere site e Instagram e coloca as empresas no radar. Leva alguns minutos e costuma custar menos de 1 dólar em créditos.' : 'A busca roda na nuvem: pesquisa as empresas, confere site e Instagram, calcula as pontuações e coloca no radar.' });
   const enviar = async (agoraMesmo, bt) => {
     bt.disabled = true; status.textContent = agoraMesmo ? 'Salvando o pedido e iniciando a busca…' : 'Salvando o pedido…';
-    const r = await pedirGarimpo({ nicho: nicho.value, cidade: cidade.value, uf: uf.value, quantidade: Number(qtd.value), obs: obs.value }, agoraMesmo);
-    status.textContent = r.msg; bt.disabled = false; if (r.ok) { nicho.value = ''; obs.value = ''; }
+    const r = await pedirGarimpo({ nicho: nichoF.value, cidade: cidade.value, uf: uf.value, quantidade: Number(qtd.value), obs: obs.value }, agoraMesmo);
+    status.textContent = r.msg; bt.disabled = false; if (r.ok) { nichoF.value = ''; obs.value = ''; }
   };
   const fila = el('button', { class: 'btn', type: 'button', text: 'Deixar na fila', onclick: e => enviar(false, e.currentTarget) });
-  const ja = el('button', { class: 'btn gold', type: 'submit', text: 'Buscar agora', onclick: e => enviar(true, e.currentTarget) });
+  const ja = el('button', { class: 'btn gold', type: 'submit', onclick: e => enviar(true, e.currentTarget) }, ico('brilho'), 'Buscar agora');
   abrirModal('garimpar', 'Garimpar empresas', [l1, el('div', { class: 'two' }, l2, l3), cidades, l4, l5, status, el('div', { class: 'pend', id: 'g-pend', hidden: true })], MODO_LOCAL ? [ja] : [fila, ja]);
   renderPedidos();
 }
 function abrirNovo() {
   if (!S.db) { toast('O banco de dados não está disponível nesta visualização.'); return; }
   const [l1, nome] = campo('Nome da empresa', { id: 'n-nome', required: true });
-  const [l2, nicho] = campo('Nicho', { id: 'n-nicho', opts: NICHOS });
-  const [l3, cidade] = campo('Cidade', { id: 'n-cidade' });
-  const [l4, uf] = campo('Estado', { id: 'n-uf', opts: [['', '—'], ...UFS.map(u => [u, u])] });
+  const [l2, nichoF] = campo('Nicho', { id: 'n-nicho', opts: NICHOS });
+  const [l3, cidade] = campo('Cidade', { id: 'n-cidade', list: 'n-cidades' });
+  const [l4, uf] = campo('Estado', { id: 'n-uf', opts: [['', '—'], ...UFS.map(u => [u, u])], value: 'RS' });
   const [l5, tel] = campo('Telefone com DDD', { id: 'n-tel', inputmode: 'tel', placeholder: '(54) 99999-9999' });
   const [l6, ig] = campo('Instagram', { id: 'n-ig', placeholder: '@empresa' });
-  const [l7, pres] = campo('Presença digital', { id: 'n-pres', opts: Object.entries(PRESENCA) });
-  const [l8, obs] = campo('O que você observou', { id: 'n-obs', rows: '2', placeholder: 'Um problema por linha. Ex.: perfil do Google sem fotos' });
+  const [l7, pres] = campo('Site', { id: 'n-pres', opts: Object.entries(PRESENCA) });
+  const [l9, igs] = campo('Instagram está…', { id: 'n-igs', opts: [['sem_instagram', 'Não tem'], ['fraco', 'Fraco (bio sem link, parado)'], ['bom', 'Bom']] });
+  const [l8, obs] = campo('O que você observou', { id: 'n-obs', rows: '2', placeholder: 'Um problema por linha. Ex.: bio do Instagram sem WhatsApp' });
   const salvar = el('button', { class: 'btn gold', type: 'submit', text: 'Adicionar ao radar', onclick: async () => {
     if (!nome.value.trim()) { nome.focus(); return; }
     const t = tel.value.replace(/\D/g, '').replace(/^55(?=\d{10,11}$)/, '');
-    const l = { nome: nome.value.trim(), nicho: nicho.value, cidade: cidade.value.trim(), uf: uf.value, telefone: t, telefone_tipo: t.length === 11 ? 'celular' : (t.length === 10 ? 'fixo' : ''), instagram: ig.value.trim(), site_status: pres.value,
+    const l = { nome: nome.value.trim(), nicho: nichoF.value, cidade: cidade.value.trim(), uf: uf.value, telefone: t, telefone_tipo: t.length === 11 ? 'celular' : (t.length === 10 ? 'fixo' : ''), instagram: ig.value.trim(), instagram_status: ig.value.trim() ? igs.value : 'sem_instagram', site_status: pres.value,
       problemas: obs.value.split('\n').map(s => s.trim()).filter(Boolean), sinais_de_caixa: [], servicos_sugeridos: [], fontes: [], confianca: 'media', etapa: 'novo', origem: 'manual', criado_em: agora(), atualizado_em: agora() };
     Object.assign(l, pontuar(l));
     const id = slug(`${l.nome}-${l.cidade}-${l.uf}`);
     if (S.leads.has(id)) { toast('Essa empresa já está no radar.'); abrirLead(id); return; }
     try { await gravar('leads/' + id, l, 'set'); fecharModal(); toast('Empresa adicionada.'); } catch (e) {}
   } });
-  abrirModal('novo', 'Novo lead', [l1, el('div', { class: 'two' }, l2, l7), el('div', { class: 'two' }, l3, l4), el('div', { class: 'two' }, l5, l6), l8], salvar);
+  abrirModal('novo', 'Novo lead', [l1, el('div', { class: 'two' }, l2, l7), el('div', { class: 'two' }, l3, l4), el('datalist', { id: 'n-cidades' }, SERRA_CIDADES.map(c => el('option', { value: c }))), el('div', { class: 'two' }, l5, l6), l9, l8], salvar);
 }
 function abrirConfig() {
   if (!S.db) { toast('O banco de dados não está disponível nesta visualização.'); return; }
   const c = S.config;
   const [l1, emp] = campo('Nome da sua empresa', { id: 'c-emp', value: c.empresa });
   const [l2, rem] = campo('Seu nome (assina as mensagens)', { id: 'c-rem', value: c.remetente, placeholder: 'Ex.: Ryan' });
+  const [la, asst] = campo('Nome da assistente', { id: 'c-asst', value: nomeIA(), placeholder: 'Lia' });
   const [l3, serv] = campo('O que vocês vendem', { id: 'c-serv', rows: '3', value: c.servicos });
-  const [l4, inst] = campo('Instruções para a IA (tom de voz, preços, o que evitar)', { id: 'c-inst', rows: '3', value: c.instrucoes, placeholder: 'Ex.: tom descontraído; site a partir de R$ 1.500; não oferecer desconto na primeira conversa' });
+  const [l4, inst] = campo('Instruções para a assistente (tom de voz, preços, o que evitar)', { id: 'c-inst', rows: '3', value: c.instrucoes, placeholder: 'Ex.: tom descontraído; site a partir de R$ 1.500; não oferecer desconto na primeira conversa' });
   const extras = [];
   let chave = null;
   if (MODO_LOCAL) {
     const [l5, k] = campo('Chave da API do Claude (fica só neste computador)', { id: 'c-chave', type: 'password', autocomplete: 'off', placeholder: 'sk-ant-…', value: mem('radar.apikey') || '' });
     chave = k;
-    extras.push(l5, el('p', { class: 'hint', text: 'Crie a chave em console.anthropic.com → API Keys. Ela liga a IA e a busca de empresas nesta versão local, e os gastos saem dos créditos da sua conta.' }));
+    extras.push(l5, el('p', { class: 'hint', text: 'Crie a chave em console.anthropic.com → API Keys. Ela liga a assistente e a busca de empresas nesta versão local, e os gastos saem dos créditos da sua conta.' }));
   }
   const arquivo = el('input', { type: 'file', id: 'c-arquivo', accept: '.json,application/json', hidden: true, onchange: e => { const f = e.target.files && e.target.files[0]; if (f) importarBackup(f); e.target.value = ''; } });
   extras.push(el('div', { class: 'pend' }, el('b', { text: 'Backup das empresas' }),
     el('span', { text: 'Leve os leads entre o painel online e a versão do computador.' }),
-    el('div', { class: 'row' }, el('button', { class: 'btn sm', type: 'button', text: 'Exportar backup', onclick: exportarBackup }), el('button', { class: 'btn sm', type: 'button', text: 'Importar backup', onclick: () => arquivo.click() }), arquivo)));
+    el('div', { class: 'row' }, el('button', { class: 'btn sm', type: 'button', onclick: exportarBackup }, ico('baixar'), 'Exportar backup'), el('button', { class: 'btn sm', type: 'button', text: 'Importar backup', onclick: () => arquivo.click() }), arquivo)));
   const salvar = el('button', { class: 'btn gold', type: 'submit', text: 'Salvar', onclick: async () => {
     if (chave) mem('radar.apikey', chave.value.trim());
-    try { await gravar('config/principal', { ...c, empresa: emp.value.trim() || CFG_PADRAO.empresa, remetente: rem.value.trim(), servicos: serv.value.trim() || CFG_PADRAO.servicos, instrucoes: inst.value.trim() }, 'set'); fecharModal(); toast('Configurações salvas.'); render(); } catch (e) {}
+    try { await gravar('config/principal', { ...c, empresa: emp.value.trim() || CFG_PADRAO.empresa, remetente: rem.value.trim(), assistente: asst.value.trim() || 'Lia', servicos: serv.value.trim() || CFG_PADRAO.servicos, instrucoes: inst.value.trim() }, 'set'); fecharModal(); toast('Configurações salvas.'); render(); } catch (e) {}
   } });
-  abrirModal('config', 'Configurações', [l1, l2, l3, l4, ...extras], salvar);
+  abrirModal('config', 'Configurações', [el('div', { class: 'two' }, l1, l2), la, l3, l4, ...extras], salvar);
 }
 function dadosBackup() {
   const c = S.config;
-  return { app: 'radar-dalas', versao: 1, exportado_em: agora(), config: { empresa: c.empresa, remetente: c.remetente, servicos: c.servicos, instrucoes: c.instrucoes },
+  return { app: 'radar-dalas', versao: 1, exportado_em: agora(), config: { empresa: c.empresa, remetente: c.remetente, assistente: c.assistente, servicos: c.servicos, instrucoes: c.instrucoes },
     leads: [...S.leads.values()].map(l => { const { score, ...r } = l; return r; }) };
 }
 async function exportarBackup() {
@@ -895,32 +1306,36 @@ async function importarBackup(file) {
 }
 async function baixarCsv() {
   if (!S.dl) return;
-  const cab = ['Empresa', 'Nicho', 'Cidade', 'UF', 'Telefone', 'Tipo', 'Instagram', 'Site', 'Presença', 'Nota Google', 'Avaliações', 'Necessidade', 'Potencial', 'Etapa', 'Resumo', 'Anotações'];
+  const cab = ['Empresa', 'Nicho', 'Cidade', 'UF', 'Telefone', 'Tipo', 'Instagram', 'Site', 'Presença', 'Nota Google', 'Avaliações', 'Necessidade', 'Potencial', 'Prioridade', 'Etapa', 'Resumo', 'Anotações'];
   const cel = v => { let s = v == null ? '' : String(v); if (/^[=+\-@]/.test(s)) s = "'" + s; return '"' + s.replace(/"/g, '""') + '"'; };
-  const linhas = filtrados().sort((a, b) => b.score - a.score).map(l => [l.nome, l.nicho, l.cidade, l.uf, l.telefone, l.telefone_tipo, l.instagram, l.site, PRESENCA[l.site_status], l.google_nota, l.google_avaliacoes, l.necessidade, l.potencial, ETAPA[l.etapa], l.resumo, l.notas].map(cel).join(';'));
+  const linhas = filtrados().sort((a, b) => b.score - a.score).map(l => [l.nome, l.nicho, l.cidade, l.uf, l.telefone, l.telefone_tipo, l.instagram, l.site, PRESENCA[l.site_status], l.google_nota, avaliacoes(l) || '', l.necessidade, l.potencial, prio(l).nome, ETAPA[l.etapa], l.resumo, l.notas].map(cel).join(';'));
   try { await S.dl.save({ filename: 'radar-dalas-leads.csv', data: '﻿' + cab.map(cel).join(';') + '\r\n' + linhas.join('\r\n') }); }
   catch (e) { if (!e || e.code !== 'declined') toast('Não consegui gerar a planilha agora.'); }
 }
 
 /* ---------- Eventos ---------- */
-function irPara(v) { S.view = ['radar', 'funil', 'lista'].includes(v) ? v : 'radar'; render(); }
+function irPara(v) { const novo = ['radar', 'funil', 'lista'].includes(v) ? v : 'radar'; if (novo !== S.view) S.animar = true; S.view = novo; render(); }
 document.querySelectorAll('.tabs button').forEach(b => b.addEventListener('click', () => { location.hash = b.dataset.view; irPara(b.dataset.view); }));
 window.addEventListener('hashchange', () => irPara(location.hash.slice(1)));
-$('#f-regiao').addEventListener('change', e => { S.f.regiao = e.target.value; mem('radar.regiao', S.f.regiao); render(); });
+window.addEventListener('resize', () => moverIndicador());
+$('#f-regiao').addEventListener('change', e => { mem('radar.regiao', e.target.value); mudarFiltro('regiao', e.target.value); });
 $('#f-busca').addEventListener('input', e => { S.f.busca = e.target.value; render(); });
-$('#f-uf').addEventListener('change', e => { S.f.uf = e.target.value; render(); });
-$('#f-nicho').addEventListener('change', e => { S.f.nicho = e.target.value; render(); });
-$('#f-tel').addEventListener('change', e => { S.f.tel = e.target.value; render(); });
+$('#f-uf').addEventListener('change', e => mudarFiltro('uf', e.target.value));
+$('#f-prio').addEventListener('change', e => mudarFiltro('prio', e.target.value));
+$('#f-tel').addEventListener('change', e => mudarFiltro('tel', e.target.value));
 $('#btn-garimpar').addEventListener('click', abrirGarimpo);
 $('#btn-novo').addEventListener('click', abrirNovo);
 $('#btn-cfg').addEventListener('click', abrirConfig);
+$('#btn-tema').addEventListener('click', () => { const t = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; mem('radar.tema', t); aplicarTema(t); });
 $('#btn-lote').addEventListener('click', gerarLote);
 $('#btn-csv').addEventListener('click', baixarCsv);
 $('#btn-ia').addEventListener('click', () => $('#chat').hidden ? abrirChat() : fecharChat());
 $('#fab-ia').addEventListener('click', abrirChat);
 $('#chat-fechar').addEventListener('click', fecharChat);
+$('#chat-voz').addEventListener('click', () => { S.voz = !S.voz; mem('radar.voz', S.voz ? '1' : '0'); if (!S.voz && S.tts && S.tts.stop) S.tts.stop(); renderChat(); });
+$('#chat-mic').addEventListener('click', microfone);
 $('#chat-limpar').addEventListener('click', () => { if (S.chat.busy) return; S.chat.turns = []; renderChat(); if (S.db) gravar('conversas/principal', { turns: [], atualizado_em: agora() }, 'set').catch(() => {}); });
-$('#chat-form').addEventListener('submit', e => { e.preventDefault(); if (S.chat.busy) { S.chat.ctl && S.chat.ctl.abort(); return; } const i = $('#chat-in'); const t = i.value; i.value = ''; enviarChat(t); });
+$('#chat-form').addEventListener('submit', e => { e.preventDefault(); if (S.chat.busy) { S.chat.ctl && S.chat.ctl.abort(); return; } if (S.chat.ouvindo && S.dict) S.dict.stop(); const i = $('#chat-in'); const t = i.value; i.value = ''; S.chat.base = ''; enviarChat(t); });
 $('#chat-in').addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); $('#chat-form').requestSubmit(); } });
 document.addEventListener('keydown', e => { if (e.key !== 'Escape') return; if (S.modal) fecharModal(); else if (S.sel) fecharLead(); });
 
@@ -968,15 +1383,15 @@ function criarLocal() {
   const carregarSdk = () => sdk || (sdk = import('./vendor/anthropic-sdk.mjs').then(m => m.Anthropic).catch(e => { sdk = null; throw e; }));
   async function erroApi(e, texto) {
     const A = await carregarSdk().catch(() => null);
-    const base = texto ? { text: texto } : {};
-    if (e && (e.name === 'AbortError' || (A && e instanceof A.APIUserAbortError))) return { code: 'cancelled', ...base };
+    const extra = texto ? { text: texto } : {};
+    if (e && (e.name === 'AbortError' || (A && e instanceof A.APIUserAbortError))) return { code: 'cancelled', ...extra };
     const st = e && e.status;
     const msg = String((e && e.error && e.error.error && e.error.error.message) || (e && e.message) || '');
-    if (st === 401) return { code: 'chave_invalida', message: msg, ...base };
-    if (st === 429) return { code: 'rate_limited', message: msg, ...base };
-    if (/credit balance/i.test(msg)) return { code: 'sem_credito', message: msg, ...base };
-    if (st) return { code: 'api', message: msg.slice(0, 240), ...base };
-    return { code: 'upstream_error', message: msg, ...base };
+    if (st === 401) return { code: 'chave_invalida', message: msg, ...extra };
+    if (st === 429) return { code: 'rate_limited', message: msg, ...extra };
+    if (/credit balance/i.test(msg)) return { code: 'sem_credito', message: msg, ...extra };
+    if (st) return { code: 'api', message: msg.slice(0, 240), ...extra };
+    return { code: 'upstream_error', message: msg, ...extra };
   }
   // Depois de uma troca de modelo no meio da resposta, o histórico devolve só o que a API aceita antes do bloco "fallback".
   function ecoSeguro(content) {
@@ -1047,18 +1462,49 @@ function criarLocal() {
     setTimeout(() => URL.revokeObjectURL(a.href), 4000);
     return { status: 'saved' };
   } };
-  return { db: { doc: docRef, collection: colRef }, sample, downloads };
+
+  /* voz no navegador: leitura em voz alta e ditado (quando o navegador oferece) */
+  const tts = ('speechSynthesis' in window) ? {
+    speak: texto => new Promise((ok, falha) => {
+      const u = new SpeechSynthesisUtterance(texto); u.lang = 'pt-BR'; u.rate = 1.05;
+      const v = speechSynthesis.getVoices().find(x => /^pt[-_]BR/i.test(x.lang)); if (v) u.voice = v;
+      u.onend = () => ok(); u.onerror = () => falha({ code: 'tts' });
+      speechSynthesis.cancel(); speechSynthesis.speak(u);
+    }),
+    stop: () => speechSynthesis.cancel(),
+  } : null;
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const dictation = SR ? (() => {
+    let rec = null; const fP = [], fF = [], fS = [];
+    return {
+      start: () => {
+        rec = new SR(); rec.lang = 'pt-BR'; rec.interimResults = true; rec.continuous = true;
+        rec.onresult = e => { for (let i = e.resultIndex; i < e.results.length; i++) { const t = e.results[i][0].transcript; (e.results[i].isFinal ? fF : fP).forEach(f => f({ text: t })); } };
+        rec.onend = () => fS.forEach(f => f({ state: 'idle', reason: 'stopped' }));
+        rec.onerror = e => fS.forEach(f => f({ state: 'idle', reason: e.error || 'error' }));
+        rec.start(); fS.forEach(f => f({ state: 'listening' }));
+        return Promise.resolve();
+      },
+      stop: async () => { if (rec) rec.stop(); },
+      onPartial: f => fP.push(f), onFinal: f => fF.push(f), onState: f => fS.push(f),
+    };
+  })() : null;
+  return { db: { doc: docRef, collection: colRef }, sample, downloads, tts, dictation };
 }
 
 /* ---------- Início ---------- */
+pintarIcones(document);
+aplicarTema(mem('radar.tema') || 'light');
 irPara(location.hash.slice(1));
+radarIniciar();
 renderChat();
-if (mem('radar.chat') === '1' || (mem('radar.chat') == null && window.innerWidth >= 1280)) abrirChat();
+if (mem('radar.chat') === '1' || (mem('radar.chat') == null && window.innerWidth >= 1400)) abrirChat();
 const LOCAL = MODO_LOCAL ? criarLocal() : {};
 const usar = n => MODO_LOCAL ? Promise.resolve(LOCAL[n] || null) : window.claude.use(n).catch(() => null);
 usar('db').then(initDb);
 usar('sample').then(async s => { S.sample = s; if (s) { const lim = await s.limits().catch(() => null); S.tools = !!(lim && lim.tools); } renderChat(); render(); });
 usar('mcp').then(m => { S.mcp = m; });
 usar('downloads').then(d => { S.dl = d; render(); });
+Promise.all([usar('tts'), usar('dictation')]).then(([t, d]) => { S.tts = t; S.dict = d; ligarVoz(); renderChat(); });
 })();
 </script>
