@@ -1,16 +1,26 @@
 #!/bin/bash
-# Abre o site da Dalas Marketing no navegador, em http://localhost:8080
-# (ou a próxima porta livre). Para parar, feche esta janela.
-cd "$(dirname "$0")/site" || { echo 'Não achei a pasta "site". Descompacte o zip inteiro.'; read -r; exit 1; }
+# Abre o site no navegador, em http://localhost:8080 (ou a próxima porta livre).
+# Para parar, feche esta janela. PAGINA=grupo/ abre direto na página do Grupo Kairos.
+cd "$(dirname "$0")" || exit 1
+if [ ! -f site/index.html ]; then
+  echo 'Não achei a pasta "site". Descompacte o zip inteiro.'
+  read -r
+  exit 1
+fi
 
+# 1) o Perl que vem em todo Mac (com suporte aos vídeos no Safari)
+if command -v perl >/dev/null 2>&1 && perl -MIO::Socket::IP -e 1 >/dev/null 2>&1; then
+  exec perl ./servidor-mac.pl site "${PAGINA:-}"
+fi
+
+# 2) se não tiver Perl, tenta Python, Ruby ou Node
+cd site || exit 1
 PORT=8080
 while (echo >"/dev/tcp/127.0.0.1/$PORT") >/dev/null 2>&1; do PORT=$((PORT + 1)); done
 URL="http://localhost:$PORT/"
-
 echo ""
-echo "  Site da Dalas Marketing rodando em $URL"
-echo "  Inglês: ${URL}en/   Espanhol: ${URL}es/"
-echo "  Grupo Kairos: ${URL}grupo/"
+echo "  Grupo Kairos:     ${URL}grupo/"
+echo "  Dalas Marketing:  $URL   (inglês: ${URL}en/   espanhol: ${URL}es/)"
 echo ""
 echo "  Para parar, feche esta janela."
 echo ""

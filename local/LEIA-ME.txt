@@ -13,13 +13,18 @@ WINDOWS
    (ou dê dois cliques em "Abrir-Grupo-Kairos-Windows.bat" para abrir direto nela)
 4. Para parar, feche a janela preta.
 
-MAC
-2. Clique com o botão direito em "Abrir-site-Mac.command" e escolha "Abrir"
-   (na primeira vez o Mac pede essa confirmação).
+MAC (não precisa instalar nada: usa o Perl que já vem no Mac)
+2. Dê dois cliques em "Abrir-Grupo-Kairos-Mac.command" (abre direto no
+   Grupo Kairos) ou em "Abrir-site-Mac.command" (abre no site da Dalas).
 3. O site abre sozinho no navegador em http://localhost:8080
    Grupo Kairos: http://localhost:8080/grupo/
-   (ou abra "Abrir-Grupo-Kairos-Mac.command" do mesmo jeito para ir direto nela)
 4. Para parar, feche a janela do Terminal.
+
+   Se o Mac não deixar abrir ("não foi possível verificar"):
+   - Ajustes do Sistema > Privacidade e Segurança, role até o fim e clique
+     em "Abrir Mesmo Assim"; depois dê dois cliques de novo. Ou:
+   - Abra o Terminal, digite bash e um espaço, arraste o arquivo .command
+     para dentro da janela e aperte Enter.
 
 Não abra o index.html com dois cliques direto: o site precisa desse
 "servidorzinho" para carregar os efeitos, os vídeos e os idiomas.

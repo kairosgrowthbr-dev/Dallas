@@ -83,7 +83,7 @@ npm run dev:grupo   # só a página do grupo, em http://localhost:5173
 A pasta `local/` tem os atalhos que abrem o site gerado (`dist/`) num servidorzinho em http://localhost:8080 (ou a próxima porta livre), sem instalar nada:
 
 - **Windows**: `Abrir-site-Windows.bat` chama `servidor-windows.ps1`, que usa o PowerShell do próprio Windows.
-- **Mac**: `Abrir-site-Mac.command` usa o Python ou o Ruby do Mac (ou o Node, se tiver).
+- **Mac**: `Abrir-site-Mac.command` chama `servidor-mac.pl`, que usa o Perl que já vem em todo Mac e responde por partes (Range), como o Safari exige para tocar os vídeos. Sem Perl, tenta Python, Ruby ou Node.
 - **Grupo Kairos**: `Abrir-Grupo-Kairos-Windows.bat` e `Abrir-Grupo-Kairos-Mac.command` fazem o mesmo, mas abrem direto em `/grupo/`.
 
 Para montar o pacote: rode `npm run build`, copie `dist/` para uma pasta `site/` ao lado dos arquivos de `local/` e compacte. Quem tem Node pode simplesmente rodar `npm run dev` (http://localhost:5173) ou `npm run preview` depois da build.
