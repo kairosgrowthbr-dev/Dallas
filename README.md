@@ -84,6 +84,7 @@ A pasta `local/` tem os atalhos que abrem o site gerado (`dist/`) num servidorzi
 
 - **Windows**: `Abrir-site-Windows.bat` chama `servidor-windows.ps1`, que usa o PowerShell do próprio Windows.
 - **Mac**: `Abrir-site-Mac.command` usa o Python ou o Ruby do Mac (ou o Node, se tiver).
+- **Grupo Kairos**: `Abrir-Grupo-Kairos-Windows.bat` e `Abrir-Grupo-Kairos-Mac.command` fazem o mesmo, mas abrem direto em `/grupo/`.
 
 Para montar o pacote: rode `npm run build`, copie `dist/` para uma pasta `site/` ao lado dos arquivos de `local/` e compacte. Quem tem Node pode simplesmente rodar `npm run dev` (http://localhost:5173) ou `npm run preview` depois da build.
 

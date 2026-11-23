@@ -10,10 +10,11 @@ URL="http://localhost:$PORT/"
 echo ""
 echo "  Site da Dalas Marketing rodando em $URL"
 echo "  Inglês: ${URL}en/   Espanhol: ${URL}es/"
+echo "  Grupo Kairos: ${URL}grupo/"
 echo ""
 echo "  Para parar, feche esta janela."
 echo ""
-( sleep 1.5; open "$URL" 2>/dev/null || xdg-open "$URL" 2>/dev/null ) &
+( sleep 1.5; open "$URL${PAGINA:-}" 2>/dev/null || xdg-open "$URL${PAGINA:-}" 2>/dev/null ) &
 
 # python3 só se for de verdade (no Mac sem as ferramentas de desenvolvedor, /usr/bin/python3 é um atalho que pede instalação)
 if command -v python3 >/dev/null 2>&1 && { [ "$(command -v python3)" != "/usr/bin/python3" ] || xcode-select -p >/dev/null 2>&1 || [ "$(uname)" != "Darwin" ]; }; then

@@ -9,12 +9,16 @@ WINDOWS
    e depois em "Executar assim mesmo".
 3. O site abre sozinho no navegador em http://localhost:8080
    Inglês: http://localhost:8080/en/   Espanhol: http://localhost:8080/es/
+   Grupo Kairos: http://localhost:8080/grupo/
+   (ou dê dois cliques em "Abrir-Grupo-Kairos-Windows.bat" para abrir direto nela)
 4. Para parar, feche a janela preta.
 
 MAC
 2. Clique com o botão direito em "Abrir-site-Mac.command" e escolha "Abrir"
    (na primeira vez o Mac pede essa confirmação).
 3. O site abre sozinho no navegador em http://localhost:8080
+   Grupo Kairos: http://localhost:8080/grupo/
+   (ou abra "Abrir-Grupo-Kairos-Mac.command" do mesmo jeito para ir direto nela)
 4. Para parar, feche a janela do Terminal.
 
 Não abra o index.html com dois cliques direto: o site precisa desse

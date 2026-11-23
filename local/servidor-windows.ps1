@@ -3,6 +3,8 @@
 # Abre o site em http://localhost:8080 (ou a próxima porta livre) e fica rodando
 # enquanto esta janela estiver aberta.
 
+param([string]$Pagina = '')
+
 $ErrorActionPreference = 'Stop'
 $root = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot 'site'))
 if (-not (Test-Path (Join-Path $root 'index.html'))) {
@@ -41,10 +43,11 @@ Write-Host ''
 Write-Host "  Site da Dalas Marketing rodando em $url"
 Write-Host '  Inglês: ' -NoNewline; Write-Host "${url}en/"
 Write-Host '  Espanhol: ' -NoNewline; Write-Host "${url}es/"
+Write-Host '  Grupo Kairos: ' -NoNewline; Write-Host "${url}grupo/"
 Write-Host ''
 Write-Host '  Para parar, feche esta janela.'
 Write-Host ''
-try { Start-Process $url } catch {}
+try { Start-Process "$url$Pagina" } catch {}
 
 function Send($stream, $status, $type, [byte[]]$body, $extra, $head) {
   $len = if ($null -ne $body) { $body.Length } else { 0 }
