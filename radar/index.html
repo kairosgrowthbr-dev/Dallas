@@ -506,6 +506,73 @@ textarea.field { width: 100%; resize: vertical; min-height: 88px; line-height: 1
   .ia-btn span:last-child { display: none; } .ia-btn { padding: 4px; }
   .fab { padding: 6px; } .fab .lbl { display: none; }
 }
+
+/* WhatsApp */
+body { overflow-x: clip; }
+.pagina-w { padding-bottom: 40px; }
+.wa-tile { background: linear-gradient(135deg, #5fe39a, #1fae5a) !important; color: #04170b !important; box-shadow: 0 10px 28px rgba(37, 211, 102, .25) !important; }
+.wa-grid { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 14px; padding-top: 14px; align-items: start; }
+.wa-col { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.fila { display: flex; flex-direction: column; gap: 10px; }
+.f-item { --h: 205; border: 1px solid var(--line); background: var(--surface); border-radius: 16px; padding: 12px; display: flex; flex-direction: column; gap: 9px; animation: sobe .45s var(--ease) both; transition: border-color .2s, box-shadow .25s; }
+.f-item:hover { border-color: var(--line-2); box-shadow: var(--shadow-1); }
+.f-item.atrasado { border-left: 3px solid var(--u1); }
+.f-item:nth-child(2) { animation-delay: .04s; } .f-item:nth-child(3) { animation-delay: .08s; } .f-item:nth-child(n+4) { animation-delay: .12s; }
+.f-top { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.f-top .tile { width: 36px; height: 36px; border-radius: 11px; display: grid; place-items: center; background: hsl(var(--h) var(--ns2) var(--nsoft)); color: hsl(var(--h) var(--ns) var(--nl)); flex: none; }
+.f-nome { flex: 1 1 160px; min-width: 0; text-align: left; border: 0; background: none; padding: 0; cursor: pointer; }
+.f-nome b { display: block; font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.f-nome small { color: var(--fg-3); font-size: 12px; }
+.f-nome:hover b { color: var(--gold); }
+.f-item textarea { width: 100%; resize: vertical; font-size: 13px; line-height: 1.45; }
+.f-acoes { gap: 6px; }
+.wa-conta { display: flex; flex-direction: column; gap: 8px; }
+.wa-num { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; } .wa-num b { font-family: var(--mono); font-size: 17px; font-weight: 500; }
+.modelos { display: flex; flex-direction: column; gap: 10px; max-height: 420px; overflow-y: auto; padding-right: 2px; }
+.m-grupo { display: flex; flex-direction: column; gap: 5px; }
+.m-g { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--fg-3); font-weight: 700; }
+.m-item { text-align: left; border: 1px solid var(--line); background: var(--surface); border-radius: 11px; padding: 7px 10px; cursor: pointer; transition: transform .25s var(--spring), border-color .2s; min-width: 0; }
+.m-item:hover { transform: translateX(3px); border-color: var(--wa); }
+.m-item b { display: block; font-size: 12.5px; } .m-item small { display: block; color: var(--fg-3); font-size: 11.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.linha-tempo { list-style: none; margin: 0; padding: 0 0 0 14px; display: flex; flex-direction: column; gap: 6px; border-left: 2px solid var(--line); }
+.linha-tempo li { position: relative; display: flex; align-items: center; gap: 8px; }
+.linha-tempo li > i { position: absolute; left: -20px; width: 10px; height: 10px; border-radius: 50%; background: var(--wa); box-shadow: 0 0 0 3px var(--surface); }
+.linha-tempo li > i.pulo { background: var(--fg-3); }
+.linha-tempo li > div b { display: block; font-size: 12.5px; } .linha-tempo li > div small { color: var(--fg-3); font-size: 11.5px; }
+.prox { display: flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--wa); font-weight: 600; margin-bottom: 8px; } .prox .ico { width: 15px; height: 15px; }
+.tres-c { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.chk { flex-direction: row !important; align-items: center; gap: 8px !important; font-weight: 500 !important; }
+.chk input { width: 18px; height: 18px; accent-color: var(--wa); }
+.cat { display: flex; flex-direction: column; gap: 6px; }
+.cat-l { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 1fr) 38px; gap: 6px; align-items: center; }
+.cat-l.cab span { font-size: 11.5px; color: var(--fg-3); font-weight: 700; }
+.sel-chip { cursor: pointer; background: none; font: inherit; font-size: 11.5px; }
+.sel-chip[aria-pressed="true"] { border-color: transparent; background: var(--wa-soft); color: var(--wa); font-weight: 700; }
+.sec.fechou { border: 1px solid var(--wa-soft); background: color-mix(in srgb, var(--wa) 6%, transparent); border-radius: 14px; padding: 12px; }
+.mini-l { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--fg-3); font-weight: 600; } .mini-l .field { width: 100%; }
+.modal.larga { width: 600px; }
+.raiox-img { width: 100%; border-radius: 14px; box-shadow: var(--shadow-2); display: block; }
+.cal-r { background: var(--gold-soft); color: var(--gold); }
+/* resultados */
+.w-larga { grid-column: span 2; }
+.res { display: flex; flex-direction: column; gap: 12px; }
+.res-nums { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.res-n { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 9px 11px; min-width: 0; }
+.res-n b { display: block; font-family: var(--mono); font-size: 17px; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.res-n.ouro b { color: var(--gold); }
+.res-n span { font-size: 11.5px; color: var(--fg-3); }
+.res-graf { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; height: 96px; align-items: end; }
+.res-col { height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 4px; }
+.res-col i { width: 100%; max-width: 46px; height: max(4px, var(--p)); border-radius: 8px 8px 4px 4px; background: linear-gradient(180deg, var(--teal), color-mix(in srgb, var(--teal) 40%, transparent)); animation: ergue .9s var(--ease) both; transform-origin: bottom; }
+.res-col i.atual { background: linear-gradient(180deg, var(--gold-fill-1), var(--gold-fill-2)); }
+.res-col span { font-size: 11px; color: var(--fg-3); text-transform: capitalize; }
+@keyframes ergue { from { transform: scaleY(0); } }
+.dica { font-size: 13.5px; line-height: 1.55; color: var(--fg-2); }
+.dica-n { font-family: var(--mono); font-size: 11px; color: var(--fg-3); }
+@media (max-width: 1100px) { .wa-grid { grid-template-columns: 1fr; } }
+@media (max-width: 1100px) and (min-width: 621px) { .inicio-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 620px) { .w-larga { grid-column: auto; } .res-nums { grid-template-columns: repeat(2, minmax(0, 1fr)); } .tres-c { grid-template-columns: 1fr; } .cat-l { grid-template-columns: minmax(0, 1fr) minmax(0, .8fr) minmax(0, .8fr) 38px; } }
+@media (max-width: 720px) { .tabs { overflow-x: auto; scrollbar-width: none; } .tabs::-webkit-scrollbar { display: none; } .tabs button { flex: 1 0 auto; } }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
   .card { transform: none !important; }
@@ -524,6 +591,7 @@ textarea.field { width: 100%; resize: vertical; min-height: 88px; line-height: 1
         <button role="tab" data-view="radar" aria-selected="false"><span class="ico" data-i="radar"></span>Radar</button>
         <button role="tab" data-view="urgencia" aria-selected="false"><span class="ico" data-i="raio"></span>Urgência</button>
         <button role="tab" data-view="funil" aria-selected="false"><span class="ico" data-i="funil"></span>Funil</button>
+        <button role="tab" data-view="whats" aria-selected="false"><span class="ico" data-i="wa"></span>WhatsApp</button>
         <button role="tab" data-view="lista" aria-selected="false"><span class="ico" data-i="lista"></span>Lista</button>
       </nav>
       <div class="grow"></div>
@@ -556,6 +624,7 @@ textarea.field { width: 100%; resize: vertical; min-height: 88px; line-height: 1
     </section>
       <div class="inicio-grid" id="inicio-grid"></div>
     </section>
+    <section class="pagina pagina-w" id="pg-whats" hidden aria-label="WhatsApp"></section>
     <section class="pagina" id="pg-trabalho" hidden>
       <header class="pg-cab"><span class="tile" id="pg-ico"></span><div class="grow"><h1 id="pg-titulo"></h1><p id="pg-desc"></p></div><div class="pg-stats" id="pg-stats"></div></header>
       <nav class="nichos" id="nichos" aria-label="Nichos"></nav>
@@ -604,6 +673,7 @@ textarea.field { width: 100%; resize: vertical; min-height: 88px; line-height: 1
 
 /* ---------- Ícones (traço, 24×24) ---------- */
 const ICONES = {
+  cal: '<rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/>',
   radar: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><path d="M12 12l6.5-6.5"/>',
   funil: '<path d="M3 4h18l-7 8.5V19l-4 2v-8.5z"/>',
   lista: '<path d="M9 6h12M9 12h12M9 18h12M4 6h.01M4 12h.01M4 18h.01"/>',
@@ -713,7 +783,7 @@ const S = {
   view: 'inicio', f: { regiao: mem('radar.regiao') ?? 'serra', busca: '', uf: '', nicho: '', urg: '', tel: '' }, sort: { campo: 'urgencia', dir: -1 },
   sel: null, ordem: [], modal: null, animar: true, kpi: {},
   db: null, sample: null, mcp: null, dl: null, tools: false, tts: null, dict: null, voz: mem('radar.voz') === '1',
-  dbState: 'carregando', chat: { turns: [], busy: false, ctl: null, parcial: '', ouvindo: false, base: '' }, lote: false,
+  wa: {}, catalogo: null, rasc: {}, dbState: 'carregando', chat: { turns: [], busy: false, ctl: null, parcial: '', ouvindo: false, base: '' }, lote: false,
 };
 const $ = (s, r = document) => r.querySelector(s);
 
@@ -764,6 +834,10 @@ function normalizar(id, x) {
     resumo: str(x.resumo), confianca: str(x.confianca) || 'media', etapa: ETAPA[x.etapa] ? x.etapa : 'novo',
     notas: typeof x.notas === 'string' ? x.notas : '', mensagem: typeof x.mensagem === 'string' ? x.mensagem : '',
     criado_em: str(x.criado_em), atualizado_em: str(x.atualizado_em), origem: str(x.origem),
+    abordado_em: str(x.abordado_em), proposta: typeof x.proposta === 'string' ? x.proposta : '', proposta_em: str(x.proposta_em),
+    toques: Array.isArray(x.toques) ? x.toques.filter(t => t && typeof t.em === 'string').slice(-40) : [],
+    respondeu_em: str(x.respondeu_em), reuniao_em: str(x.reuniao_em), reuniao_local: str(x.reuniao_local),
+    fechado_em: str(x.fechado_em), valor_projeto: num(x.valor_projeto), valor_mensal: num(x.valor_mensal), servicos_fechados: arr(x.servicos_fechados),
   };
   if (l.telefone.startsWith('55') && l.telefone.length > 11) l.telefone = l.telefone.slice(2);
   if (!l.telefone_tipo && l.telefone.length === 11 && l.telefone[2] === '9') l.telefone_tipo = 'celular';
@@ -883,6 +957,8 @@ function initDb(db) {
     S.pedidos = s.docs.map(d => ({ id: d.id, ...d.data() })).sort((a, b) => String(b.criado_em).localeCompare(String(a.criado_em)));
     if (S.modal === 'garimpar') renderPedidos();
   }, () => {});
+  db.doc('config/whatsapp').onSnapshot(s => { S.wa = s.exists ? (s.data() || {}) : {}; render(); }, () => {});
+  db.doc('config/catalogo').onSnapshot(s => { const d = s.exists ? s.data() : null; S.catalogo = d && Array.isArray(d.itens) ? d.itens : null; render(); }, () => {});
   db.doc('rotina/ultima').onSnapshot(s => { S.rotina = s.exists ? s.data() : null; renderHero(); }, () => {});
   // A conversa com a assistente começa do zero a cada vez que o painel é aberto (nada é guardado).
 }
@@ -911,12 +987,13 @@ function desenhar() {
   $('#f-regiao').value = S.f.regiao; $('#f-urg').value = S.f.urg;
   document.querySelectorAll('.tabs button').forEach(b => b.setAttribute('aria-selected', String(b.dataset.view === S.view)));
   moverIndicador();
-  const inicio = S.view === 'inicio', pgI = $('#pg-inicio'), pgT = $('#pg-trabalho');
+  const inicio = S.view === 'inicio', whats = S.view === 'whats', pgI = $('#pg-inicio'), pgT = $('#pg-trabalho'), pgW = $('#pg-whats');
   const trocou = S.paginaAtual !== S.view; S.paginaAtual = S.view;
-  pgI.hidden = !inicio; pgT.hidden = inicio;
-  if (trocou && !calmo.matches) { const pg = inicio ? pgI : pgT; pg.classList.remove('entra'); void pg.offsetWidth; pg.classList.add('entra'); window.scrollTo({ top: 0 }); }
+  pgI.hidden = !inicio; pgW.hidden = !whats; pgT.hidden = inicio || whats;
+  if (trocou && !calmo.matches) { const pg = inicio ? pgI : whats ? pgW : pgT; pg.classList.remove('entra'); void pg.offsetWidth; pg.classList.add('entra'); window.scrollTo({ top: 0 }); }
   renderAviso();
   if (inicio) { mapaRender(); renderTopUrg(); renderInicio(); if (S.sel) renderDrawerSeguro(); return; }
+  if (whats) { renderWhats(); if (S.sel) renderDrawerSeguro(); return; }
   renderCabecalho();
   renderNichos();
   $('#nichos').hidden = S.view === 'funil';
@@ -956,30 +1033,30 @@ function renderCabecalho() {
 /* ---------- Início: painéis ---------- */
 function inicioDaSemana() { const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - ((d.getDay() + 6) % 7)); return d.getTime(); }
 const diasDesde = iso => { const t = Date.parse(iso || ''); return t ? Math.floor((Date.now() - t) / 864e5) : null; };
-function textoCobranca(l) {
-  const nome = (S.config.remetente || nomeDono() || '').split(' ')[0];
-  return `${saudacao()}! ${nome ? 'Aqui é o ' + nome + ', da ' + S.config.empresa + '. ' : ''}Passando para saber se você conseguiu ver minha mensagem sobre a ${l.nome}. Posso te mandar uma ideia rápida, sem compromisso?`;
-}
 function renderInicio() {
   const box = $('#inicio-grid'); if (!box) return;
   const todos = base(), semana = inicioDaSemana(), meta = Math.max(1, Number(S.config.meta_semana) || 15);
   const feitas = todos.filter(l => Date.parse(l.abordado_em || '') >= semana).length;
   const pct = Math.min(100, Math.round(feitas / meta * 100));
-  const cobrar = todos.filter(l => l.etapa === 'abordado' && (diasDesde(l.abordado_em || l.atualizado_em) ?? 0) >= 3).sort((a, b) => String(a.abordado_em).localeCompare(String(b.abordado_em))).slice(0, 5);
+  const hojeW = filaWhats().filter(x => x.t.quando <= fimDoDia() && x.t.tipo !== 'fim'), diaAno = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0)) / DIA);
   const fila = todos.filter(l => l.etapa === 'novo');
   const porNicho = {}; for (const l of fila) { const u = nivel(l).id; if (u === 'urgente' || u === 'alta') porNicho[l.nicho] = (porNicho[l.nicho] || 0) + 1; }
   const nichos = Object.entries(porNicho).sort((a, b) => b[1] - a[1]).slice(0, 6), maxN = Math.max(1, ...nichos.map(x => x[1]));
   const recentes = [...todos].filter(l => l.criado_em).sort((a, b) => String(b.criado_em).localeCompare(String(a.criado_em))).slice(0, 5);
-  const painel = (i, titulo, corpo, extra) => el('section', { class: 'widget tilt' }, el('div', { class: 'w-cab' }, el('span', { class: 'w-ico' }, ico(i)), el('h3', { text: titulo }), extra || null), corpo);
+  const painel = (i, titulo, corpo, extra, cls) => el('section', { class: 'widget tilt' + (cls ? ' ' + cls : '') }, el('div', { class: 'w-cab' }, el('span', { class: 'w-ico' }, ico(i)), el('h3', { text: titulo }), extra || null), corpo);
   const quando2 = iso => { const d = diasDesde(iso); return d == null ? '' : d === 0 ? 'hoje' : d === 1 ? 'ontem' : `há ${d} dias`; };
   box.replaceChildren(
     painel('meta', 'Meta da semana', el('div', { class: 'meta-w' }, anel(pct, pct >= 100 ? 'var(--wa)' : 'var(--gold)', 34),
       el('div', null, el('b', { class: 'meta-n', text: `${feitas} de ${meta}` }), el('p', { text: feitas >= meta ? 'Meta batida. Bora pra próxima!' : `abordagens nesta semana. Faltam ${meta - feitas}.` }),
         el('button', { class: 'btn sm', type: 'button', onclick: verUrgencias }, ico('raio'), 'Abordar as urgentes')))),
-    painel('sino', 'Para cobrar', cobrar.length ? el('ul', { class: 'w-lista' }, cobrar.map(l => el('li', null,
-      el('button', { class: 'w-item', type: 'button', onclick: () => abrirLead(l.id) }, el('b', { text: l.nome }), el('small', { text: `abordada ${quando2(l.abordado_em || l.atualizado_em)} · sem resposta` })),
-      l.telefone ? el('a', { class: 'wa-r', href: waLink(l, textoCobranca(l)), target: '_blank', rel: 'noopener', title: 'Cobrar no WhatsApp', 'aria-label': 'Cobrar no WhatsApp' }, ico('wa')) : null)))
-      : el('p', { class: 'vazio', text: 'Nenhum retorno pendente. Empresas abordadas que não responderem em 3 dias aparecem aqui, com a mensagem de cobrança pronta.' })),
+    painel('wa', 'WhatsApp de hoje', hojeW.length ? el('ul', { class: 'w-lista' }, hojeW.slice(0, 4).map(x => el('li', null,
+      el('button', { class: 'w-item', type: 'button', onclick: () => abrirLead(x.l.id) }, el('b', { text: x.l.nome }), el('small', { text: `${x.t.titulo} · ${prazo(x.t.quando)}` })),
+      el('a', { class: 'wa-r', href: waLink(x.l, rascunho(x.l, x.t)), target: '_blank', rel: 'noopener', title: 'Abrir no WhatsApp', 'aria-label': 'Abrir no WhatsApp', onclick: () => setTimeout(() => registrarToque(x.l, x.t.tipo, rascunho(x.l, x.t)).then(() => toast('Registrado como enviado.'), () => {}), 300) }, ico('wa')))))
+      : el('p', { class: 'vazio', text: 'Nenhum follow-up para hoje. Quem você abordar entra na sequência sozinho.' }),
+      el('button', { class: 'btn ghost sm', type: 'button', onclick: () => { location.hash = 'whats'; irPara('whats'); } }, hojeW.length > 4 ? `+${hojeW.length - 4}` : 'Abrir', ico('seta'))),
+    painel('cal', 'Próximas reuniões', widgetReunioes()),
+    painel('brilho', 'Dica do dia', el('div', null, el('p', { class: 'dica', text: DICAS[diaAno % DICAS.length] }), el('span', { class: 'dica-n', text: `dica ${diaAno % DICAS.length + 1} de ${DICAS.length}` }))),
+    painel('barras', 'Resultados', widgetResultados(), el('button', { class: 'btn ghost sm', type: 'button', onclick: abrirCatalogo }, 'Preços'), 'w-larga'),
     painel('barras', 'Onde estão as oportunidades', nichos.length ? el('ul', { class: 'w-barras' }, nichos.map(([n, q]) => el('li', null,
       el('button', { type: 'button', onclick: () => irNicho(n), style: { '--h': String(nicho(n).h), '--p': (q / maxN * 100).toFixed(0) + '%' } }, el('span', { class: 'w-n' }, ico(nicho(n).i), n), el('span', { class: 'w-bar' }, el('i')), el('b', { text: String(q) })))))
       : el('p', { class: 'vazio', text: 'Sem empresas urgentes ou de urgência alta com esses filtros.' }), el('span', { class: 'hint', text: 'urgentes + alta' })),
@@ -1070,7 +1147,7 @@ function coluna(id, nome, dica, itens, opt = {}) {
   if (opt.solta) {
     col.addEventListener('dragover', e => { e.preventDefault(); col.classList.add('over'); });
     col.addEventListener('dragleave', () => col.classList.remove('over'));
-    col.addEventListener('drop', e => { e.preventDefault(); col.classList.remove('over'); const lid = e.dataTransfer.getData('text/plain'); const l = S.leads.get(lid); if (l && l.etapa !== id) atualizarLead(lid, { etapa: id }).catch(() => {}); });
+    col.addEventListener('drop', e => { e.preventDefault(); col.classList.remove('over'); const lid = e.dataTransfer.getData('text/plain'); const l = S.leads.get(lid); if (l && l.etapa !== id) mudarEtapa(l, id).catch(() => {}); });
   }
   return col;
 }
@@ -1198,7 +1275,7 @@ function renderTopUrg() {
 
 /* ---------- Ficha do lead ---------- */
 function aposWhats(l) {
-  if (l.etapa === 'novo') toast('Enviou a mensagem no WhatsApp?', { rotulo: 'Marcar como abordado', fn: () => atualizarLead(l.id, { etapa: 'abordado', abordado_em: agora() }).catch(() => {}) });
+  if (l.etapa === 'novo') toast('Enviou a mensagem no WhatsApp?', { rotulo: 'Marcar como abordado', fn: () => registrarToque(l, 'primeiro', l.mensagem).then(() => toast('Pronto. O 2º toque entra na fila do WhatsApp em ' + ((cadencia()[0] || {}).dias || 2) + ' dias.'), () => {}) });
 }
 function abrirLead(id) { if (!S.leads.has(id)) return; fecharModal(); S.sel = id; renderDrawer(); render(); }
 function fecharLead() { salvarCampos(); S.sel = null; $('#camada').querySelectorAll('.veil.d, #drawer').forEach(n => n.remove()); render(); }
@@ -1226,7 +1303,7 @@ function renderDrawer() {
   const lista = (t, itens) => itens.length ? el('div', { class: 'sec' }, el('h4', { text: t }), el('ul', null, itens.map(x => el('li', { text: x })))) : null;
   const msg = el('textarea', { class: 'field', id: 'd-msg', rows: '5', placeholder: `Escreva a primeira mensagem, ou peça para a ${nomeIA()} escrever.`, value: l.mensagem, oninput: () => { agendarSalvar(); if (wa) wa.href = waLink(l, msg.value); } });
   const wa = l.telefone ? el('a', { class: 'btn wa', href: waLink(l, l.mensagem), target: '_blank', rel: 'noopener', onclick: () => { salvarCampos(); aposWhats(l); } }, ico('wa'), l.telefone_tipo === 'fixo' ? 'Tentar WhatsApp' : 'Abrir WhatsApp') : null;
-  const etapa = el('select', { class: 'field', id: 'd-etapa', 'aria-label': 'Etapa', onchange: e => atualizarLead(l.id, { etapa: e.target.value }).catch(() => {}) }, ETAPAS.map(e => el('option', { value: e.id, text: e.nome })));
+  const etapa = el('select', { class: 'field', id: 'd-etapa', 'aria-label': 'Etapa', onchange: e => mudarEtapa(l, e.target.value).catch(() => {}) }, ETAPAS.map(e => el('option', { value: e.id, text: e.nome })));
   etapa.value = l.etapa;
   const btIA = S.sample ? el('button', { class: 'btn', id: 'd-ia', onclick: () => gerarMensagem(l.id) }, ico('brilho'), l.mensagem ? `Reescrever com a ${nomeIA()}` : `Escrever com a ${nomeIA()}`) : null;
   const btCop = el('button', { class: 'btn', onclick: e => copiar(msg.value, msg, e.currentTarget) }, ico('copiar'), 'Copiar');
@@ -1269,14 +1346,410 @@ function renderDrawer() {
         el('p', { class: 'hint', style: { 'margin-top': '6px' }, text: 'O WhatsApp abre no seu número com o texto pronto. Você confere e envia.' })),
       el('div', { class: 'sec' }, el('h4', { text: 'Etapa e anotações' }), etapa,
         el('textarea', { class: 'field', id: 'd-notas', rows: '3', style: { 'margin-top': '8px' }, placeholder: 'Anotações da conversa, objeções, próximo passo…', value: l.notas, oninput: agendarSalvar, onblur: salvarCampos })),
+      l.etapa === 'fechado' ? secFechamento(l) : null,
+      !['novo', 'descartado', 'fechado'].includes(l.etapa) || l.reuniao_em ? secReuniao(l) : null,
+      secHistorico(l),
       l.fontes.length ? el('div', { class: 'sec fontes' }, el('h4', { text: 'Fontes' + (l.confianca ? ` · confiança ${l.confianca}` : '') }), l.fontes.slice(0, 6).map(u => seguro(u) ? el('div', null, el('a', { href: u, target: '_blank', rel: 'noopener', text: u.replace(/^https:\/\/(www\.)?/, '').slice(0, 70) })) : el('div', { class: 'hint', text: u.slice(0, 70) }))) : null),
     el('div', { class: 'dr-f' },
       el('div', { class: 'row' }, el('button', { class: 'btn sm', text: '← Anterior', disabled: i <= 0, onclick: () => ir(-1) }), el('button', { class: 'btn sm', text: 'Próximo →', disabled: i < 0 || i >= S.ordem.length - 1, onclick: () => ir(1) })),
-      el('div', { class: 'row' }, S.sample ? el('button', { class: 'btn sm', onclick: () => gerarProposta(l.id) }, ico('doc'), 'Gerar proposta') : null, S.sample ? el('button', { class: 'btn sm', onclick: () => { abrirChat(); enviarChat(`Analise a empresa "${l.nome}" (id ${l.id}) e me diga: o que vender primeiro, quanto cobrar e como conduzir a conversa.`); } }, ico('brilho'), `Analisar com a ${nomeIA()}`) : null, excluir)));
+      el('div', { class: 'row' }, el('button', { class: 'btn sm', onclick: () => abrirRaioX(l.id) }, ico('pulso'), 'Raio-X digital'), S.sample ? el('button', { class: 'btn sm', onclick: () => gerarProposta(l.id) }, ico('doc'), 'Gerar proposta') : null, S.sample ? el('button', { class: 'btn sm', onclick: () => { abrirChat(); enviarChat(`Analise a empresa "${l.nome}" (id ${l.id}) e me diga: o que vender primeiro, quanto cobrar e como conduzir a conversa.`); } }, ico('brilho'), `Analisar com a ${nomeIA()}`) : null, excluir)));
   const waRow = dr.querySelector('.sec .row .btn.wa'); if (waRow) waRow.addEventListener('click', () => { salvarCampos(); aposWhats(l); });
   const veu = el('div', { class: 'veil d', onclick: fecharLead });
   if (jaAberta) { dr.style.animation = 'none'; veu.style.animation = 'none'; }
   cam.append(veu, dr);
+}
+
+/* ---------- WhatsApp: sequência de follow-up, modelos e API ---------- */
+const DIA = 864e5;
+const MODELOS_PADRAO = [
+  { id: 'seguimento1', grupo: 'Sequência', nome: '2º toque · lembrete', texto: '{saudacao}! Aqui é o {eu}, da {minha_empresa}. Passando para saber se você viu minha mensagem sobre a {empresa}. Posso te mandar uma ideia rápida, sem compromisso?' },
+  { id: 'seguimento2', grupo: 'Sequência', nome: '3º toque · raio-x grátis', texto: '{saudacao}! Fiz um raio-x rápido de como a {empresa} aparece no Google e no Instagram e achei pontos simples que fazem clientes de {cidade} irem para a concorrência. Posso te mandar? É gratuito e leva 2 minutos para ler.' },
+  { id: 'despedida', grupo: 'Sequência', nome: 'Último toque · despedida', texto: '{saudacao}! Vou parar de insistir por aqui 🙂 Se em algum momento a {empresa} quiser receber mais clientes pelo Google e pelo Instagram, é só me chamar. Abraço, {eu} · {minha_empresa}' },
+  { id: 'proposta1', grupo: 'Proposta', nome: 'Proposta · 3 dias depois', texto: '{saudacao}! Conseguiu dar uma olhada na proposta que te mandei para a {empresa}? Se ficar mais fácil, te explico em 10 minutos por chamada.' },
+  { id: 'proposta2', grupo: 'Proposta', nome: 'Proposta · 7 dias depois', texto: '{saudacao}! Ainda faz sentido para vocês? Se o momento ou o valor não encaixar, posso ajustar a proposta à realidade da {empresa}.' },
+  { id: 'confirmacao', grupo: 'Reunião', nome: 'Confirmar reunião', texto: '{saudacao}! Confirmando nossa conversa {reuniao_quando}{reuniao_onde}. Qualquer imprevisto, me avisa por aqui. Até lá!' },
+  { id: 'indicacao', grupo: 'Pós-venda', nome: '30 dias depois · avaliação e indicação', texto: '{saudacao}! Já faz um mês que começamos com a {empresa}. Está gostando? Se puder deixar uma avaliação da {minha_empresa} no Google, ajuda muito. E se conhecer outro empresário que precisa de mais clientes, me indica 🙏' },
+  { id: 'obj_caro', grupo: 'Objeções', nome: '"Tá caro"', texto: 'Entendo! Pensa assim: se o site e o Google trouxerem 2 ou 3 clientes novos por mês, o investimento se paga rápido. E dá para começar pelo essencial e crescer aos poucos. Quer que eu monte uma versão mais enxuta?' },
+  { id: 'obj_ja_tenho', grupo: 'Objeções', nome: '"Já tenho alguém que faz"', texto: 'Que bom que vocês já cuidam disso! Posso te mandar o raio-x gratuito mesmo assim? Às vezes um olhar de fora mostra oportunidades que passam batido no dia a dia.' },
+  { id: 'obj_instagram', grupo: 'Objeções', nome: '"O Instagram já basta"', texto: 'O Instagram é ótimo para quem já te segue. Mas quem procura "{nicho_busca} em {cidade}" no Google não encontra a {empresa} e acaba indo no concorrente que aparece. O site e o Google pegam esse cliente que ainda não te conhece.' },
+  { id: 'obj_pensar', grupo: 'Objeções', nome: '"Vou pensar"', texto: 'Claro, sem pressa! Para te ajudar a decidir: qual é a maior dúvida hoje, o valor, o prazo ou se vai dar resultado? Assim te mando exatamente o que falta.' },
+];
+const CADENCIA_PADRAO = [{ dias: 2, modelo: 'seguimento1' }, { dias: 5, modelo: 'seguimento2' }, { dias: 10, modelo: 'despedida' }];
+const WA_PADRAO = { numero: '', cadencia: CADENCIA_PADRAO, modelos: null };
+const BUSCA_NICHO = { 'Restaurante': 'restaurante', 'Hospedagem': 'pousada', 'Odontologia': 'dentista', 'Estética': 'clínica de estética', 'Saúde': 'clínica', 'Pet': 'pet shop', 'Fitness': 'academia', 'Automotivo': 'mecânica', 'Jurídico/Contábil': 'contador', 'Imobiliária': 'imobiliária', 'Varejo': 'loja', 'Beleza': 'salão de beleza' };
+const CATALOGO_PADRAO = ['Site institucional', 'Landing page', 'Google Meu Negócio (otimização)', 'Gestão de Instagram', 'Tráfego pago', 'CRM', 'Automação de WhatsApp com IA', 'Sistema ou painel sob medida'].map(nome => ({ nome, setup: null, mensal: null }));
+const modelos = () => (Array.isArray(S.wa.modelos) && S.wa.modelos.length ? S.wa.modelos : MODELOS_PADRAO);
+const modeloTxt = id => (modelos().find(m => m.id === id) || MODELOS_PADRAO.find(m => m.id === id) || {}).texto || '';
+const cadencia = () => (Array.isArray(S.wa.cadencia) && S.wa.cadencia.length ? S.wa.cadencia : CADENCIA_PADRAO);
+const catalogo = () => (Array.isArray(S.catalogo) && S.catalogo.length ? S.catalogo : CATALOGO_PADRAO);
+const brl = n => (Number(n) || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
+const ts = iso => Date.parse(iso || '') || 0;
+const fimDoDia = () => { const d = new Date(); d.setHours(23, 59, 59, 999); return d.getTime(); };
+const meuNome = () => (S.config.remetente || nomeDono() || '').split(' ')[0];
+
+function preencher(t, l) {
+  const r = l.reuniao_em ? new Date(l.reuniao_em) : null;
+  const v = {
+    saudacao: saudacao(), eu: meuNome() || 'pessoal', minha_empresa: S.config.empresa, empresa: l.nome, cidade: l.cidade || 'sua cidade',
+    nicho: l.nicho.toLowerCase(), nicho_busca: BUSCA_NICHO[l.nicho] || l.nicho.toLowerCase(),
+    reuniao_quando: r ? r.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'numeric' }) + ' às ' + r.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) : 'no horário combinado',
+    reuniao_onde: l.reuniao_local ? ', ' + l.reuniao_local : '',
+  };
+  return String(t || '').replace(/\{(\w+)\}/g, (m, k) => (k in v ? v[k] : m));
+}
+// Datas que acompanham cada mudança de etapa (para a sequência e os resultados do mês)
+function patchEtapa(l, etapa) {
+  const p = { etapa }, t = agora();
+  if (etapa === 'abordado' && !l.abordado_em) p.abordado_em = t;
+  if (['conversando', 'reuniao', 'proposta', 'fechado'].includes(etapa) && !l.respondeu_em && (l.abordado_em || p.abordado_em)) p.respondeu_em = t;
+  if (etapa === 'proposta' && l.etapa !== 'proposta') p.proposta_em = t;
+  if (etapa === 'fechado' && !l.fechado_em) p.fechado_em = t;
+  return p;
+}
+const mudarEtapa = (l, etapa) => atualizarLead(l.id, patchEtapa(l, etapa));
+function registrarToque(l, tipo, texto, via) {
+  const antes = l.toques || [];
+  const p = { toques: [...antes, { em: agora(), tipo, via: via || 'link', texto: String(texto || '').slice(0, 600) }].slice(-40) };
+  if (tipo === 'primeiro' && l.etapa === 'novo') Object.assign(p, patchEtapa(l, 'abordado'));
+  return atualizarLead(l.id, p).then(() => antes);
+}
+function proximoToque(l) {
+  if (!l.telefone) return null;
+  const toques = l.toques || [], feitos = tipo => toques.filter(t => t.tipo === tipo).length;
+  if (l.etapa === 'abordado') {
+    const cad = cadencia(), n = feitos('sequencia'), passo = cad[n], base = ts(l.abordado_em) || ts(l.atualizado_em);
+    if (!passo) return { tipo: 'fim', passo: n, quando: (ts((toques[toques.length - 1] || {}).em) || base) + 3 * DIA, modelo: null, titulo: 'Sequência completa, sem resposta' };
+    return { tipo: 'sequencia', passo: n, quando: base + (Number(passo.dias) || 2) * DIA, modelo: passo.modelo, titulo: n === cad.length - 1 ? 'Último toque' : `${n + 2}º toque` };
+  }
+  if (l.etapa === 'proposta') {
+    const n = feitos('proposta'), dias = [3, 7][n]; if (dias == null) return null;
+    return { tipo: 'proposta', passo: n, quando: (ts(l.proposta_em) || ts(l.atualizado_em)) + dias * DIA, modelo: n ? 'proposta2' : 'proposta1', titulo: n ? 'Cobrar a proposta de novo' : 'Cobrar a proposta' };
+  }
+  if (l.etapa === 'reuniao' && l.reuniao_em && !feitos('confirmacao')) {
+    const r = ts(l.reuniao_em); if (r < Date.now()) return null;
+    return { tipo: 'confirmacao', passo: 0, quando: r - DIA, modelo: 'confirmacao', titulo: 'Confirmar a reunião' };
+  }
+  if (l.etapa === 'fechado' && l.fechado_em && !feitos('indicacao')) return { tipo: 'indicacao', passo: 0, quando: ts(l.fechado_em) + 30 * DIA, modelo: 'indicacao', titulo: 'Pedir avaliação e indicação' };
+  return null;
+}
+function filaWhats() {
+  const itens = [];
+  for (const l of S.leads.values()) { const t = proximoToque(l); if (t) itens.push({ l, t }); }
+  return itens.sort((a, b) => a.t.quando - b.t.quando);
+}
+const rascunho = (l, t) => { const k = `${l.id}:${t.tipo}:${t.passo}`; return k in S.rasc ? S.rasc[k] : preencher(modeloTxt(t.modelo), l); };
+const prazo = q => { const d = Math.floor((fimDoDia() - q) / DIA); return q > fimDoDia() ? (Math.ceil((q - fimDoDia()) / DIA) <= 1 ? 'amanhã' : new Date(q).toLocaleDateString('pt-BR', { weekday: 'short', day: 'numeric', month: 'numeric' })) : d <= 0 ? 'para hoje' : d === 1 ? 'atrasado 1 dia' : `atrasado ${d} dias`; };
+
+/* API oficial do WhatsApp (Meta Cloud API): só na versão do computador, com token guardado neste navegador */
+function waApi() {
+  if (!MODO_LOCAL) return null;
+  const token = mem('radar.wa.token'), id = mem('radar.wa.phoneid'); if (!token || !id) return null;
+  return { token, id, ver: mem('radar.wa.ver') || 'v23.0', tpl: mem('radar.wa.tpl') || '', lang: mem('radar.wa.lang') || 'pt_BR', vars: mem('radar.wa.vars') !== '0' };
+}
+async function graph(api, caminho, corpo) {
+  const r = await fetch(`https://graph.facebook.com/${api.ver}/${caminho}`, { method: corpo ? 'POST' : 'GET', headers: { Authorization: 'Bearer ' + api.token, ...(corpo ? { 'Content-Type': 'application/json' } : {}) }, body: corpo ? JSON.stringify(corpo) : undefined });
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok || j.error) throw new Error((j.error && (j.error.error_user_msg || j.error.message)) || 'erro HTTP ' + r.status);
+  return j;
+}
+async function enviarModeloApi(l) {
+  const api = waApi(); if (!api || !api.tpl) throw new Error('Configure o nome do modelo aprovado na Meta.');
+  const r = await graph(api, api.id + '/messages', { messaging_product: 'whatsapp', to: '55' + l.telefone, type: 'template', template: { name: api.tpl, language: { code: api.lang }, ...(api.vars ? { components: [{ type: 'body', parameters: [{ type: 'text', text: l.nome }] }] } : {}) } });
+  await registrarToque(l, l.etapa === 'novo' ? 'primeiro' : (proximoToque(l) || {}).tipo || 'avulso', 'Modelo da Meta: ' + api.tpl, 'api');
+  return r;
+}
+
+/* Página WhatsApp */
+function renderWhats() {
+  const pg = $('#pg-whats'); if (!pg) return;
+  const a = document.activeElement; if (pg.contains(a) && /TEXTAREA|INPUT/.test(a.tagName)) return;
+  const fila = filaWhats(), fim = fimDoDia(), hoje = fila.filter(x => x.t.quando <= fim), prox = fila.filter(x => x.t.quando > fim && x.t.quando <= fim + 7 * DIA);
+  const todos = [...S.leads.values()], semana = inicioDaSemana();
+  const envios = todos.flatMap(l => (l.toques || []).map(t => ({ l, t }))).sort((x, y) => ts(y.t.em) - ts(x.t.em));
+  const naSemana = envios.filter(x => ts(x.t.em) >= semana && x.t.via !== 'pulado').length;
+  const abordadas = todos.filter(l => l.abordado_em), responderam = abordadas.filter(l => l.respondeu_em);
+  const taxa = abordadas.length ? Math.round(responderam.length / abordadas.length * 100) : 0;
+  const pilha = (n, rot, cor) => el('div', { class: 'pg-stat', style: cor ? { '--c': cor } : null }, el('b', { text: String(n) }), el('span', { text: rot }));
+  const api = waApi(), num = (S.wa.numero || '').replace(/\D/g, '');
+  const painel = (i, titulo, corpo, extra, cls) => el('section', { class: 'widget' + (cls ? ' ' + cls : '') }, el('div', { class: 'w-cab' }, el('span', { class: 'w-ico' }, ico(i)), el('h3', { text: titulo }), extra || null), corpo);
+  const grupos = {}; for (const m of modelos()) (grupos[m.grupo || 'Outros'] = grupos[m.grupo || 'Outros'] || []).push(m);
+  pg.replaceChildren(
+    el('header', { class: 'pg-cab' }, el('span', { class: 'tile wa-tile' }, ico('wa')),
+      el('div', { class: 'grow' }, el('h1', { text: 'WhatsApp' }), el('p', { text: 'Sua sequência de follow-up: o painel diz quem chamar hoje e deixa a mensagem pronta. Ninguém fica esquecido.' })),
+      el('div', { class: 'pg-stats' }, pilha(hoje.length, 'para hoje', hoje.length ? 'var(--wa)' : null), pilha(naSemana, 'enviadas na semana'), pilha(taxa + '%', 'responderam'))),
+    el('div', { class: 'wa-grid' },
+      el('div', { class: 'wa-col' },
+        painel('sino', 'Para mandar hoje', hoje.length ? el('div', { class: 'fila' }, hoje.map(x => itemFila(x.l, x.t, api))) : el('p', { class: 'vazio', text: 'Tudo em dia por hoje. Quando você aborda uma empresa pelo Radar, a sequência começa sozinha: 2º toque em 2 dias, raio-x no 5º e despedida no 10º.' }), el('span', { class: 'hint', text: hoje.length ? `${hoje.length} ${hoje.length === 1 ? 'conversa' : 'conversas'}` : '' })),
+        painel('cal', 'Próximos 7 dias', prox.length ? el('ul', { class: 'w-lista' }, prox.slice(0, 12).map(x => el('li', null,
+          el('button', { class: 'w-item', type: 'button', onclick: () => abrirLead(x.l.id) }, el('b', { text: x.l.nome }), el('small', { text: `${x.t.titulo} · ${prazo(x.t.quando)}` })))))
+          : el('p', { class: 'vazio', text: 'Nada agendado para os próximos dias.' }))),
+      el('div', { class: 'wa-col' },
+        painel('wa', 'Seu WhatsApp', el('div', { class: 'wa-conta' },
+          el('div', { class: 'wa-num' }, el('b', { text: num ? fone(num.replace(/^55/, '')) : 'Número não configurado' }), el('span', { class: 'chip ' + (api ? 'v' : ''), text: api ? 'API oficial conectada' : 'Modo link (wa.me)' })),
+          el('p', { class: 'hint', text: api ? 'Você pode disparar o modelo aprovado pela API ou continuar abrindo cada conversa no seu WhatsApp.' : 'Cada botão abre a conversa no seu WhatsApp com o texto pronto. Você confere e envia.' }),
+          el('div', { class: 'row' }, el('button', { class: 'btn sm', type: 'button', onclick: abrirConfigWhats }, ico('engrenagem'), 'Configurar'),
+            num ? el('button', { class: 'btn sm', type: 'button', onclick: e => copiar('https://wa.me/' + (num.startsWith('55') ? num : '55' + num), null, e.currentTarget) }, ico('link'), 'Copiar meu link') : null))),
+        painel('doc', 'Modelos de mensagem', el('div', { class: 'modelos' }, Object.entries(grupos).map(([g, ms]) => el('div', { class: 'm-grupo' }, el('span', { class: 'm-g', text: g }),
+          ms.map(m => el('button', { class: 'm-item', type: 'button', title: m.texto, onclick: () => editarModelo(m) }, el('b', { text: m.nome }), el('small', { text: m.texto })))))),
+          el('button', { class: 'btn ghost sm', type: 'button', onclick: () => editarModelo(null) }, ico('mais'), 'Novo')),
+        painel('conversa', 'Últimos envios', envios.length ? el('ul', { class: 'linha-tempo' }, envios.slice(0, 8).map(x => el('li', null,
+          el('i', { class: x.t.via === 'pulado' ? 'pulo' : '' }), el('button', { class: 'w-item', type: 'button', onclick: () => abrirLead(x.l.id) }, el('b', { text: x.l.nome }), el('small', { text: `${ROTULO_TOQUE[x.t.tipo] || 'Mensagem'}${x.t.via === 'api' ? ' · pela API' : x.t.via === 'pulado' ? ' · pulado' : ''} · ${quando(x.t.em)}` })))))
+          : el('p', { class: 'vazio', text: 'As mensagens que você mandar pelo painel aparecem aqui.' })))));
+}
+const ROTULO_TOQUE = { primeiro: '1ª mensagem', sequencia: 'Follow-up', proposta: 'Cobrança da proposta', confirmacao: 'Confirmação de reunião', indicacao: 'Pedido de indicação', avulso: 'Mensagem' };
+function itemFila(l, t, api) {
+  const k = `${l.id}:${t.tipo}:${t.passo}`, nc = nicho(l.nicho), atraso = t.quando < Date.now() - DIA;
+  const txt = el('textarea', { class: 'field', rows: '3', value: t.modelo ? rascunho(l, t) : '', 'aria-label': 'Mensagem para ' + l.nome, oninput: e => { S.rasc[k] = e.target.value; wa.href = waLink(l, e.target.value); } });
+  const enviar = async () => {
+    try { const antes = await registrarToque(l, t.tipo, txt.value, 'link'); delete S.rasc[k]; toast('Registrado como enviado.', { rotulo: 'Desfazer', fn: () => atualizarLead(l.id, { toques: antes }).catch(() => {}) }); } catch (e) {}
+  };
+  const wa = el('a', { class: 'btn wa sm', href: waLink(l, txt.value), target: '_blank', rel: 'noopener', onclick: () => setTimeout(enviar, 300) }, ico('wa'), 'Abrir e registrar');
+  const respondeu = el('button', { class: 'btn sm', type: 'button', onclick: () => mudarEtapa(l, t.tipo === 'indicacao' ? l.etapa : 'conversando').then(() => toast(`${l.nome} foi para Em conversa. Boa!`), () => {}) }, ico('check'), 'Respondeu');
+  const pular = el('button', { class: 'btn ghost sm', type: 'button', title: 'Pula este toque e segue a sequência', onclick: () => registrarToque(l, t.tipo, '', 'pulado').catch(() => {}) }, 'Pular');
+  const acoes = t.tipo === 'fim'
+    ? [el('button', { class: 'btn sm', type: 'button', onclick: () => mudarEtapa(l, 'descartado').catch(() => {}) }, ico('lixo'), 'Descartar'), el('button', { class: 'btn sm', type: 'button', onclick: () => atualizarLead(l.id, { etapa: 'novo' }).catch(() => {}) }, 'Voltar para a fila'), el('button', { class: 'btn ghost sm', type: 'button', onclick: () => abrirLead(l.id) }, 'Abrir ficha')]
+    : [wa, api && api.tpl && t.tipo === 'sequencia' ? el('button', { class: 'btn sm', type: 'button', onclick: e => { const b = e.currentTarget; b.disabled = true; enviarModeloApi(l).then(() => toast('Modelo enviado pela API.'), x => { b.disabled = false; toast('A API recusou: ' + x.message); }); } }, ico('enviar'), 'Enviar pela API') : null,
+      t.modelo === 'seguimento2' && S.dl ? el('button', { class: 'btn sm', type: 'button', onclick: () => abrirRaioX(l.id) }, ico('pulso'), 'Raio-X') : null,
+      t.tipo !== 'indicacao' ? respondeu : null, pular];
+  return el('article', { class: 'f-item' + (atraso ? ' atrasado' : ''), style: { '--h': String(nc.h) } },
+    el('div', { class: 'f-top' }, el('span', { class: 'tile' }, ico(nc.i)),
+      el('button', { class: 'f-nome', type: 'button', onclick: () => abrirLead(l.id) }, el('b', { text: l.nome }), el('small', { text: [l.nicho, local(l), ETAPA[l.etapa]].filter(Boolean).join(' · ') })),
+      el('span', { class: 'chip ' + (atraso ? 'u-1' : 'v'), text: `${t.titulo} · ${prazo(t.quando)}` })),
+    t.modelo ? txt : el('p', { class: 'hint', text: 'Ela não respondeu a nenhum dos toques. Descarte ou devolva para a fila para tentar daqui a um tempo.' }),
+    el('div', { class: 'row f-acoes' }, acoes));
+}
+function editarModelo(m) {
+  const novo = !m, base = m || { id: 'm' + Date.now().toString(36), grupo: 'Meus modelos', nome: '', texto: '' };
+  const [l1, nome] = campo('Nome', { id: 'mo-nome', value: base.nome, placeholder: 'Ex.: Resposta para quem pediu preço' });
+  const [l2, grupo] = campo('Grupo', { id: 'mo-grupo', value: base.grupo });
+  const [l3, texto] = campo('Mensagem', { id: 'mo-texto', rows: '6', value: base.texto });
+  const vars = el('p', { class: 'hint', text: 'Variáveis: {saudacao} {eu} {minha_empresa} {empresa} {cidade} {nicho} {nicho_busca} {reuniao_quando} {reuniao_onde}. Elas viram os dados de cada empresa na hora de enviar.' });
+  const salvar = async () => {
+    if (!texto.value.trim()) { toast('Escreva a mensagem.'); return; }
+    const lista = modelos().map(x => ({ ...x })), item = { ...base, nome: nome.value.trim() || 'Sem nome', grupo: grupo.value.trim() || 'Meus modelos', texto: texto.value.trim() };
+    const i = lista.findIndex(x => x.id === item.id); if (i >= 0) lista[i] = item; else lista.push(item);
+    try { await gravar('config/whatsapp', { ...S.wa, modelos: lista }, 'set'); fecharModal(); toast('Modelo salvo.'); } catch (e) {}
+  };
+  const apagar = !novo && !MODELOS_PADRAO.some(x => x.id === base.id) ? el('button', { class: 'btn ghost sm danger', type: 'button', onclick: async () => { try { await gravar('config/whatsapp', { ...S.wa, modelos: modelos().filter(x => x.id !== base.id) }, 'set'); fecharModal(); } catch (e) {} } }, ico('lixo'), 'Apagar') : null;
+  const restaurar = !novo && MODELOS_PADRAO.some(x => x.id === base.id) ? el('button', { class: 'btn ghost sm', type: 'button', onclick: () => { texto.value = MODELOS_PADRAO.find(x => x.id === base.id).texto; } }, 'Texto original') : null;
+  abrirModal('modelo', novo ? 'Novo modelo' : 'Editar modelo', [el('div', { class: 'two' }, l1, l2), l3, vars], [apagar, restaurar, el('button', { class: 'btn', type: 'button', onclick: e => copiar(texto.value, texto, e.currentTarget) }, ico('copiar'), 'Copiar'), el('button', { class: 'btn gold', type: 'button', text: 'Salvar', onclick: salvar })]);
+}
+function abrirConfigWhats() {
+  if (!S.db) { toast('O banco de dados não está disponível nesta visualização.'); return; }
+  const cad = cadencia();
+  const [l1, numero] = campo('Número do WhatsApp da empresa (com DDD)', { id: 'w-num', value: S.wa.numero || '', placeholder: '(54) 99999-9999', inputmode: 'tel' });
+  const dias = cad.map((c, i) => campo(i === cad.length - 1 ? 'Último toque (dia)' : `${i + 2}º toque (dia)`, { id: 'w-d' + i, type: 'number', min: '1', max: '60', value: String(c.dias) }));
+  const corpo = [l1, el('p', { class: 'hint', text: 'Ele aparece no Raio-X digital e no seu link de contato.' }),
+    el('div', { class: 'pend' }, el('b', { text: 'Sequência de follow-up' }), el('span', { text: 'Dias contados a partir da primeira mensagem. Os textos de cada toque ficam em Modelos de mensagem.' }), el('div', { class: 'tres-c' }, dias.map(d => d[0])))];
+  let api = null;
+  if (MODO_LOCAL) {
+    const f = (rot, k, props) => campo(rot, { id: 'w-' + k, value: mem('radar.wa.' + k) || '', autocomplete: 'off', ...props });
+    const [a1, pid] = f('Phone Number ID', 'phoneid', { placeholder: 'Ex.: 123456789012345' });
+    const [a2, tok] = f('Token de acesso', 'token', { type: 'password', placeholder: 'EAAG…' });
+    const [a3, tpl] = f('Nome do modelo aprovado (primeiro contato)', 'tpl', { placeholder: 'Ex.: primeiro_contato' });
+    const [a4, lang] = f('Idioma do modelo', 'lang', { placeholder: 'pt_BR' });
+    const [a5, ver] = f('Versão da API', 'ver', { placeholder: 'v23.0' });
+    const vars = el('input', { type: 'checkbox', id: 'w-vars', checked: mem('radar.wa.vars') !== '0' });
+    const st = el('p', { class: 'hint', text: waApi() ? 'Conectado neste computador.' : 'Não conectado.' });
+    const testar = el('button', { class: 'btn sm', type: 'button', onclick: async () => {
+      st.textContent = 'Testando…';
+      try { const r = await graph({ token: tok.value.trim(), id: pid.value.trim(), ver: ver.value.trim() || 'v23.0' }, pid.value.trim() + '?fields=display_phone_number,verified_name'); st.textContent = `Conectou: ${r.verified_name || ''} ${r.display_phone_number || ''}`.trim(); }
+      catch (e) { st.textContent = 'Não conectou: ' + e.message; }
+    } }, ico('check'), 'Testar conexão');
+    api = { pid, tok, tpl, lang, ver, vars };
+    corpo.push(el('div', { class: 'pend' }, el('b', { text: 'API oficial do WhatsApp (opcional)' }),
+      el('span', { text: 'Para disparar mensagens direto do painel pelo número da empresa. Crie um app em developers.facebook.com, adicione o produto WhatsApp e copie o Phone Number ID e um token permanente. Para começar conversa com quem nunca te chamou, a Meta exige um modelo aprovado.' }),
+      el('div', { class: 'two' }, a1, a2), el('div', { class: 'two' }, a3, a4), el('div', { class: 'two' }, a5, el('label', { class: 'chk' }, vars, 'O modelo tem a variável {{1}} com o nome da empresa')),
+      el('div', { class: 'row' }, testar, st),
+      el('span', { class: 'hint', text: 'O token fica guardado só neste navegador. Respostas dos clientes não chegam no painel sem um servidor (webhook): por enquanto, marque "Respondeu" na fila.' })));
+  } else corpo.push(el('div', { class: 'pend' }, el('b', { text: 'API oficial do WhatsApp' }), el('span', { text: 'A conexão direta com a API da Meta funciona na versão do computador (o zip). Aqui o painel usa os links do WhatsApp, que funcionam com qualquer número.' })));
+  const salvar = el('button', { class: 'btn gold', type: 'button', text: 'Salvar', onclick: async () => {
+    if (api) { for (const k of ['pid', 'tok', 'tpl', 'lang', 'ver']) mem('radar.wa.' + ({ pid: 'phoneid', tok: 'token' }[k] || k), api[k].value.trim()); mem('radar.wa.vars', api.vars.checked ? '1' : '0'); }
+    const nova = cad.map((c, i) => ({ ...c, dias: Math.max(1, Math.min(60, Number(dias[i][1].value) || c.dias)) }));
+    for (let i = 1; i < nova.length; i++) if (nova[i].dias <= nova[i - 1].dias) nova[i].dias = nova[i - 1].dias + 1;
+    try { await gravar('config/whatsapp', { ...S.wa, numero: numero.value.replace(/\D/g, ''), cadencia: nova }, 'set'); fecharModal(); toast('WhatsApp configurado.'); render(); } catch (e) {}
+  } });
+  abrirModal('whats', 'Configurar WhatsApp', corpo, salvar);
+}
+
+/* Catálogo de serviços e preços */
+function tabelaPrecos() {
+  const c = catalogo().filter(s => s.setup || s.mensal);
+  return c.length ? 'Tabela de preços da empresa (use estes valores): ' + c.map(s => `${s.nome}: ${[s.setup ? brl(s.setup) + ' de implantação' : '', s.mensal ? brl(s.mensal) + '/mês' : ''].filter(Boolean).join(' + ')}`).join('; ') + '.' : '';
+}
+function abrirCatalogo() {
+  if (!S.db) { toast('O banco de dados não está disponível nesta visualização.'); return; }
+  const linhas = el('div', { class: 'cat' });
+  const linha = s => {
+    const r = el('div', { class: 'cat-l' },
+      el('input', { class: 'field', value: s.nome || '', placeholder: 'Serviço', 'aria-label': 'Serviço' }),
+      el('input', { class: 'field', type: 'number', min: '0', step: '50', value: s.setup ?? '', placeholder: 'Implantação R$', 'aria-label': 'Implantação em reais' }),
+      el('input', { class: 'field', type: 'number', min: '0', step: '10', value: s.mensal ?? '', placeholder: 'Mensal R$', 'aria-label': 'Mensalidade em reais' }),
+      el('button', { class: 'ib', type: 'button', title: 'Remover', 'aria-label': 'Remover serviço', onclick: () => r.remove() }, ico('x')));
+    linhas.append(r);
+  };
+  catalogo().forEach(linha);
+  const salvar = el('button', { class: 'btn gold', type: 'button', text: 'Salvar', onclick: async () => {
+    const itens = [...linhas.children].map(r => { const [n, a, m] = r.querySelectorAll('input'); return { nome: n.value.trim(), setup: Number(a.value) || null, mensal: Number(m.value) || null }; }).filter(s => s.nome);
+    try { await gravar('config/catalogo', { itens }, 'set'); fecharModal(); toast('Serviços e preços salvos.'); render(); } catch (e) {}
+  } });
+  abrirModal('catalogo', 'Serviços e preços', [el('p', { class: 'hint', text: 'Esses valores entram nas propostas da assistente e somam sozinhos quando você registra um fechamento.' }), el('div', { class: 'cat-l cab' }, el('span', { text: 'Serviço' }), el('span', { text: 'Implantação' }), el('span', { text: 'Mensal' }), el('span')), linhas,
+    el('button', { class: 'btn ghost sm', type: 'button', onclick: () => linha({ nome: '' }) }, ico('mais'), 'Adicionar serviço')], salvar);
+}
+
+/* Reunião e fechamento (ficha da empresa) */
+const paraLocal = iso => { const t = ts(iso); if (!t) return ''; const d = new Date(t - new Date(t).getTimezoneOffset() * 6e4); return d.toISOString().slice(0, 16); };
+function linkAgenda(l) {
+  const ini = new Date(ts(l.reuniao_em)), fim = new Date(ini.getTime() + 45 * 6e4), f = d => d.toISOString().replace(/[-:]|\.\d{3}/g, '');
+  const det = [`${l.nicho} · ${local(l)}`, l.telefone ? 'WhatsApp: ' + fone(l.telefone) : '', igUser(l) ? 'Instagram: @' + igUser(l) : '', l.notas].filter(Boolean).join('\n');
+  return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('Reunião · ' + l.nome)}&dates=${f(ini)}/${f(fim)}&details=${encodeURIComponent(det)}&location=${encodeURIComponent(l.reuniao_local || '')}`;
+}
+function secReuniao(l) {
+  const dt = el('input', { class: 'field', type: 'datetime-local', id: 'd-reu', value: paraLocal(l.reuniao_em), 'aria-label': 'Data e hora da reunião' });
+  const lc = el('input', { class: 'field', id: 'd-reu-l', value: l.reuniao_local || '', placeholder: 'Onde: Google Meet, no escritório deles…', 'aria-label': 'Local da reunião' });
+  const salvar = () => { if (!dt.value) { toast('Escolha a data e a hora.'); return; } const iso = new Date(dt.value).toISOString(); atualizarLead(l.id, { ...(l.etapa === 'reuniao' ? {} : patchEtapa(l, 'reuniao')), reuniao_em: iso, reuniao_local: lc.value.trim() }).then(() => toast('Reunião marcada.'), () => {}); };
+  const tem = ts(l.reuniao_em) > 0;
+  return el('div', { class: 'sec' }, el('h4', { text: 'Reunião' }),
+    el('div', { class: 'two' }, dt, lc),
+    el('div', { class: 'row', style: { 'margin-top': '8px' } }, el('button', { class: 'btn sm', type: 'button', onclick: salvar }, ico('cal'), tem ? 'Atualizar' : 'Marcar reunião'),
+      tem ? el('a', { class: 'btn sm', href: linkAgenda(l), target: '_blank', rel: 'noopener' }, ico('cal'), 'Google Agenda') : null,
+      tem && l.telefone ? el('a', { class: 'btn wa sm', href: waLink(l, preencher(modeloTxt('confirmacao'), l)), target: '_blank', rel: 'noopener', onclick: () => setTimeout(() => registrarToque(l, 'confirmacao', preencher(modeloTxt('confirmacao'), l)).catch(() => {}), 300) }, ico('wa'), 'Confirmar no WhatsApp') : null));
+}
+function secFechamento(l) {
+  const vp = el('input', { class: 'field', type: 'number', min: '0', step: '50', id: 'd-vp', value: l.valor_projeto ?? '', placeholder: 'R$', 'aria-label': 'Valor do projeto' });
+  const vm = el('input', { class: 'field', type: 'number', min: '0', step: '10', id: 'd-vm', value: l.valor_mensal ?? '', placeholder: 'R$ por mês', 'aria-label': 'Mensalidade' });
+  const sel = new Set(l.servicos_fechados || []);
+  const chips = el('div', { class: 'chips' }, catalogo().map(s => {
+    const b = el('button', { type: 'button', class: 'chip sel-chip', 'aria-pressed': String(sel.has(s.nome)), text: s.nome, onclick: () => {
+      const on = !sel.has(s.nome); on ? sel.add(s.nome) : sel.delete(s.nome); b.setAttribute('aria-pressed', String(on));
+      const soma = k => catalogo().filter(x => sel.has(x.nome)).reduce((t, x) => t + (Number(x[k]) || 0), 0);
+      if (catalogo().some(x => x.setup || x.mensal)) { vp.value = soma('setup') || ''; vm.value = soma('mensal') || ''; }
+    } });
+    return b;
+  }));
+  return el('div', { class: 'sec fechou' }, el('h4', { text: 'Fechamento 🎉' }),
+    el('p', { class: 'hint', text: 'Marque o que foi vendido. Com os preços cadastrados em Serviços e preços, os valores somam sozinhos.' }), chips,
+    el('div', { class: 'two', style: { 'margin-top': '8px' } }, el('label', { class: 'mini-l' }, 'Valor do projeto', vp), el('label', { class: 'mini-l' }, 'Mensalidade', vm)),
+    el('div', { class: 'row', style: { 'margin-top': '8px' } }, el('button', { class: 'btn sm gold', type: 'button', onclick: () => atualizarLead(l.id, { valor_projeto: Number(vp.value) || null, valor_mensal: Number(vm.value) || null, servicos_fechados: [...sel] }).then(() => toast('Fechamento registrado. Parabéns!'), () => {}) }, ico('check'), 'Salvar fechamento'),
+      el('button', { class: 'btn ghost sm', type: 'button', onclick: abrirCatalogo }, 'Serviços e preços')));
+}
+function secHistorico(l) {
+  const t = (l.toques || []).slice().reverse(), prox = proximoToque(l);
+  if (!t.length && !prox) return null;
+  return el('div', { class: 'sec' }, el('h4', { text: 'Contatos pelo WhatsApp' }),
+    prox ? el('p', { class: 'prox' }, ico('sino'), `Próximo: ${prox.titulo.toLowerCase()} · ${prazo(prox.quando)}`) : null,
+    t.length ? el('ul', { class: 'linha-tempo' }, t.slice(0, 8).map(x => el('li', null, el('i', { class: x.via === 'pulado' ? 'pulo' : '' }), el('div', null, el('b', { text: `${ROTULO_TOQUE[x.tipo] || 'Mensagem'}${x.via === 'api' ? ' · API' : x.via === 'pulado' ? ' · pulado' : ''}` }), el('small', { text: quando(x.em) }))))) : null);
+}
+
+/* Raio-X digital: imagem pronta para mandar no WhatsApp, feita só com os dados públicos do lead (sem gastar IA) */
+function avaliarRaioX(l) {
+  const g = l.google_avaliacoes, ig = igUser(l);
+  const site = siteGap(l) === 1 ? ['Não encontramos site próprio', 'Quem procura no Google não acha a empresa fora das redes sociais.'] : l.site_status === 'site_fraco' ? ['Site com pontos a melhorar', 'Lento, desatualizado ou difícil de usar no celular.'] : ['Site encontrado', 'Base boa para atrair clientes pelo Google.'];
+  const goo = g == null ? ['Pouca presença no Google', 'Não encontramos perfil com avaliações no Google.'] : g < 30 ? [`Só ${g} avaliações no Google`, 'Poucas avaliações passam menos confiança que os concorrentes.'] : [`${g.toLocaleString('pt-BR')} avaliações${l.google_nota != null ? ' · nota ' + l.google_nota.toLocaleString('pt-BR') : ''}`, 'Boa reputação: dá para transformar em mais clientes.'];
+  const ins = !ig ? ['Instagram não encontrado', 'Sem vitrine para quem descobre a empresa pelas redes.'] : l.instagram_status === 'fraco' ? [`@${ig} · perfil fraco`, 'Pouca atividade ou bio sem link para contato.'] : [`@${ig}${l.seguidores != null ? ' · ' + l.seguidores.toLocaleString('pt-BR') + ' seguidores' : ''}`, 'Perfil ativo: dá para converter seguidores em clientes.'];
+  const nota = Math.max(0, Math.min(10, Math.round((10 - 10 * (.45 * siteGap(l) + .35 * googleGap(l) + .2 * igGap(l))) * 10) / 10));
+  return { nota, itens: [['Site', 1 - siteGap(l), ...site], ['Google', 1 - googleGap(l), ...goo], ['Instagram', 1 - igGap(l), ...ins]] };
+}
+function desenharRaioX(l) {
+  const W = 1080, H = 1350, cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+  const c = cv.getContext('2d'), cor = CORES[S.config.cor] || ['#f0cf7e', '#d2a043'], { nota, itens } = avaliarRaioX(l);
+  const fonte = (p, w) => `${w || 600} ${p}px "Plus Jakarta Sans", system-ui, sans-serif`;
+  const quebrar = (t, x, y, max, alt, lim = 9) => {
+    const ps = String(t).split(' '), linhas = []; let lin = '';
+    for (const p of ps) { const tst = lin ? lin + ' ' + p : p; if (c.measureText(tst).width > max && lin) { linhas.push(lin); lin = p; } else lin = tst; }
+    linhas.push(lin);
+    if (linhas.length > lim) { linhas.length = lim; let u = linhas[lim - 1]; while (u && c.measureText(u + '…').width > max) u = u.slice(0, -1); linhas[lim - 1] = u + '…'; }
+    for (const s of linhas) { c.fillText(s, x, y); y += alt; }
+    return y;
+  };
+  const g = c.createLinearGradient(0, 0, W, H); g.addColorStop(0, '#0b1020'); g.addColorStop(1, '#161c38'); c.fillStyle = g; c.fillRect(0, 0, W, H);
+  const brilho = c.createRadialGradient(W * .85, 120, 10, W * .85, 120, 520); brilho.addColorStop(0, cor[1] + '55'); brilho.addColorStop(1, 'transparent'); c.fillStyle = brilho; c.fillRect(0, 0, W, H);
+  c.fillStyle = cor[0]; c.font = fonte(30, 800); c.fillText('RAIO-X DIGITAL', 80, 120);
+  const tam = l.nome.length > 34 ? 46 : l.nome.length > 20 ? 54 : 64; c.fillStyle = '#ffffff'; c.font = fonte(tam, 800); let y = quebrar(l.nome, 80, 200, 640, tam + 10, 3);
+  c.fillStyle = '#aab3cf'; c.font = fonte(32, 500); c.fillText([l.nicho, local(l)].filter(Boolean).join(' · '), 80, y + 4);
+  // nota geral
+  const cx = 880, cy = 210, r = 108, k = nota / 10, corN = nota < 4 ? '#ff6b70' : nota < 7 ? '#f4a64c' : '#45d4b8';
+  c.lineWidth = 22; c.strokeStyle = 'rgba(255,255,255,.1)'; c.beginPath(); c.arc(cx, cy, r, 0, Math.PI * 2); c.stroke();
+  c.strokeStyle = corN; c.lineCap = 'round'; c.beginPath(); c.arc(cx, cy, r, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * Math.max(.02, k)); c.stroke();
+  c.fillStyle = '#fff'; c.textAlign = 'center'; c.font = fonte(68, 800); c.fillText(nota.toLocaleString('pt-BR'), cx, cy + 18); c.font = fonte(24, 600); c.fillStyle = '#aab3cf'; c.fillText('de 10', cx, cy + 54); c.fillText('presença digital', cx, cy + r + 56); c.textAlign = 'left';
+  y = Math.max(y + 100, 480);
+  for (const [nome, v, titulo, desc] of itens) {
+    c.fillStyle = 'rgba(255,255,255,.06)'; c.beginPath(); c.roundRect(60, y - 56, W - 120, 150, 26); c.fill();
+    const corI = v < .35 ? '#ff6b70' : v < .7 ? '#f4a64c' : '#45d4b8';
+    c.fillStyle = '#aab3cf'; c.font = fonte(24, 700); c.fillText(nome.toUpperCase(), 100, y - 14);
+    c.fillStyle = 'rgba(255,255,255,.1)'; c.beginPath(); c.roundRect(W - 360, y - 32, 260, 16, 8); c.fill();
+    c.fillStyle = corI; c.beginPath(); c.roundRect(W - 360, y - 32, Math.max(16, 260 * v), 16, 8); c.fill();
+    c.fillStyle = '#fff'; c.font = fonte(36, 700); c.fillText(titulo, 100, y + 30);
+    c.fillStyle = '#c7cee6'; c.font = fonte(26, 500); c.fillText(desc, 100, y + 70);
+    y += 172;
+  }
+  const blocos = [['O que está custando clientes', l.problemas.slice(0, 3)], ['Como resolver', l.servicos_sugeridos.slice(0, 3)]].filter(b => b[1].length);
+  for (const [tit, ls] of blocos) {
+    if (y > H - 260) break;
+    c.fillStyle = cor[0]; c.font = fonte(30, 800); c.fillText(tit, 80, y + 10); y += 56;
+    c.font = fonte(27, 500);
+    for (const t of ls) { if (y > H - 205) break; c.fillStyle = cor[1]; c.beginPath(); c.arc(92, y - 9, 6, 0, Math.PI * 2); c.fill(); c.fillStyle = '#e6e9f5'; y = quebrar(t, 116, y, W - 200, 36, 2) + 6; }
+    y += 20;
+  }
+  const num = (S.wa.numero || '').replace(/\D/g, '').replace(/^55/, '');
+  c.fillStyle = 'rgba(255,255,255,.08)'; c.fillRect(0, H - 150, W, 150);
+  c.fillStyle = '#fff'; c.font = fonte(34, 800); c.fillText(S.config.empresa, 80, H - 88);
+  c.fillStyle = '#aab3cf'; c.font = fonte(24, 500); c.fillText(`Diagnóstico gratuito com dados públicos · ${new Date().toLocaleDateString('pt-BR')}`, 80, H - 48);
+  if (num) { c.textAlign = 'right'; c.fillStyle = '#25d366'; c.font = fonte(32, 800); c.fillText('WhatsApp ' + fone(num), W - 80, H - 88); c.textAlign = 'left'; }
+  return cv;
+}
+function textoRaioX(l) {
+  const { nota, itens } = avaliarRaioX(l);
+  return `${saudacao()}! Fiz o raio-x digital da ${l.nome} 👇\n\n*Nota de presença digital: ${nota.toLocaleString('pt-BR')}/10*\n${itens.map(([n, , t]) => `• *${n}:* ${t}`).join('\n')}${l.problemas.length ? '\n\n*O que está custando clientes:*\n' + l.problemas.slice(0, 3).map(p => '• ' + p).join('\n') : ''}\n\nPosso te mostrar em 10 minutos como resolver isso? ${meuNome() ? '— ' + meuNome() + ', ' : ''}${S.config.empresa}`;
+}
+async function abrirRaioX(id) {
+  const l = S.leads.get(id); if (!l) return;
+  try { if (document.fonts) await document.fonts.load('800 40px "Plus Jakarta Sans"'); } catch (e) {}
+  const cv = desenharRaioX(l), img = el('img', { class: 'raiox-img', src: cv.toDataURL('image/png'), alt: 'Raio-X digital de ' + l.nome });
+  const txt = textoRaioX(l), arq = `raio-x-${slug(l.nome)}.png`;
+  const baixar = S.dl ? el('button', { class: 'btn gold', type: 'button', onclick: () => cv.toBlob(b => S.dl.save({ filename: arq, data: b }).then(() => toast('Imagem salva. Anexe no WhatsApp da empresa.'), e => { if (!e || e.code !== 'declined') toast('Não consegui salvar a imagem.'); })) }, ico('baixar'), 'Baixar imagem') : null;
+  const copiarImg = window.ClipboardItem ? el('button', { class: 'btn', type: 'button', onclick: e => { const b0 = e.currentTarget; cv.toBlob(b => navigator.clipboard.write([new ClipboardItem({ 'image/png': b })]).then(() => { b0.replaceChildren(ico('check'), 'Copiada'); toast('Imagem copiada. Cole na conversa do WhatsApp.'); }, () => toast('O navegador não deixou copiar a imagem. Use Baixar imagem.'))); } }, ico('copiar'), 'Copiar imagem') : null;
+  const wa = l.telefone ? el('a', { class: 'btn wa', href: waLink(l, txt), target: '_blank', rel: 'noopener', onclick: () => setTimeout(() => registrarToque(l, l.etapa === 'novo' ? 'primeiro' : 'avulso', 'Raio-X digital').catch(() => {}), 300) }, ico('wa'), 'Mandar resumo') : null;
+  abrirModal('raiox', 'Raio-X digital · ' + l.nome, [img, el('p', { class: 'hint', text: 'Feito só com os dados públicos que o radar encontrou. Baixe ou copie a imagem e anexe na conversa; o botão verde abre o WhatsApp com o resumo em texto.' })], [copiarImg, baixar, wa]);
+  const m = $('.modal'); if (m) m.classList.add('larga');
+}
+
+/* Início: reuniões, resultados e dica do dia */
+const DICAS = [
+  'Mande o Raio-X digital no 3º toque. Quando o dono vê a própria nota, a conversa muda de "não preciso" para "como eu resolvo isso?".',
+  'Não pule a mensagem de despedida. "Vou parar de insistir" costuma tirar resposta de quem ficou em silêncio a semana toda.',
+  'Antes da reunião, pesquise o nicho da empresa no Google pelo celular e mostre quem aparece na frente dela. Vale mais que qualquer slide.',
+  'Feche primeiro o essencial (Google Meu Negócio + site simples). Tráfego e CRM ficam fáceis de vender quando o cliente já vê resultado.',
+  'Peça avaliação no Google 30 dias depois da entrega. É prova social para o cliente e para a Dalas.',
+  'Saia de cada fechamento com algo mensal, nem que seja a gestão do Google. Mensalidade é o que deixa o mês previsível.',
+  'Restaurante costuma responder melhor no meio da tarde, longe do almoço e da janta. Clínica, cedo ou no fim do dia.',
+  'Responda objeção com pergunta: "qual é a maior dúvida, valor, prazo ou resultado?". O cliente te diz exatamente o que falta para fechar.',
+  'Pousada paga comissão alta para sites de reserva. Mostre quanto ela economiza com reserva direta pelo próprio site.',
+  'Comece elogiando algo real do Instagram da empresa. Depois fale do que falta. A mensagem deixa de parecer disparo em massa.',
+  'Reserve um horário fixo por dia só para a fila do WhatsApp. Constância vence volume.',
+  'Telefone fixo não tem WhatsApp? Ligue. Muita empresa sem site atende o telefone mais rápido do que responde mensagem.',
+];
+function widgetReunioes() {
+  const agoraT = Date.now() - 2 * 3600e3;
+  const rs = [...S.leads.values()].filter(l => l.etapa === 'reuniao' && ts(l.reuniao_em) >= agoraT).sort((a, b) => ts(a.reuniao_em) - ts(b.reuniao_em)).slice(0, 4);
+  const dia = iso => { const d = new Date(ts(iso)), hoje = new Date(); const df = Math.round((new Date(d).setHours(0, 0, 0, 0) - hoje.setHours(0, 0, 0, 0)) / DIA); return (df === 0 ? 'Hoje' : df === 1 ? 'Amanhã' : d.toLocaleDateString('pt-BR', { weekday: 'short', day: 'numeric', month: 'numeric' })) + ' · ' + d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }); };
+  return rs.length ? el('ul', { class: 'w-lista' }, rs.map(l => el('li', null,
+    el('button', { class: 'w-item', type: 'button', onclick: () => abrirLead(l.id) }, el('b', { text: l.nome }), el('small', { text: dia(l.reuniao_em) + (l.reuniao_local ? ' · ' + l.reuniao_local : '') })),
+    el('a', { class: 'wa-r cal-r', href: linkAgenda(l), target: '_blank', rel: 'noopener', title: 'Adicionar ao Google Agenda', 'aria-label': 'Adicionar ao Google Agenda' }, ico('cal')))))
+    : el('p', { class: 'vazio', text: 'Nenhuma reunião marcada. Na ficha da empresa, use "Marcar reunião": ela aparece aqui, vai para o Google Agenda e a confirmação entra na fila do WhatsApp na véspera.' });
+}
+function widgetResultados() {
+  const ls = [...S.leads.values()], fech = ls.filter(l => l.etapa === 'fechado'), mes = new Date(); mes.setDate(1); mes.setHours(0, 0, 0, 0);
+  const noMes = fech.filter(l => ts(l.fechado_em) >= mes.getTime());
+  const faturado = noMes.reduce((t, l) => t + (l.valor_projeto || 0) + (l.valor_mensal || 0), 0), mrr = fech.reduce((t, l) => t + (l.valor_mensal || 0), 0);
+  const abord = ls.filter(l => l.abordado_em || !['novo', 'descartado'].includes(l.etapa)).length, conv = abord ? Math.round(fech.length / abord * 100) : 0;
+  const meses = [...Array(6)].map((_, i) => { const d = new Date(mes); d.setMonth(d.getMonth() - (5 - i)); const f = new Date(d); f.setMonth(f.getMonth() + 1); return { rot: d.toLocaleDateString('pt-BR', { month: 'short' }).replace('.', ''), v: fech.filter(l => ts(l.fechado_em) >= d.getTime() && ts(l.fechado_em) < f.getTime()).reduce((t, l) => t + (l.valor_projeto || 0) + (l.valor_mensal || 0), 0) }; });
+  const max = Math.max(1, ...meses.map(m => m.v));
+  const n = (v, rot, cls) => el('div', { class: 'res-n' + (cls ? ' ' + cls : '') }, el('b', { text: v }), el('span', { text: rot }));
+  return el('div', { class: 'res' },
+    el('div', { class: 'res-nums' }, n(brl(faturado), 'fechado no mês', 'ouro'), n(brl(mrr) + '/mês', 'receita recorrente'), n(String(fech.length), fech.length === 1 ? 'cliente fechado' : 'clientes fechados'), n(conv + '%', 'das abordadas viraram cliente')),
+    el('div', { class: 'res-graf', role: 'img', 'aria-label': 'Faturamento dos últimos 6 meses: ' + meses.map(m => `${m.rot} ${brl(m.v)}`).join(', ') }, meses.map((m, i) => el('div', { class: 'res-col', title: `${m.rot}: ${brl(m.v)}` }, el('i', { style: { '--p': (m.v / max * 100).toFixed(0) + '%', 'animation-delay': i * 60 + 'ms' }, class: i === 5 ? 'atual' : '' }), el('span', { text: m.rot })))),
+    !fech.length ? el('p', { class: 'vazio', text: 'Quando uma empresa for para Fechado, registre o valor na ficha e o faturamento aparece aqui.' }) : null);
 }
 
 /* ---------- IA ---------- */
@@ -1326,10 +1799,10 @@ Estrutura (texto simples, sem markdown pesado, pode usar *negrito* do WhatsApp e
 1. Saudação e uma frase mostrando que olhamos a empresa.
 2. *Diagnóstico rápido*: 2 ou 3 pontos concretos sobre a presença digital (site, Google, Instagram), só com base nos dados.
 3. *O que proponho*: 2 ou 3 serviços, cada um com o benefício em uma linha.
-4. *Investimento*: use os preços das instruções do dono, se houver; se não houver preço, escreva "valores sob medida, apresento numa conversa de 15 minutos".
+4. *Investimento*: use a tabela de preços ou os preços das instruções do dono, se houver; se não houver preço, escreva "valores sob medida, apresento numa conversa de 15 minutos".
 5. Próximo passo com uma pergunta simples.
 Máximo de 1.200 caracteres. Não invente fatos nem números.
-${c.instrucoes ? 'Instruções do dono: ' + c.instrucoes + '\n' : ''}
+${c.instrucoes ? 'Instruções do dono: ' + c.instrucoes + '\n' : ''}${tabelaPrecos()}
 DADOS DA EMPRESA:
 ${JSON.stringify(dadosLead(l))}`, { cache: false, onText: ({ text }) => { txt.value = text; } });
       txt.value = text.trim(); if (wa) wa.href = waLink(l, txt.value); await salvar();
@@ -1425,7 +1898,12 @@ ${c.instrucoes ? 'Instruções do dono: ' + c.instrucoes + '\n' : ''}Regras:
 Agora: ${new Date().toLocaleString('pt-BR')}. Empresa aberta na tela: ${ab ? `${ab.nome} (id ${ab.id})` : 'nenhuma'}.
 
 PAINEL (${S.leads.size} empresas no total; abaixo as 60 mais urgentes. Para detalhes de qualquer uma, use ver_lead) — id | empresa | nicho | cidade/UF | urgência | nec | pot | etapa | presença | telefone:
-${linhas.join('\n') || '(vazio)'}`;
+${linhas.join('\n') || '(vazio)'}
+
+FOLLOW-UPS DO WHATSAPP PARA HOJE (a fila da aba WhatsApp):
+${filaWhats().filter(x => x.t.quando <= fimDoDia()).slice(0, 15).map(x => `${x.l.id} | ${x.l.nome} | ${x.t.titulo} | ${prazo(x.t.quando)}`).join('\n') || '(nada para hoje)'}
+REUNIÕES MARCADAS:
+${[...S.leads.values()].filter(l => l.etapa === 'reuniao' && l.reuniao_em).sort((a, b) => ts(a.reuniao_em) - ts(b.reuniao_em)).slice(0, 10).map(l => `${l.nome} | ${new Date(ts(l.reuniao_em)).toLocaleString('pt-BR')}${l.reuniao_local ? ' | ' + l.reuniao_local : ''}`).join('\n') || '(nenhuma)'}`;
 }
 function ferramentas() {
   const achar = id => { const l = S.leads.get(String(id)); if (!l) throw new Error('Não existe empresa com esse id no painel.'); return l; };
@@ -1678,6 +2156,8 @@ function abrirMenu() {
   const m = el('div', { class: 'menu-perfil', id: 'menu-perfil', role: 'menu' },
     el('div', { class: 'quem' }, av, el('div', null, el('b', { text: nomeDono() || 'Seu perfil' }), el('span', { text: S.config.perfil_cargo || S.config.empresa }))),
     el('button', { class: 'btn', type: 'button', onclick: () => { fecharMenu(); abrirConfig(); } }, ico('engrenagem'), 'Perfil e configurações'),
+    el('button', { class: 'btn', type: 'button', onclick: () => { fecharMenu(); abrirCatalogo(); } }, ico('doc'), 'Serviços e preços'),
+    el('button', { class: 'btn', type: 'button', onclick: () => { fecharMenu(); abrirConfigWhats(); } }, ico('wa'), 'Configurar WhatsApp'),
     el('button', { class: 'btn', type: 'button', onclick: bloquear }, ico('cadeado'), lerPin() ? 'Bloquear o painel' : 'Criar senha de acesso'));
   document.body.append(m);
   setTimeout(() => document.addEventListener('click', function fora(e) { if (!m.contains(e.target) && !e.target.closest('#btn-perfil')) { fecharMenu(); document.removeEventListener('click', fora); } }), 0);
@@ -1765,7 +2245,7 @@ async function baixarCsv() {
 }
 
 /* ---------- Eventos ---------- */
-function irPara(v) { const novo = ['inicio', 'radar', 'urgencia', 'funil', 'lista'].includes(v) ? v : 'inicio'; if (novo !== S.view) S.animar = true; S.view = novo; render(); }
+function irPara(v) { const novo = ['inicio', 'radar', 'urgencia', 'funil', 'whats', 'lista'].includes(v) ? v : 'inicio'; if (novo !== S.view) S.animar = true; S.view = novo; render(); }
 document.querySelectorAll('.tabs button').forEach(b => b.addEventListener('click', () => { location.hash = b.dataset.view; irPara(b.dataset.view); }));
 window.addEventListener('hashchange', () => irPara(location.hash.slice(1)));
 window.addEventListener('resize', () => moverIndicador());
@@ -1835,7 +2315,7 @@ function criarLocal() {
         for (const x of Array.isArray(j.leads) ? j.leads : []) if (x && typeof x.id === 'string' && corte && String(x.criado_em || '') <= corte) vistos.add(x.id);
       }
       let mudou = false;
-      const SEUS = ['etapa', 'notas', 'mensagem', 'abordado_em', 'instagram'];
+      const SEUS = ['etapa', 'notas', 'mensagem', 'abordado_em', 'instagram', 'proposta', 'proposta_em', 'toques', 'respondeu_em', 'reuniao_em', 'reuniao_local', 'fechado_em', 'valor_projeto', 'valor_mensal', 'servicos_fechados'];
       for (const x of Array.isArray(j.leads) ? j.leads : []) {
         if (!x || typeof x.id !== 'string') continue;
         const { id, ...d } = x, k = 'leads/' + id, em = String(d.atualizado_em || '');
