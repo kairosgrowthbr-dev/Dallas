@@ -363,8 +363,83 @@ textarea.field { width: 100%; resize: vertical; min-height: 88px; line-height: 1
 .radar-top h2 { font-size: 15px; font-weight: 800; }
 .radar-top p { color: var(--fg-3); font-size: 12px; }
 .radar-cv { position: relative; min-width: 0; cursor: pointer; }
-#radar { height: 250px; cursor: pointer; }
-.leg { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-top: 2px; }
+/* páginas */
+.pagina.entra { animation: pagina .7s var(--ease) both; transform-origin: 50% 0; }
+@keyframes pagina { from { opacity: 0; transform: perspective(1400px) rotateX(7deg) translateY(28px) scale(.985); filter: blur(4px); } to { opacity: 1; transform: none; filter: none; } }
+.pagina.entra .widget, .pagina.entra .kpi { animation: sobe .7s var(--ease) both; }
+.pagina.entra .widget:nth-child(2) { animation-delay: .06s; } .pagina.entra .widget:nth-child(3) { animation-delay: .12s; } .pagina.entra .widget:nth-child(4) { animation-delay: .18s; }
+.pg-cab { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; padding-block: 26px 4px; }
+.pg-cab .tile { width: 54px; height: 54px; border-radius: 16px; display: grid; place-items: center; color: var(--gold-ink); background: linear-gradient(135deg, var(--gold-fill-1), var(--gold-fill-2)); box-shadow: 0 10px 28px var(--gold-soft); flex: none; animation: flutua 6s ease-in-out infinite; }
+.pg-cab .tile .ico { width: 26px; height: 26px; }
+.pg-cab h1 { font-size: clamp(24px, 3vw, 34px); font-weight: 800; letter-spacing: -.02em; line-height: 1.1; }
+.pg-cab p { color: var(--fg-2); margin-top: 4px; max-width: 70ch; }
+.pg-stats { display: flex; gap: 10px; flex-wrap: wrap; }
+.pg-stat { --c: var(--fg); background: var(--glass); border: 1px solid var(--line); border-radius: 14px; padding: 8px 14px; min-width: 92px; display: flex; flex-direction: column; }
+.pg-stat b { font-family: var(--mono); font-size: 22px; font-weight: 500; color: var(--c); line-height: 1.15; }
+.pg-stat span { font-size: 12px; color: var(--fg-3); }
+/* painéis do início */
+.inicio-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; padding-block: 8px 40px; }
+.widget { --rx: 0deg; --ry: 0deg; background: var(--glass); border: 1px solid var(--line); border-radius: 20px; padding: 16px; display: flex; flex-direction: column; gap: 12px; box-shadow: var(--shadow-1); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry)); transition: transform .4s var(--ease), box-shadow .3s; min-width: 0; }
+.widget:hover { box-shadow: var(--shadow-2); }
+.kpi { --rx: 0deg; --ry: 0deg; transform: perspective(700px) rotateX(var(--rx)) rotateY(var(--ry)); }
+.w-cab { display: flex; align-items: center; gap: 10px; }
+.w-cab h3 { font-size: 14.5px; font-weight: 800; flex: 1 1 auto; }
+.w-ico { width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center; background: var(--gold-soft); color: var(--gold); flex: none; }
+.w-ico .ico { width: 17px; height: 17px; }
+.meta-w { display: flex; gap: 14px; align-items: center; }
+.meta-w .anel { width: 84px; height: 84px; } .meta-w .anel b { font-size: 17px; }
+.meta-w .anel b::after { content: "%"; font-size: 11px; color: var(--fg-3); }
+.meta-n { font-family: var(--mono); font-size: 22px; font-weight: 500; display: block; }
+.meta-w p { color: var(--fg-2); font-size: 12.5px; margin-block: 2px 8px; }
+.w-lista { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.w-lista li { display: flex; align-items: center; gap: 8px; }
+.w-item { flex: 1 1 auto; min-width: 0; text-align: left; border: 1px solid var(--line); background: var(--surface); border-radius: 11px; padding: 7px 10px; cursor: pointer; transition: transform .25s var(--spring), border-color .2s; }
+.w-item:hover { transform: translateX(3px); border-color: var(--gold); }
+.w-item b { display: block; font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.w-item small { color: var(--fg-3); font-size: 11.5px; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.w-barras { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.w-barras button { width: 100%; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) auto; align-items: center; gap: 10px; border: 0; background: none; cursor: pointer; padding: 2px 0; text-align: left; }
+.w-n { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--fg-2); overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.w-n .ico { color: hsl(var(--h) var(--ns) var(--nl)); width: 15px; height: 15px; }
+.w-bar { height: 8px; border-radius: 99px; background: var(--surface-3); overflow: hidden; }
+.w-bar i { display: block; height: 100%; width: var(--p); border-radius: 99px; background: linear-gradient(90deg, hsl(var(--h) var(--ns) var(--nl) / .6), hsl(var(--h) var(--ns) var(--nl))); animation: cresce 1s var(--ease) both; transform-origin: left; }
+@keyframes cresce { from { transform: scaleX(0); } }
+.w-barras b { font-family: var(--mono); font-size: 12px; font-weight: 500; }
+.w-barras button:hover .w-n { color: var(--fg); }
+/* borda viva no mapa */
+.radar-box { position: relative; isolation: isolate; }
+.radar-box::before { content: ""; position: absolute; inset: -1px; border-radius: inherit; padding: 1px; background: conic-gradient(from var(--giro, 0deg), transparent 0 70%, var(--gold-fill-2) 80%, var(--teal) 90%, transparent 100%); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; z-index: -1; animation: borda 7s linear infinite; pointer-events: none; }
+@property --giro { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+@keyframes borda { to { --giro: 360deg; } }
+.hero h1 { animation: titulo .9s var(--ease) both; }
+@keyframes titulo { from { opacity: 0; transform: translateY(14px); letter-spacing: .02em; } to { opacity: 1; transform: none; } }
+@media (max-width: 1180px) { .inicio-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 620px) { .inicio-grid { grid-template-columns: 1fr; } .pg-stat { min-width: 0; flex: 1 1 0; } .mapa { height: 400px; background: none; } }
+@media (max-width: 720px) { .tabs { max-width: 100%; } .tabs button .ico { display: none; } .tabs button { padding: 7px 4px; font-size: 13px; } }
+
+/* mapa de bolhas */
+.mapa { position: relative; height: 252px; cursor: pointer; border-radius: 16px; background:
+  radial-gradient(ellipse 30% 70% at 12.5% 45%, var(--u1s), transparent 70%),
+  radial-gradient(ellipse 30% 70% at 37.5% 45%, var(--u2s), transparent 70%),
+  radial-gradient(ellipse 30% 70% at 62.5% 45%, var(--u3s), transparent 70%),
+  radial-gradient(ellipse 30% 70% at 87.5% 45%, var(--u4s), transparent 70%); }
+.bolha { --c: var(--u4); position: absolute; border: 0; padding: 0; border-radius: 50%; cursor: pointer; display: grid; place-items: center; color: rgba(255, 255, 255, .95);
+  background: radial-gradient(circle at 32% 26%, rgba(255, 255, 255, .7), rgba(255, 255, 255, 0) 38%), radial-gradient(circle at 50% 60%, var(--c), color-mix(in srgb, var(--c) 62%, #000) 100%);
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--c) 40%, transparent), inset 0 -3px 7px rgba(0, 0, 0, .22);
+  animation: boia 7s ease-in-out var(--d, 0s) infinite, nasce .7s var(--spring) var(--e, 0ms) backwards; transition: scale .3s var(--spring), box-shadow .3s; }
+.bolha .ico { width: 52%; height: 52%; filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .3)); }
+.bolha .ico svg { stroke-width: 2.2; }
+.bolha:hover, .bolha:focus-visible { scale: 1.22; z-index: 3; box-shadow: 0 0 0 3px var(--surface), 0 0 0 5px var(--c), 0 10px 26px color-mix(in srgb, var(--c) 55%, transparent); outline: none; }
+.bolha.u-1 { --c: var(--u1); } .bolha.u-2 { --c: var(--u2); } .bolha.u-3 { --c: var(--u3); } .bolha.u-4 { --c: var(--u4); }
+.bolha.u-1::after { content: ""; position: absolute; inset: -3px; border-radius: 50%; border: 2px solid var(--c); opacity: 0; animation: onda 2.6s ease-out var(--d, 0s) infinite; pointer-events: none; }
+@keyframes boia { 0%, 100% { translate: 0 0; } 33% { translate: 2px -4px; } 66% { translate: -2px 2px; } }
+@keyframes nasce { from { scale: 0; opacity: 0; } to { scale: 1; opacity: 1; } }
+.grupo-rot { position: absolute; transform: translateX(-50%); border: 0; background: none; cursor: pointer; color: var(--c); font: 700 12px var(--sans); display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; padding: 2px 8px; border-radius: 999px; transition: background-color .2s; }
+.grupo-rot:hover { background: var(--surface-3); }
+.grupo-rot b { font-family: var(--mono); font-weight: 500; font-size: 11px; color: var(--fg-2); background: var(--surface-3); padding: 0 6px; border-radius: 999px; }
+.mapa-vazio { position: absolute; inset: 0; display: grid; place-items: center; }
+.radar-tip .tip-m { display: block; color: var(--teal); font-size: 11.5px; margin-top: 2px; }
+.leg { display: none; }
 .leg span { font-size: 11.5px; color: var(--fg-2); display: inline-flex; align-items: center; gap: 5px; }
 .leg i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
 .top-urg { min-width: 0; display: flex; flex-direction: column; gap: 6px; }
@@ -420,7 +495,7 @@ textarea.field { width: 100%; resize: vertical; min-height: 88px; line-height: 1
 @keyframes treme { 20%, 60% { transform: translateX(-8px); } 40%, 80% { transform: translateX(8px); } }
 
 @media (max-width: 1100px) { .radar-box { grid-template-columns: 1fr; } }
-@media (max-width: 980px) { .hero { grid-template-columns: 1fr; } #radar { height: 230px; } }
+@media (max-width: 980px) { .hero { grid-template-columns: 1fr; } .mapa { height: 230px; } }
 @media (max-width: 720px) {
   .tres { grid-template-columns: 1fr 1fr 1fr; } .tres .gauge span { font-size: 11px; }
   .avatar.g { --s: 46px; }
@@ -445,7 +520,8 @@ textarea.field { width: 100%; resize: vertical; min-height: 88px; line-height: 1
       <a class="marca" href="#radar" aria-label="Dalas"><span class="asa"><img src="data:image/webp;base64,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" alt=""></span><b>DALAS</b></a>
       <nav class="tabs" role="tablist" aria-label="Visões">
         <span class="tab-ind" aria-hidden="true"></span>
-        <button role="tab" data-view="radar" aria-selected="true"><span class="ico" data-i="radar"></span>Radar</button>
+        <button role="tab" data-view="inicio" aria-selected="true"><span class="ico" data-i="inicio"></span>Início</button>
+        <button role="tab" data-view="radar" aria-selected="false"><span class="ico" data-i="radar"></span>Radar</button>
         <button role="tab" data-view="urgencia" aria-selected="false"><span class="ico" data-i="raio"></span>Urgência</button>
         <button role="tab" data-view="funil" aria-selected="false"><span class="ico" data-i="funil"></span>Funil</button>
         <button role="tab" data-view="lista" aria-selected="false"><span class="ico" data-i="lista"></span>Lista</button>
@@ -463,6 +539,8 @@ textarea.field { width: 100%; resize: vertical; min-height: 88px; line-height: 1
   </header>
 
   <div class="wrap">
+    <div id="aviso"></div>
+    <section class="pagina" id="pg-inicio" aria-label="Início">
     <section class="hero" aria-label="Resumo">
       <div>
         <div class="ola-l"><span class="avatar g" id="av-hero"></span><div><p class="eyebrow" id="hero-data"></p><h1 id="hero-ola">Olá</h1></div></div>
@@ -471,14 +549,16 @@ textarea.field { width: 100%; resize: vertical; min-height: 88px; line-height: 1
         <p class="rot" id="rot"></p>
       </div>
       <div class="radar-box">
-        <div class="radar-top"><div class="grow"><h2>Radar de urgência</h2><p>Quanto mais perto do centro, mais urgente · a altura do pino é o potencial de compra</p></div><button class="btn sm" id="btn-ver-urg">Ver urgências <span class="ico" data-i="seta"></span></button></div>
-        <div class="radar-cv" title="Abrir a página de urgências"><canvas id="radar" aria-label="Radar de urgência: cada pino é uma empresa"></canvas><div class="radar-tip" id="radar-tip" hidden></div><div class="leg" id="radar-leg"></div></div>
+        <div class="radar-top"><div class="grow"><h2>Mapa de oportunidades</h2><p>Cada bolha é uma empresa: a cor mostra a urgência e o tamanho, o potencial de compra</p></div><button class="btn sm" id="btn-ver-urg">Ver urgências <span class="ico" data-i="seta"></span></button></div>
+        <div class="radar-cv"><div class="mapa" id="mapa" role="group" aria-label="Mapa de oportunidades"></div><div class="radar-tip" id="radar-tip" hidden></div><div class="leg" id="radar-leg"></div></div>
         <div class="top-urg"><h3>Mais urgentes agora</h3><ol id="top-urg"></ol></div>
       </div>
     </section>
-
-    <nav class="nichos" id="nichos" aria-label="Nichos"></nav>
-
+      <div class="inicio-grid" id="inicio-grid"></div>
+    </section>
+    <section class="pagina" id="pg-trabalho" hidden>
+      <header class="pg-cab"><span class="tile" id="pg-ico"></span><div class="grow"><h1 id="pg-titulo"></h1><p id="pg-desc"></p></div><div class="pg-stats" id="pg-stats"></div></header>
+      <nav class="nichos" id="nichos" aria-label="Nichos"></nav>
     <section class="filters" aria-label="Filtros">
       <div class="busca"><span class="ico" data-i="busca"></span><input class="field" id="f-busca" type="search" placeholder="Buscar empresa, cidade ou nicho" aria-label="Buscar"></div>
       <select class="field" id="f-regiao" aria-label="Região"><option value="serra">Serra Gaúcha</option><option value="">Brasil inteiro</option></select>
@@ -491,8 +571,8 @@ textarea.field { width: 100%; resize: vertical; min-height: 88px; line-height: 1
       <button class="btn" id="btn-lote" hidden><span class="ico" data-i="brilho"></span>Preparar abordagens</button>
       <button class="btn" id="btn-csv" hidden><span class="ico" data-i="baixar"></span>Planilha</button>
     </section>
-    <div id="aviso"></div>
-    <main id="main"></main>
+      <main id="main"></main>
+    </section>
   </div>
 </div>
 
@@ -564,6 +644,12 @@ const ICONES = {
   tesoura: '<circle cx="6" cy="6.5" r="2.5"/><circle cx="6" cy="17.5" r="2.5"/><path d="M8 8l12 10M8 16L20 6"/>',
   ponto: '<circle cx="12" cy="12" r="3.5"/>',
   seta: '<path d="M5 12h14M13 6l6 6-6 6"/>',
+  inicio: '<path d="M3.5 11L12 4l8.5 7"/><path d="M6 9.5V20h4.5v-5h3v5H18V9.5"/>',
+  meta: '<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><path d="M12 12l7-7M16 5h3v3"/>',
+  sino: '<path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 1.5h-15z"/><path d="M10 20a2 2 0 0 0 4 0"/>',
+  barras: '<path d="M4 20h16M7 16v-5M12 16V7M17 16v-8"/>',
+  novo: '<path d="M12 3l2.2 4.6 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5L4.8 8.3l5-.7z"/>',
+  doc: '<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/>',
   cadeado: '<rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/>',
   camera: '<path d="M4 8h3l1.5-2.5h7L17 8h3v11H4z"/><circle cx="12" cy="13.5" r="3.5"/>',
   usuario: '<circle cx="12" cy="8.5" r="4"/><path d="M4.5 20.5a7.5 7.5 0 0 1 15 0"/>',
@@ -624,7 +710,7 @@ const calmo = matchMedia('(prefers-reduced-motion: reduce)');
 /* ---------- Estado ---------- */
 const S = {
   leads: new Map(), config: { ...CFG_PADRAO }, pedidos: [], rotina: null,
-  view: 'radar', f: { regiao: mem('radar.regiao') ?? 'serra', busca: '', uf: '', nicho: '', urg: '', tel: '' }, sort: { campo: 'urgencia', dir: -1 },
+  view: 'inicio', f: { regiao: mem('radar.regiao') ?? 'serra', busca: '', uf: '', nicho: '', urg: '', tel: '' }, sort: { campo: 'urgencia', dir: -1 },
   sel: null, ordem: [], modal: null, animar: true, kpi: {},
   db: null, sample: null, mcp: null, dl: null, tools: false, tts: null, dict: null, voz: mem('radar.voz') === '1',
   dbState: 'carregando', chat: { turns: [], busy: false, ctl: null, parcial: '', ouvindo: false, base: '' }, lote: false,
@@ -758,7 +844,6 @@ function aplicarAparencia(a) {
   if (t && t[0]) css += `.hero h1, .col-h h2, .card-t h3, .dr-h h2, .modal h2, .chat-h h2, .ola h3, .entrada-card h2, .radar-top h2, .top-urg b { font-family: '${t[0]}', var(--sans); letter-spacing: ${t[0] === 'Cinzel' ? '.02em' : 'normal'}; }`;
   if (a.tamanho === 'grande') css += `body { font-size: 15.5px; } .card-t h3, .top-urg b { font-size: 15px; } .meta, .chip, .card-f .tel { font-size: 13px; } .msg { font-size: 15px; }`;
   st.textContent = css;
-  radarCores();
 }
 
 /* ---------- Tema ---------- */
@@ -766,7 +851,6 @@ function aplicarTema(t) {
   document.documentElement.setAttribute('data-theme', t);
   const b = $('#btn-tema'); b.replaceChildren(ico(t === 'dark' ? 'sol' : 'lua'));
   b.title = t === 'dark' ? 'Modo claro' : 'Modo escuro';
-  radarCores();
 }
 
 /* ---------- Banco ---------- */
@@ -800,10 +884,7 @@ function initDb(db) {
     if (S.modal === 'garimpar') renderPedidos();
   }, () => {});
   db.doc('rotina/ultima').onSnapshot(s => { S.rotina = s.exists ? s.data() : null; renderHero(); }, () => {});
-  db.doc('conversas/principal').get().then(s => {
-    const t = s.exists ? s.data().turns : null;
-    if (Array.isArray(t) && !S.chat.turns.length) { S.chat.turns = t.filter(x => x && (x.role === 'user' || x.role === 'assistant') && typeof x.content === 'string' && x.content); renderChat(); }
-  }).catch(() => {});
+  // A conversa com a assistente começa do zero a cada vez que o painel é aberto (nada é guardado).
 }
 
 /* ---------- Filtros ---------- */
@@ -830,23 +911,82 @@ function desenhar() {
   $('#f-regiao').value = S.f.regiao; $('#f-urg').value = S.f.urg;
   document.querySelectorAll('.tabs button').forEach(b => b.setAttribute('aria-selected', String(b.dataset.view === S.view)));
   moverIndicador();
+  const inicio = S.view === 'inicio', pgI = $('#pg-inicio'), pgT = $('#pg-trabalho');
+  const trocou = S.paginaAtual !== S.view; S.paginaAtual = S.view;
+  pgI.hidden = !inicio; pgT.hidden = inicio;
+  if (trocou && !calmo.matches) { const pg = inicio ? pgI : pgT; pg.classList.remove('entra'); void pg.offsetWidth; pg.classList.add('entra'); window.scrollTo({ top: 0 }); }
+  renderAviso();
+  if (inicio) { mapaRender(); renderTopUrg(); renderInicio(); if (S.sel) renderDrawerSeguro(); return; }
+  renderCabecalho();
   renderNichos();
-  $('#btn-lote').hidden = !(S.sample && S.view === 'radar' && S.leads.size);
+  $('#nichos').hidden = S.view === 'funil';
+  $('#btn-lote').hidden = !(S.sample && (S.view === 'radar' || S.view === 'urgencia') && S.leads.size);
   $('#btn-lote').disabled = S.lote;
   $('#btn-lote').lastChild.textContent = S.lote ? 'Escrevendo abordagens…' : 'Preparar abordagens';
   $('#btn-csv').hidden = !(S.dl && S.leads.size);
-  renderAviso();
   const main = $('#main');
   const v = S.view === 'radar' ? viewRadar() : S.view === 'urgencia' ? viewUrgencia() : S.view === 'funil' ? viewFunil() : viewLista();
   if (S.animar && v.classList.contains('board') && !calmo.matches) v.classList.add('entra');
   S.animar = false;
   main.replaceChildren(v);
-  radarPontos(); renderTopUrg();
-  if (S.sel) {
-    const a = document.activeElement, dr = $('#drawer');
-    const editando = dr && dr.contains(a) && /TEXTAREA|INPUT|SELECT/.test(a.tagName);
-    if (!editando && !S.gerando) renderDrawer();
-  }
+  if (S.sel) renderDrawerSeguro();
+}
+function renderDrawerSeguro() {
+  const a = document.activeElement, dr = $('#drawer');
+  const editando = dr && dr.contains(a) && /TEXTAREA|INPUT|SELECT/.test(a.tagName);
+  if (!editando && !S.gerando) renderDrawer();
+}
+const PAGINAS = {
+  radar: ['radar', 'Radar de empresas', 'Todas as empresas da fila, uma coluna por nicho. Clique numa empresa para ver contato, Instagram e o que vender.'],
+  urgencia: ['raio', 'Urgências', 'Quem abordar primeiro: sem site, quase nada no Google e com cara de quem compra.'],
+  funil: ['funil', 'Funil de vendas', 'Arraste as empresas entre as etapas conforme a conversa anda.'],
+  lista: ['lista', 'Lista completa', 'Todas as empresas numa tabela. Clique no título de uma coluna para ordenar.'],
+};
+function renderCabecalho() {
+  const [i, t, d] = PAGINAS[S.view];
+  $('#pg-ico').replaceChildren(ico(i)); $('#pg-titulo').textContent = t; $('#pg-desc').textContent = d;
+  const ls = filtrados(), fila = ls.filter(l => l.etapa === 'novo'), st = $('#pg-stats');
+  const pilha = (n, rot, cor) => el('div', { class: 'pg-stat', style: cor ? { '--c': cor } : null }, el('b', { text: String(n) }), el('span', { text: rot }));
+  if (S.view === 'radar') st.replaceChildren(pilha(fila.length, 'na fila'), pilha(new Set(fila.map(l => l.nicho)).size, 'nichos'), pilha(fila.filter(l => igUser(l)).length, 'com Instagram'));
+  else if (S.view === 'urgencia') st.replaceChildren(...URG.map(u => pilha(fila.filter(l => nivel(l).id === u.id).length, u.nome, COR_URG[u.id])));
+  else if (S.view === 'funil') { const c = id => ls.filter(l => l.etapa === id).length; st.replaceChildren(pilha(c('abordado'), 'abordadas'), pilha(c('conversando') + c('reuniao') + c('proposta'), 'em negociação'), pilha(c('fechado'), 'fechadas', 'var(--wa)')); }
+  else st.replaceChildren(pilha(ls.length, 'empresas'), pilha(ls.filter(l => !siteGap(l) === false && siteGap(l) === 1).length, 'sem site'), pilha(ls.filter(l => l.telefone_tipo === 'celular').length, 'com celular'));
+}
+
+/* ---------- Início: painéis ---------- */
+function inicioDaSemana() { const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - ((d.getDay() + 6) % 7)); return d.getTime(); }
+const diasDesde = iso => { const t = Date.parse(iso || ''); return t ? Math.floor((Date.now() - t) / 864e5) : null; };
+function textoCobranca(l) {
+  const nome = (S.config.remetente || nomeDono() || '').split(' ')[0];
+  return `${saudacao()}! ${nome ? 'Aqui é o ' + nome + ', da ' + S.config.empresa + '. ' : ''}Passando para saber se você conseguiu ver minha mensagem sobre a ${l.nome}. Posso te mandar uma ideia rápida, sem compromisso?`;
+}
+function renderInicio() {
+  const box = $('#inicio-grid'); if (!box) return;
+  const todos = base(), semana = inicioDaSemana(), meta = Math.max(1, Number(S.config.meta_semana) || 15);
+  const feitas = todos.filter(l => Date.parse(l.abordado_em || '') >= semana).length;
+  const pct = Math.min(100, Math.round(feitas / meta * 100));
+  const cobrar = todos.filter(l => l.etapa === 'abordado' && (diasDesde(l.abordado_em || l.atualizado_em) ?? 0) >= 3).sort((a, b) => String(a.abordado_em).localeCompare(String(b.abordado_em))).slice(0, 5);
+  const fila = todos.filter(l => l.etapa === 'novo');
+  const porNicho = {}; for (const l of fila) { const u = nivel(l).id; if (u === 'urgente' || u === 'alta') porNicho[l.nicho] = (porNicho[l.nicho] || 0) + 1; }
+  const nichos = Object.entries(porNicho).sort((a, b) => b[1] - a[1]).slice(0, 6), maxN = Math.max(1, ...nichos.map(x => x[1]));
+  const recentes = [...todos].filter(l => l.criado_em).sort((a, b) => String(b.criado_em).localeCompare(String(a.criado_em))).slice(0, 5);
+  const painel = (i, titulo, corpo, extra) => el('section', { class: 'widget tilt' }, el('div', { class: 'w-cab' }, el('span', { class: 'w-ico' }, ico(i)), el('h3', { text: titulo }), extra || null), corpo);
+  const quando2 = iso => { const d = diasDesde(iso); return d == null ? '' : d === 0 ? 'hoje' : d === 1 ? 'ontem' : `há ${d} dias`; };
+  box.replaceChildren(
+    painel('meta', 'Meta da semana', el('div', { class: 'meta-w' }, anel(pct, pct >= 100 ? 'var(--wa)' : 'var(--gold)', 34),
+      el('div', null, el('b', { class: 'meta-n', text: `${feitas} de ${meta}` }), el('p', { text: feitas >= meta ? 'Meta batida. Bora pra próxima!' : `abordagens nesta semana. Faltam ${meta - feitas}.` }),
+        el('button', { class: 'btn sm', type: 'button', onclick: verUrgencias }, ico('raio'), 'Abordar as urgentes')))),
+    painel('sino', 'Para cobrar', cobrar.length ? el('ul', { class: 'w-lista' }, cobrar.map(l => el('li', null,
+      el('button', { class: 'w-item', type: 'button', onclick: () => abrirLead(l.id) }, el('b', { text: l.nome }), el('small', { text: `abordada ${quando2(l.abordado_em || l.atualizado_em)} · sem resposta` })),
+      l.telefone ? el('a', { class: 'wa-r', href: waLink(l, textoCobranca(l)), target: '_blank', rel: 'noopener', title: 'Cobrar no WhatsApp', 'aria-label': 'Cobrar no WhatsApp' }, ico('wa')) : null)))
+      : el('p', { class: 'vazio', text: 'Nenhum retorno pendente. Empresas abordadas que não responderem em 3 dias aparecem aqui, com a mensagem de cobrança pronta.' })),
+    painel('barras', 'Onde estão as oportunidades', nichos.length ? el('ul', { class: 'w-barras' }, nichos.map(([n, q]) => el('li', null,
+      el('button', { type: 'button', onclick: () => irNicho(n), style: { '--h': String(nicho(n).h), '--p': (q / maxN * 100).toFixed(0) + '%' } }, el('span', { class: 'w-n' }, ico(nicho(n).i), n), el('span', { class: 'w-bar' }, el('i')), el('b', { text: String(q) })))))
+      : el('p', { class: 'vazio', text: 'Sem empresas urgentes ou de urgência alta com esses filtros.' }), el('span', { class: 'hint', text: 'urgentes + alta' })),
+    painel('novo', 'Encontradas por último', recentes.length ? el('ul', { class: 'w-lista' }, recentes.map(l => el('li', null,
+      el('button', { class: 'w-item', type: 'button', onclick: () => abrirLead(l.id) }, el('b', { text: l.nome }), el('small', { text: `${l.nicho} · ${l.cidade} · ${quando2(l.criado_em)}` })),
+      el('span', { class: 'chip u-' + nivel(l).n, text: nivel(l).nome }))))
+      : el('p', { class: 'vazio', text: 'As empresas novas da busca aparecem aqui.' })));
 }
 function moverIndicador() {
   const t = $('.tabs'), b = t.querySelector('button[aria-selected="true"]'); if (!b) return;
@@ -871,7 +1011,7 @@ function renderHero() {
   const kp = $('#kpis');
   const itens = [['fila', c.novo || 0, 'Na fila', 'fila', 'var(--teal)'], ['abordado', c.abordado || 0, 'Abordadas', 'conversa', 'var(--info)'],
     ['negocio', (c.conversando || 0) + (c.reuniao || 0) + (c.proposta || 0), 'Em negociação', 'aperto', 'var(--gold)'], ['fechado', c.fechado || 0, 'Fechadas', 'check', 'var(--wa)']];
-  if (!kp.children.length) kp.append(...itens.map(([k, , rot, i, cor]) => el('div', { class: 'kpi', style: { '--k': cor } }, ico(i), el('b', { 'data-k': k, text: '0' }), el('span', { text: rot }))));
+  if (!kp.children.length) kp.append(...itens.map(([k, , rot, i, cor]) => el('div', { class: 'kpi tilt', style: { '--k': cor } }, ico(i), el('b', { 'data-k': k, text: '0' }), el('span', { text: rot }))));
   for (const [k, v] of itens) contar(kp.querySelector(`[data-k="${k}"]`), v);
   const r = S.rotina;
   $('#rot').textContent = r && r.em ? `Última busca: ${quando(r.em)}${typeof r.novos === 'number' ? ` · ${r.novos} novas` : ''}` : (MODO_LOCAL ? 'Versão local · a busca automática diária fica no painel online' : 'Busca automática: dias úteis pela manhã');
@@ -979,91 +1119,75 @@ function viewLista() {
 const tiltOk = matchMedia('(hover: hover) and (pointer: fine)');
 document.addEventListener('pointermove', e => {
   if (!tiltOk.matches || calmo.matches) return;
-  const c = e.target.closest && e.target.closest('.card'); if (!c) return;
-  const r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
-  c.style.setProperty('--ry', ((x - .5) * 9).toFixed(2) + 'deg'); c.style.setProperty('--rx', ((.5 - y) * 9).toFixed(2) + 'deg');
+  const c = e.target.closest && e.target.closest('.card, .tilt'); if (!c) return;
+  const r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height, f = c.classList.contains('card') ? 9 : 6;
+  c.style.setProperty('--ry', ((x - .5) * f).toFixed(2) + 'deg'); c.style.setProperty('--rx', ((.5 - y) * f).toFixed(2) + 'deg');
   c.style.setProperty('--gx', (x * 100).toFixed(0) + '%'); c.style.setProperty('--gy', (y * 100).toFixed(0) + '%');
 }, { passive: true });
-document.addEventListener('pointerout', e => { const c = e.target.closest && e.target.closest('.card'); if (c && !c.contains(e.relatedTarget)) { c.style.setProperty('--rx', '0deg'); c.style.setProperty('--ry', '0deg'); } });
+document.addEventListener('pointerout', e => { const c = e.target.closest && e.target.closest('.card, .tilt'); if (c && !c.contains(e.relatedTarget)) { c.style.setProperty('--rx', '0deg'); c.style.setProperty('--ry', '0deg'); } });
 
-/* ---------- Radar 3D ---------- */
-const radar = { cv: null, ctx: null, w: 0, h: 0, pts: [], hover: null, raf: 0, visivel: true, cor: {} };
-function radarCores() {
-  const cs = getComputedStyle(document.documentElement), g = n => cs.getPropertyValue(n).trim();
-  radar.cor = { d1: g('--radar-disc-1'), d2: g('--radar-disc-2'), line: g('--radar-line'), sweep: g('--radar-sweep'), fg3: g('--fg-3'), gold: g('--gold'), nl: g('--nl'), ns: g('--ns'), surface: g('--surface'),
-    u: { urgente: g('--u1'), alta: g('--u2'), media: g('--u3'), baixa: g('--u4') } };
-  if (radar.ctx) radarDesenhar(performance.now());
+/* ---------- Mapa de oportunidades (bolhas) ---------- */
+const mapa = { chave: '' };
+function mostrarTip(l, x, y) {
+  const tip = $('#radar-tip'); if (!tip) return;
+  tip.replaceChildren(el('b', { text: l.nome }), el('span', { text: [l.nicho, local(l)].join(' · ') }), el('span', { class: 'tip-m', text: motivos(l).slice(0, 2).join(' · ') }));
+  tip.style.left = x + 'px'; tip.style.top = y + 'px'; tip.hidden = false;
 }
-const radarRaio = u => .1 + Math.max(0, Math.min(1, (90 - u) / 50)) * .86;
-function hexA(cor, a) { const m = /^#([0-9a-f]{6})$/i.exec(cor.trim()); if (!m) return cor; const n = parseInt(m[1], 16); return `rgba(${n >> 16}, ${(n >> 8) & 255}, ${n & 255}, ${a})`; }
-function radarGeo() { const w = radar.w, h = radar.h, k = .46; const R = Math.min(w * .46, (h - 20) / (2 * k + .5)); return { cx: w / 2, cy: h * .6, R, k }; }
-function radarPontos() {
-  if (!radar.ctx) return;
-  const ls = filtrados(), ns = [...new Set(ls.map(l => l.nicho))].sort(), n = Math.max(ns.length, 1);
-  radar.pts = ls.map(l => {
-    const i = ns.indexOf(l.nicho), a = (i / n) * Math.PI * 2 + (.15 + .7 * hashN(l.id)) * (Math.PI * 2 / n);
-    return { id: l.id, l, a, fr: radarRaio(l.urgencia), alt: .1 + l.potencial / 100, nv: nivel(l).id };
+function esconderTip() { const tip = $('#radar-tip'); if (tip) tip.hidden = true; }
+function bolhaMapa(l, x, y, r, u, atraso) {
+  const b = el('button', { type: 'button', class: 'bolha u-' + u.n, 'aria-label': `${l.nome}, urgência ${u.nome.toLowerCase()}`,
+    style: { left: (x - r).toFixed(1) + 'px', top: (y - r).toFixed(1) + 'px', width: (2 * r).toFixed(1) + 'px', height: (2 * r).toFixed(1) + 'px', '--d': (-hashN(l.id) * 7).toFixed(2) + 's', '--e': atraso + 'ms' },
+    onclick: e => { e.stopPropagation(); esconderTip(); abrirLead(l.id); },
+    onpointerenter: () => mostrarTip(l, x, y - r), onpointerleave: esconderTip, onfocus: () => mostrarTip(l, x, y - r), onblur: esconderTip });
+  if (r >= 12) b.append(ico(nicho(l.nicho).i));
+  return b;
+}
+function mapaRender() {
+  const box = $('#mapa'); if (!box) return;
+  const w = box.clientWidth, h = box.clientHeight; if (!w || !h) return;
+  const ls = filtrados().filter(l => l.etapa === 'novo');
+  const chave = `${w}x${h}|` + ls.map(l => l.id + ':' + l.urgencia + ':' + l.potencial).join(',');
+  if (chave === mapa.chave) return;
+  const primeira = !mapa.chave; mapa.chave = chave;
+  const cont = {}; for (const l of ls) cont[nivel(l).id] = (cont[nivel(l).id] || 0) + 1;
+  $('#radar-leg').replaceChildren(...URG.map(u => el('span', null, el('i', { style: { background: COR_URG[u.id] } }), `${u.nome} ${cont[u.id] || 0}`)));
+  const cols = w < 560 ? 2 : 4, linhas = 4 / cols, colW = w / cols, linH = h / linhas, kids = [];
+  URG.forEach((u, gi) => {
+    const grupo = ls.filter(l => nivel(l).id === u.id).sort((a, b) => b.potencial - a.potencial);
+    const ci = gi % cols, li = Math.floor(gi / cols);
+    const x0 = ci * colW + 5, x1 = (ci + 1) * colW - 5, topo = li * linH + 6, base = (li + 1) * linH - 30, cx = (x0 + x1) / 2, cy = (topo + base) / 2;
+    const raio = l => 8 + (l.potencial / 100) * 17;
+    const area = grupo.reduce((t, l) => t + Math.PI * raio(l) ** 2, 0), cabe = (x1 - x0) * (base - topo) * .6;
+    let k = area > cabe ? Math.sqrt(cabe / area) : 1, feitos = [];
+    // empacota em espiral; se alguma bolha não couber, encolhe todas um pouco e tenta de novo
+    for (let tentativa = 0; tentativa < 8; tentativa++) {
+      feitos = [];
+      for (const l of grupo) {
+        const r = Math.max(4.5, raio(l) * k); let pos = null;
+        for (let t = 0; t < 1600 && !pos; t++) {
+          const x = cx + Math.cos(t * .42) * t * .3, y = cy + Math.sin(t * .42) * t * .28;
+          if (x - r < x0 || x + r > x1 || y - r < topo || y + r > base) continue;
+          if (feitos.every(f => Math.hypot(f.x - x, f.y - y) >= f.r + r + 2.5)) pos = { x, y };
+        }
+        if (!pos) break;
+        feitos.push({ ...pos, r, l });
+      }
+      if (feitos.length === grupo.length) break;
+      k *= .88;
+    }
+    feitos.forEach((f, i) => kids.push(bolhaMapa(f.l, f.x, f.y, f.r, u, primeira ? gi * 90 + (i + 1) * 28 : 0)));
+    kids.push(el('button', { class: 'grupo-rot', type: 'button', style: { left: cx + 'px', top: (base + 7) + 'px', '--c': COR_URG[u.id] }, onclick: e => { e.stopPropagation(); verUrgencias(); } }, u.nome, el('b', { text: String(grupo.length) })));
   });
-  const leg = $('#radar-leg');
-  if (leg) { const c = {}; for (const p of radar.pts) c[p.nv] = (c[p.nv] || 0) + 1; leg.replaceChildren(...URG.map(u => el('span', null, el('i', { style: { background: COR_URG[u.id] } }), `${u.nome} ${c[u.id] || 0}`))); }
-  if (calmo.matches || !radar.raf) radarDesenhar(performance.now());
+  if (!ls.length) kids.push(el('p', { class: 'vazio mapa-vazio', text: 'Nenhuma empresa na fila com esses filtros.' }));
+  box.replaceChildren(...kids);
 }
-function radarDesenhar(t) {
-  const { ctx, w, h } = radar; if (!ctx || !w) return;
-  const { cx, cy, R, k } = radarGeo(), c = radar.cor;
-  const ang = calmo.matches ? 4.2 : (t * .0009) % (Math.PI * 2);
-  ctx.clearRect(0, 0, w, h);
-  ctx.save(); ctx.translate(cx, cy); ctx.scale(1, k);
-  const gr = ctx.createRadialGradient(0, 0, 0, 0, 0, R); gr.addColorStop(0, c.d1); gr.addColorStop(1, c.d2);
-  ctx.fillStyle = gr; ctx.beginPath(); ctx.arc(0, 0, R, 0, Math.PI * 2); ctx.fill();
-  ctx.strokeStyle = c.line; ctx.lineWidth = 1 / k * .9;
-  const zonas = [['baixa', 1], ['media', radarRaio(60)], ['alta', radarRaio(68)], ['urgente', radarRaio(76)]];
-  for (const [id, f] of zonas) { ctx.fillStyle = hexA(c.u[id] || '#888888', id === 'urgente' ? .14 : .06); ctx.beginPath(); ctx.arc(0, 0, R * f, 0, Math.PI * 2); ctx.fill(); ctx.beginPath(); ctx.arc(0, 0, R * f, 0, Math.PI * 2); ctx.stroke(); }
-  for (let i = 0; i < 6; i++) { const a = i * Math.PI / 3; ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(Math.cos(a) * R, Math.sin(a) * R); ctx.stroke(); }
-  for (let i = 0; i < 26; i++) { const a0 = ang - (i + 1) * .045, a1 = ang - i * .045; ctx.fillStyle = `rgba(${c.sweep}, ${(.32 * (1 - i / 26)).toFixed(3)})`; ctx.beginPath(); ctx.moveTo(0, 0); ctx.arc(0, 0, R, a0, a1); ctx.closePath(); ctx.fill(); }
-  ctx.strokeStyle = `rgba(${c.sweep}, .9)`; ctx.lineWidth = 2 / k; ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(Math.cos(ang) * R, Math.sin(ang) * R); ctx.stroke();
-  ctx.restore();
-  const pts = radar.pts.map(p => { const x = cx + Math.cos(p.a) * p.fr * R, yb = cy + Math.sin(p.a) * p.fr * R * k, hh = p.alt * R * .42; return { ...p, x, yb, yt: yb - hh }; }).sort((a, b) => a.yb - b.yb);
-  for (const p of pts) {
-    let d = (ang - p.a) % (Math.PI * 2); if (d < 0) d += Math.PI * 2;
-    const luz = calmo.matches ? .6 : Math.max(0, 1 - d / 2.2), base = c.u[p.nv] || '#888888';
-    ctx.fillStyle = 'rgba(0,0,0,.12)'; ctx.beginPath(); ctx.ellipse(p.x, p.yb, 4, 4 * k, 0, 0, Math.PI * 2); ctx.fill();
-    ctx.strokeStyle = hexA(base, .55); ctx.lineWidth = 1.4; ctx.beginPath(); ctx.moveTo(p.x, p.yb); ctx.lineTo(p.x, p.yt); ctx.stroke();
-    const sel = radar.hover && radar.hover.id === p.id, urg = p.nv === 'urgente', r = (sel ? 6.8 : 4.2 + luz * 1.6) + (urg ? 1 : 0);
-    if (urg && !calmo.matches) { const pul = (Math.sin(t / 380 + p.a * 3) + 1) / 2; ctx.strokeStyle = hexA(base, .5 * (1 - pul)); ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(p.x, p.yt, r + 3 + pul * 8, 0, Math.PI * 2); ctx.stroke(); }
-    if (luz > .05 || sel) { ctx.fillStyle = hexA(base, (.18 + luz * .3).toFixed(2)); ctx.beginPath(); ctx.arc(p.x, p.yt, r + 5 * luz + (sel ? 4 : 0), 0, Math.PI * 2); ctx.fill(); }
-    ctx.fillStyle = base; ctx.beginPath(); ctx.arc(p.x, p.yt, r, 0, Math.PI * 2); ctx.fill();
-    ctx.strokeStyle = c.surface; ctx.lineWidth = 1.5; ctx.stroke();
-  }
-  radar.desenhados = pts;
-  ctx.fillStyle = c.gold; ctx.beginPath(); ctx.arc(cx, cy, 4, 0, Math.PI * 2); ctx.fill();
+function mapaIniciar() {
+  const box = $('#mapa');
+  if ('ResizeObserver' in window) new ResizeObserver(() => { mapa.chave = mapa.chave ? 'x' : ''; mapaRender(); }).observe(box);
+  box.addEventListener('click', verUrgencias);
 }
-function radarLoop() {
-  if (radar.raf || calmo.matches) return;
-  let ult = 0;
-  const passo = t => { radar.raf = 0; if (document.hidden || !radar.visivel) return; if (t - ult > 33) { ult = t; radarDesenhar(t); } radar.raf = requestAnimationFrame(passo); };
-  radar.raf = requestAnimationFrame(passo);
-}
-function radarIniciar() {
-  const cv = $('#radar'); radar.cv = cv; radar.ctx = cv.getContext('2d');
-  const ajustar = () => { const r = cv.getBoundingClientRect(), d = Math.min(window.devicePixelRatio || 1, 2); if (!r.width) return; radar.w = r.width; radar.h = r.height; cv.width = Math.round(r.width * d); cv.height = Math.round(r.height * d); radar.ctx.setTransform(d, 0, 0, d, 0, 0); radarDesenhar(performance.now()); };
-  if ('ResizeObserver' in window) new ResizeObserver(ajustar).observe(cv); ajustar();
-  const tip = $('#radar-tip');
-  const achar = e => { const r = cv.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top; let m = null, md = 14; for (const p of radar.desenhados || []) { const dd = Math.hypot(p.x - x, p.yt - y); if (dd < md) { md = dd; m = p; } } return m; };
-  cv.addEventListener('pointermove', e => {
-    const p = achar(e); radar.hover = p; cv.style.cursor = p ? 'pointer' : 'crosshair';
-    if (p) { tip.hidden = false; tip.replaceChildren(el('b', { text: p.l.nome }), el('span', { text: `${p.l.nicho} · ${local(p.l)} · urgência ${nivel(p.l).nome.toLowerCase()}` })); tip.style.left = p.x + 'px'; tip.style.top = p.yt + 'px'; }
-    else tip.hidden = true;
-    if (calmo.matches) radarDesenhar(performance.now());
-  });
-  cv.addEventListener('pointerleave', () => { radar.hover = null; tip.hidden = true; });
-  cv.addEventListener('click', e => { const p = achar(e); if (p) abrirLead(p.id); else verUrgencias(); });
-  if ('IntersectionObserver' in window) new IntersectionObserver(es => { radar.visivel = es[0].isIntersecting; if (radar.visivel) radarLoop(); }).observe(cv);
-  document.addEventListener('visibilitychange', () => { if (!document.hidden) radarLoop(); });
-  radarCores(); radarLoop();
-}
-
-function verUrgencias() { location.hash = 'urgencia'; irPara('urgencia'); setTimeout(() => $('#nichos').scrollIntoView({ behavior: calmo.matches ? 'auto' : 'smooth', block: 'start' }), 60); }
+function verUrgencias() { location.hash = 'urgencia'; irPara('urgencia'); }
+function irNicho(n) { S.f.nicho = n; location.hash = 'radar'; irPara('radar'); }
 function renderTopUrg() {
   const box = $('#top-urg'); if (!box) return;
   const ls = filtrados().filter(l => l.etapa === 'novo').sort((a, b) => b.urgencia - a.urgencia).slice(0, 5);
@@ -1148,7 +1272,7 @@ function renderDrawer() {
       l.fontes.length ? el('div', { class: 'sec fontes' }, el('h4', { text: 'Fontes' + (l.confianca ? ` · confiança ${l.confianca}` : '') }), l.fontes.slice(0, 6).map(u => seguro(u) ? el('div', null, el('a', { href: u, target: '_blank', rel: 'noopener', text: u.replace(/^https:\/\/(www\.)?/, '').slice(0, 70) })) : el('div', { class: 'hint', text: u.slice(0, 70) }))) : null),
     el('div', { class: 'dr-f' },
       el('div', { class: 'row' }, el('button', { class: 'btn sm', text: '← Anterior', disabled: i <= 0, onclick: () => ir(-1) }), el('button', { class: 'btn sm', text: 'Próximo →', disabled: i < 0 || i >= S.ordem.length - 1, onclick: () => ir(1) })),
-      el('div', { class: 'row' }, S.sample ? el('button', { class: 'btn sm', onclick: () => { abrirChat(); enviarChat(`Analise a empresa "${l.nome}" (id ${l.id}) e me diga: o que vender primeiro, quanto cobrar e como conduzir a conversa.`); } }, ico('brilho'), `Analisar com a ${nomeIA()}`) : null, excluir)));
+      el('div', { class: 'row' }, S.sample ? el('button', { class: 'btn sm', onclick: () => gerarProposta(l.id) }, ico('doc'), 'Gerar proposta') : null, S.sample ? el('button', { class: 'btn sm', onclick: () => { abrirChat(); enviarChat(`Analise a empresa "${l.nome}" (id ${l.id}) e me diga: o que vender primeiro, quanto cobrar e como conduzir a conversa.`); } }, ico('brilho'), `Analisar com a ${nomeIA()}`) : null, excluir)));
   const waRow = dr.querySelector('.sec .row .btn.wa'); if (waRow) waRow.addEventListener('click', () => { salvarCampos(); aposWhats(l); });
   const veu = el('div', { class: 'veil d', onclick: fecharLead });
   if (jaAberta) { dr.style.animation = 'none'; veu.style.animation = 'none'; }
@@ -1185,6 +1309,34 @@ async function gerarMensagem(id) {
     await atualizarLead(id, { mensagem: final });
   } catch (e) { if (S.sel === id) campo.value = antes; toast(erroIA(e)); }
   finally { S.gerando = false; if (S.sel === id) renderDrawer(); render(); }
+}
+async function gerarProposta(id) {
+  const l = S.leads.get(id); if (!l || !S.sample) return;
+  const c = S.config, quem = c.remetente || nomeDono().split(' ')[0] || 'a equipe';
+  const txt = el('textarea', { class: 'field', id: 'p-texto', rows: '14', value: l.proposta || '' });
+  const st = el('p', { class: 'hint', text: l.proposta ? 'Proposta salva. Você pode editar, copiar, mandar no WhatsApp ou gerar de novo.' : 'Escrevendo a proposta…' });
+  const wa = l.telefone ? el('a', { class: 'btn wa', href: waLink(l, txt.value), target: '_blank', rel: 'noopener' }, ico('wa'), 'Mandar no WhatsApp') : null;
+  txt.addEventListener('input', () => { if (wa) wa.href = waLink(l, txt.value); });
+  const salvar = () => atualizarLead(id, { proposta: txt.value }).then(() => { st.textContent = 'Proposta salva.'; }, () => {});
+  const gerar = async () => {
+    st.textContent = 'Escrevendo a proposta…'; txt.value = '';
+    try {
+      const { text } = await S.sample(`Escreva uma proposta comercial curta, para mandar no WhatsApp, de ${quem} da ${c.empresa} para a empresa abaixo. A ${c.empresa} vende: ${c.servicos}.
+Estrutura (texto simples, sem markdown pesado, pode usar *negrito* do WhatsApp e emojis com moderação):
+1. Saudação e uma frase mostrando que olhamos a empresa.
+2. *Diagnóstico rápido*: 2 ou 3 pontos concretos sobre a presença digital (site, Google, Instagram), só com base nos dados.
+3. *O que proponho*: 2 ou 3 serviços, cada um com o benefício em uma linha.
+4. *Investimento*: use os preços das instruções do dono, se houver; se não houver preço, escreva "valores sob medida, apresento numa conversa de 15 minutos".
+5. Próximo passo com uma pergunta simples.
+Máximo de 1.200 caracteres. Não invente fatos nem números.
+${c.instrucoes ? 'Instruções do dono: ' + c.instrucoes + '\n' : ''}
+DADOS DA EMPRESA:
+${JSON.stringify(dadosLead(l))}`, { cache: false, onText: ({ text }) => { txt.value = text; } });
+      txt.value = text.trim(); if (wa) wa.href = waLink(l, txt.value); await salvar();
+    } catch (e) { st.textContent = erroIA(e); }
+  };
+  abrirModal('proposta', 'Proposta para ' + l.nome, [txt, st], [el('button', { class: 'btn', type: 'button', onclick: gerar }, ico('brilho'), 'Gerar de novo'), el('button', { class: 'btn', type: 'button', onclick: e => { salvar(); copiar(txt.value, txt, e.currentTarget); } }, ico('copiar'), 'Copiar'), wa]);
+  if (!l.proposta) gerar();
 }
 async function gerarLote() {
   if (!S.sample || S.lote) return;
@@ -1309,7 +1461,6 @@ async function enviarChat(texto) {
   } finally {
     c.busy = false; c.parcial = ''; c.ctl = null; renderChat();
     if (resposta && S.voz) falar(resposta);
-    if (S.db) gravar('conversas/principal', { turns: c.turns.filter(t => !t.erro).slice(-30).map(t => ({ role: t.role, content: t.content.slice(0, 6000) })), atualizado_em: agora() }, 'set').catch(() => {});
   }
 }
 function falar(texto) {
@@ -1490,6 +1641,7 @@ function abrirConfig() {
   const [l1, emp] = campo('Nome da sua empresa', { id: 'c-emp', value: c.empresa });
   const [l2, rem] = campo('Nome que assina as mensagens', { id: 'c-rem', value: c.remetente, placeholder: 'Ex.: Ryan' });
   const [la, asst] = campo('Nome da assistente', { id: 'c-asst', value: nomeIA(), placeholder: 'Lia' });
+  const [lmeta, meta] = campo('Meta de abordagens por semana', { id: 'c-meta', type: 'number', min: '1', max: '500', value: String(c.meta_semana || 15) });
   const [l3, serv] = campo('O que vocês vendem', { id: 'c-serv', rows: '3', value: c.servicos });
   const [l4, inst] = campo('Instruções para a assistente (tom de voz, preços, o que evitar)', { id: 'c-inst', rows: '3', value: c.instrucoes, placeholder: 'Ex.: tom descontraído; site a partir de R$ 1.500; não oferecer desconto na primeira conversa' });
   const extras = [];
@@ -1505,9 +1657,9 @@ function abrirConfig() {
     el('div', { class: 'row' }, el('button', { class: 'btn sm', type: 'button', onclick: exportarBackup }, ico('baixar'), 'Exportar backup'), el('button', { class: 'btn sm', type: 'button', text: 'Importar backup', onclick: () => arquivo.click() }), arquivo)));
   const salvar = el('button', { class: 'btn gold', type: 'submit', text: 'Salvar', onclick: async () => {
     if (chave) mem('radar.apikey', chave.value.trim());
-    try { await gravar('config/principal', { ...c, ...ap, perfil_nome: pnome.value.trim(), perfil_cargo: pcargo.value.trim(), foto, empresa: emp.value.trim() || CFG_PADRAO.empresa, remetente: rem.value.trim() || pnome.value.trim().split(' ')[0], assistente: asst.value.trim() || 'Lia', servicos: serv.value.trim() || CFG_PADRAO.servicos, instrucoes: inst.value.trim() }, 'set'); fecharModal(); toast('Configurações salvas.'); render(); } catch (e) {}
+    try { await gravar('config/principal', { ...c, ...ap, perfil_nome: pnome.value.trim(), perfil_cargo: pcargo.value.trim(), foto, empresa: emp.value.trim() || CFG_PADRAO.empresa, remetente: rem.value.trim() || pnome.value.trim().split(' ')[0], assistente: asst.value.trim() || 'Lia', meta_semana: Math.max(1, Math.min(500, Number(meta.value) || 15)), servicos: serv.value.trim() || CFG_PADRAO.servicos, instrucoes: inst.value.trim() }, 'set'); fecharModal(); toast('Configurações salvas.'); render(); } catch (e) {}
   } });
-  abrirModal('config', 'Perfil e configurações', [blocoPerfil, blocoAparencia, el('div', { class: 'two' }, l1, l2), la, l3, l4, ...extras], salvar);
+  abrirModal('config', 'Perfil e configurações', [blocoPerfil, blocoAparencia, el('div', { class: 'two' }, l1, l2), el('div', { class: 'two' }, la, lmeta), l3, l4, ...extras], salvar);
 }
 function reduzirFoto(file) {
   return new Promise((ok, falha) => {
@@ -1535,7 +1687,7 @@ function lerPin() { try { return JSON.parse(mem('radar.pin') || 'null'); } catch
 async function hashPin(pin, sal) { const b = new TextEncoder().encode(sal + ':' + pin); const h = await crypto.subtle.digest('SHA-256', b); return [...new Uint8Array(h)].map(x => x.toString(16).padStart(2, '0')).join(''); }
 const sessaoValida = () => Number(mem('radar.sessao') || 0) > Date.now();
 function entrar() { mem('radar.sessao', String(Date.now() + SESSAO_H * 3600e3)); const e = $('#entrada'); e.classList.add('saindo'); setTimeout(() => { e.hidden = true; e.classList.remove('saindo'); }, 450); }
-function bloquear() { fecharMenu(); mem('radar.sessao', '0'); mostrarEntrada(); }
+function bloquear() { fecharMenu(); mem('radar.sessao', '0'); if (S.chat.ctl) S.chat.ctl.abort(); S.chat.turns = []; renderChat(); mostrarEntrada(); }
 function mostrarEntrada(modo) {
   const e = $('#entrada'), pin = lerPin();
   modo = modo || (pin ? 'senha' : 'criar');
@@ -1579,7 +1731,7 @@ function mostrarEntrada(modo) {
 
 function dadosBackup() {
   const c = S.config;
-  return { app: 'radar-dalas', versao: 1, exportado_em: agora(), config: { empresa: c.empresa, remetente: c.remetente, perfil_nome: c.perfil_nome, perfil_cargo: c.perfil_cargo, foto: c.foto, cor: c.cor, fonte: c.fonte, titulos: c.titulos, tamanho: c.tamanho, assistente: c.assistente, servicos: c.servicos, instrucoes: c.instrucoes },
+  return { app: 'radar-dalas', versao: 1, exportado_em: agora(), config: { empresa: c.empresa, remetente: c.remetente, meta_semana: c.meta_semana, perfil_nome: c.perfil_nome, perfil_cargo: c.perfil_cargo, foto: c.foto, cor: c.cor, fonte: c.fonte, titulos: c.titulos, tamanho: c.tamanho, assistente: c.assistente, servicos: c.servicos, instrucoes: c.instrucoes },
     leads: [...S.leads.values()].map(l => { const { score, ...r } = l; return r; }) };
 }
 async function exportarBackup() {
@@ -1613,7 +1765,7 @@ async function baixarCsv() {
 }
 
 /* ---------- Eventos ---------- */
-function irPara(v) { const novo = ['radar', 'urgencia', 'funil', 'lista'].includes(v) ? v : 'radar'; if (novo !== S.view) S.animar = true; S.view = novo; render(); }
+function irPara(v) { const novo = ['inicio', 'radar', 'urgencia', 'funil', 'lista'].includes(v) ? v : 'inicio'; if (novo !== S.view) S.animar = true; S.view = novo; render(); }
 document.querySelectorAll('.tabs button').forEach(b => b.addEventListener('click', () => { location.hash = b.dataset.view; irPara(b.dataset.view); }));
 window.addEventListener('hashchange', () => irPara(location.hash.slice(1)));
 window.addEventListener('resize', () => moverIndicador());
@@ -1634,7 +1786,7 @@ $('#fab-ia').addEventListener('click', abrirChat);
 $('#chat-fechar').addEventListener('click', fecharChat);
 $('#chat-voz').addEventListener('click', () => { S.voz = !S.voz; mem('radar.voz', S.voz ? '1' : '0'); if (!S.voz && S.tts && S.tts.stop) S.tts.stop(); renderChat(); });
 $('#chat-mic').addEventListener('click', microfone);
-$('#chat-limpar').addEventListener('click', () => { if (S.chat.busy) return; S.chat.turns = []; renderChat(); if (S.db) gravar('conversas/principal', { turns: [], atualizado_em: agora() }, 'set').catch(() => {}); });
+$('#chat-limpar').addEventListener('click', () => { if (S.chat.busy) return; S.chat.turns = []; renderChat(); });
 $('#chat-form').addEventListener('submit', e => { e.preventDefault(); if (S.chat.busy) { S.chat.ctl && S.chat.ctl.abort(); return; } if (S.chat.ouvindo && S.dict) S.dict.stop(); const i = $('#chat-in'); const t = i.value; i.value = ''; S.chat.base = ''; enviarChat(t); });
 $('#chat-in').addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); $('#chat-form').requestSubmit(); } });
 document.addEventListener('keydown', e => { if (e.key !== 'Escape') return; if ($('#menu-perfil')) fecharMenu(); else if (S.modal) fecharModal(); else if (S.sel) fecharLead(); });
@@ -1828,7 +1980,7 @@ aplicarTema(mem('radar.tema') || 'dark');
 renderPerfil();
 if (!sessaoValida()) mostrarEntrada();
 irPara(location.hash.slice(1));
-radarIniciar();
+mapaIniciar();
 renderChat();
 if (mem('radar.chat') === '1' || (mem('radar.chat') == null && window.innerWidth >= 1400)) abrirChat();
 const LOCAL = MODO_LOCAL ? criarLocal() : {};
