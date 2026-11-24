@@ -150,8 +150,12 @@ a { color: inherit; }
 .pill .dot { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: hsl(var(--h) var(--ns2) var(--nsoft)); color: hsl(var(--h) var(--ns) var(--nl)); }
 .pill .dot .ico { width: 15px; height: 15px; }
 .pill i { font-style: normal; font-family: var(--mono); font-size: 12px; color: var(--fg-3); }
-.pill[aria-pressed="true"] { background: hsl(var(--h) var(--ns2) var(--nsoft)); border-color: hsl(var(--h) var(--ns) var(--nl)); color: var(--fg); }
+.pill[aria-pressed="true"] { background: hsl(var(--h) var(--ns) var(--nl)); border-color: transparent; color: var(--bg); box-shadow: 0 6px 18px hsl(var(--h) var(--ns) var(--nl) / .3); }
+.pill[aria-pressed="true"] i { color: inherit; opacity: .85; }
+.pill[aria-pressed="true"] .dot { background: var(--bg); }
 .pill.todos .dot { background: var(--surface-3); color: var(--fg-2); }
+.pill.todos[aria-pressed="true"] { background: linear-gradient(135deg, var(--gold-fill-1), var(--gold-fill-2)); color: var(--gold-ink); box-shadow: 0 6px 18px rgba(196, 146, 52, .3); }
+.pill.todos[aria-pressed="true"] .dot { background: rgba(255, 255, 255, .55); color: var(--gold-ink); }
 
 /* filtros */
 .filters { display: flex; flex-wrap: wrap; gap: 8px; padding-block: 8px 16px; align-items: center; }
@@ -281,7 +285,7 @@ td .nicho-t .ico { color: hsl(var(--h) var(--ns) var(--nl)); width: 15px; height
 .fab { position: fixed; right: calc(18px + env(safe-area-inset-right, 0px)); bottom: calc(18px + env(safe-area-inset-bottom, 0px)); z-index: 8; display: inline-flex; align-items: center; gap: 10px; padding: 6px 18px 6px 6px; border-radius: 999px; border: 1px solid var(--line-2); background: var(--surface); box-shadow: var(--shadow-2); cursor: pointer; font-weight: 600; animation: flutua 5s ease-in-out infinite; }
 .fab:hover { box-shadow: 0 0 0 5px var(--gold-soft), var(--shadow-2); }
 @keyframes flutua { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
-@media (min-width: 1240px) { body.chat-open .app { margin-right: var(--chat-w); } body.chat-open .fab { display: none; } }
+@media (min-width: 1240px) { body.chat-open .app { margin-right: var(--chat-w); } body.chat-open .fab { display: none; } body.chat-open .acts .lbl, body.chat-open .ia-btn .nome-ia { display: none; } body.chat-open .ia-btn { padding: 4px; } body.chat-open .btn.gold { padding: 8px 11px; } }
 @media (max-width: 1239px) { .chat { width: 100%; border-left: 0; padding-left: env(safe-area-inset-left, 0px); } body.chat-open .fab { display: none; } }
 
 /* gaveta e modais */
@@ -320,8 +324,98 @@ textarea.field { width: 100%; resize: vertical; min-height: 88px; line-height: 1
 .toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(24px + env(safe-area-inset-bottom, 0px)); z-index: 50; background: var(--fg); color: var(--bg); border-radius: 13px; padding: 10px 14px; box-shadow: var(--shadow-2); display: flex; gap: 12px; align-items: center; max-width: calc(100% - 32px); animation: toast .45s var(--spring); }
 @keyframes toast { from { transform: translate(-50%, 20px); opacity: 0; } to { transform: translate(-50%, 0); opacity: 1; } }
 
+/* urgência */
+:root { --u1: #d93b40; --u2: #cf7a1f; --u3: #0e8a76; --u4: #6f7891; --u1s: rgba(217, 59, 64, .12); --u2s: rgba(207, 122, 31, .13); --u3s: rgba(14, 138, 118, .12); --u4s: rgba(111, 120, 145, .14); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --u1: #ff6b70; --u2: #f4a64c; --u3: #45d4b8; --u4: #9aa3bd; --u1s: rgba(255, 107, 112, .15); --u2s: rgba(244, 166, 76, .15); --u3s: rgba(69, 212, 184, .14); --u4s: rgba(154, 163, 189, .14); } }
+:root[data-theme="dark"] { --u1: #ff6b70; --u2: #f4a64c; --u3: #45d4b8; --u4: #9aa3bd; --u1s: rgba(255, 107, 112, .15); --u2s: rgba(244, 166, 76, .15); --u3s: rgba(69, 212, 184, .14); --u4s: rgba(154, 163, 189, .14); }
+.chip.u-1 { border-color: transparent; background: var(--u1s); color: var(--u1); font-weight: 700; }
+.chip.u-2 { border-color: transparent; background: var(--u2s); color: var(--u2); font-weight: 700; }
+.chip.u-3 { border-color: transparent; background: var(--u3s); color: var(--u3); font-weight: 700; }
+.chip.u-4 { border-color: transparent; background: var(--u4s); color: var(--u4); font-weight: 600; }
+.chip.m { border-style: dashed; }
+.btn.ig { border-color: transparent; color: #fff; background: linear-gradient(45deg, #f09433, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888); }
+.btn.ig:hover { box-shadow: 0 0 0 5px rgba(220, 39, 67, .16), var(--shadow-1); }
+.btn.ig.buscar { background: none; color: #dc2743; border: 1.5px dashed rgba(220, 39, 67, .55); }
+.ig-r { width: 34px; height: 34px; border-radius: 50%; display: inline-grid; place-items: center; color: #fff; background: linear-gradient(45deg, #f09433, #dc2743 50%, #bc1888); text-decoration: none; transition: transform .25s var(--spring); }
+.ig-r:hover { transform: scale(1.1) rotate(-6deg); }
+.ig-r .ico { width: 17px; height: 17px; }
+.card-f .acoes-r { display: flex; gap: 6px; }
+.ig-edit { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.ig-edit .field { flex: 1 1 160px; min-width: 0; }
+.tres { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.tres .gauge { flex-direction: column; text-align: center; gap: 6px; padding: 12px 8px; }
+.motivos { display: flex; flex-wrap: wrap; gap: 6px; }
+.motivos .chip { font-size: 12.5px; padding: 4px 10px; }
+
+/* radar de urgência */
+.hero { grid-template-columns: minmax(0, .82fr) minmax(0, 1.38fr); }
+.ola-l { display: flex; gap: 14px; align-items: center; }
+.radar-box { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 4px 16px; padding: 14px 16px 14px; }
+.radar-top { grid-column: 1 / -1; display: flex; align-items: center; gap: 10px; }
+.radar-top h2 { font-size: 15px; font-weight: 800; }
+.radar-top p { color: var(--fg-3); font-size: 12px; }
+.radar-cv { position: relative; min-width: 0; cursor: pointer; }
+#radar { height: 250px; cursor: pointer; }
+.leg { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-top: 2px; }
+.leg span { font-size: 11.5px; color: var(--fg-2); display: inline-flex; align-items: center; gap: 5px; }
+.leg i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+.top-urg { min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.top-urg h3 { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--fg-3); font-weight: 400; }
+.top-urg ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.top-urg button { width: 100%; text-align: left; display: flex; gap: 10px; align-items: center; border: 1px solid var(--line); background: var(--surface); border-radius: 12px; padding: 8px 10px; cursor: pointer; transition: transform .25s var(--spring), border-color .2s; }
+.top-urg button:hover { transform: translateX(4px); border-color: var(--u1); }
+.top-urg .rk { font-family: var(--mono); font-size: 12px; color: var(--fg-3); width: 14px; flex: none; }
+.top-urg b { display: block; font-size: 13px; line-height: 1.25; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.top-urg small { color: var(--fg-3); font-size: 11.5px; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.top-urg .anel { width: 34px; height: 34px; } .top-urg .anel b { font-size: 11px; }
+.top-urg .vazio { padding: 6px 2px; }
+
+/* perfil */
+.avatar { --s: 36px; width: var(--s); height: var(--s); border-radius: 50%; flex: none; display: inline-grid; place-items: center; overflow: hidden; background: linear-gradient(135deg, var(--gold-fill-1), var(--teal)); color: var(--gold-ink); font-weight: 800; font-size: calc(var(--s) * .38); position: relative; }
+.avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.avatar.g { --s: 56px; box-shadow: 0 0 0 3px var(--surface), 0 0 0 5px var(--gold-fill-2); }
+.avatar.xg { --s: 104px; }
+.avatar-btn { border: 0; background: none; padding: 2px; border-radius: 50%; cursor: pointer; box-shadow: 0 0 0 2px var(--line-2); transition: box-shadow .2s; }
+.avatar-btn:hover { box-shadow: 0 0 0 3px var(--gold-fill-2); }
+.menu-perfil { position: fixed; z-index: 45; top: calc(env(safe-area-inset-top, 0px) + 62px); right: max(18px, env(safe-area-inset-right, 0px)); width: 260px; background: var(--surface); border: 1px solid var(--line-2); border-radius: 16px; box-shadow: var(--shadow-2); padding: 14px; display: flex; flex-direction: column; gap: 10px; animation: pop-m .3s var(--spring); }
+@keyframes pop-m { from { transform: translateY(-6px) scale(.97); opacity: 0; } to { transform: none; opacity: 1; } }
+.menu-perfil .quem { display: flex; gap: 10px; align-items: center; }
+.menu-perfil .quem b { display: block; } .menu-perfil .quem span { color: var(--fg-3); font-size: 12px; }
+.menu-perfil .btn { justify-content: flex-start; }
+.perfil-ed { display: flex; gap: 14px; align-items: center; }
+.cor-op { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--surface); box-shadow: 0 0 0 1px var(--line-2); cursor: pointer; transition: transform .2s var(--spring), box-shadow .2s; }
+.cor-op:hover { transform: scale(1.1); }
+.cor-op[aria-checked="true"] { box-shadow: 0 0 0 2px var(--fg); transform: scale(1.08); }
+
+/* tela de entrada */
+.entrada { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; background: var(--bg); padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); overflow-y: auto; transition: opacity .45s ease, transform .45s var(--ease); }
+.entrada.saindo { opacity: 0; transform: scale(1.03); pointer-events: none; }
+.entrada .luz { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.entrada .luz i { position: absolute; width: 60vmax; height: 60vmax; border-radius: 50%; filter: blur(80px); animation: deriva 22s ease-in-out infinite alternate; }
+.entrada .luz i:nth-child(1) { background: radial-gradient(circle, var(--bg-glow-1), transparent 65%); top: -25vmax; left: -15vmax; }
+.entrada .luz i:nth-child(2) { background: radial-gradient(circle, var(--bg-glow-2), transparent 65%); bottom: -25vmax; right: -15vmax; animation-delay: -7s; }
+.entrada-card { position: relative; width: 380px; max-width: 100%; background: var(--glass); border: 1px solid var(--line-2); border-radius: 26px; box-shadow: var(--shadow-2); padding: 26px 24px 22px; display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); animation: pop-e .6s var(--spring); }
+@keyframes pop-e { from { transform: translateY(18px) scale(.97); opacity: 0; } to { transform: none; opacity: 1; } }
+.entrada-card .marca b { font-size: 17px; }
+.anel-av { position: relative; padding: 5px; border-radius: 50%; margin-top: 4px; }
+.anel-av::before { content: ""; position: absolute; inset: 0; border-radius: 50%; background: conic-gradient(var(--gold-fill-1), var(--teal), var(--gold-fill-2), var(--gold-fill-1)); animation: gira 6s linear infinite; }
+.anel-av .avatar { box-shadow: 0 0 0 4px var(--surface); }
+@keyframes gira { to { transform: rotate(360deg); } }
+.entrada-card h2 { font-size: 21px; font-weight: 800; }
+.entrada-card p { color: var(--fg-2); }
+.entrada-card form { width: 100%; display: flex; flex-direction: column; gap: 10px; margin-top: 6px; }
+.entrada-card .field { width: 100%; text-align: center; font-size: 16px; letter-spacing: .08em; padding: 11px 12px; }
+.entrada-card .btn { width: 100%; padding: 11px 14px; }
+.entrada-card .erro { color: var(--danger); font-size: 12.5px; min-height: 1em; }
+.entrada-card .link { border: 0; background: none; color: var(--fg-3); cursor: pointer; font-size: 12.5px; text-decoration: underline; text-underline-offset: 3px; }
+.entrada-card.treme { animation: treme .4s; }
+@keyframes treme { 20%, 60% { transform: translateX(-8px); } 40%, 80% { transform: translateX(8px); } }
+
+@media (max-width: 1100px) { .radar-box { grid-template-columns: 1fr; } }
 @media (max-width: 980px) { .hero { grid-template-columns: 1fr; } #radar { height: 230px; } }
 @media (max-width: 720px) {
+  .tres { grid-template-columns: 1fr 1fr 1fr; } .tres .gauge span { font-size: 11px; }
+  .avatar.g { --s: 46px; }
   .tabs { order: 3; width: 100%; } .tabs button { flex: 1 1 0; justify-content: center; padding: 7px 8px; }
   .acts .lbl { display: none; } .btn.gold { padding: 8px 11px; }
   .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -344,6 +438,7 @@ textarea.field { width: 100%; resize: vertical; min-height: 88px; line-height: 1
       <nav class="tabs" role="tablist" aria-label="Visões">
         <span class="tab-ind" aria-hidden="true"></span>
         <button role="tab" data-view="radar" aria-selected="true"><span class="ico" data-i="radar"></span>Radar</button>
+        <button role="tab" data-view="urgencia" aria-selected="false"><span class="ico" data-i="raio"></span>Urgência</button>
         <button role="tab" data-view="funil" aria-selected="false"><span class="ico" data-i="funil"></span>Funil</button>
         <button role="tab" data-view="lista" aria-selected="false"><span class="ico" data-i="lista"></span>Lista</button>
       </nav>
@@ -352,8 +447,9 @@ textarea.field { width: 100%; resize: vertical; min-height: 88px; line-height: 1
         <button class="btn gold" id="btn-garimpar"><span class="ico" data-i="brilho"></span><span class="lbl">Garimpar empresas</span></button>
         <button class="ib" id="btn-novo" title="Novo lead" aria-label="Novo lead"><span class="ico" data-i="mais"></span></button>
         <button class="ib" id="btn-tema" title="Modo escuro" aria-label="Alternar modo claro ou escuro"><span class="ico" data-i="lua"></span></button>
-        <button class="ib" id="btn-cfg" title="Configurações" aria-label="Configurações"><span class="ico" data-i="engrenagem"></span></button>
+
         <button class="ia-btn" id="btn-ia"><span class="orb mini"><i></i><i></i></span><span class="nome-ia">Lia</span></button>
+        <button class="avatar-btn" id="btn-perfil" title="Perfil e configurações" aria-label="Perfil e configurações"><span class="avatar" id="av-top"></span></button>
       </div>
     </div>
   </header>
@@ -361,16 +457,15 @@ textarea.field { width: 100%; resize: vertical; min-height: 88px; line-height: 1
   <div class="wrap">
     <section class="hero" aria-label="Resumo">
       <div>
-        <p class="eyebrow" id="hero-data"></p>
-        <h1 id="hero-ola">Olá</h1>
+        <div class="ola-l"><span class="avatar g" id="av-hero"></span><div><p class="eyebrow" id="hero-data"></p><h1 id="hero-ola">Olá</h1></div></div>
         <p class="sub" id="hero-sub">Carregando as empresas do radar…</p>
         <div class="kpis" id="kpis"></div>
         <p class="rot" id="rot"></p>
       </div>
       <div class="radar-box">
-        <canvas id="radar" aria-label="Radar das empresas: cada ponto é uma empresa"></canvas>
-        <div class="radar-tip" id="radar-tip" hidden></div>
-        <p class="radar-leg">Perto do centro = pontuação maior · altura do pino = potencial de compra</p>
+        <div class="radar-top"><div class="grow"><h2>Radar de urgência</h2><p>Quanto mais perto do centro, mais urgente · a altura do pino é o potencial de compra</p></div><button class="btn sm" id="btn-ver-urg">Ver urgências <span class="ico" data-i="seta"></span></button></div>
+        <div class="radar-cv" title="Abrir a página de urgências"><canvas id="radar" aria-label="Radar de urgência: cada pino é uma empresa"></canvas><div class="radar-tip" id="radar-tip" hidden></div><div class="leg" id="radar-leg"></div></div>
+        <div class="top-urg"><h3>Mais urgentes agora</h3><ol id="top-urg"></ol></div>
       </div>
     </section>
 
@@ -380,8 +475,8 @@ textarea.field { width: 100%; resize: vertical; min-height: 88px; line-height: 1
       <div class="busca"><span class="ico" data-i="busca"></span><input class="field" id="f-busca" type="search" placeholder="Buscar empresa, cidade ou nicho" aria-label="Buscar"></div>
       <select class="field" id="f-regiao" aria-label="Região"><option value="serra">Serra Gaúcha</option><option value="">Brasil inteiro</option></select>
       <select class="field" id="f-uf" aria-label="Estado"></select>
-      <select class="field" id="f-prio" aria-label="Prioridade">
-        <option value="">Toda prioridade</option><option value="max">Prioridade máxima</option><option value="precisa">Precisa muito</option><option value="compra">Tende a comprar</option><option value="aquecer">Para aquecer</option>
+      <select class="field" id="f-urg" aria-label="Urgência">
+        <option value="">Toda urgência</option><option value="urgente">Urgente</option><option value="alta">Alta</option><option value="media">Média</option><option value="baixa">Pode esperar</option>
       </select>
       <select class="field" id="f-tel" aria-label="Tipo de telefone"><option value="">Qualquer telefone</option><option value="celular">Só celular (WhatsApp)</option></select>
       <div class="grow"></div>
@@ -413,6 +508,7 @@ textarea.field { width: 100%; resize: vertical; min-height: 88px; line-height: 1
 
 <div id="camada"></div>
 <div id="toasts"></div>
+<div class="entrada" id="entrada" hidden><div class="luz" aria-hidden="true"><i></i><i></i></div></div>
 
 <script>
 (() => {
@@ -459,6 +555,11 @@ const ICONES = {
   sacola: '<path d="M5 8h14l-1 12.5H6zM9 8V6.5a3 3 0 0 1 6 0V8"/>',
   tesoura: '<circle cx="6" cy="6.5" r="2.5"/><circle cx="6" cy="17.5" r="2.5"/><path d="M8 8l12 10M8 16L20 6"/>',
   ponto: '<circle cx="12" cy="12" r="3.5"/>',
+  seta: '<path d="M5 12h14M13 6l6 6-6 6"/>',
+  cadeado: '<rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/>',
+  camera: '<path d="M4 8h3l1.5-2.5h7L17 8h3v11H4z"/><circle cx="12" cy="13.5" r="3.5"/>',
+  usuario: '<circle cx="12" cy="8.5" r="4"/><path d="M4.5 20.5a7.5 7.5 0 0 1 15 0"/>',
+  link: '<path d="M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1 1M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1-1"/>',
 };
 function ico(nome, cls) { const s = document.createElement('span'); s.className = 'ico' + (cls ? ' ' + cls : ''); s.setAttribute('aria-hidden', 'true'); s.innerHTML = `<svg viewBox="0 0 24 24">${ICONES[nome] || ICONES.ponto}</svg>`; return s; }
 function pintarIcones(raiz) { raiz.querySelectorAll('.ico[data-i]').forEach(s => { if (!s.firstChild) s.innerHTML = `<svg viewBox="0 0 24 24">${ICONES[s.dataset.i] || ''}</svg>`; }); }
@@ -485,23 +586,37 @@ const semAcento = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').
 const SERRA = new Set(SERRA_CIDADES.map(semAcento));
 const naSerra = l => l.uf === 'RS' && SERRA.has(semAcento(l.cidade));
 const MODO_LOCAL = !(window.claude && typeof window.claude.use === 'function');
-const CORTE_N = 72, CORTE_P = 50;
-const PRIO = [
-  { id: 'max', nome: 'Prioridade máxima', t: l => l.necessidade >= CORTE_N && l.potencial >= CORTE_P },
-  { id: 'precisa', nome: 'Precisa muito', t: l => l.necessidade >= CORTE_N },
-  { id: 'compra', nome: 'Tende a comprar', t: l => l.potencial >= CORTE_P },
-  { id: 'aquecer', nome: 'Para aquecer', t: () => true },
+const CORTE_P = 50;
+/* Urgência: quem tende a comprar e quase não aparece no Google vem primeiro. */
+const URG = [
+  { id: 'urgente', nome: 'Urgente', n: 1, min: 76, h: 358, i: 'raio', dica: 'Sem site, quase nada no Google e com cara de quem compra' },
+  { id: 'alta', nome: 'Alta', n: 2, min: 68, h: 30, i: 'alvo', dica: 'Boa chance de compra e presença fraca' },
+  { id: 'media', nome: 'Média', n: 3, min: 60, h: 172, i: 'conversa', dica: 'Aborde depois das urgentes' },
+  { id: 'baixa', nome: 'Pode esperar', n: 4, min: -1, h: 220, i: 'fila', dica: 'Sinais mais fracos por enquanto' },
 ];
-const PRIO_RANK = { max: 0, precisa: 1, compra: 2, aquecer: 3 };
-const prio = l => PRIO.find(p => p.t(l));
-const COR_PRIO = { max: 'var(--gold)', precisa: 'var(--coral)', compra: 'var(--teal)', aquecer: 'var(--fg-3)' };
-const CFG_PADRAO = { empresa: 'Dalas Marketing', remetente: '', assistente: 'Lia', servicos: 'Sites e landing pages, funis de venda, CRM, automações de WhatsApp e IA, tráfego pago, painéis e sistemas sob medida, Google Meu Negócio, gestão de Instagram', instrucoes: '' };
+const COR_URG = { urgente: 'var(--u1)', alta: 'var(--u2)', media: 'var(--u3)', baixa: 'var(--u4)' };
+const googleGap = l => { const g = l.google_avaliacoes; return g == null ? 1 : g < 30 ? .8 : g < 100 ? .5 : g < 300 ? .25 : 0; };
+const siteGap = l => ['sem_site', 'nao_encontrado', 'so_instagram', 'so_linktree'].includes(l.site_status) ? 1 : l.site_status === 'site_fraco' ? .55 : 0;
+const igGap = l => (!l.instagram || l.instagram_status === 'sem_instagram') ? 1 : l.instagram_status === 'fraco' ? .8 : (l.seguidores != null && l.seguidores < 1000) ? .5 : .15;
+// Peso: sem site (20) > Google fraco ou sem Google Meu Negócio (15) > Instagram fraco (10), somados ao potencial de compra e à necessidade.
+const urgencia = l => Math.max(0, Math.min(100, Math.round(.38 * l.potencial + .17 * l.necessidade + 100 * (.20 * siteGap(l) + .15 * googleGap(l) + .10 * igGap(l)))));
+const nivel = l => URG.find(u => l.urgencia >= u.min);
+function motivos(l) {
+  const m = [];
+  if (siteGap(l) === 1) m.push('Sem site próprio'); else if (l.site_status === 'site_fraco') m.push('Site fraco');
+  if (l.potencial >= CORTE_P) m.push('Tende a comprar');
+  if (googleGap(l) >= .8) m.push('Quase nada no Google');
+  if (!l.instagram || l.instagram_status === 'sem_instagram') m.push('Sem Instagram'); else if (l.instagram_status === 'fraco') m.push('Instagram fraco');
+  const av = Math.max(l.google_avaliacoes ?? 0, l.avaliacoes_total ?? 0); if (av >= 150) m.push(`${av.toLocaleString('pt-BR')} avaliações`);
+  return m;
+}
+const CFG_PADRAO = { empresa: 'Dalas Marketing', remetente: '', perfil_nome: '', perfil_cargo: '', foto: '', cor: 'dourado', fonte: 'jakarta', titulos: 'igual', tamanho: 'normal', assistente: 'Lia', servicos: 'Sites e landing pages, funis de venda, CRM, automações de WhatsApp e IA, tráfego pago, painéis e sistemas sob medida, Google Meu Negócio, gestão de Instagram', instrucoes: '' };
 const calmo = matchMedia('(prefers-reduced-motion: reduce)');
 
 /* ---------- Estado ---------- */
 const S = {
   leads: new Map(), config: { ...CFG_PADRAO }, pedidos: [], rotina: null,
-  view: 'radar', f: { regiao: mem('radar.regiao') ?? 'serra', busca: '', uf: '', nicho: '', prio: '', tel: '' }, sort: { campo: 'score', dir: -1 },
+  view: 'radar', f: { regiao: mem('radar.regiao') ?? 'serra', busca: '', uf: '', nicho: '', urg: '', tel: '' }, sort: { campo: 'urgencia', dir: -1 },
   sel: null, ordem: [], modal: null, animar: true, kpi: {},
   db: null, sample: null, mcp: null, dl: null, tools: false, tts: null, dict: null, voz: mem('radar.voz') === '1',
   dbState: 'carregando', chat: { turns: [], busy: false, ctl: null, parcial: '', ouvindo: false, base: '' }, lote: false,
@@ -561,6 +676,7 @@ function normalizar(id, x) {
   const p = pontuar(l);
   l.necessidade = num(x.necessidade) ?? p.necessidade; l.potencial = num(x.potencial) ?? p.potencial;
   l.score = Math.round((l.necessidade + l.potencial) / 2);
+  l.urgencia = urgencia(l);
   return l;
 }
 function fone(t) {
@@ -581,6 +697,14 @@ function saudacao() { const h = new Date().getHours(); return h < 12 ? 'Bom dia'
 function slug(s) { return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 70) || 'lead'; }
 function mem(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
 const nomeIA = () => str(S.config.assistente) || 'Lia';
+const nomeDono = () => str(S.config.perfil_nome) || str(S.config.remetente);
+function pintarAvatar(alvo, foto) {
+  if (!alvo) return;
+  const f = foto !== undefined ? foto : S.config.foto;
+  if (f && /^data:image\/(jpeg|png|webp);base64,/.test(f)) { alvo.replaceChildren(el('img', { src: f, alt: '' })); return; }
+  const n = nomeDono(); alvo.replaceChildren(n ? n.split(/\s+/).slice(0, 2).map(p => p[0]).join('').toUpperCase() : ico('usuario'));
+}
+function renderPerfil() { pintarAvatar($('#av-top')); pintarAvatar($('#av-hero')); if (!$('#entrada').hidden) mostrarEntrada(); }
 function hashN(s) { let h = 2166136261; for (const c of s) { h ^= c.charCodeAt(0); h = Math.imul(h, 16777619); } return (h >>> 0) / 4294967295; }
 
 function toast(msg, acao) {
@@ -594,6 +718,39 @@ function anel(valor, cor, r = 16) {
   const c = 2 * Math.PI * r, w = (r + 4) * 2;
   const svg = `<svg viewBox="0 0 ${w} ${w}"><circle class="fundo-anel" cx="${w / 2}" cy="${w / 2}" r="${r}"/><circle class="valor" cx="${w / 2}" cy="${w / 2}" r="${r}" stroke-dasharray="${c.toFixed(1)}" stroke-dashoffset="${(c * (1 - valor / 100)).toFixed(1)}"/></svg>`;
   const d = el('div', { class: 'anel', style: { '--pc': cor } }); d.innerHTML = svg; d.append(el('b', { text: String(valor) })); return d;
+}
+
+/* ---------- Aparência (cor de destaque e fontes) ---------- */
+const CORES = {
+  dourado: null,
+  verde: ['#9cf0bf', '#2fbf73', '#04170b', '#13804a', '#6fe6a6', '47, 191, 115'],
+  azul: ['#a8cdff', '#3b82f6', '#04112b', '#1d5fd1', '#93c0ff', '59, 130, 246'],
+  roxo: ['#d8bfff', '#8b5cf6', '#160632', '#6d3fd6', '#c7a9ff', '139, 92, 246'],
+  rosa: ['#ffbcd8', '#ec4899', '#2c0516', '#c42876', '#ff9fca', '236, 72, 153'],
+  laranja: ['#ffcf9c', '#f97316', '#2a1203', '#c2540a', '#ffb070', '249, 115, 22'],
+  turquesa: ['#a3f0ea', '#14b8a6', '#03201d', '#0b7f74', '#6fe3d7', '20, 184, 166'],
+};
+const FONTES = { jakarta: ['Plus Jakarta Sans', ''], inter: ['Inter', 'Inter:wght@400;500;600;700;800'], poppins: ['Poppins', 'Poppins:wght@400;500;600;700;800'], montserrat: ['Montserrat', 'Montserrat:wght@400;500;600;700;800'], dm: ['DM Sans', 'DM+Sans:wght@400;500;600;700;800'] };
+const TITULOS = { igual: ['', ''], cinzel: ['Cinzel', ''], grotesk: ['Space Grotesk', 'Space+Grotesk:wght@500;600;700'], playfair: ['Playfair Display', 'Playfair+Display:wght@600;700;800'], sora: ['Sora', 'Sora:wght@500;600;700;800'] };
+function carregarFonte(q) { if (!q || document.querySelector(`link[data-f="${q}"]`)) return; document.head.append(el('link', { rel: 'stylesheet', 'data-f': q, href: `https://fonts.googleapis.com/css2?family=${q}&display=swap` })); }
+function aplicarAparencia(a) {
+  a = a || S.config;
+  const st = $('#estilo-usuario') || document.head.appendChild(el('style', { id: 'estilo-usuario' }));
+  let css = '';
+  const c = CORES[a.cor];
+  if (c) {
+    const [f1, f2, ink, txtClaro, txtEscuro, rgb] = c;
+    const comum = `--gold-fill-1: ${f1}; --gold-fill-2: ${f2}; --gold-ink: ${ink}; --gold-soft: rgba(${rgb}, .15); --orb-1: ${f1}; --orb-2: ${f2}; --orb-glow: rgba(${rgb}, .45); --orb-ring: rgba(${rgb}, .6); --radar-sweep: ${rgb};`;
+    css += `html:root[data-theme="light"] { ${comum} --gold: ${txtClaro}; } html:root[data-theme="dark"] { ${comum} --gold: ${txtEscuro}; }
+.btn.gold, .pill.todos[aria-pressed="true"] { box-shadow: 0 6px 18px rgba(${rgb}, .3); }`;
+  }
+  const f = FONTES[a.fonte]; if (f && f[1]) carregarFonte(f[1]);
+  if (f) css += `html:root { --sans: '${f[0]}', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif; }`;
+  const t = TITULOS[a.titulos]; if (t && t[1]) carregarFonte(t[1]);
+  if (t && t[0]) css += `.hero h1, .col-h h2, .card-t h3, .dr-h h2, .modal h2, .chat-h h2, .ola h3, .entrada-card h2, .radar-top h2, .top-urg b { font-family: '${t[0]}', var(--sans); letter-spacing: ${t[0] === 'Cinzel' ? '.02em' : 'normal'}; }`;
+  if (a.tamanho === 'grande') css += `body { font-size: 15.5px; } .card-t h3, .top-urg b { font-size: 15px; } .meta, .chip, .card-f .tel { font-size: 13px; } .msg { font-size: 15px; }`;
+  st.textContent = css;
+  radarCores();
 }
 
 /* ---------- Tema ---------- */
@@ -629,7 +786,7 @@ function initDb(db) {
     if (!snap.metadata.fromCache) { clearTimeout(lento); S.dbState = 'ok'; }
     render();
   }, () => { clearTimeout(lento); S.dbState = 'erro'; render(); });
-  db.doc('config/principal').onSnapshot(s => { S.config = { ...CFG_PADRAO, ...(s.exists ? s.data() : {}) }; document.querySelectorAll('.nome-ia').forEach(n => { n.textContent = nomeIA(); }); render(); renderChat(); }, () => {});
+  db.doc('config/principal').onSnapshot(s => { S.config = { ...CFG_PADRAO, ...(s.exists ? s.data() : {}) }; document.querySelectorAll('.nome-ia').forEach(n => { n.textContent = nomeIA(); }); aplicarAparencia(); renderPerfil(); render(); renderChat(); }, () => {});
   db.collection('pedidos').limit(200).onSnapshot(s => {
     S.pedidos = s.docs.map(d => ({ id: d.id, ...d.data() })).sort((a, b) => String(b.criado_em).localeCompare(String(a.criado_em)));
     if (S.modal === 'garimpar') renderPedidos();
@@ -647,7 +804,7 @@ function filtrados(semNicho) {
   const q = S.f.busca.trim().toLowerCase();
   return base().filter(l =>
     (!S.f.uf || l.uf === S.f.uf) && (semNicho || !S.f.nicho || l.nicho === S.f.nicho) && (!S.f.tel || l.telefone_tipo === S.f.tel) &&
-    (!S.f.prio || prio(l).id === S.f.prio) && (!q || `${l.nome} ${l.cidade} ${l.uf} ${l.nicho}`.toLowerCase().includes(q)));
+    (!S.f.urg || nivel(l).id === S.f.urg) && (!q || `${l.nome} ${l.cidade} ${l.uf} ${l.nicho}`.toLowerCase().includes(q)));
 }
 function opcoes(sel, rotulo, valores, atual) {
   const cur = [...sel.options].map(o => o.value).join('|'), novo = ['', ...valores].join('|');
@@ -662,7 +819,7 @@ function render() { if (pend) return; pend = true; requestAnimationFrame(() => {
 function desenhar() {
   renderHero();
   opcoes($('#f-uf'), 'Todos os estados', [...new Set(base().map(l => l.uf).filter(Boolean))].sort(), S.f.uf);
-  $('#f-regiao').value = S.f.regiao; $('#f-prio').value = S.f.prio;
+  $('#f-regiao').value = S.f.regiao; $('#f-urg').value = S.f.urg;
   document.querySelectorAll('.tabs button').forEach(b => b.setAttribute('aria-selected', String(b.dataset.view === S.view)));
   moverIndicador();
   renderNichos();
@@ -672,11 +829,11 @@ function desenhar() {
   $('#btn-csv').hidden = !(S.dl && S.leads.size);
   renderAviso();
   const main = $('#main');
-  const v = S.view === 'radar' ? viewRadar() : S.view === 'funil' ? viewFunil() : viewLista();
+  const v = S.view === 'radar' ? viewRadar() : S.view === 'urgencia' ? viewUrgencia() : S.view === 'funil' ? viewFunil() : viewLista();
   if (S.animar && v.classList.contains('board') && !calmo.matches) v.classList.add('entra');
   S.animar = false;
   main.replaceChildren(v);
-  radarPontos();
+  radarPontos(); renderTopUrg();
   if (S.sel) {
     const a = document.activeElement, dr = $('#drawer');
     const editando = dr && dr.contains(a) && /TEXTAREA|INPUT|SELECT/.test(a.tagName);
@@ -695,14 +852,14 @@ function contar(elm, alvo) {
   requestAnimationFrame(passo);
 }
 function renderHero() {
-  const nome = str(S.config.remetente);
+  const nome = nomeDono().split(' ')[0];
   const dia = new Date().toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' });
   $('#hero-data').textContent = dia;
   const h1 = $('#hero-ola'); h1.replaceChildren(`${saudacao()}${nome ? ', ' : ''}`, nome ? el('em', { text: nome }) : '', '.');
   const b = base(), c = {}; for (const l of b) c[l.etapa] = (c[l.etapa] || 0) + 1;
-  const max = b.filter(l => l.etapa === 'novo' && prio(l).id === 'max').length;
+  const max = b.filter(l => l.etapa === 'novo' && nivel(l).id === 'urgente').length;
   const onde = S.f.regiao ? 'na Serra Gaúcha' : 'no radar';
-  $('#hero-sub').textContent = S.dbState === 'carregando' ? 'Carregando as empresas do radar…' : b.length ? `${b.length} empresas ${onde}, ${max} com prioridade máxima esperando o primeiro contato.` : `Nenhuma empresa ${onde} ainda.`;
+  $('#hero-sub').textContent = S.dbState === 'carregando' ? 'Carregando as empresas do radar…' : b.length ? `${b.length} empresas ${onde}. ${max === 1 ? '1 urgente esperando' : max + ' urgentes esperando'} o primeiro contato.` : `Nenhuma empresa ${onde} ainda.`;
   const kp = $('#kpis');
   const itens = [['fila', c.novo || 0, 'Na fila', 'fila', 'var(--teal)'], ['abordado', c.abordado || 0, 'Abordadas', 'conversa', 'var(--info)'],
     ['negocio', (c.conversando || 0) + (c.reuniao || 0) + (c.proposta || 0), 'Em negociação', 'aperto', 'var(--gold)'], ['fechado', c.fechado || 0, 'Fechadas', 'check', 'var(--wa)']];
@@ -718,7 +875,7 @@ function renderNichos() {
   if (S.f.nicho && !cont[S.f.nicho]) ord.push(S.f.nicho);
   const pill = (n, rot, qtd, i, h) => el('button', { class: 'pill' + (n ? '' : ' todos'), type: 'button', 'aria-pressed': String(S.f.nicho === n), style: { '--h': String(h) }, onclick: () => mudarFiltro('nicho', S.f.nicho === n ? '' : n) },
     el('span', { class: 'dot' }, ico(i)), rot, el('i', { text: String(qtd) }));
-  box.replaceChildren(pill('', 'Todos', ls.length, 'radar', 200), ...ord.map(n => pill(n, n, cont[n] || 0, nicho(n).i, nicho(n).h)));
+  box.replaceChildren(pill('', 'Todos', ls.length, 'radar', 42), ...ord.map(n => pill(n, n, cont[n] || 0, nicho(n).i, nicho(n).h)));
 }
 function renderAviso() {
   const box = $('#aviso'); let n = null;
@@ -727,7 +884,7 @@ function renderAviso() {
   else if (S.dbState === 'erro') n = el('div', { class: 'notice' }, 'Perdi o acesso ao banco de dados nesta sessão. Recarregue a página para tentar de novo.');
   else if (MODO_LOCAL && location.protocol === 'file:') n = el('div', { class: 'notice' }, el('b', { text: 'Abra pelo atalho. ' }), 'Use “Abrir-Radar-Windows” ou “Abrir-Radar-Mac” da pasta do Radar; aberto direto pelo arquivo, a IA e os dados iniciais não carregam.');
   else if (MODO_LOCAL && S.dbState === 'ok' && !mem('radar.apikey')) n = el('div', { class: 'notice' }, el('b', { text: 'Falta a chave da API do Claude. ' }), 'Sem ela o painel funciona, mas a assistente e a busca de empresas ficam desligadas aqui no computador. ', el('button', { class: 'btn sm', text: 'Colocar a chave', onclick: abrirConfig }));
-  else if (S.dbState === 'ok' && !S.config.remetente && S.leads.size) n = el('div', { class: 'notice' }, el('b', { text: 'Falta o seu nome. ' }), 'A assistente assina as mensagens de abordagem com ele. ', el('button', { class: 'btn sm', text: 'Preencher agora', onclick: abrirConfig }));
+  else if (S.dbState === 'ok' && !S.config.remetente && !S.config.perfil_nome && S.leads.size) n = el('div', { class: 'notice' }, el('b', { text: 'Falta o seu nome. ' }), 'A assistente assina as mensagens de abordagem com ele. ', el('button', { class: 'btn sm', text: 'Preencher agora', onclick: abrirConfig }));
   box.replaceChildren(...(n ? [n] : []));
 }
 function vazioGeral() {
@@ -740,20 +897,19 @@ function vazioGeral() {
     'Aqui aparecem as empresas encontradas, uma coluna por nicho. Use “Garimpar empresas” para pedir uma busca, ou o botão + para cadastrar uma que você já conhece.');
 }
 function card(l, opt = {}) {
-  const p = prio(l), nc = nicho(l.nicho);
+  const u = nivel(l), nc = nicho(l.nicho), ig = igUser(l);
   const chips = [];
   if (recente(l) && l.etapa === 'novo') chips.push(el('span', { class: 'chip novo', text: 'Novo' }));
-  chips.push(el('span', { class: 'chip p-' + p.id, text: p.nome }));
-  chips.push(el('span', { class: 'chip', text: PRESENCA[l.site_status] || 'Site não encontrado' }));
-  if (!l.instagram) chips.push(el('span', { class: 'chip', text: 'Sem Instagram' }));
-  else if (l.instagram_status === 'fraco') chips.push(el('span', { class: 'chip', text: 'Instagram fraco' }));
-  const av = avaliacoes(l); if (av) chips.push(el('span', { class: 'chip v', text: `${av.toLocaleString('pt-BR')} avaliações` }));
-  if (l.mensagem) chips.push(el('span', { class: 'chip', text: 'Abordagem pronta' }));
-  const c = el('article', { class: 'card' + (S.sel === l.id ? ' sel' : ''), tabindex: '0', 'data-id': l.id, draggable: opt.arrasta ? 'true' : null, style: { '--h': String(nc.h) }, 'aria-label': `${l.nome}, pontuação ${l.score}, ${p.nome}` },
-    el('div', { class: 'card-t' }, anel(l.score, COR_PRIO[p.id]), el('div', { class: 'grow' }, el('h3', { text: l.nome }), el('p', { class: 'meta', text: [opt.mostrarNicho ? l.nicho : '', local(l)].filter(Boolean).join(' · ') }))),
+  chips.push(el('span', { class: 'chip u-' + u.n, text: u.nome }));
+  for (const m of motivos(l).slice(0, 3)) chips.push(el('span', { class: 'chip m', text: m }));
+  if (l.mensagem) chips.push(el('span', { class: 'chip v', text: 'Abordagem pronta' }));
+  const c = el('article', { class: 'card' + (S.sel === l.id ? ' sel' : ''), tabindex: '0', 'data-id': l.id, draggable: opt.arrasta ? 'true' : null, style: { '--h': String(nc.h) }, 'aria-label': `${l.nome}, urgência ${u.nome}` },
+    el('div', { class: 'card-t' }, anel(l.urgencia, COR_URG[u.id]), el('div', { class: 'grow' }, el('h3', { text: l.nome }), el('p', { class: 'meta', text: [opt.mostrarNicho ? l.nicho : '', local(l)].filter(Boolean).join(' · ') }))),
     el('div', { class: 'chips' }, chips),
     el('div', { class: 'card-f' }, el('span', { class: 'tel', text: l.telefone ? fone(l.telefone) : 'sem telefone' }),
-      l.telefone ? el('a', { class: 'wa-r', href: waLink(l, l.mensagem), target: '_blank', rel: 'noopener', title: 'Abrir no WhatsApp', 'aria-label': 'Abrir conversa no WhatsApp', onclick: e => { e.stopPropagation(); aposWhats(l); } }, ico('wa')) : null));
+      el('span', { class: 'acoes-r' },
+        ig ? el('a', { class: 'ig-r', href: 'https://www.instagram.com/' + ig + '/', target: '_blank', rel: 'noopener', title: 'Abrir o Instagram @' + ig, 'aria-label': 'Abrir o Instagram', onclick: e => e.stopPropagation() }, ico('insta')) : null,
+        l.telefone ? el('a', { class: 'wa-r', href: waLink(l, l.mensagem), target: '_blank', rel: 'noopener', title: 'Abrir no WhatsApp', 'aria-label': 'Abrir conversa no WhatsApp', onclick: e => { e.stopPropagation(); aposWhats(l); } }, ico('wa')) : null)));
   c.addEventListener('click', () => abrirLead(l.id));
   c.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target === c) abrirLead(l.id); });
   if (opt.arrasta) c.addEventListener('dragstart', e => { e.dataTransfer.setData('text/plain', l.id); e.dataTransfer.effectAllowed = 'move'; });
@@ -772,15 +928,23 @@ function coluna(id, nome, dica, itens, opt = {}) {
 }
 function viewRadar() {
   const v = vazioGeral(); if (v) { S.ordem = []; return v; }
-  const fila = filtrados().filter(l => l.etapa === 'novo').sort((a, b) => PRIO_RANK[prio(a).id] - PRIO_RANK[prio(b).id] || b.score - a.score);
+  const fila = filtrados().filter(l => l.etapa === 'novo').sort((a, b) => b.urgencia - a.urgencia);
   const g = {}; for (const l of fila) (g[l.nicho] = g[l.nicho] || []).push(l);
   const ord = Object.keys(g).sort((a, b) => g[b].length - g[a].length || a.localeCompare(b));
   S.ordem = ord.flatMap(n => g[n].map(l => l.id));
   if (!ord.length) return el('div', { class: 'notice' }, el('b', { text: 'A fila está vazia com esses filtros. ' }), 'Limpe os filtros ou peça uma nova busca em “Garimpar empresas”.');
   return el('div', { class: 'board' }, ord.map(n => {
-    const ls = g[n], max = ls.filter(l => prio(l).id === 'max').length;
-    return coluna(n, n, max ? `${max} com prioridade máxima` : `média ${Math.round(ls.reduce((s, l) => s + l.score, 0) / ls.length)} pontos`, ls, { h: nicho(n).h, i: nicho(n).i });
+    const ls = g[n], urg = ls.filter(l => nivel(l).id === 'urgente').length, alta = ls.filter(l => nivel(l).id === 'alta').length;
+    return coluna(n, n, urg ? `${urg} ${urg === 1 ? 'urgente' : 'urgentes'}${alta ? ` · ${alta} alta` : ''}` : alta ? `${alta} com urgência alta` : 'sem urgentes agora', ls, { h: nicho(n).h, i: nicho(n).i });
   }));
+}
+function viewUrgencia() {
+  const v = vazioGeral(); if (v) { S.ordem = []; return v; }
+  const fila = filtrados().filter(l => l.etapa === 'novo').sort((a, b) => b.urgencia - a.urgencia);
+  const g = Object.fromEntries(URG.map(u => [u.id, []]));
+  for (const l of fila) g[nivel(l).id].push(l);
+  S.ordem = URG.flatMap(u => g[u.id].map(l => l.id));
+  return el('div', { class: 'board' }, URG.map(u => coluna(u.id, u.nome, u.dica, g[u.id], { h: u.h, i: u.i, mostrarNicho: true, vazio: 'Nenhuma empresa neste nível com os filtros atuais.' })));
 }
 function viewFunil() {
   const v = vazioGeral(); if (v) { S.ordem = []; return v; }
@@ -795,11 +959,11 @@ function viewLista() {
   const { campo, dir } = S.sort;
   const ls = filtrados().sort((a, b) => { const x = a[campo], y = b[campo]; return (typeof x === 'number' ? x - y : String(x).localeCompare(String(y), 'pt-BR')) * dir; });
   S.ordem = ls.map(l => l.id);
-  const cols = [['nome', 'Empresa'], ['nicho', 'Nicho'], ['cidade', 'Cidade'], ['telefone', 'Telefone'], ['site_status', 'Presença'], ['necessidade', 'Necessidade'], ['potencial', 'Potencial'], ['score', 'Geral'], ['etapa', 'Etapa']];
-  const th = cols.map(([k, t]) => el('th', { scope: 'col', onclick: () => { S.sort = { campo: k, dir: S.sort.campo === k ? -S.sort.dir : (['necessidade', 'potencial', 'score'].includes(k) ? -1 : 1) }; render(); }, text: t + (campo === k ? (dir > 0 ? ' ↑' : ' ↓') : '') }));
+  const cols = [['nome', 'Empresa'], ['nicho', 'Nicho'], ['cidade', 'Cidade'], ['telefone', 'Telefone'], ['instagram', 'Instagram'], ['site_status', 'Site'], ['urgencia', 'Urgência'], ['potencial', 'Potencial'], ['etapa', 'Etapa']];
+  const th = cols.map(([k, t]) => el('th', { scope: 'col', onclick: () => { S.sort = { campo: k, dir: S.sort.campo === k ? -S.sort.dir : (['necessidade', 'potencial', 'urgencia'].includes(k) ? -1 : 1) }; render(); }, text: t + (campo === k ? (dir > 0 ? ' ↑' : ' ↓') : '') }));
   const tr = ls.map(l => el('tr', { onclick: () => abrirLead(l.id) },
     el('td', { class: 'nome', text: l.nome }), el('td', null, el('span', { class: 'nicho-t', style: { '--h': String(nicho(l.nicho).h) } }, ico(nicho(l.nicho).i), l.nicho)), el('td', { text: local(l) }), el('td', { class: 'num', text: l.telefone ? fone(l.telefone) : '' }),
-    el('td', { text: PRESENCA[l.site_status] || '' }), el('td', { class: 'num', text: String(l.necessidade) }), el('td', { class: 'num', text: String(l.potencial) }), el('td', { class: 'num', text: String(l.score) }), el('td', { text: ETAPA[l.etapa] })));
+    el('td', { text: igUser(l) ? '@' + igUser(l) : '—' }), el('td', { text: PRESENCA[l.site_status] || '' }), el('td', null, el('span', { class: 'chip u-' + nivel(l).n, text: `${nivel(l).nome} · ${l.urgencia}` })), el('td', { class: 'num', text: String(l.potencial) }), el('td', { text: ETAPA[l.etapa] })));
   return el('div', { class: 'tbl-w' }, el('table', null, el('thead', null, el('tr', null, th)), el('tbody', null, tr.length ? tr : el('tr', null, el('td', { colspan: '9', class: 'vazio', text: 'Nenhuma empresa com os filtros atuais.' })))));
 }
 
@@ -818,17 +982,22 @@ document.addEventListener('pointerout', e => { const c = e.target.closest && e.t
 const radar = { cv: null, ctx: null, w: 0, h: 0, pts: [], hover: null, raf: 0, visivel: true, cor: {} };
 function radarCores() {
   const cs = getComputedStyle(document.documentElement), g = n => cs.getPropertyValue(n).trim();
-  radar.cor = { d1: g('--radar-disc-1'), d2: g('--radar-disc-2'), line: g('--radar-line'), sweep: g('--radar-sweep'), fg3: g('--fg-3'), gold: g('--gold'), nl: g('--nl'), ns: g('--ns'), surface: g('--surface') };
+  radar.cor = { d1: g('--radar-disc-1'), d2: g('--radar-disc-2'), line: g('--radar-line'), sweep: g('--radar-sweep'), fg3: g('--fg-3'), gold: g('--gold'), nl: g('--nl'), ns: g('--ns'), surface: g('--surface'),
+    u: { urgente: g('--u1'), alta: g('--u2'), media: g('--u3'), baixa: g('--u4') } };
   if (radar.ctx) radarDesenhar(performance.now());
 }
+const radarRaio = u => .1 + Math.max(0, Math.min(1, (90 - u) / 50)) * .86;
+function hexA(cor, a) { const m = /^#([0-9a-f]{6})$/i.exec(cor.trim()); if (!m) return cor; const n = parseInt(m[1], 16); return `rgba(${n >> 16}, ${(n >> 8) & 255}, ${n & 255}, ${a})`; }
 function radarGeo() { const w = radar.w, h = radar.h, k = .46; const R = Math.min(w * .46, (h - 20) / (2 * k + .5)); return { cx: w / 2, cy: h * .6, R, k }; }
 function radarPontos() {
   if (!radar.ctx) return;
   const ls = filtrados(), ns = [...new Set(ls.map(l => l.nicho))].sort(), n = Math.max(ns.length, 1);
   radar.pts = ls.map(l => {
     const i = ns.indexOf(l.nicho), a = (i / n) * Math.PI * 2 + (.15 + .7 * hashN(l.id)) * (Math.PI * 2 / n);
-    return { id: l.id, l, a, fr: .14 + (1 - l.score / 100) * .82, alt: .1 + l.potencial / 100, h: nicho(l.nicho).h };
+    return { id: l.id, l, a, fr: radarRaio(l.urgencia), alt: .1 + l.potencial / 100, nv: nivel(l).id };
   });
+  const leg = $('#radar-leg');
+  if (leg) { const c = {}; for (const p of radar.pts) c[p.nv] = (c[p.nv] || 0) + 1; leg.replaceChildren(...URG.map(u => el('span', null, el('i', { style: { background: COR_URG[u.id] } }), `${u.nome} ${c[u.id] || 0}`))); }
   if (calmo.matches || !radar.raf) radarDesenhar(performance.now());
 }
 function radarDesenhar(t) {
@@ -840,7 +1009,8 @@ function radarDesenhar(t) {
   const gr = ctx.createRadialGradient(0, 0, 0, 0, 0, R); gr.addColorStop(0, c.d1); gr.addColorStop(1, c.d2);
   ctx.fillStyle = gr; ctx.beginPath(); ctx.arc(0, 0, R, 0, Math.PI * 2); ctx.fill();
   ctx.strokeStyle = c.line; ctx.lineWidth = 1 / k * .9;
-  for (const f of [.25, .5, .75, 1]) { ctx.beginPath(); ctx.arc(0, 0, R * f, 0, Math.PI * 2); ctx.stroke(); }
+  const zonas = [['baixa', 1], ['media', radarRaio(60)], ['alta', radarRaio(68)], ['urgente', radarRaio(76)]];
+  for (const [id, f] of zonas) { ctx.fillStyle = hexA(c.u[id] || '#888888', id === 'urgente' ? .14 : .06); ctx.beginPath(); ctx.arc(0, 0, R * f, 0, Math.PI * 2); ctx.fill(); ctx.beginPath(); ctx.arc(0, 0, R * f, 0, Math.PI * 2); ctx.stroke(); }
   for (let i = 0; i < 6; i++) { const a = i * Math.PI / 3; ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(Math.cos(a) * R, Math.sin(a) * R); ctx.stroke(); }
   for (let i = 0; i < 26; i++) { const a0 = ang - (i + 1) * .045, a1 = ang - i * .045; ctx.fillStyle = `rgba(${c.sweep}, ${(.32 * (1 - i / 26)).toFixed(3)})`; ctx.beginPath(); ctx.moveTo(0, 0); ctx.arc(0, 0, R, a0, a1); ctx.closePath(); ctx.fill(); }
   ctx.strokeStyle = `rgba(${c.sweep}, .9)`; ctx.lineWidth = 2 / k; ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(Math.cos(ang) * R, Math.sin(ang) * R); ctx.stroke();
@@ -848,12 +1018,13 @@ function radarDesenhar(t) {
   const pts = radar.pts.map(p => { const x = cx + Math.cos(p.a) * p.fr * R, yb = cy + Math.sin(p.a) * p.fr * R * k, hh = p.alt * R * .42; return { ...p, x, yb, yt: yb - hh }; }).sort((a, b) => a.yb - b.yb);
   for (const p of pts) {
     let d = (ang - p.a) % (Math.PI * 2); if (d < 0) d += Math.PI * 2;
-    const luz = calmo.matches ? .6 : Math.max(0, 1 - d / 2.2), cor = `hsl(${p.h} ${c.ns} ${c.nl}`;
+    const luz = calmo.matches ? .6 : Math.max(0, 1 - d / 2.2), base = c.u[p.nv] || '#888888';
     ctx.fillStyle = 'rgba(0,0,0,.12)'; ctx.beginPath(); ctx.ellipse(p.x, p.yb, 4, 4 * k, 0, 0, Math.PI * 2); ctx.fill();
-    ctx.strokeStyle = cor + ' / .55)'; ctx.lineWidth = 1.4; ctx.beginPath(); ctx.moveTo(p.x, p.yb); ctx.lineTo(p.x, p.yt); ctx.stroke();
-    const sel = radar.hover && radar.hover.id === p.id, r = sel ? 6.5 : 4.2 + luz * 1.6;
-    if (luz > .05 || sel) { ctx.fillStyle = cor + ` / ${(.18 + luz * .3).toFixed(2)})`; ctx.beginPath(); ctx.arc(p.x, p.yt, r + 5 * luz + (sel ? 4 : 0), 0, Math.PI * 2); ctx.fill(); }
-    ctx.fillStyle = cor + ')'; ctx.beginPath(); ctx.arc(p.x, p.yt, r, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = hexA(base, .55); ctx.lineWidth = 1.4; ctx.beginPath(); ctx.moveTo(p.x, p.yb); ctx.lineTo(p.x, p.yt); ctx.stroke();
+    const sel = radar.hover && radar.hover.id === p.id, urg = p.nv === 'urgente', r = (sel ? 6.8 : 4.2 + luz * 1.6) + (urg ? 1 : 0);
+    if (urg && !calmo.matches) { const pul = (Math.sin(t / 380 + p.a * 3) + 1) / 2; ctx.strokeStyle = hexA(base, .5 * (1 - pul)); ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(p.x, p.yt, r + 3 + pul * 8, 0, Math.PI * 2); ctx.stroke(); }
+    if (luz > .05 || sel) { ctx.fillStyle = hexA(base, (.18 + luz * .3).toFixed(2)); ctx.beginPath(); ctx.arc(p.x, p.yt, r + 5 * luz + (sel ? 4 : 0), 0, Math.PI * 2); ctx.fill(); }
+    ctx.fillStyle = base; ctx.beginPath(); ctx.arc(p.x, p.yt, r, 0, Math.PI * 2); ctx.fill();
     ctx.strokeStyle = c.surface; ctx.lineWidth = 1.5; ctx.stroke();
   }
   radar.desenhados = pts;
@@ -873,15 +1044,24 @@ function radarIniciar() {
   const achar = e => { const r = cv.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top; let m = null, md = 14; for (const p of radar.desenhados || []) { const dd = Math.hypot(p.x - x, p.yt - y); if (dd < md) { md = dd; m = p; } } return m; };
   cv.addEventListener('pointermove', e => {
     const p = achar(e); radar.hover = p; cv.style.cursor = p ? 'pointer' : 'crosshair';
-    if (p) { tip.hidden = false; tip.replaceChildren(el('b', { text: p.l.nome }), el('span', { text: `${p.l.nicho} · ${local(p.l)} · ${p.l.score} pontos` })); tip.style.left = (p.x + cv.offsetLeft) + 'px'; tip.style.top = (p.yt + cv.offsetTop) + 'px'; }
+    if (p) { tip.hidden = false; tip.replaceChildren(el('b', { text: p.l.nome }), el('span', { text: `${p.l.nicho} · ${local(p.l)} · urgência ${nivel(p.l).nome.toLowerCase()}` })); tip.style.left = p.x + 'px'; tip.style.top = p.yt + 'px'; }
     else tip.hidden = true;
     if (calmo.matches) radarDesenhar(performance.now());
   });
   cv.addEventListener('pointerleave', () => { radar.hover = null; tip.hidden = true; });
-  cv.addEventListener('click', e => { const p = achar(e); if (p) abrirLead(p.id); });
+  cv.addEventListener('click', e => { const p = achar(e); if (p) abrirLead(p.id); else verUrgencias(); });
   if ('IntersectionObserver' in window) new IntersectionObserver(es => { radar.visivel = es[0].isIntersecting; if (radar.visivel) radarLoop(); }).observe(cv);
   document.addEventListener('visibilitychange', () => { if (!document.hidden) radarLoop(); });
   radarCores(); radarLoop();
+}
+
+function verUrgencias() { location.hash = 'urgencia'; irPara('urgencia'); setTimeout(() => $('#nichos').scrollIntoView({ behavior: calmo.matches ? 'auto' : 'smooth', block: 'start' }), 60); }
+function renderTopUrg() {
+  const box = $('#top-urg'); if (!box) return;
+  const ls = filtrados().filter(l => l.etapa === 'novo').sort((a, b) => b.urgencia - a.urgencia).slice(0, 5);
+  box.replaceChildren(...(ls.length ? ls.map((l, i) => el('li', null, el('button', { type: 'button', onclick: () => abrirLead(l.id) },
+    el('span', { class: 'rk', text: String(i + 1) }), anel(l.urgencia, COR_URG[nivel(l).id], 13),
+    el('span', { class: 'grow', style: { 'min-width': '0' } }, el('b', { text: l.nome }), el('small', { text: [l.nicho, l.cidade, ...motivos(l).slice(0, 2)].join(' · ') }))))) : [el('li', { class: 'vazio', text: 'Nenhuma empresa na fila com esses filtros.' })]));
 }
 
 /* ---------- Ficha do lead ---------- */
@@ -907,7 +1087,7 @@ function renderDrawer() {
   const jaAberta = !!cam.querySelector('#drawer');
   cam.querySelectorAll('.veil.d, #drawer').forEach(n => n.remove());
   if (!l) { S.sel = null; return; }
-  const i = S.ordem.indexOf(l.id), p = prio(l), nc = nicho(l.nicho);
+  const i = S.ordem.indexOf(l.id), u = nivel(l), nc = nicho(l.nicho), mot = motivos(l);
   const ir = d => { const id = S.ordem[i + d]; if (id) { salvarCampos(); S.sel = id; renderDrawer(); render(); } };
   const ig = igUser(l), site = seguro(l.site);
   const linha = (k, v) => el('div', { class: 'row' }, el('span', { class: 'k', text: k }), v);
@@ -918,23 +1098,35 @@ function renderDrawer() {
   etapa.value = l.etapa;
   const btIA = S.sample ? el('button', { class: 'btn', id: 'd-ia', onclick: () => gerarMensagem(l.id) }, ico('brilho'), l.mensagem ? `Reescrever com a ${nomeIA()}` : `Escrever com a ${nomeIA()}`) : null;
   const btCop = el('button', { class: 'btn', onclick: e => copiar(msg.value, msg, e.currentTarget) }, ico('copiar'), 'Copiar');
+  const igCampo = el('input', { class: 'field', id: 'd-ig', placeholder: '@perfil da empresa', value: ig ? '@' + ig : '', autocomplete: 'off' });
+  const salvarIg = () => {
+    const v = igCampo.value.trim().replace(/^https?:\/\/(www\.)?instagram\.com\//i, '').replace(/[/?].*$/, '').replace(/^@/, '');
+    if (v && !/^[A-Za-z0-9._]{1,30}$/.test(v)) { toast('Esse @ não parece válido. Use só letras, números, ponto e sublinhado.'); return; }
+    atualizarLead(l.id, { instagram: v ? '@' + v : '', instagram_status: v ? (l.instagram_status && l.instagram_status !== 'sem_instagram' ? l.instagram_status : '') : 'sem_instagram' }).then(() => toast(v ? 'Instagram salvo.' : 'Instagram removido.'), () => {});
+  };
   const excluir = el('button', { class: 'btn ghost sm danger', onclick: () => { excluir.replaceWith(el('button', { class: 'btn sm danger', text: 'Confirmar exclusão', onclick: () => { const id = l.id; fecharLead(); S.db && S.db.doc('leads/' + id).delete().then(() => toast('Lead excluído.'), () => toast('Não consegui excluir agora.')); } })); } }, ico('lixo'), 'Excluir');
   const dr = el('aside', { class: 'drawer', id: 'drawer', role: 'dialog', 'aria-label': 'Ficha de ' + l.nome, style: { '--h': String(nc.h) } },
     el('div', { class: 'dr-h' },
       el('span', { class: 'tile' }, ico(nc.i)),
-      el('div', { class: 'grow' }, el('h2', { text: l.nome }), el('p', { class: 'meta', text: [l.nicho, local(l), l.endereco].filter(Boolean).join(' · ') }), el('div', { class: 'chips', style: { 'margin-top': '6px' } }, el('span', { class: 'chip p-' + p.id, text: p.nome }), el('span', { class: 'chip', text: ETAPA[l.etapa] }))),
+      el('div', { class: 'grow' }, el('h2', { text: l.nome }), el('p', { class: 'meta', text: [l.nicho, local(l), l.endereco].filter(Boolean).join(' · ') }), el('div', { class: 'chips', style: { 'margin-top': '6px' } }, el('span', { class: 'chip u-' + u.n, text: 'Urgência ' + u.nome.toLowerCase() }), el('span', { class: 'chip', text: ETAPA[l.etapa] }))),
       el('button', { class: 'ib', title: 'Fechar', 'aria-label': 'Fechar ficha', onclick: fecharLead }, ico('x'))),
     el('div', { class: 'dr-b' },
       l.resumo ? el('p', { text: l.resumo }) : null,
-      el('div', { class: 'two' },
-        el('div', { class: 'gauge' }, anel(l.necessidade, 'var(--coral)', 22), el('span', { text: 'Necessidade do serviço' })),
+      el('div', { class: 'tres' },
+        el('div', { class: 'gauge' }, anel(l.urgencia, COR_URG[u.id], 22), el('span', { text: 'Urgência' })),
+        el('div', { class: 'gauge' }, anel(l.necessidade, 'var(--coral)', 22), el('span', { text: 'Precisa do serviço' })),
         el('div', { class: 'gauge' }, anel(l.potencial, 'var(--teal)', 22), el('span', { text: 'Potencial de compra' }))),
+      mot.length ? el('div', { class: 'sec' }, el('h4', { text: 'Por que está nesse nível' }), el('div', { class: 'motivos' }, mot.map(m => el('span', { class: 'chip m', text: m })))) : null,
       el('div', { class: 'contato' },
         el('div', { class: 'fone' }, ico('fone'), l.telefone ? el('b', { text: fone(l.telefone) }) : el('span', { class: 'hint', text: 'telefone não encontrado' }), l.telefone_tipo ? el('span', { class: 'chip', text: l.telefone_tipo }) : null),
-        el('div', { class: 'acoes' }, wa, l.telefone ? el('button', { class: 'btn', onclick: e => copiar(l.telefone, null, e.currentTarget) }, ico('copiar'), 'Copiar número') : null,
-          ig ? el('a', { class: 'btn', href: 'https://www.instagram.com/' + ig + '/', target: '_blank', rel: 'noopener' }, ico('insta'), '@' + ig) : null,
-          el('a', { class: 'btn', href: buscaGoogle(l), target: '_blank', rel: 'noopener' }, ico('globo'), 'Google')),
-        linha('Instagram', ig ? el('span', { class: 'v', text: '@' + ig + (l.seguidores != null ? ` · ${l.seguidores.toLocaleString('pt-BR')} seguidores` : '') + (l.instagram_status === 'fraco' ? ' · perfil fraco' : '') }) : el('span', { class: 'hint', text: 'não encontrado' })),
+        el('div', { class: 'acoes' }, wa,
+          ig ? el('a', { class: 'btn ig', href: 'https://www.instagram.com/' + ig + '/', target: '_blank', rel: 'noopener' }, ico('insta'), '@' + ig)
+            : el('a', { class: 'btn ig buscar', href: 'https://www.google.com/search?q=' + encodeURIComponent(`site:instagram.com ${l.nome} ${l.cidade}`), target: '_blank', rel: 'noopener' }, ico('insta'), 'Procurar Instagram'),
+          site ? el('a', { class: 'btn', href: site, target: '_blank', rel: 'noopener' }, ico('link'), 'Site') : null,
+          el('a', { class: 'btn', href: buscaGoogle(l), target: '_blank', rel: 'noopener' }, ico('globo'), 'Google'),
+          l.telefone ? el('button', { class: 'btn', onclick: e => copiar(l.telefone, null, e.currentTarget) }, ico('copiar'), 'Copiar número') : null),
+        linha('Instagram', el('div', { class: 'ig-edit grow' }, igCampo, el('button', { class: 'btn sm', type: 'button', onclick: salvarIg }, 'Salvar'),
+          el('span', { class: 'hint', style: { width: '100%' }, text: ig ? [l.seguidores != null ? `${l.seguidores.toLocaleString('pt-BR')} seguidores` : '', l.instagram_status === 'fraco' ? 'perfil fraco' : l.instagram_status === 'bom' ? 'perfil bem cuidado' : ''].filter(Boolean).join(' · ') || 'Perfil encontrado' : 'Achou o perfil? Cole o @ aqui e salve.' }))),
         linha('Site', site ? el('a', { class: 'v', href: site, target: '_blank', rel: 'noopener', text: site.replace(/^https:\/\//, '') }) : el('span', { class: 'hint', text: l.site || PRESENCA[l.site_status] || 'não encontrado' })),
         linha('Google', el('span', { class: 'v', text: [l.google_nota != null ? `${l.google_nota.toLocaleString('pt-BR')} ★` : '', avaliacoes(l) ? `${avaliacoes(l).toLocaleString('pt-BR')} avaliações` : ''].filter(Boolean).join(' · ') || '—' }))),
       lista('O que dá para melhorar', l.problemas),
@@ -961,7 +1153,7 @@ const ERRO_IA = { not_granted: 'Você não liberou o uso do Claude neste painel.
 const erroIA = e => ERRO_IA[e && e.code] || (e && e.code === 'api' && e.message ? 'A API do Claude respondeu: ' + e.message : 'A conexão com a IA falhou. Tente de novo.');
 function dadosLead(l) {
   return { id: l.id, nome: l.nome, nicho: l.nicho, cidade: l.cidade, uf: l.uf, presenca: PRESENCA[l.site_status], instagram: l.instagram || null, instagram_status: l.instagram_status || null, seguidores: l.seguidores, site: l.site || null,
-    google_nota: l.google_nota, google_avaliacoes: l.google_avaliacoes, avaliacoes_em_outras_plataformas: l.avaliacoes_total, problemas: l.problemas, sinais_de_caixa: l.sinais_de_caixa, servicos_sugeridos: l.servicos_sugeridos, resumo: l.resumo, etapa: ETAPA[l.etapa], prioridade: prio(l).nome, notas: l.notas || null };
+    google_nota: l.google_nota, google_avaliacoes: l.google_avaliacoes, avaliacoes_em_outras_plataformas: l.avaliacoes_total, problemas: l.problemas, sinais_de_caixa: l.sinais_de_caixa, servicos_sugeridos: l.servicos_sugeridos, resumo: l.resumo, etapa: ETAPA[l.etapa], urgencia: l.urgencia, nivel_de_urgencia: nivel(l).nome, motivos: motivos(l), notas: l.notas || null };
 }
 function regrasMensagem() {
   const c = S.config, quem = c.remetente ? `${c.remetente}, da ${c.empresa}` : `a equipe da ${c.empresa}`;
@@ -1016,7 +1208,7 @@ function md(texto) {
   return frag;
 }
 const textoLimpo = t => t.replace(/\*\*|`|^#+\s*/gm, '').replace(/^\s*[-*•]\s+/gm, '').slice(0, 1900);
-const SUGESTOES = [['alvo', 'Quem eu abordo hoje e por quê?'], ['mapa', 'Quais nichos da Serra estão mais quentes?'], ['fone', 'Monte um roteiro de ligação para a empresa aberta'], ['conversa', 'Como responder “já tenho quem faz isso”?']];
+const SUGESTOES = [['conversa', 'Meu dia foi corrido, me ajuda a organizar amanhã'], ['raio', 'Quais clientes eu abordo hoje?'], ['brilho', 'Me dá uma ideia de post para o Instagram da Dalas'], ['alvo', 'Como eu aumento o faturamento este mês?']];
 function estadoAssistente() {
   const c = S.chat, ch = $('#chat');
   ch.classList.toggle('pensando', c.busy); ch.classList.toggle('ouvindo', c.ouvindo);
@@ -1033,11 +1225,11 @@ function bolha(t, i) {
   return el('div', { class: 'linha ' + (u ? 'u' : 'a') }, u ? null : el('span', { class: 'orb mini' }, el('i'), el('i')), m);
 }
 function renderChat() {
-  const box = $('#msgs'), c = S.chat, kids = [], nome = nomeIA(), dono = str(S.config.remetente);
+  const box = $('#msgs'), c = S.chat, kids = [], nome = nomeIA(), dono = nomeDono().split(' ')[0];
   if (!S.sample) kids.push(el('div', { class: 'ola' }, el('span', { class: 'orb g' }, el('i'), el('i')), el('h3', { text: `Oi! Eu sou a ${nome}.` }), el('p', { text: MODO_LOCAL ? 'Para eu funcionar aqui no computador, coloque a chave da API do Claude em Configurar.' : 'Eu funciono com o painel aberto dentro do Claude.' })));
   else if (!c.turns.length && !c.busy) kids.push(el('div', { class: 'ola' }, el('span', { class: 'orb g' }, el('i'), el('i')),
-    el('h3', { text: `Oi${dono ? ', ' + dono : ''}! Eu sou a ${nome}.` }),
-    el('p', { text: 'Sua assistente comercial. Conheço todas as empresas do radar, escrevo abordagens, movo empresas no funil e peço novas buscas. Pode falar de qualquer assunto.' }),
+    el('h3', { text: `${saudacao()}${dono ? ', ' + dono : ''}! Eu sou a ${nome}.` }),
+    el('p', { text: 'Como está sendo o seu dia? Me conta no que eu posso te ajudar agora. Pode ser trabalho, cliente, ideia ou só um papo.' }),
     el('div', { class: 'sug-g' }, SUGESTOES.map(([i, s]) => el('button', { type: 'button', onclick: () => enviarChat(s) }, ico(i), s)))));
   c.turns.forEach((t, i) => kids.push(bolha(t, i)));
   if (c.busy) kids.push(el('div', { class: 'linha a', id: 'linha-viva' }, el('span', { class: 'orb mini' }, el('i'), el('i')), el('div', { class: 'msg a', id: 'msg-viva' }, c.parcial ? md(c.parcial) : el('span', { class: 'digitando' }, el('i'), el('i'), el('i')))));
@@ -1050,23 +1242,29 @@ function renderChat() {
 }
 function contexto() {
   const c = S.config, ab = S.leads.get(S.sel);
-  const linhas = [...S.leads.values()].sort((a, b) => b.score - a.score).slice(0, 400).map(l =>
-    `${l.id} | ${l.nome} | ${l.nicho} | ${local(l)} | nec ${l.necessidade} | pot ${l.potencial} | ${prio(l).nome} | ${ETAPA[l.etapa]} | ${PRESENCA[l.site_status] || '?'}${l.instagram_status === 'fraco' ? ' + Instagram fraco' : l.instagram ? '' : ' + sem Instagram'} | ${l.telefone ? (l.telefone_tipo || 'tel') : 'sem tel'}${l.mensagem ? ' | abordagem pronta' : ''}${naSerra(l) ? ' | Serra' : ''}`);
-  return `Você é ${nomeIA()}, a assistente comercial do Radar Dalas, o painel de prospecção da ${c.empresa}. Você conversa com ${c.remetente || 'o dono da empresa'}.
-Fale em português do Brasil, de forma calorosa e direta, como uma sócia comercial experiente. Converse sobre qualquer assunto que ele trouxer, mas o seu trabalho principal é ajudar a encontrar, priorizar e fechar clientes.
+  const linhas = [...S.leads.values()].sort((a, b) => b.urgencia - a.urgencia).slice(0, 60).map(l =>
+    `${l.id} | ${l.nome} | ${l.nicho} | ${local(l)} | urg ${l.urgencia} ${nivel(l).nome} | nec ${l.necessidade} | pot ${l.potencial} | ${ETAPA[l.etapa]} | ${PRESENCA[l.site_status] || '?'}${l.instagram ? ' + IG ' + l.instagram + (l.instagram_status === 'fraco' ? ' (fraco)' : '') : ' + sem Instagram'} | ${l.telefone ? (l.telefone_tipo || 'tel') : 'sem tel'}${l.mensagem ? ' | abordagem pronta' : ''}${naSerra(l) ? ' | Serra' : ''}`);
+  return `Você é ${nomeIA()}, a assistente pessoal de ${nomeDono() || 'o dono da empresa'}${c.perfil_cargo ? ' (' + c.perfil_cargo + ')' : ''}, dentro do Radar Dalas, o painel da ${c.empresa}.
+Jeito de conversar:
+- Converse como uma pessoa de verdade, em português do Brasil: calorosa, leve, curiosa e com bom humor na medida certa. Chame ele pelo primeiro nome de vez em quando.
+- Responda no tamanho da mensagem dele. A um "oi" ou "bom dia", responda com uma saudação curta e uma pergunta (como está sendo o dia dele, o que ele precisa agora, como você pode ajudar). Nada de relatório sem ele pedir.
+- Não despeje listas de empresas, números do painel nem textos longos por conta própria. Quando não souber o que ele quer, faça UMA pergunta curta para entender.
+- Pode falar de qualquer assunto: o dia dele, organização da agenda, ideias, textos, posts, estratégia, finanças, vendas, vida pessoal. Lembre do que ele contou antes nesta conversa.
+- Quando o assunto for clientes, vendas ou prospecção, aí sim use os dados do painel abaixo e as ferramentas.
 A ${c.empresa} vende: ${c.servicos}.
 Foco comercial: Serra Gaúcha (Caxias do Sul, Bento Gonçalves, Gramado, Canela, Farroupilha, Garibaldi, Nova Petrópolis e região). Quando ele não disser a região, priorize empresas de lá.
 Bons clientes não são só quem não tem nada: empresas com Instagram fraco (bio sem link ou sem WhatsApp, perfil parado) ou site que dá para melhorar também são ótimas oportunidades.
 ${c.instrucoes ? 'Instruções do dono: ' + c.instrucoes + '\n' : ''}Regras:
 - Ao falar de uma empresa do painel, use só os dados do painel. Não invente telefone, números, avaliações nem fatos. Se faltar um dado, diga que falta.
+- "urg" é a urgência (0 a 100): junta quem tende a comprar com quem quase não aparece no Google. Níveis: Urgente, Alta, Média, Pode esperar. Quando ele perguntar quem abordar, comece pelas urgentes.
 - "nec" é a necessidade do serviço (presença digital fraca) e "pot" é o potencial de compra, de 0 a 100.
 - Mensagens de abordagem: curtas, humanas, identificando quem fala, sem promessa de resultado.
 - Você não navega na internet. Para trazer empresas novas, use a ferramenta pedir_garimpo.
 - Use as ferramentas quando ele pedir uma ação (mover de etapa, anotar, salvar mensagem, abrir a ficha). Para detalhes de uma empresa, use ver_lead.
-- Respostas objetivas, que funcionem também lidas em voz alta. Use listas curtas quando ajudar.
+- Respostas curtas e naturais, que funcionem também lidas em voz alta. Use listas só quando ele pedir algo que peça lista.
 Agora: ${new Date().toLocaleString('pt-BR')}. Empresa aberta na tela: ${ab ? `${ab.nome} (id ${ab.id})` : 'nenhuma'}.
 
-PAINEL (${S.leads.size} empresas) — id | empresa | nicho | cidade/UF | nec | pot | prioridade | etapa | presença | telefone:
+PAINEL (${S.leads.size} empresas no total; abaixo as 60 mais urgentes. Para detalhes de qualquer uma, use ver_lead) — id | empresa | nicho | cidade/UF | urgência | nec | pot | etapa | presença | telefone:
 ${linhas.join('\n') || '(vazio)'}`;
 }
 function ferramentas() {
@@ -1091,6 +1289,7 @@ async function enviarChat(texto) {
   while (hist.length && hist[0].role !== 'user') hist.shift();
   const opts = { signal: c.ctl.signal, onText: ({ text }) => { c.parcial = text; const v = $('#msg-viva'); if (v) { v.replaceChildren(md(text)); const b = $('#msgs'); b.scrollTop = b.scrollHeight; } } };
   if (S.tools) opts.tools = ferramentas(); else opts.cache = false;
+  if (MODO_LOCAL) opts.effort = 'low';
   let resposta = '';
   try {
     const { text, truncated } = await S.sample([{ role: 'user', content: contexto() }, ...hist], opts);
@@ -1160,7 +1359,7 @@ async function garimpoLocal(pid, p) {
   const prompt = `Você é o pesquisador de prospecção da ${S.config.empresa}, agência que vende: ${S.config.servicos}.
 Encontre ${p.quantidade} empresas REAIS de "${p.nicho}" em ${onde}, com presença digital fraca ou que dá para melhorar, e sinais de que podem pagar.${p.obs ? '\nObservação do dono: ' + p.obs : ''}
 
-Bom lead = (1) presença digital com espaço para melhorar: sem site próprio; só Instagram/Linktree; Instagram com bio fraca (sem link, sem WhatsApp, sem dizer o que vende, perfil parado); site antigo, lento, ruim no celular, sem botão de WhatsApp, sem agendamento, reserva, cardápio ou loja online; reservas só por OTA; ficha do Google incompleta. Empresas que já têm Instagram ou site também servem, desde que dê para melhorar. E (2) capacidade de pagar: negócio estabelecido, muitas avaliações, seguidores, anos de mercado, mais de uma unidade, ticket alto. Evite microempreendedores muito pequenos, negócios fechados e grandes redes/franquias.
+Ordem de prioridade: (1) PRINCIPALMENTE empresas SEM SITE próprio; (2) sem Google Meu Negócio ou com ficha do Google fraca (poucas avaliações, sem fotos, sem horário, dados errados); (3) Instagram fraco (bio sem link, sem WhatsApp, sem dizer o que vende, perfil parado). Empresa com site só entra se o site for muito ruim (antigo, quebrado, sem HTTPS, inutilizável no celular). Além disso precisa ter capacidade de pagar: negócio estabelecido, muitas avaliações, seguidores, anos de mercado, mais de uma unidade, ticket alto. Evite microempreendedores muito pequenos, negócios fechados e grandes redes/franquias.
 Pesquise com web_search e abra páginas com web_fetch: perfis do Instagram (a bio costuma ter o WhatsApp), o site da empresa, solutudo.com.br, benditoguia.com.br, guiamais.com.br, tripadvisor.com.br, doctoralia.com.br, cardapio.menu. Se um diretório mostrar o celular cortado, abra a página ou busque o nome + "whatsapp" para achar o número completo.
 REGRA ABSOLUTA: não invente nada. Todo telefone tem que ter aparecido completo numa fonte citada; número cortado não vale. Campo não encontrado fica null. Só inclua empresas com telefone. Problemas precisam ser coisas que você viu.
 Já estão no painel (não repita): ${jaTem || 'nenhuma'}.
@@ -1202,7 +1401,7 @@ function renderPedidos() {
 }
 
 /* ---------- Modais ---------- */
-function fecharModal() { S.modal = null; $('#camada').querySelectorAll('.veil.m, .modal').forEach(n => n.remove()); }
+function fecharModal() { const era = S.modal; S.modal = null; $('#camada').querySelectorAll('.veil.m, .modal').forEach(n => n.remove()); if (era === 'config') aplicarAparencia(); }
 function abrirModal(nome, titulo, corpo, rodape) {
   fecharModal(); S.modal = nome;
   const m = el('form', { class: 'modal', role: 'dialog', 'aria-label': titulo, onsubmit: e => e.preventDefault() }, el('h2', { text: titulo }), corpo, el('div', { class: 'row', style: { 'justify-content': 'flex-end' } }, el('button', { class: 'btn ghost', type: 'button', text: 'Fechar', onclick: fecharModal }), rodape));
@@ -1256,8 +1455,32 @@ function abrirNovo() {
 function abrirConfig() {
   if (!S.db) { toast('O banco de dados não está disponível nesta visualização.'); return; }
   const c = S.config;
+  let foto = c.foto || '';
+  const prev = el('span', { class: 'avatar g' }); pintarAvatar(prev, foto);
+  const arqFoto = el('input', { type: 'file', id: 'c-foto', accept: 'image/*', hidden: true, onchange: async e => { const f = e.target.files && e.target.files[0]; e.target.value = ''; if (!f) return; try { foto = await reduzirFoto(f); pintarAvatar(prev, foto); } catch (x) { toast('Não consegui abrir essa imagem. Tente uma foto JPG ou PNG.'); } } });
+  const [lp1, pnome] = campo('Seu nome completo', { id: 'c-pnome', value: c.perfil_nome, placeholder: 'Ex.: Ryan Dalatea' });
+  const [lp2, pcargo] = campo('Cargo', { id: 'c-pcargo', value: c.perfil_cargo, placeholder: 'Ex.: CEO · Dalas Marketing' });
+  const blocoPerfil = el('div', { class: 'pend', style: { 'border-top': '0', 'padding-top': '0' } }, el('b', { text: 'Seu perfil' }),
+    el('div', { class: 'perfil-ed' }, prev, el('div', { class: 'row' }, el('button', { class: 'btn sm', type: 'button', onclick: () => arqFoto.click() }, ico('camera'), 'Trocar foto'), el('button', { class: 'btn ghost sm', type: 'button', onclick: () => { foto = ''; pintarAvatar(prev, ''); } }, 'Remover'), arqFoto)),
+    el('div', { class: 'two' }, lp1, lp2));
+  const ap = { cor: c.cor || 'dourado', fonte: c.fonte || 'jakarta', titulos: c.titulos || 'igual', tamanho: c.tamanho || 'normal' };
+  const previa = () => aplicarAparencia({ ...c, ...ap });
+  const NOMES_COR = { dourado: 'Dourado', verde: 'Verde', azul: 'Azul', roxo: 'Roxo', rosa: 'Rosa', laranja: 'Laranja', turquesa: 'Turquesa' };
+  const AMOSTRA = { dourado: ['#f0cf7e', '#d2a043'] };
+  const bolinhas = el('div', { class: 'row', role: 'radiogroup', 'aria-label': 'Cor de destaque' }, Object.keys(CORES).map(k => {
+    const [a1, a2] = CORES[k] ? CORES[k] : AMOSTRA.dourado;
+    const b = el('button', { type: 'button', class: 'cor-op', role: 'radio', title: NOMES_COR[k], 'aria-label': NOMES_COR[k], 'aria-checked': String(ap.cor === k), style: { background: `linear-gradient(135deg, ${a1}, ${a2})` }, onclick: () => { ap.cor = k; bolinhas.querySelectorAll('.cor-op').forEach(x => x.setAttribute('aria-checked', String(x === b))); previa(); } });
+    return b;
+  }));
+  const [lf, sf] = campo('Fonte do texto', { id: 'c-fonte', opts: [['jakarta', 'Plus Jakarta Sans (padrão)'], ['inter', 'Inter'], ['poppins', 'Poppins'], ['montserrat', 'Montserrat'], ['dm', 'DM Sans']], value: ap.fonte });
+  const [lt, stt] = campo('Fonte dos títulos', { id: 'c-tit', opts: [['igual', 'Igual ao texto'], ['cinzel', 'Cinzel (a da marca)'], ['grotesk', 'Space Grotesk'], ['playfair', 'Playfair Display'], ['sora', 'Sora']], value: ap.titulos });
+  const [lz, sz] = campo('Tamanho das letras', { id: 'c-tam', opts: [['normal', 'Normal'], ['grande', 'Maior']], value: ap.tamanho });
+  const [lm, sm] = campo('Modo', { id: 'c-modo', opts: [['dark', 'Escuro'], ['light', 'Claro']], value: document.documentElement.getAttribute('data-theme') || 'dark' });
+  sf.addEventListener('change', () => { ap.fonte = sf.value; previa(); }); stt.addEventListener('change', () => { ap.titulos = stt.value; previa(); }); sz.addEventListener('change', () => { ap.tamanho = sz.value; previa(); });
+  sm.addEventListener('change', () => { mem('radar.tema', sm.value); aplicarTema(sm.value); previa(); });
+  const blocoAparencia = el('div', { class: 'pend' }, el('b', { text: 'Aparência' }), el('span', { text: 'Cor de destaque' }), bolinhas, el('div', { class: 'two' }, lf, lt), el('div', { class: 'two' }, lz, lm));
   const [l1, emp] = campo('Nome da sua empresa', { id: 'c-emp', value: c.empresa });
-  const [l2, rem] = campo('Seu nome (assina as mensagens)', { id: 'c-rem', value: c.remetente, placeholder: 'Ex.: Ryan' });
+  const [l2, rem] = campo('Nome que assina as mensagens', { id: 'c-rem', value: c.remetente, placeholder: 'Ex.: Ryan' });
   const [la, asst] = campo('Nome da assistente', { id: 'c-asst', value: nomeIA(), placeholder: 'Lia' });
   const [l3, serv] = campo('O que vocês vendem', { id: 'c-serv', rows: '3', value: c.servicos });
   const [l4, inst] = campo('Instruções para a assistente (tom de voz, preços, o que evitar)', { id: 'c-inst', rows: '3', value: c.instrucoes, placeholder: 'Ex.: tom descontraído; site a partir de R$ 1.500; não oferecer desconto na primeira conversa' });
@@ -1274,13 +1497,81 @@ function abrirConfig() {
     el('div', { class: 'row' }, el('button', { class: 'btn sm', type: 'button', onclick: exportarBackup }, ico('baixar'), 'Exportar backup'), el('button', { class: 'btn sm', type: 'button', text: 'Importar backup', onclick: () => arquivo.click() }), arquivo)));
   const salvar = el('button', { class: 'btn gold', type: 'submit', text: 'Salvar', onclick: async () => {
     if (chave) mem('radar.apikey', chave.value.trim());
-    try { await gravar('config/principal', { ...c, empresa: emp.value.trim() || CFG_PADRAO.empresa, remetente: rem.value.trim(), assistente: asst.value.trim() || 'Lia', servicos: serv.value.trim() || CFG_PADRAO.servicos, instrucoes: inst.value.trim() }, 'set'); fecharModal(); toast('Configurações salvas.'); render(); } catch (e) {}
+    try { await gravar('config/principal', { ...c, ...ap, perfil_nome: pnome.value.trim(), perfil_cargo: pcargo.value.trim(), foto, empresa: emp.value.trim() || CFG_PADRAO.empresa, remetente: rem.value.trim() || pnome.value.trim().split(' ')[0], assistente: asst.value.trim() || 'Lia', servicos: serv.value.trim() || CFG_PADRAO.servicos, instrucoes: inst.value.trim() }, 'set'); fecharModal(); toast('Configurações salvas.'); render(); } catch (e) {}
   } });
-  abrirModal('config', 'Configurações', [el('div', { class: 'two' }, l1, l2), la, l3, l4, ...extras], salvar);
+  abrirModal('config', 'Perfil e configurações', [blocoPerfil, blocoAparencia, el('div', { class: 'two' }, l1, l2), la, l3, l4, ...extras], salvar);
 }
+function reduzirFoto(file) {
+  return new Promise((ok, falha) => {
+    const url = URL.createObjectURL(file), img = new Image();
+    img.onload = () => { const s = 192, cv = document.createElement('canvas'); cv.width = cv.height = s; const k = Math.max(s / img.width, s / img.height), w = img.width * k, h = img.height * k; cv.getContext('2d').drawImage(img, (s - w) / 2, (s - h) / 2, w, h); URL.revokeObjectURL(url); ok(cv.toDataURL('image/jpeg', .86)); };
+    img.onerror = () => { URL.revokeObjectURL(url); falha(); };
+    img.src = url;
+  });
+}
+
+/* ---------- Menu do perfil e tela de entrada ---------- */
+function fecharMenu() { const m = $('#menu-perfil'); if (m) m.remove(); }
+function abrirMenu() {
+  if ($('#menu-perfil')) { fecharMenu(); return; }
+  const av = el('span', { class: 'avatar' }); pintarAvatar(av);
+  const m = el('div', { class: 'menu-perfil', id: 'menu-perfil', role: 'menu' },
+    el('div', { class: 'quem' }, av, el('div', null, el('b', { text: nomeDono() || 'Seu perfil' }), el('span', { text: S.config.perfil_cargo || S.config.empresa }))),
+    el('button', { class: 'btn', type: 'button', onclick: () => { fecharMenu(); abrirConfig(); } }, ico('engrenagem'), 'Perfil e configurações'),
+    el('button', { class: 'btn', type: 'button', onclick: bloquear }, ico('cadeado'), lerPin() ? 'Bloquear o painel' : 'Criar senha de acesso'));
+  document.body.append(m);
+  setTimeout(() => document.addEventListener('click', function fora(e) { if (!m.contains(e.target) && !e.target.closest('#btn-perfil')) { fecharMenu(); document.removeEventListener('click', fora); } }), 0);
+}
+const SESSAO_H = 12;
+function lerPin() { try { return JSON.parse(mem('radar.pin') || 'null'); } catch (e) { return null; } }
+async function hashPin(pin, sal) { const b = new TextEncoder().encode(sal + ':' + pin); const h = await crypto.subtle.digest('SHA-256', b); return [...new Uint8Array(h)].map(x => x.toString(16).padStart(2, '0')).join(''); }
+const sessaoValida = () => Number(mem('radar.sessao') || 0) > Date.now();
+function entrar() { mem('radar.sessao', String(Date.now() + SESSAO_H * 3600e3)); const e = $('#entrada'); e.classList.add('saindo'); setTimeout(() => { e.hidden = true; e.classList.remove('saindo'); }, 450); }
+function bloquear() { fecharMenu(); mem('radar.sessao', '0'); mostrarEntrada(); }
+function mostrarEntrada(modo) {
+  const e = $('#entrada'), pin = lerPin();
+  modo = modo || (pin ? 'senha' : 'criar');
+  const nome = nomeDono(), primeiro = nome.split(' ')[0];
+  const av = el('span', { class: 'avatar xg' }); pintarAvatar(av);
+  const erro = el('p', { class: 'erro', role: 'alert' });
+  const cartao = el('div', { class: 'entrada-card' },
+    el('span', { class: 'marca' }, el('span', { class: 'asa' }, el('img', { src: $('.asa img').src, alt: '' })), el('b', { text: 'DALAS' })),
+    el('div', { class: 'anel-av' }, av),
+    el('h2', { text: primeiro ? `Bem-vindo de volta, ${primeiro}` : 'Bem-vindo ao Radar' }),
+    el('p', { text: S.config.perfil_cargo || 'Painel de clientes da Dalas Marketing' }));
+  const treme = () => { cartao.classList.remove('treme'); void cartao.offsetWidth; cartao.classList.add('treme'); };
+  if (modo === 'senha') {
+    const senha = el('input', { class: 'field', id: 'e-senha', type: 'password', placeholder: 'Sua senha', autocomplete: 'current-password' });
+    cartao.append(el('form', { onsubmit: async ev => { ev.preventDefault(); if (await hashPin(senha.value, pin.sal) === pin.hash) entrar(); else { erro.textContent = 'Senha incorreta. Tente de novo.'; senha.select(); treme(); } } },
+      senha, el('button', { class: 'btn gold', type: 'submit' }, ico('cadeado'), 'Entrar'), erro),
+      el('button', { class: 'link', type: 'button', text: 'Esqueci a senha', onclick: () => mostrarEntrada('esqueci') }));
+    setTimeout(() => senha.focus(), 80);
+  } else if (modo === 'esqueci') {
+    cartao.append(el('p', { text: 'Redefinir tira só a senha deste aparelho. As empresas, o funil e as anotações continuam salvos.' }),
+      el('button', { class: 'btn gold', type: 'button', onclick: () => { try { localStorage.removeItem('radar.pin'); } catch (x) {} mostrarEntrada('criar'); } }, 'Redefinir a senha'),
+      el('button', { class: 'link', type: 'button', text: 'Voltar', onclick: () => mostrarEntrada('senha') }));
+  } else {
+    const s1 = el('input', { class: 'field', id: 'e-nova', type: 'password', placeholder: 'Crie uma senha', autocomplete: 'new-password' });
+    const s2 = el('input', { class: 'field', id: 'e-conf', type: 'password', placeholder: 'Repita a senha', autocomplete: 'new-password' });
+    cartao.append(el('form', { onsubmit: async ev => { ev.preventDefault();
+      if (s1.value.length < 4) { erro.textContent = 'Use pelo menos 4 caracteres.'; treme(); return; }
+      if (s1.value !== s2.value) { erro.textContent = 'As duas senhas não são iguais.'; treme(); return; }
+      const sal = Math.random().toString(36).slice(2) + Date.now().toString(36);
+      mem('radar.pin', JSON.stringify({ sal, hash: await hashPin(s1.value, sal) }));
+      if (!lerPin()) { erro.textContent = 'Este navegador não deixou guardar a senha. Você pode entrar sem senha.'; return; }
+      entrar(); } },
+      s1, s2, el('button', { class: 'btn gold', type: 'submit' }, ico('cadeado'), 'Criar senha e entrar'), erro),
+      el('button', { class: 'link', type: 'button', text: 'Entrar sem senha', onclick: entrar }),
+      el('p', { class: 'hint', text: 'A senha fica guardada só neste aparelho e bloqueia a tela do painel.' }));
+    setTimeout(() => s1.focus(), 80);
+  }
+  e.replaceChildren(el('div', { class: 'luz', 'aria-hidden': 'true' }, el('i'), el('i')), cartao);
+  e.hidden = false;
+}
+
 function dadosBackup() {
   const c = S.config;
-  return { app: 'radar-dalas', versao: 1, exportado_em: agora(), config: { empresa: c.empresa, remetente: c.remetente, assistente: c.assistente, servicos: c.servicos, instrucoes: c.instrucoes },
+  return { app: 'radar-dalas', versao: 1, exportado_em: agora(), config: { empresa: c.empresa, remetente: c.remetente, perfil_nome: c.perfil_nome, perfil_cargo: c.perfil_cargo, foto: c.foto, cor: c.cor, fonte: c.fonte, titulos: c.titulos, tamanho: c.tamanho, assistente: c.assistente, servicos: c.servicos, instrucoes: c.instrucoes },
     leads: [...S.leads.values()].map(l => { const { score, ...r } = l; return r; }) };
 }
 async function exportarBackup() {
@@ -1306,26 +1597,27 @@ async function importarBackup(file) {
 }
 async function baixarCsv() {
   if (!S.dl) return;
-  const cab = ['Empresa', 'Nicho', 'Cidade', 'UF', 'Telefone', 'Tipo', 'Instagram', 'Site', 'Presença', 'Nota Google', 'Avaliações', 'Necessidade', 'Potencial', 'Prioridade', 'Etapa', 'Resumo', 'Anotações'];
+  const cab = ['Empresa', 'Nicho', 'Cidade', 'UF', 'Telefone', 'Tipo', 'Instagram', 'Site', 'Presença', 'Nota Google', 'Avaliações', 'Urgência', 'Nível', 'Necessidade', 'Potencial', 'Etapa', 'Resumo', 'Anotações'];
   const cel = v => { let s = v == null ? '' : String(v); if (/^[=+\-@]/.test(s)) s = "'" + s; return '"' + s.replace(/"/g, '""') + '"'; };
-  const linhas = filtrados().sort((a, b) => b.score - a.score).map(l => [l.nome, l.nicho, l.cidade, l.uf, l.telefone, l.telefone_tipo, l.instagram, l.site, PRESENCA[l.site_status], l.google_nota, avaliacoes(l) || '', l.necessidade, l.potencial, prio(l).nome, ETAPA[l.etapa], l.resumo, l.notas].map(cel).join(';'));
+  const linhas = filtrados().sort((a, b) => b.urgencia - a.urgencia).map(l => [l.nome, l.nicho, l.cidade, l.uf, l.telefone, l.telefone_tipo, l.instagram, l.site, PRESENCA[l.site_status], l.google_nota, avaliacoes(l) || '', l.urgencia, nivel(l).nome, l.necessidade, l.potencial, ETAPA[l.etapa], l.resumo, l.notas].map(cel).join(';'));
   try { await S.dl.save({ filename: 'radar-dalas-leads.csv', data: '﻿' + cab.map(cel).join(';') + '\r\n' + linhas.join('\r\n') }); }
   catch (e) { if (!e || e.code !== 'declined') toast('Não consegui gerar a planilha agora.'); }
 }
 
 /* ---------- Eventos ---------- */
-function irPara(v) { const novo = ['radar', 'funil', 'lista'].includes(v) ? v : 'radar'; if (novo !== S.view) S.animar = true; S.view = novo; render(); }
+function irPara(v) { const novo = ['radar', 'urgencia', 'funil', 'lista'].includes(v) ? v : 'radar'; if (novo !== S.view) S.animar = true; S.view = novo; render(); }
 document.querySelectorAll('.tabs button').forEach(b => b.addEventListener('click', () => { location.hash = b.dataset.view; irPara(b.dataset.view); }));
 window.addEventListener('hashchange', () => irPara(location.hash.slice(1)));
 window.addEventListener('resize', () => moverIndicador());
 $('#f-regiao').addEventListener('change', e => { mem('radar.regiao', e.target.value); mudarFiltro('regiao', e.target.value); });
 $('#f-busca').addEventListener('input', e => { S.f.busca = e.target.value; render(); });
 $('#f-uf').addEventListener('change', e => mudarFiltro('uf', e.target.value));
-$('#f-prio').addEventListener('change', e => mudarFiltro('prio', e.target.value));
+$('#f-urg').addEventListener('change', e => mudarFiltro('urg', e.target.value));
 $('#f-tel').addEventListener('change', e => mudarFiltro('tel', e.target.value));
 $('#btn-garimpar').addEventListener('click', abrirGarimpo);
 $('#btn-novo').addEventListener('click', abrirNovo);
-$('#btn-cfg').addEventListener('click', abrirConfig);
+$('#btn-perfil').addEventListener('click', abrirMenu);
+$('#btn-ver-urg').addEventListener('click', verUrgencias);
 $('#btn-tema').addEventListener('click', () => { const t = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; mem('radar.tema', t); aplicarTema(t); });
 $('#btn-lote').addEventListener('click', gerarLote);
 $('#btn-csv').addEventListener('click', baixarCsv);
@@ -1337,7 +1629,7 @@ $('#chat-mic').addEventListener('click', microfone);
 $('#chat-limpar').addEventListener('click', () => { if (S.chat.busy) return; S.chat.turns = []; renderChat(); if (S.db) gravar('conversas/principal', { turns: [], atualizado_em: agora() }, 'set').catch(() => {}); });
 $('#chat-form').addEventListener('submit', e => { e.preventDefault(); if (S.chat.busy) { S.chat.ctl && S.chat.ctl.abort(); return; } if (S.chat.ouvindo && S.dict) S.dict.stop(); const i = $('#chat-in'); const t = i.value; i.value = ''; S.chat.base = ''; enviarChat(t); });
 $('#chat-in').addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); $('#chat-form').requestSubmit(); } });
-document.addEventListener('keydown', e => { if (e.key !== 'Escape') return; if (S.modal) fecharModal(); else if (S.sel) fecharLead(); });
+document.addEventListener('keydown', e => { if (e.key !== 'Escape') return; if ($('#menu-perfil')) fecharMenu(); else if (S.modal) fecharModal(); else if (S.sel) fecharLead(); });
 
 /* ---------- Versão local (fora do claude.ai) ---------- */
 function criarLocal() {
@@ -1374,7 +1666,8 @@ function criarLocal() {
   if (location.protocol !== 'file:') {
     fetch('dados/leads.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : null).then(j => {
       if (!j) return;
-      let vistos; try { vistos = new Set(JSON.parse(localStorage.getItem('radar.semeados') || '[]')); } catch (e) { vistos = new Set(); }
+      let vistos, versoes = {};
+      try { const v = JSON.parse(localStorage.getItem('radar.semeados') || '[]'); vistos = new Set(Array.isArray(v) ? v : Object.keys(v)); if (!Array.isArray(v)) versoes = v; } catch (e) { vistos = new Set(); }
       if (!novo && !vistos.size) {
         // navegador da versão anterior: conta como já recebido tudo o que veio até o último pacote aberto aqui
         let corte = '';
@@ -1382,13 +1675,27 @@ function criarLocal() {
         for (const x of Array.isArray(j.leads) ? j.leads : []) if (x && typeof x.id === 'string' && corte && String(x.criado_em || '') <= corte) vistos.add(x.id);
       }
       let mudou = false;
+      const SEUS = ['etapa', 'notas', 'mensagem', 'abordado_em', 'instagram'];
       for (const x of Array.isArray(j.leads) ? j.leads : []) {
-        if (!x || typeof x.id !== 'string' || vistos.has(x.id)) continue;
-        const { id, ...d } = x; vistos.add(id);
-        if (!dados['leads/' + id]) { dados['leads/' + id] = d; mudou = true; }
+        if (!x || typeof x.id !== 'string') continue;
+        const { id, ...d } = x, k = 'leads/' + id, em = String(d.atualizado_em || '');
+        if (!vistos.has(id)) { vistos.add(id); versoes[id] = em; if (!dados[k]) { dados[k] = d; mudou = true; } continue; }
+        // empresa já recebida: se o pacote trouxe pesquisa mais nova, atualiza os dados da pesquisa e mantém etapa, anotações e mensagem
+        if (dados[k] && em && em > String(versoes[id] || '')) {
+          const atual = dados[k], novo = { ...atual, ...d };
+          for (const c of SEUS) if (atual[c]) novo[c] = atual[c];
+          novo.atualizado_em = String(atual.atualizado_em || '') > em ? atual.atualizado_em : em;
+          dados[k] = novo; mudou = true;
+        }
+        versoes[id] = em;
       }
-      if (j.config && !dados['config/principal']) { dados['config/principal'] = j.config; mudou = true; }
-      try { localStorage.setItem('radar.semeados', JSON.stringify([...vistos])); } catch (e) {}
+      if (j.config) {
+        const cf = dados['config/principal'] || {};
+        for (const [c, v] of Object.entries(j.config)) if (v && !cf[c]) { cf[c] = v; mudou = true; }
+        dados['config/principal'] = cf;
+      }
+      for (const id of vistos) if (!(id in versoes)) versoes[id] = '';
+      try { localStorage.setItem('radar.semeados', JSON.stringify(versoes)); } catch (e) {}
       if (mudou) { salvar(); avisar(); }
     }).catch(() => {});
   }
@@ -1509,7 +1816,9 @@ function criarLocal() {
 
 /* ---------- Início ---------- */
 pintarIcones(document);
-aplicarTema(mem('radar.tema') || 'light');
+aplicarTema(mem('radar.tema') || 'dark');
+renderPerfil();
+if (!sessaoValida()) mostrarEntrada();
 irPara(location.hash.slice(1));
 radarIniciar();
 renderChat();
