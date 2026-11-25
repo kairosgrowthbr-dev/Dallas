@@ -507,6 +507,14 @@ textarea.field { width: 100%; resize: vertical; min-height: 88px; line-height: 1
   .fab { padding: 6px; } .fab .lbl { display: none; }
 }
 
+/* checagem rápida */
+.checagem { border: 1px dashed var(--line-2); border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+.chk-g { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; } .chk-g .k { width: 52px; flex: none; color: var(--fg-3); font-size: 12.5px; }
+.seg { display: inline-flex; background: var(--surface-3); border-radius: 10px; padding: 3px; gap: 2px; flex-wrap: wrap; }
+.seg-b { border: 0; background: none; padding: 5px 11px; border-radius: 8px; cursor: pointer; font-size: 12.5px; font-weight: 600; color: var(--fg-2); transition: background-color .2s, color .2s; }
+.seg-b:hover { color: var(--fg); } .seg-b[aria-pressed="true"] { background: var(--surface); color: var(--fg); box-shadow: var(--shadow-1); }
+.bio-l { flex: 1 1 240px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .8fr) auto; gap: 6px; }
+@media (max-width: 620px) { .bio-l { grid-template-columns: 1fr; } }
 /* separador de nível no Radar */
 .sep-urg { display: flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--c); padding: 6px 2px 0; }
 .sep-urg i { width: 8px; height: 8px; border-radius: 50%; background: var(--c); box-shadow: 0 0 0 3px color-mix(in srgb, var(--c) 22%, transparent); }
@@ -758,36 +766,43 @@ const MODO_LOCAL = !(window.claude && typeof window.claude.use === 'function');
 const CORTE_P = 50;
 /* Urgência: quem tende a comprar e quase não aparece no Google vem primeiro. */
 const URG = [
-  { id: 'urgente', nome: 'Urgente', n: 1, min: 80, pts: 7, h: 358, i: 'raio', dica: 'Sem site, quase nada no Google e com sinais de que pode pagar' },
-  { id: 'alta', nome: 'Alta', n: 2, min: 65, pts: 6, h: 30, i: 'alvo', dica: 'Sem site e quase nada no Google ou no Instagram' },
-  { id: 'media', nome: 'Média', n: 3, min: 50, pts: 5, h: 172, i: 'conversa', dica: 'Falta site, mas já aparece no Google ou no Instagram' },
-  { id: 'baixa', nome: 'Pode esperar', n: 4, min: -1, pts: 0, h: 220, i: 'fila', dica: 'Já tem site ou aparece bem no Google' },
+  { id: 'urgente', nome: 'Urgente', n: 1, min: 80, pts: 8, h: 358, i: 'raio', dica: 'Empresa com dinheiro, que cuida do Instagram e não tem site' },
+  { id: 'alta', nome: 'Alta', n: 2, min: 65, pts: 7, h: 30, i: 'alvo', dica: 'Bom perfil, mas falta um sinal: menos porte, Instagram menos ativo ou já aparece no Google' },
+  { id: 'media', nome: 'Média', n: 3, min: 50, pts: 6, h: 172, i: 'conversa', dica: 'Bom perfil, mas já tem site razoável ou só o Google é fraco' },
+  { id: 'baixa', nome: 'Pode esperar', n: 4, min: -1, pts: 0, h: 220, i: 'fila', dica: 'Fora do perfil (pequena, sem Instagram ativo, sem sinal de dinheiro) ou já bem resolvida' },
 ];
 const COR_URG = { urgente: 'var(--u1)', alta: 'var(--u2)', media: 'var(--u3)', baixa: 'var(--u4)' };
 const googleGap = l => { const g = l.google_avaliacoes; return g == null ? 1 : g < 30 ? .8 : g < 100 ? .5 : g < 300 ? .25 : 0; };
 const siteGap = l => ['sem_site', 'nao_encontrado', 'so_instagram', 'so_linktree'].includes(l.site_status) ? 1 : l.site_status === 'site_fraco' ? .55 : 0;
 const igGap = l => (!l.instagram || l.instagram_status === 'sem_instagram') ? 1 : l.instagram_status === 'fraco' ? .8 : (l.seguidores != null && l.seguidores < 1000) ? .5 : .15;
-// Régua da urgência, na ordem de prioridade da Dalas:
-// sem site (3 pts; site fraco 2) > quase nada no Google (2; pouco, 1) > sinais de que pode pagar (2) > Instagram fraco ou ausente (1).
-// 7+ pontos = Urgente, 6 = Alta, 5 = Média, até 4 = Pode esperar. A nota de 0 a 100 fica dentro da faixa do nível,
-// então uma empresa Urgente sempre tem nota maior que qualquer Alta (o número nunca contradiz o nível).
-function pontosUrg(l) {
-  const sg = siteGap(l), gg = googleGap(l);
-  return (sg === 1 ? 3 : sg > 0 ? 2 : 0) + (gg >= .8 ? 2 : gg >= .5 ? 1 : 0) + (l.potencial >= CORTE_P ? 2 : 0) + (igGap(l) >= .8 ? 1 : 0);
+// Régua da urgência. Só entra no topo quem é LEAD BEM SELECIONADO: empresa com dinheiro (porte alto ou médio)
+// que cuida do Instagram (posta toda semana). Quem não passa nesse filtro vai para "Pode esperar" (fora do perfil).
+// Pontos: sem site 3 (site fraco 2) + Google fraco 2 (pouco 1) + dinheiro (alto 2, médio 1) + Instagram (semanal 2, às vezes 1).
+// 8+ = Urgente, 7 = Alta, 6 = Média. A nota de 0 a 100 fica dentro da faixa do nível, então o número nunca contradiz o nível.
+function perfilUrg(l) {
+  const sg = siteGap(l), gg = googleGap(l), pot = l.potencial;
+  const site = sg === 1 ? 3 : sg > 0 ? 2 : 0, google = gg >= .8 ? 2 : gg >= .5 ? 1 : 0;
+  const din = l.porte === 'alto' ? 2 : l.porte === 'medio' ? 1 : l.porte === 'pequeno' ? 0 : pot >= 60 ? 2 : pot >= 45 ? 1 : 0;
+  const temIg = !!igUser(l) && l.instagram_status !== 'sem_instagram';
+  const cuida = !temIg ? 0 : l.ig_atividade === 'semanal' ? 2 : l.ig_atividade === 'mensal' ? 1 : l.ig_atividade === 'parado' ? 0 : l.instagram_status === 'fraco' ? 0 : 1;
+  const fora = din === 0 ? (l.porte === 'pequeno' ? 'pequeno porte' : 'sem sinal de dinheiro') : cuida === 0 ? (!temIg ? 'sem Instagram' : l.ig_atividade === 'parado' ? 'Instagram parado' : 'Instagram fraco, conferir') : '';
+  return { pts: site + google + din + cuida, fora, din, cuida, temIg };
 }
-const FAIXA = { urgente: [80, 99, 7, 8], alta: [65, 79, 6, 6], media: [50, 64, 5, 5], baixa: [20, 49, 0, 4] };
+const FAIXA = { urgente: [80, 99, 8, 9], alta: [65, 79, 7, 7], media: [50, 64, 6, 6], baixa: [20, 49, 0, 7] };
 function urgencia(l) {
-  const p = pontosUrg(l), u = URG.find(x => p >= x.pts), [lo, hi, p0, p1] = FAIXA[u.id];
-  const fino = .5 * (p1 > p0 ? (p - p0) / (p1 - p0) : .5) + .35 * (l.potencial / 100) + .15 * (l.necessidade / 100);
+  const q = perfilUrg(l), u = q.fora ? URG[3] : URG.find(x => q.pts >= x.pts), [lo, hi, p0, p1] = FAIXA[u.id];
+  const fino = .5 * (p1 > p0 ? (q.pts - p0) / (p1 - p0) : .5) + .35 * (l.potencial / 100) + .15 * (l.necessidade / 100);
   return Math.round(lo + (hi - lo) * Math.max(0, Math.min(1, fino)));
 }
 const nivel = l => URG.find(u => l.urgencia >= u.min);
 function motivos(l) {
-  const m = [];
+  const m = [], q = perfilUrg(l);
+  if (q.fora) m.push('Fora do perfil: ' + q.fora);
   if (siteGap(l) === 1) m.push('Sem site próprio'); else if (l.site_status === 'site_fraco') m.push('Site fraco');
-  if (l.potencial >= CORTE_P) m.push('Tende a comprar');
+  if (l.porte === 'alto') m.push('Alto padrão'); else if (l.porte === 'medio') m.push('Porte médio'); else if (!l.porte && q.din === 2) m.push('Tende a comprar');
+  if (l.ig_atividade === 'semanal') m.push('Posta toda semana'); else if (l.ig_atividade === 'mensal') m.push('Posta às vezes'); else if (q.temIg && !l.ig_atividade && !q.fora) m.push('Instagram a conferir');
   if (googleGap(l) >= .8) m.push('Quase nada no Google');
-  if (!l.instagram || l.instagram_status === 'sem_instagram') m.push('Sem Instagram'); else if (l.instagram_status === 'fraco') m.push('Instagram fraco');
+  if (l.bio_link) m.push('Link na bio');
   const av = Math.max(l.google_avaliacoes ?? 0, l.avaliacoes_total ?? 0); if (av >= 150) m.push(`${av.toLocaleString('pt-BR')} avaliações`);
   return m;
 }
@@ -836,6 +851,8 @@ function pontuar(l) {
   p += Math.min((l.sinais_de_caixa || []).length, 3) * 6;
   if (l.telefone_tipo === 'celular') p += 5;
   if (l.confianca === 'alta') p += 5; else if (l.confianca === 'baixa') p -= 8;
+  p += { alto: 20, medio: 8, pequeno: -25 }[l.porte] || 0;
+  p += { semanal: 8, mensal: 3, parado: -10 }[l.ig_atividade] || 0;
   return { necessidade: clamp(n), potencial: clamp(p) };
 }
 const arr = v => Array.isArray(v) ? v.filter(x => typeof x === 'string' && x.trim()) : [];
@@ -855,11 +872,14 @@ function normalizar(id, x) {
     toques: Array.isArray(x.toques) ? x.toques.filter(t => t && typeof t.em === 'string').slice(-40) : [],
     respondeu_em: str(x.respondeu_em), reuniao_em: str(x.reuniao_em), reuniao_local: str(x.reuniao_local),
     fechado_em: str(x.fechado_em), valor_projeto: num(x.valor_projeto), valor_mensal: num(x.valor_mensal), servicos_fechados: arr(x.servicos_fechados),
+    bio_link: str(x.bio_link), ig_atividade: ['semanal', 'mensal', 'parado'].includes(x.ig_atividade) ? x.ig_atividade : '', ig_ultimo_post: str(x.ig_ultimo_post), ig_posts: num(x.ig_posts),
+    porte: ['alto', 'medio', 'pequeno'].includes(x.porte) ? x.porte : '', analise: str(x.analise), checado_em: str(x.checado_em), fora_do_perfil: x.fora_do_perfil === true,
   };
+  if (l.fora_do_perfil && l.etapa === 'novo') l.etapa = 'descartado'; // tirada do painel na revisão de qualidade (volta ao mudar a etapa)
   if (l.telefone.startsWith('55') && l.telefone.length > 11) l.telefone = l.telefone.slice(2);
   if (!l.telefone_tipo && l.telefone.length === 11 && l.telefone[2] === '9') l.telefone_tipo = 'celular';
   const p = pontuar(l);
-  l.necessidade = num(x.necessidade) ?? p.necessidade; l.potencial = num(x.potencial) ?? p.potencial;
+  l.necessidade = p.necessidade; l.potencial = p.potencial;
   l.score = Math.round((l.necessidade + l.potencial) / 2);
   l.urgencia = urgencia(l);
   return l;
@@ -1362,6 +1382,7 @@ function renderDrawer() {
           el('span', { class: 'hint', style: { width: '100%' }, text: ig ? [l.seguidores != null ? `${l.seguidores.toLocaleString('pt-BR')} seguidores` : '', l.instagram_status === 'fraco' ? 'perfil fraco' : l.instagram_status === 'bom' ? 'perfil bem cuidado' : ''].filter(Boolean).join(' · ') || 'Perfil encontrado' : 'Achou o perfil? Cole o @ aqui e salve.' }))),
         linha('Site', site ? el('a', { class: 'v', href: site, target: '_blank', rel: 'noopener', text: site.replace(/^https:\/\//, '') }) : el('span', { class: 'hint', text: l.site || PRESENCA[l.site_status] || 'não encontrado' })),
         linha('Google', el('span', { class: 'v', text: [l.google_nota != null ? `${l.google_nota.toLocaleString('pt-BR')} ★` : '', avaliacoes(l) ? `${avaliacoes(l).toLocaleString('pt-BR')} avaliações` : ''].filter(Boolean).join(' · ') || '—' }))),
+      secChecagem(l),
       lista('O que dá para melhorar', l.problemas),
       lista('Sinais de que pode pagar', l.sinais_de_caixa),
       l.servicos_sugeridos.length ? el('div', { class: 'sec' }, el('h4', { text: 'O que vender' }), el('div', { class: 'chips' }, l.servicos_sugeridos.map(s => el('span', { class: 'chip p-max', text: s })))) : null,
@@ -1424,6 +1445,7 @@ function preencher(t, l) {
 // Datas que acompanham cada mudança de etapa (para a sequência e os resultados do mês)
 function patchEtapa(l, etapa) {
   const p = { etapa }, t = agora();
+  if (l.fora_do_perfil) p.fora_do_perfil = false;
   if (etapa === 'abordado' && !l.abordado_em) p.abordado_em = t;
   if (['conversando', 'reuniao', 'proposta', 'fechado'].includes(etapa) && !l.respondeu_em && (l.abordado_em || p.abordado_em)) p.respondeu_em = t;
   if (etapa === 'proposta' && l.etapa !== 'proposta') p.proposta_em = t;
@@ -1621,6 +1643,32 @@ function abrirCatalogo() {
     el('button', { class: 'btn ghost sm', type: 'button', onclick: () => linha({ nome: '' }) }, ico('mais'), 'Adicionar serviço')], salvar);
 }
 
+/* Checagem rápida: o dono confere o Instagram em 10 segundos e o painel reclassifica na hora */
+function secChecagem(l) {
+  const salva = (patch, msg) => atualizarLead(l.id, { ...patch, checado_em: agora() }).then(() => toast(msg), () => {});
+  const grupo = (rot, campo, ops) => el('div', { class: 'chk-g' }, el('span', { class: 'k', text: rot }), el('div', { class: 'seg', role: 'group', 'aria-label': rot },
+    ops.map(([v, t]) => el('button', { type: 'button', class: 'seg-b', 'aria-pressed': String(l[campo] === v), onclick: () => salva({ [campo]: l[campo] === v ? '' : v }, 'Anotado. A urgência foi recalculada.') }, t))));
+  const link = el('input', { class: 'field', id: 'd-bio', value: l.bio_link || '', placeholder: 'Cole o link que aparece na bio do Instagram', autocomplete: 'off', 'aria-label': 'Link da bio do Instagram' });
+  const tipo = el('select', { class: 'field', id: 'd-bio-t', 'aria-label': 'O que é esse link' },
+    [['', 'O que é esse link?'], ['tem_site', 'Site próprio e bom'], ['site_fraco', 'Site próprio, mas fraco'], ['so_linktree', 'Linktree / página de links'], ['sem_site', 'Só WhatsApp ou cardápio']].map(([v, t]) => el('option', { value: v, text: t })));
+  tipo.value = l.bio_link ? (l.site_status === 'tem_site' || l.site_status === 'site_fraco' || l.site_status === 'so_linktree' ? l.site_status : '') : '';
+  const salvarLink = () => {
+    const v = link.value.trim(), t = tipo.value;
+    if (v && !t) { toast('Escolha o que é esse link.'); return; }
+    const patch = { bio_link: v };
+    if (t) patch.site_status = t;
+    if (v && (t === 'tem_site' || t === 'site_fraco')) patch.site = /^https?:\/\//i.test(v) ? v.replace(/^http:/i, 'https:') : 'https://' + v;
+    salva(patch, t === 'tem_site' ? 'Tem site bom: a empresa desceu na urgência.' : 'Link da bio salvo.');
+  };
+  return el('div', { class: 'sec checagem' }, el('h4', { text: 'Checagem rápida do Instagram' }),
+    el('p', { class: 'hint', text: 'Abra o Instagram, olhe a bio e os últimos posts e marque aqui. O painel recalcula a urgência na hora. Pequena ou com Instagram parado sai do topo.' }),
+    grupo('Posta', 'ig_atividade', [['semanal', 'Toda semana'], ['mensal', 'Às vezes'], ['parado', 'Parado']]),
+    grupo('Porte', 'porte', [['alto', 'Alto padrão'], ['medio', 'Médio'], ['pequeno', 'Pequeno']]),
+    el('div', { class: 'chk-g' }, el('span', { class: 'k', text: 'Bio' }), el('div', { class: 'bio-l' }, link, tipo, el('button', { class: 'btn sm', type: 'button', onclick: salvarLink }, 'Salvar'))),
+    l.analise ? el('p', { class: 'hint', text: 'Análise: ' + l.analise }) : null,
+    l.checado_em ? el('p', { class: 'hint', text: 'Conferido em ' + quando(l.checado_em) }) : null);
+}
+
 /* Reunião e fechamento (ficha da empresa) */
 const paraLocal = iso => { const t = ts(iso); if (!t) return ''; const d = new Date(t - new Date(t).getTimezoneOffset() * 6e4); return d.toISOString().slice(0, 16); };
 function linkAgenda(l) {
@@ -1782,7 +1830,7 @@ const ERRO_IA = { not_granted: 'Você não liberou o uso do Claude neste painel.
 const erroIA = e => ERRO_IA[e && e.code] || (e && e.code === 'api' && e.message ? 'A API do Claude respondeu: ' + e.message : 'A conexão com a IA falhou. Tente de novo.');
 function dadosLead(l) {
   return { id: l.id, nome: l.nome, nicho: l.nicho, cidade: l.cidade, uf: l.uf, presenca: PRESENCA[l.site_status], instagram: l.instagram || null, instagram_status: l.instagram_status || null, seguidores: l.seguidores, site: l.site || null,
-    google_nota: l.google_nota, google_avaliacoes: l.google_avaliacoes, avaliacoes_em_outras_plataformas: l.avaliacoes_total, problemas: l.problemas, sinais_de_caixa: l.sinais_de_caixa, servicos_sugeridos: l.servicos_sugeridos, resumo: l.resumo, etapa: ETAPA[l.etapa], urgencia: l.urgencia, nivel_de_urgencia: nivel(l).nome, motivos: motivos(l), notas: l.notas || null };
+    google_nota: l.google_nota, google_avaliacoes: l.google_avaliacoes, avaliacoes_em_outras_plataformas: l.avaliacoes_total, problemas: l.problemas, sinais_de_caixa: l.sinais_de_caixa, servicos_sugeridos: l.servicos_sugeridos, resumo: l.resumo, etapa: ETAPA[l.etapa], urgencia: l.urgencia, nivel_de_urgencia: nivel(l).nome, motivos: motivos(l), porte: l.porte || null, instagram_posta: l.ig_atividade || null, link_na_bio: l.bio_link || null, notas: l.notas || null };
 }
 function regrasMensagem() {
   const c = S.config, quem = c.remetente ? `${c.remetente}, da ${c.empresa}` : `a equipe da ${c.empresa}`;
@@ -1913,7 +1961,7 @@ Foco comercial: Serra Gaúcha (Caxias do Sul, Bento Gonçalves, Gramado, Canela,
 Bons clientes não são só quem não tem nada: empresas com Instagram fraco (bio sem link ou sem WhatsApp, perfil parado) ou site que dá para melhorar também são ótimas oportunidades.
 ${c.instrucoes ? 'Instruções do dono: ' + c.instrucoes + '\n' : ''}Regras:
 - Ao falar de uma empresa do painel, use só os dados do painel. Não invente telefone, números, avaliações nem fatos. Se faltar um dado, diga que falta.
-- "urg" é a urgência (0 a 100). Régua: sem site pesa mais, depois quase nada no Google, depois sinais de que pode pagar, depois Instagram fraco. Urgente = sem site + quase nada no Google + pode pagar; Alta = sem site + quase nada no Google ou no Instagram; Média = falta site mas já aparece no Google ou no Instagram; Pode esperar = já tem site ou aparece bem no Google. Quando ele perguntar quem abordar, comece pelas urgentes.
+- "urg" é a urgência (0 a 100). O dono só quer LEADS BEM SELECIONADOS: empresa com dinheiro (porte alto ou médio) que cuida do Instagram (posta toda semana) e não tem site ou tem Google fraco. Pequena, sem Instagram ativo ou sem sinal de dinheiro fica em "Pode esperar" (fora do perfil). Níveis: Urgente, Alta, Média, Pode esperar. Quando ele perguntar quem abordar, comece pelas urgentes e lembre de conferir a bio do Instagram (pode ter site lá).
 - "nec" é a necessidade do serviço (presença digital fraca) e "pot" é o potencial de compra, de 0 a 100.
 - Mensagens de abordagem: curtas, humanas, identificando quem fala, sem promessa de resultado.
 - Você não navega na internet. Para trazer empresas novas, use a ferramenta pedir_garimpo.
@@ -2020,13 +2068,14 @@ async function garimpoLocal(pid, p) {
   const prompt = `Você é o pesquisador de prospecção da ${S.config.empresa}, agência que vende: ${S.config.servicos}.
 Encontre ${p.quantidade} empresas REAIS de "${p.nicho}" em ${onde}, com presença digital fraca ou que dá para melhorar, e sinais de que podem pagar.${p.obs ? '\nObservação do dono: ' + p.obs : ''}
 
+PERFIL OBRIGATÓRIO (o dono só quer leads bem selecionados; lead ruim é dor de cabeça): (a) empresa com dinheiro, de porte alto ou médio: estrutura boa, posicionamento premium, muitas avaliações, equipe, mais de uma unidade, ticket alto. Nada de negócio pequeno, informal ou barato. (b) Cuida do Instagram: posta mais ou menos toda semana. Perfil parado fica de fora. (c) Tem o que vender. SEMPRE confira a bio do Instagram: se houver link de site (direto ou dentro de um Linktree), abra o site antes de dizer que não tem site. Prefira poucas empresas excelentes a muitas medianas.
 Ordem de prioridade: (1) PRINCIPALMENTE empresas SEM SITE próprio; (2) sem Google Meu Negócio ou com ficha do Google fraca (poucas avaliações, sem fotos, sem horário, dados errados); (3) Instagram fraco (bio sem link, sem WhatsApp, sem dizer o que vende, perfil parado). Empresa com site só entra se o site for muito ruim (antigo, quebrado, sem HTTPS, inutilizável no celular). Além disso precisa ter capacidade de pagar: negócio estabelecido, muitas avaliações, seguidores, anos de mercado, mais de uma unidade, ticket alto. Evite microempreendedores muito pequenos, negócios fechados e grandes redes/franquias.
 Pesquise com web_search e abra páginas com web_fetch: perfis do Instagram (a bio costuma ter o WhatsApp), o site da empresa, solutudo.com.br, benditoguia.com.br, guiamais.com.br, tripadvisor.com.br, doctoralia.com.br, cardapio.menu. Se um diretório mostrar o celular cortado, abra a página ou busque o nome + "whatsapp" para achar o número completo.
 REGRA ABSOLUTA: não invente nada. Todo telefone tem que ter aparecido completo numa fonte citada; número cortado não vale. Campo não encontrado fica null. Só inclua empresas com telefone. Problemas precisam ser coisas que você viu.
 Já estão no painel (não repita): ${jaTem || 'nenhuma'}.
 
 Responda só com um array JSON, um objeto por empresa:
-{"nome":"","nicho":"Odontologia | Estética | Saúde | Restaurante | Hospedagem | Pet | Fitness | Automotivo | Jurídico/Contábil | Imobiliária | Varejo | Beleza | Outro","cidade":"","uf":"","endereco":"ou null","telefone":"só dígitos com DDD","telefone_tipo":"celular | fixo","instagram":"@handle ou null","seguidores":número ou null,"instagram_status":"sem_instagram | fraco | bom","site":"url ou null","site_status":"sem_site | so_instagram | so_linktree | site_fraco | tem_site | nao_encontrado","google_nota":número ou null,"google_avaliacoes":número ou null,"avaliacoes_total":maior número de avaliações visto em qualquer plataforma ou null,"sinais_de_caixa":["fatos concretos"],"problemas":["problemas concretos"],"servicos_sugeridos":["Site | Landing page | Google Meu Negócio | Tráfego pago | CRM | Automação WhatsApp | Cardápio/Pedido online | Sistema/Painel | Loja online | Gestão de Instagram"],"resumo":"2 frases: o que melhorar e o que vender primeiro","fontes":["urls"],"confianca":"alta | media | baixa"}`;
+{"nome":"","nicho":"Odontologia | Estética | Saúde | Restaurante | Hospedagem | Pet | Fitness | Automotivo | Jurídico/Contábil | Imobiliária | Varejo | Beleza | Outro","cidade":"","uf":"","endereco":"ou null","telefone":"só dígitos com DDD","telefone_tipo":"celular | fixo","instagram":"@handle ou null","seguidores":número ou null,"instagram_status":"sem_instagram | fraco | bom","ig_atividade":"semanal | mensal | parado | null se não deu para ver","bio_link":"link da bio do Instagram ou null","porte":"alto | medio | pequeno","site":"url ou null","site_status":"sem_site | so_instagram | so_linktree | site_fraco | tem_site | nao_encontrado","google_nota":número ou null,"google_avaliacoes":número ou null,"avaliacoes_total":maior número de avaliações visto em qualquer plataforma ou null,"sinais_de_caixa":["fatos concretos"],"problemas":["problemas concretos"],"servicos_sugeridos":["Site | Landing page | Google Meu Negócio | Tráfego pago | CRM | Automação WhatsApp | Cardápio/Pedido online | Sistema/Painel | Loja online | Gestão de Instagram"],"resumo":"2 frases: o que melhorar e o que vender primeiro","fontes":["urls"],"confianca":"alta | media | baixa"}`;
   try {
     const res = await S.sample.json(prompt, { effort: 'high', maxTokens: 64000, serverTools: [
       { type: 'web_search_20260209', name: 'web_search', max_uses: 30, user_location: { type: 'approximate', country: 'BR' } },
