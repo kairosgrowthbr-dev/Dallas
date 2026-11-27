@@ -55,7 +55,10 @@ print "  Radar Dalas:  $url\n";
 print "\n";
 print "  Para parar, feche esta janela.\n\n";
 
-if ($^O eq 'darwin') {
+# o aplicativo do Mac abre a janela sozinho e só precisa saber a porta
+if ($ENV{RADAR_PORTA_ARQ} && open(my $pf, '>', $ENV{RADAR_PORTA_ARQ})) { print $pf $port; close $pf; }
+if ($ENV{RADAR_SEM_ABRIR}) {
+} elsif ($^O eq 'darwin') {
   system('open', "$url$page");
 } else {
   system("xdg-open '$url$page' >/dev/null 2>&1 &");

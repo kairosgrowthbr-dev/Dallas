@@ -8,3 +8,4 @@ public/demos/*/_shots
 
 # Radar Dalas: os dados dos leads não vão para o repositório (é público)
 radar/dados/
+dist-mac/

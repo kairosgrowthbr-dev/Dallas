@@ -1,0 +1,21 @@
+RADAR DALAS · APLICATIVO PARA MAC
+
+1. Dê dois cliques no zip (se o Safari já não descompactou).
+2. Arraste "Radar Dalas.app" para a pasta Aplicativos.
+3. Na primeira vez, o Mac avisa que o app é de um desenvolvedor não identificado
+   (ele não passou pela loja da Apple). Para liberar:
+   - Abra o app uma vez e clique em "OK" no aviso.
+   - Vá em Ajustes do Sistema > Privacidade e Segurança, desça até o fim
+     e clique em "Abrir Mesmo Assim" ao lado de "Radar Dalas".
+   - Confirme com sua senha. Pronto: das próximas vezes ele abre direto.
+   (Atalho para quem prefere o Terminal:
+    xattr -dr com.apple.quarantine "/Applications/Radar Dalas.app")
+4. Para deixar no Dock: com o app aberto, clique com o botão direito no ícone
+   do Dock > Opções > Manter no Dock.
+
+COMO FUNCIONA
+- O painel abre numa janela própria se você tiver Google Chrome, Edge ou Brave.
+  Sem eles, abre no Safari.
+- Seus dados (empresas, anotações, chave da API) ficam salvos neste Mac.
+  Se você já usava o zip do Radar no mesmo navegador, os dados continuam lá.
+- Para atualizar o app, é só trocar pelo novo "Radar Dalas.app" (os dados não se perdem).
