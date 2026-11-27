@@ -507,6 +507,8 @@ textarea.field { width: 100%; resize: vertical; min-height: 88px; line-height: 1
   .fab { padding: 6px; } .fab .lbl { display: none; }
 }
 
+#btn-atualizar.girando .ico { animation: gira .8s linear infinite; }
+@keyframes gira { to { transform: rotate(360deg); } }
 /* checagem rápida */
 .checagem { border: 1px dashed var(--line-2); border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
 .chk-g { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; } .chk-g .k { width: 52px; flex: none; color: var(--fg-3); font-size: 12.5px; }
@@ -610,6 +612,7 @@ body { overflow-x: clip; }
       <div class="grow"></div>
       <div class="acts">
         <button class="btn gold" id="btn-garimpar"><span class="ico" data-i="brilho"></span><span class="lbl">Garimpar empresas</span></button>
+        <button class="ib" id="btn-atualizar" title="Atualizar o painel" aria-label="Atualizar o painel"><span class="ico" data-i="girar"></span></button>
         <button class="ib" id="btn-novo" title="Novo lead" aria-label="Novo lead"><span class="ico" data-i="mais"></span></button>
         <button class="ib" id="btn-tema" title="Modo escuro" aria-label="Alternar modo claro ou escuro"><span class="ico" data-i="lua"></span></button>
 
@@ -686,6 +689,7 @@ body { overflow-x: clip; }
 
 /* ---------- Ícones (traço, 24×24) ---------- */
 const ICONES = {
+  girar: '<path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v4.5h-4.5"/>',
   cal: '<rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/>',
   radar: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><path d="M12 12l6.5-6.5"/>',
   funil: '<path d="M3 4h18l-7 8.5V19l-4 2v-8.5z"/>',
@@ -2329,6 +2333,8 @@ $('#f-urg').addEventListener('change', e => mudarFiltro('urg', e.target.value));
 $('#f-tel').addEventListener('change', e => mudarFiltro('tel', e.target.value));
 $('#btn-garimpar').addEventListener('click', abrirGarimpo);
 $('#btn-novo').addEventListener('click', abrirNovo);
+$('#btn-atualizar').addEventListener('click', atualizarPainel);
+if (mem('radar.atualizou') === '1') { mem('radar.atualizou', '0'); setTimeout(depoisDeAtualizar, 1200); }
 $('#btn-perfil').addEventListener('click', abrirMenu);
 $('#btn-ver-urg').addEventListener('click', verUrgencias);
 $('#btn-tema').addEventListener('click', () => { const t = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; mem('radar.tema', t); aplicarTema(t); });
@@ -2343,6 +2349,26 @@ $('#chat-limpar').addEventListener('click', () => { if (S.chat.busy) return; S.c
 $('#chat-form').addEventListener('submit', e => { e.preventDefault(); if (S.chat.busy) { S.chat.ctl && S.chat.ctl.abort(); return; } if (S.chat.ouvindo && S.dict) S.dict.stop(); const i = $('#chat-in'); const t = i.value; i.value = ''; S.chat.base = ''; enviarChat(t); });
 $('#chat-in').addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); $('#chat-form').requestSubmit(); } });
 document.addEventListener('keydown', e => { if (e.key !== 'Escape') return; if ($('#menu-perfil')) fecharMenu(); else if (S.modal) fecharModal(); else if (S.sel) fecharLead(); });
+
+/* ---------- Botão Atualizar ---------- */
+const NICHOS_GARIMPO = ['clínicas odontológicas e de estética de alto padrão', 'pousadas e hotéis boutique', 'restaurantes e cafés coloniais premium', 'imobiliárias e incorporadoras de alto padrão', 'vinícolas com enoturismo', 'móveis planejados e arquitetura', 'academias e studios premium'];
+function atualizarPainel() {
+  const b = $('#btn-atualizar'); if (b.classList.contains('girando')) return;
+  b.classList.add('girando');
+  if (MODO_LOCAL) { mem('radar.atualizou', '1'); setTimeout(() => location.reload(), 350); return; } // relê os dados e o pacote de empresas do app
+  mapa.chave = ''; S.animar = true; render();
+  setTimeout(() => { b.classList.remove('girando'); depoisDeAtualizar(); }, 700);
+}
+function depoisDeAtualizar() {
+  const n = [...S.leads.values()].filter(l => l.etapa === 'novo').length;
+  toast(`Painel atualizado · ${n} ${n === 1 ? 'empresa' : 'empresas'} na fila.`, { rotulo: 'Buscar empresas novas', fn: buscarNovasAgora });
+}
+async function buscarNovasAgora() {
+  const i = Number(mem('radar.rodizio') || 0); mem('radar.rodizio', String(i + 1));
+  const nicho = NICHOS_GARIMPO[i % NICHOS_GARIMPO.length];
+  const r = await pedirGarimpo({ nicho, cidade: '', uf: 'RS', quantidade: 4, obs: 'Só empresas de alto padrão, com dinheiro, que postam no Instagram toda semana. Confira a bio do Instagram antes de dizer que não tem site.' }, true);
+  toast(r.ok ? `Buscando ${nicho} na Serra. ${r.msg}` : r.msg);
+}
 
 /* ---------- Versão local (fora do claude.ai) ---------- */
 function criarLocal() {
