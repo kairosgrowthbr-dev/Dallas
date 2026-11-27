@@ -1,0 +1,40 @@
+#!/bin/bash
+# Radar Dalas para Mac: liga o servidor local (Perl que já vem no macOS) e abre o painel numa janela própria.
+RES="$(cd "$(dirname "$0")/../Resources/radar" && pwd)"
+PORTA_ARQ="$HOME/Library/Application Support/Radar Dalas/porta"
+LOG="$HOME/Library/Logs/Radar Dalas.log"
+mkdir -p "$(dirname "$PORTA_ARQ")" "$(dirname "$LOG")"
+
+aberto() { curl -fsS --max-time 1 "$1" 2>/dev/null | grep -q 'DALAS'; }
+aviso() { osascript -e "display alert \"Radar Dalas\" message \"$1\"" >/dev/null 2>&1; }
+
+URL=""
+# já está rodando? reaproveita (mesma porta = mesmos dados salvos)
+if [ -s "$PORTA_ARQ" ]; then
+  P="$(cat "$PORTA_ARQ")"
+  aberto "http://localhost:$P/" && URL="http://localhost:$P/"
+fi
+if [ -z "$URL" ]; then
+  rm -f "$PORTA_ARQ"
+  if ! /usr/bin/perl -MIO::Socket::IP -e 1 >/dev/null 2>&1; then
+    aviso "Este Mac não tem o Perl que o painel usa. Abra o arquivo Abrir-Radar-Mac.command do zip do Radar."
+    exit 1
+  fi
+  RADAR_SEM_ABRIR=1 RADAR_PORTA_ARQ="$PORTA_ARQ" nohup /usr/bin/perl "$RES/servidor-mac.pl" "$RES" >"$LOG" 2>&1 &
+  for _ in $(seq 1 60); do [ -s "$PORTA_ARQ" ] && break; sleep 0.1; done
+  if [ ! -s "$PORTA_ARQ" ]; then
+    aviso "Não consegui ligar o painel. Detalhes em ~/Library/Logs/Radar Dalas.log"
+    exit 1
+  fi
+  URL="http://localhost:$(cat "$PORTA_ARQ")/"
+  for _ in $(seq 1 30); do aberto "$URL" && break; sleep 0.1; done
+fi
+
+# janela própria, sem barra de navegador, quando houver Chrome, Edge ou Brave; senão, o navegador padrão
+for NAV in "Google Chrome" "Microsoft Edge" "Brave Browser" "Chromium"; do
+  if open -Ra "$NAV" >/dev/null 2>&1; then
+    open -na "$NAV" --args --app="$URL"
+    exit 0
+  fi
+done
+open "$URL"
